@@ -1,0 +1,60 @@
+
+OUTDIR = .\out
+TARGET = pvztoolkit
+
+CXX = cl
+CXXFLAGS_BARE = -c -nologo -Zc:wchar_t /MP /utf-8 /Zc:__cplusplus /std:c++17 /Od /MTd /W3 /EHsc /Zi /FS
+DEFINES = -DUNICODE -DWIN32 -D_USING_V110_SDK71_ -D_ATL_XP_TARGETING -DPSAPI_VERSION=1 -D_WIN32_WINNT=0x0501
+INCPATH = -I.
+INCS = .\src\pak.h .\src\process.h .\src\code.h .\src\pvz.h .\src\window.h
+CXXFLAGS = /Fo"$(OUTDIR)\\" /Fd"$(OUTDIR)\$(TARGET).pdb" $(CXXFLAGS_BARE) $(DEFINES) $(INCPATH)
+
+RC = rc
+RC_FLAGS = /n $(DEFINES)
+
+LINKER = link
+LIBS_FLTK = fltkd.lib fltkformsd.lib fltkgld.lib fltkimagesd.lib fltkjpegd.lib fltkpngd.lib fltkzlibd.lib
+LIBS_WIN32 = winmm.lib comctl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib \
+ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wsock32.lib opengl32.lib version.lib psapi.lib shlwapi.lib
+LIBS = /LIBPATH:$(OUTDIR) $(LIBS_FLTK) $(LIBS_WIN32)
+OBJS = $(OUTDIR)\main.obj \
+       $(OUTDIR)\pak.obj \
+       $(OUTDIR)\process.obj \
+       $(OUTDIR)\code.obj \
+       $(OUTDIR)\pvz.obj \
+       $(OUTDIR)\window.obj
+RES = $(OUTDIR)\version.res
+LFLAGS = /NOLOGO /DYNAMICBASE /NXCOMPAT /INCREMENTAL:NO /SUBSYSTEM:CONSOLE,5.01 $(LIBS) $(OBJS) $(RES) /DEBUG
+
+
+all:$(OUTDIR) $(OUTDIR)\$(TARGET).exe
+
+$(OUTDIR):
+    if not exist "$(OUTDIR)" mkdir "$(OUTDIR)"
+
+$(OUTDIR)\$(TARGET).exe: $(OBJS) $(OUTDIR)\version.res
+    $(LINKER) $(LFLAGS) /out:$(OUTDIR)\$(TARGET).exe
+
+$(OUTDIR)\version.res: .\src\version.rc
+    $(RC) $(RC_FLAGS) /fo $(OUTDIR)\version.res .\src\version.rc
+
+$(OUTDIR)\main.obj: .\src\main.cpp $(INCS)
+    $(CXX) $(CXXFLAGS) /Fe"$(OUTDIR)\main.obj" .\src\main.cpp
+
+$(OUTDIR)\pak.obj: .\src\pak.cpp $(INCS)
+    $(CXX) $(CXXFLAGS) /Fe"$(OUTDIR)\pak.obj" .\src\pak.cpp
+
+$(OUTDIR)\process.obj: .\src\process.cpp $(INCS)
+    $(CXX) $(CXXFLAGS) /Fe"$(OUTDIR)\process.obj" .\src\process.cpp
+
+$(OUTDIR)\code.obj: .\src\code.cpp $(INCS)
+    $(CXX) $(CXXFLAGS) /Fe"$(OUTDIR)\code.obj" .\src\code.cpp
+
+$(OUTDIR)\pvz.obj: .\src\pvz.cpp $(INCS)
+    $(CXX) $(CXXFLAGS) /Fe"$(OUTDIR)\pvz.obj" .\src\pvz.cpp
+
+$(OUTDIR)\window.obj: .\src\window.cpp $(INCS)
+    $(CXX) $(CXXFLAGS) /Fe"$(OUTDIR)\window.obj" .\src\window.cpp
+
+clean:
+    if exist "$(OUTDIR)" rmdir /s /q "$(OUTDIR)"
