@@ -2571,7 +2571,7 @@ void PvZ::CustomizeSpawn(std::array<bool, 33> zombies)
         {
             // for (auto i : index_bungee) zombies_list[i] = 20;
             for (size_t i = 0; i < index_bungee.size(); i++)
-                zombies_list[index_bungee[i]] = 1;
+                zombies_list[index_bungee[i]] = 20;
         }
 
         if (has_yeti && limit_yeti)
