@@ -314,7 +314,7 @@ void SpawnTable::draw_cell(TableContext context, int ROW = 0, int COL = 0, //
         if (COL == (20 + 1 - 1))
             c = 0xffffff00 - 0x02020200 * int(atoi(s) / 10); // 2 <256/(1000/10)
         else if (COL == (10 - 1) || COL == (20 - 1))
-            c = 0xf6f0f600 - 0x05000500 * atoi(s); // 5 <246/50 ??
+            c = 0xfaf0fa00 - 0x05000500 * atoi(s); // 5 <250/50
         else
             c = 0xffffff00 - 0x05000500 * atoi(s); // 5 <256/50
         draw_data(s, X, Y, W, H, c);
@@ -1892,8 +1892,8 @@ void Window::cb_about()
                         + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.06 (zh)\n"            //
                         + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.07 (zh)\n"            //
                         + L"\n"                                                         //
-                        + L"版本号: 1.0.0\n"                                            //
-                        + L"构建日期: 2020/03/29\n"                                     //
+                        + L"版本号: 1.0.1\n"                                            //
+                        + L"构建日期: 2020/04/07\n"                                     //
                         + L"工具链: MSVC 2017 / FLTK 1.3.5\n"                           //
                         + L"版权所有: © 2020 lmintlcx\n"                                //
                         + L"鸣谢: a418569882 kmtohoem\n";

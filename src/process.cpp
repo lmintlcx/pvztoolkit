@@ -42,8 +42,20 @@ bool Process::OpenByWindow(const wchar_t *class_name, const wchar_t *window_name
     auto get_path = [&]() {
         wchar_t file_path[MAX_PATH]; // 游戏本体路径
         DWORD name_size = GetModuleFileNameExW(this->handle, nullptr, file_path, MAX_PATH);
-        if (name_size != 0)
-            this->path = std::wstring(file_path);
+        if (name_size == 0)
+            return;
+
+        this->path = std::wstring(file_path);
+
+        bool file_hidden = false;
+        DWORD attr = GetFileAttributesW(file_path);
+        if (attr != INVALID_FILE_ATTRIBUTES)
+            file_hidden = attr & FILE_ATTRIBUTE_HIDDEN;
+#ifdef _DEBUG
+        std::wcout << L"游戏本体隐藏: " << file_hidden << L" " << attr << std::endl;
+#endif
+        if (!file_hidden)
+            return;
 
         // 用某个未公开接口获取父进程标识和文件路径
         NtQueryInformationProcess _NtQueryInformationProcess = //
@@ -56,29 +68,35 @@ bool Process::OpenByWindow(const wchar_t *class_name, const wchar_t *window_name
                                                      (void *)&pbi,                      //
                                                      sizeof(PROCESS_BASIC_INFORMATION), //
                                                      nullptr);                          //
-        if (NT_SUCCESS(status))
+        if (!NT_SUCCESS(status))
+            return;
+        DWORD _pid = (DWORD)(pbi.Reserved3);                           // 父进程标识
+        HANDLE _handle = OpenProcess(PROCESS_ALL_ACCESS, false, _pid); // 父进程句柄
+        if (_handle == nullptr)
+            return;
+        wchar_t _file_path[MAX_PATH]; // 父进程文件路径
+        DWORD _name_size = GetModuleFileNameExW(_handle, nullptr, _file_path, MAX_PATH);
+        CloseHandle(_handle);
+        if (_name_size == 0)
+            return;
+        std::wstring _path = std::wstring(_file_path);
+#ifdef _DEBUG
+        std::wcout << L"父进程路径: " << _path << std::endl;
+#endif
+
+        std::wstring game_file_name = this->path.substr(this->path.find_last_of(L"\\") + 1);
+        std::wstring game_folder = this->path.substr(0, this->path.find_last_of(L"\\"));
+        std::wstring launcher_folder = _path.substr(0, _path.find_last_of(L"\\"));
+#ifdef _DEBUG
+        std::wcout << L"游戏文件名: " << game_file_name << std::endl;
+        std::wcout << L"游戏文件夹: " << game_folder << std::endl;
+        std::wcout << L"启动器文件夹: " << launcher_folder << std::endl;
+#endif
+        if (this->path == L"C:\\ProgramData\\PopCap Games\\PlantsVsZombies\\popcapgame1.exe" //
+            || (game_file_name == L"popcapgame1.exe" && game_folder == launcher_folder))
         {
-            DWORD _pid = (DWORD)(pbi.Reserved3);                           // 父进程标识
-            HANDLE _handle = OpenProcess(PROCESS_ALL_ACCESS, false, _pid); // 父进程句柄
-            if (_handle != nullptr)
-            {
-                wchar_t _file_path[MAX_PATH]; // 父进程文件路径
-                DWORD _name_size = GetModuleFileNameExW(_handle, nullptr, _file_path, MAX_PATH);
-                CloseHandle(_handle);
-                if (_name_size != 0)
-                {
-                    std::wstring _path = std::wstring(_file_path);
-                    PathStripPathW(_file_path);
-                    std::wstring launcher = std::wstring(_file_path);
-                    // std::wcout << L"父进程名: " << launcher << std::endl;
-                    std::transform(launcher.begin(), launcher.end(), launcher.begin(), ::tolower);
-                    // 提取游戏本体破解后双击由 explorer.exe 启动
-                    // 未提取则是 PlantsVsZombies.exe 或其他修改后的文件名
-                    // 游戏自动创建的 popcapgame1.exe 被独占, 改为读取启动器的版本信息
-                    if (launcher != L"explorer.exe")
-                        this->path = _path;
-                }
-            }
+            // 游戏自动创建的 popcapgame1.exe 被独占, 改为读取启动器的版本信息
+            this->path = _path;
         }
     };
 
