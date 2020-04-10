@@ -53,7 +53,8 @@ public:
     int data[ROWS][COLS] = {{0}};
     int total = 0;
     void UpdateData(std::array<int, 1000>);
-    void draw_header(const char *, int, int, int, int);
+    void draw_row_header(const char *, int, int, int, int);
+    void draw_col_header(const char *, int, int, int, int);
     void draw_data(const char *, int, int, int, int, Fl_Color);
     void draw_cell(TableContext, int, int, int, int, int, int);
 };

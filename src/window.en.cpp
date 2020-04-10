@@ -8,168 +8,205 @@ namespace Pt
 
 const char *plants[] =
     {
-        "豌豆射手",
-        "向日葵",
-        "樱桃炸弹",
-        "坚果",
-        "土豆雷",
-        "寒冰射手",
-        "大嘴花",
-        "双发射手",
-        "小喷菇",
-        "阳光菇",
-        "大喷菇",
-        "墓碑吞噬者",
-        "魅惑菇",
-        "胆小菇",
-        "寒冰菇",
-        "毁灭菇",
-        "睡莲",
-        "倭瓜",
-        "三线射手",
-        "缠绕海草",
-        "火爆辣椒",
-        "地刺",
-        "火炬树桩",
-        "高坚果",
-        "海蘑菇",
-        "路灯花",
-        "仙人掌",
-        "三叶草",
-        "裂荚射手",
-        "杨桃",
-        "南瓜头",
-        "磁力菇",
-        "卷心菜投手",
-        "花盆",
-        "玉米投手",
-        "咖啡豆",
-        "大蒜",
-        "叶子保护伞",
-        "金盏花",
-        "西瓜投手",
-        "机枪射手",
-        "双子向日葵",
-        "忧郁蘑菇",
-        "香蒲",
-        "冰瓜",
-        "吸金磁",
-        "地刺王",
-        "玉米加农炮",
+        "Peashooter",
+        "Sunflower",
+        "Cherry Bomb",
+        "Wall-nut",
+        "Potato Mine",
+        "Snow Pea",
+        "Chomper",
+        "Repeater",
+        "Puff-shroom",
+        "Sun-shroom",
+        "Fume-shroom",
+        "Grave Buster",
+        "Hypno-shroom",
+        "Scaredy-shroom",
+        "Ice-shroom",
+        "Doom-shroom",
+        "Lily Pad",
+        "Squash",
+        "Threepeater",
+        "Tangle Kelp",
+        "Jalapeno",
+        "Spikeweed",
+        "Torchwood",
+        "Tall-nut",
+        "Sea-shroom",
+        "Plantern",
+        "Cactus",
+        "Blover",
+        "Split Pea",
+        "Starfruit",
+        "Pumpkin",
+        "Magnet-shroom",
+        "Cabbage-pult",
+        "Flower Pot",
+        "Kernel-pult",
+        "Coffee Bean",
+        "Garlic",
+        "Umbrella Leaf",
+        "Marigold",
+        "Melon-pult",
+        "Gatling Pea",
+        "Twin Sunflower",
+        "Gloom-shroom",
+        "Cattail",
+        "Winter Melon",
+        "Gold Magnet",
+        "Spikerock",
+        "Cob Cannon",
 };
 
 const char *zombies[] =
     {
-        "普僵",
-        "旗帜",
-        "路障",
-        "撑杆",
-        "铁桶",
-        "读报",
-        "铁门",
-        "橄榄",
-        "舞王",
-        "伴舞",
-        "鸭子",
-        "潜水",
-        "冰车",
-        "雪橇",
-        "海豚",
-        "小丑",
-        "气球",
-        "矿工",
-        "跳跳",
-        "雪人",
-        "蹦极",
-        "扶梯",
-        "投篮",
-        "白眼",
-        "小鬼",
-        "僵王",
-        "豌豆",
-        "坚果",
-        "辣椒",
-        "机枪",
-        "倭瓜",
-        "搞基",
-        "红眼",
+        "Zombie",
+        "Flag Zombie",
+        "Conehead Zombie",
+        "Pole Vaulting Zombie",
+        "Buckethead Zombie",
+        "Newspaper Zombie",
+        "Screen Door Zombie",
+        "Football Zombie",
+        "Dancing Zombie",
+        "Backup Dancer",
+        "Ducky Tube Zombie",
+        "Snorkel Zombie",
+        "Zomboni",
+        "Zombie Bobsled Team",
+        "Dolphin Rider Zombie",
+        "Jack-in-the-Box Zombie",
+        "Balloon Zombie",
+        "Digger Zombie",
+        "Pogo Zombie",
+        "Zombie Yeti",
+        "Bungee Zombie",
+        "Ladder Zombie",
+        "Catapult Zombie",
+        "Gargantuar",
+        "Imp",
+        "Dr. Zomboss",
+        "Peashooter Zombie",
+        "Wall-nut Zombie",
+        "Jalapeno Zombie",
+        "Gatling Pea Zombie",
+        "Squash Zombie",
+        "Tall-nut Zombie",
+        "GigaGargantuar",
+};
+
+const char *zombies_s[] =
+    {
+        "~",
+        "Flag ~",
+        "Conehead ~",
+        "Pole Vaulting ~",
+        "Buckethead ~",
+        "Newspaper ~",
+        "Screen Door ~",
+        "Football ~",
+        "Dancing ~",
+        "Backup Dancer",
+        "Ducky Tube ~",
+        "Snorkel ~",
+        "Zomboni",
+        "~ Bobsled Team",
+        "Dolphin Rider ~",
+        "Jack-in-the-Box ~",
+        "Balloon ~",
+        "Digger ~",
+        "Pogo ~",
+        "~ Yeti",
+        "Bungee ~",
+        "Ladder ~",
+        "Catapult ~",
+        "Gargantuar",
+        "Imp",
+        "Dr. Zomboss",
+        "Peashooter ~",
+        "Wall-nut ~",
+        "Jalapeno ~",
+        "Gatling Pea ~",
+        "Squash ~",
+        "Tall-nut ~",
+        "GigaGargantuar",
 };
 
 const char *modes[] =
     {
-        "冒险模式",
-        "生存模式: 白天",
-        "生存模式: 黑夜",
-        "生存模式: 泳池",
-        "生存模式: 雾夜",
-        "生存模式: 屋顶",
-        "生存模式: 白天 (困难)",
-        "生存模式: 黑夜 (困难)",
-        "生存模式: 泳池 (困难)",
-        "生存模式: 雾夜 (困难)",
-        "生存模式: 屋顶 (困难)",
-        "生存模式: 白天 (无尽)",
-        "生存模式: 黑夜 (无尽)",
-        "生存模式: 无尽",
-        "生存模式: 雾夜 (无尽)",
-        "生存模式: 屋顶 (无尽)",
-        "植物僵尸",
-        "坚果保龄球",
-        "老虎机",
-        "雨中种植物",
-        "宝石迷阵",
-        "隐形食脑者",
-        "看星星",
-        "僵尸水族馆",
-        "宝石迷阵转转看",
-        "小僵尸大麻烦",
-        "保护传送门",
-        "你看, 他们像柱子一样",
-        "雪橇区",
-        "僵尸快跑",
-        "锤僵尸",
-        "谁笑到最后",
-        "植物僵尸 2",
-        "坚果保龄球 2",
-        "跳跳舞会",
-        "僵王博士的复仇",
-        "坚果艺术",
-        "晴天",
-        "无草皮之地",
-        "重要时间",
-        "太阳花艺术",
-        "空袭",
-        "冰冻关卡",
-        "禅境花园",
-        "超乎寻常的压力",
-        "坟墓模式",
-        "你能把它挖出来吗?",
-        "暴风雨之夜",
-        "蹦极闪电战",
-        "松鼠",
-        "智慧树",
-        "破罐者",
-        "一路向左",
-        "第三个罐子",
-        "连锁反应",
-        "M 的意思是金属",
-        "胆怯的制陶工",
-        "变戏法",
-        "另一个连锁反应",
-        "罐子王牌",
-        "无尽的试炼",
-        "我是僵尸",
-        "我也是僵尸",
-        "你能把它挖出来吗?",
-        "完全傻了",
-        "死亡飞艇",
-        "我烂了!",
-        "僵尸摇摆",
-        "三连击",
-        "你所有大脑都是属于我的",
-        "我是僵尸无尽版",
-        "促销",
-        "介绍",
+        "Adventure",
+        "Survival: Day",
+        "Survival: Night",
+        "Survival: Pool",
+        "Survival: Fog",
+        "Survival: Roof",
+        "Survival: Day (Hard)",
+        "Survival: Night (Hard)",
+        "Survival: Pool (Hard)",
+        "Survival: Fog (Hard)",
+        "Survival: Roof (Hard)",
+        "Survival: Day (Endless)",
+        "Survival: Night (Endless)",
+        "Survival: Endless",
+        "Survival: Fog (Endless)",
+        "Survival: Roof (Endless)",
+        "ZomBotany",
+        "Wall-nut Bowling",
+        "Slot Machine",
+        "It's Raining Seeds",
+        "Beghouled",
+        "Invisi-ghoul",
+        "Seeing Stars",
+        "Zombiquarium",
+        "Beghouled Twist",
+        "Big Trouble Little Zombie",
+        "Portal Combat",
+        "Column Like You See'Em",
+        "Bobseld Bonanza",
+        "Zombie Nimble Zombie Quick",
+        "Whack a Zombie",
+        "Last Stand",
+        "ZomBotany 2",
+        "Wall-nut Bowling 2",
+        "Pogo Party",
+        "Dr. Zomboss's Revenge",
+        "Art Challenge Wall-nut",
+        "Sunny Day",
+        "Unsodded (FC)",
+        "Big Time",
+        "Art Challenge Sunflower",
+        "Air Raid",
+        "Ice Level",
+        "Zen Garden (FC)",
+        "High Gravity",
+        "Grave Danger",
+        "Can You Dig It?",
+        "Dark Stormy Night",
+        "Bungee Blitz",
+        "Squirrel",
+        "Tree of Wisdom",
+        "Vasebreaker",
+        "To the Left",
+        "Third Vase",
+        "Chain Reaction",
+        "M is for Metal",
+        "Scary Potter",
+        "Hokey Pokey",
+        "Another Chain Reaction",
+        "Ace of Vase",
+        "Vasebreaker Endless",
+        "I, Zombie",
+        "I, Zombie Too",
+        "Can You Dig It?",
+        "Totally Nuts",
+        "Dead Zeppelin",
+        "Me Smash!",
+        "ZomBoogie",
+        "Three Hit Wonder",
+        "All your brainz r belong to us",
+        "I, Zombie Endless",
+        "Upsell",
+        "Intro",
 };
 
 Fl_Choice_::Fl_Choice_(int x, int y, int w, int h, const char *l)
@@ -222,7 +259,7 @@ SpawnTable::SpawnTable(int X, int Y, int W, int H, const char *L = 0)
 {
     rows(ROWS);
     row_header(1);
-    row_header_width(75);
+    row_header_width(75 + 120);
     row_height_all(18);
     row_resize(0);
     cols(COLS);
@@ -350,12 +387,12 @@ Window::Window(int width, int height, const char *title)
     // 95*4+10*2+10*(4+1)=450
     // 25*6+10*2+10*(6+1)+30=270
 
-    int w = 450; // 窗口宽度
-    int h = 270; // 窗口高度
-    int m = 10;  // 控件边距
-    int th = 30; // 选项卡高度
-    int iw = 95; // 控件宽度 (1/4)
-    int ih = 25; // 控件高度 (1/6)
+    int w = 450 + 50 * 4; // 窗口宽度
+    int h = 270;          // 窗口高度
+    int m = 10;           // 控件边距
+    int th = 30;          // 选项卡高度
+    int iw = 95 + 50;     // 控件宽度 (1/4)
+    int ih = 25;          // 控件高度 (1/6)
 
     int x = m + m;      // 第一个控件的 x 坐标
     int y = m + th + m; // 第一个控件的 y 坐标
@@ -380,117 +417,117 @@ Window::Window(int width, int height, const char *title)
     {
         tabs = new Fl_Tabs(m, m, w - m * 2, h - m * 2);
         {
-            group_resource = new Fl_Group(m, m + th, w - m * 2, h - m * 2 - th, "资源");
+            group_resource = new Fl_Group(m, m + th, w - m * 2, h - m * 2 - th, "Resources");
             {
-                input_sun = new Fl_Value_Input(c(1) + 30, r(1), iw, ih, "");
-                button_sun = new Fl_Button(c(2) + 30, r(1), iw - 30 - 10, ih, "阳光");
-                input_money = new Fl_Value_Input(c(1) + 30, r(2), iw, ih, "10x");
-                button_money = new Fl_Button(c(2) + 30, r(2), iw - 30 - 10, ih, "金钱");
-                check_auto_collect = new Fl_Check_Button(c(1), r(3), iw - 15, ih, "自动收集");
-                check_no_falling = new Fl_Check_Button(c(2), r(3), iw, ih, "僵尸不掉钱");
-                check_fertilizer = new Fl_Check_Button(c(3), r(1), iw - 15, ih, "花肥无限");
-                check_bug_spray = new Fl_Check_Button(c(4), r(1), iw, ih, "杀虫剂无限");
-                check_chocolate = new Fl_Check_Button(c(3), r(2), iw, ih, "巧克力无限");
-                check_tree_food = new Fl_Check_Button(c(4), r(2), iw - 15, ih, "树肥无限");
-                input_wisdom_tree = new Fl_Value_Input(c(3) + 15, r(3), iw - 15, ih, "");
-                button_wisdom_tree = new Fl_Button(c(4), r(3), iw, ih, "智慧树高度");
-                check_free_planting = new Fl_Check_Button(c(1), r(4), iw - 15, ih, "免费用卡");
-                check_planting_anywhere = new Fl_Check_Button(c(2), r(4), iw - 15, ih, "随意放置");
-                check_fast_belt = new Fl_Check_Button(c(3), r(4), iw - 15, ih, "连续传送");
-                check_lock_shovel = new Fl_Check_Button(c(4), r(4), iw - 15, ih, "锁定铲子");
+                input_sun = new Fl_Value_Input(c(1) + 30, r(1), iw - 40, ih, "");
+                button_sun = new Fl_Button(c(2) + 30 - 40, r(1), iw - 50, ih, "Set Sun");
+                input_money = new Fl_Value_Input(c(1) + 30, r(2), iw - 40, ih, "10x");
+                button_money = new Fl_Button(c(2) + 30 - 40, r(2), iw - 50, ih, "Set Money");
+                check_auto_collect = new Fl_Check_Button(c(1), r(3), iw, ih, "Auto Collect");
+                check_no_falling = new Fl_Check_Button(c(2), r(3), iw, ih, "Zombie No Drop");
+                check_fertilizer = new Fl_Check_Button(c(3) - 40, r(1), iw + 20, ih, "Unlimited Fertilizer");
+                check_bug_spray = new Fl_Check_Button(c(4) - 20, r(1), iw + 20, ih, "Unlimited Bug Spray");
+                check_chocolate = new Fl_Check_Button(c(3) - 40, r(2), iw + 20, ih, "Unlimited Chocolate");
+                check_tree_food = new Fl_Check_Button(c(4) - 20, r(2), iw + 20, ih, "Unlimited Tree Food");
+                input_wisdom_tree = new Fl_Value_Input(c(3) + 20, r(3), iw - 20 - 20, ih, "");
+                button_wisdom_tree = new Fl_Button(c(4) - 20, r(3), iw + 20, ih, "Wisdom Tree Height");
+                check_free_planting = new Fl_Check_Button(c(1), r(4), iw, ih, "Seeds Free Use");
+                check_planting_anywhere = new Fl_Check_Button(c(2), r(4), iw, ih, "Putting Anywhere");
+                check_fast_belt = new Fl_Check_Button(c(3), r(4), iw, ih, "Belt Continuously");
+                check_lock_shovel = new Fl_Check_Button(c(4), r(4), iw, ih, "Lock Shovel");
                 choice_slot = new Fl_Choice_(c(1), r(5), iw - 10, ih, "");
                 choice_seed = new Fl_Choice_(c(2) - 10, r(5), iw + 10 + 40, ih, "");
-                check_seed_imitater = new Fl_Check_Button(c(3) + 40, r(5), iw - 40 + 15, ih, "模仿者");
-                button_seed = new Fl_Button(c(4) + 15, r(5), iw - 15, ih, "修改卡片");
-                choice_music = new Fl_Choice_(c(1), r(6), iw + 65, ih, "");
-                button_music = new Fl_Button(c(2) + 65, r(6), iw - 65 + 20, ih, "音乐");
-                input_level = new Fl_Value_Input(c(3) + 40, r(6), iw - 40 + 15, ih, "2x");
-                button_level = new Fl_Button(c(4) + 15, r(6), iw - 15, ih, "无尽跳关");
+                check_seed_imitater = new Fl_Check_Button(c(3) + 40, r(5), iw - 40, ih, "Imitater");
+                button_seed = new Fl_Button(c(4), r(5), iw, ih, "Change Seed");
+                choice_music = new Fl_Choice_(c(1), r(6), iw + 45, ih, "");
+                button_music = new Fl_Button(c(2) + 45, r(6), iw - 45, ih, "Set Music");
+                input_level = new Fl_Value_Input(c(3) + 40, r(6), iw - 40, ih, "2x");
+                button_level = new Fl_Button(c(4), r(6), iw, ih, "Endless Rounds");
             }
             group_resource->end();
 
-            group_battle = new Fl_Group(m, m + th, w - m * 2, h - m * 2 - th, "战场");
+            group_battle = new Fl_Group(m, m + th, w - m * 2, h - m * 2 - th, "Battlefield");
             {
-                choice_row = new Fl_Choice_(c(1), r(1), iw - 10, ih, "");
-                choice_col = new Fl_Choice_(c(1), r(2), iw - 10, ih, "");
-                choice_plant = new Fl_Choice_(c(2) - 10, r(1), iw + 10 + 40, ih, "");
-                choice_zombie = new Fl_Choice_(c(2) - 10, r(2), iw + 10 + 40, ih, "");
-                button_put_plant = new Fl_Button(c(3) + 40, r(1), iw - 40 + 20, ih, "种植物");
-                button_put_zombie = new Fl_Button(c(3) + 40, r(2), iw - 40 + 20, ih, "放僵尸");
-                check_imitater = new Fl_Check_Button(c(4) + 20, r(1), iw - 20, ih, "模仿者");
-                button_put_grave = new Fl_Button(c(4) + 20, r(2), iw - 20, ih, "出墓碑");
-                button_direct_win = new Fl_Button(c(1), r(3), iw - 10, ih, "直接过关");
-                choice_item = new Fl_Choice_(c(2) - 10, r(3), iw + 10 - 20, ih, "");
-                button_clear = new Fl_Button(c(2) + iw - 20 + m, r(3), iw - 45, ih, "清除");
-                button_put_ladder = new Fl_Button(c(3) + 40, r(3), iw - 40 + 20, ih, "搭梯子");
-                button_auto_ladder = new Fl_Button(c(4) + 20, r(3), iw - 20, ih, "智能搭梯");
-                check_plant_invincible = new Fl_Check_Button(c(1), r(4), iw - 15, ih, "植物无敌");
-                check_plant_weak = new Fl_Check_Button(c(2), r(4), iw - 15, ih, "植物脆弱");
-                check_zombie_invincible = new Fl_Check_Button(c(3), r(4), iw - 15, ih, "僵尸无敌");
-                check_zombie_weak = new Fl_Check_Button(c(4), r(4), iw - 15, ih, "僵尸虚弱");
-                check_reload_instantly = new Fl_Check_Button(c(1), r(5), iw - 15, ih, "立刻装填");
-                check_mushroom_awake = new Fl_Check_Button(c(2), r(5), iw - 15, ih, "蘑菇睡醒");
-                check_stop_spawning = new Fl_Check_Button(c(3), r(5), iw - 15, ih, "暂停刷怪");
-                check_stop_zombies = new Fl_Check_Button(c(4), r(5), iw - 15, ih, "僵尸止步");
-                check_lock_butter = new Fl_Check_Button(c(1), r(6), iw - 15, ih, "锁定黄油");
-                check_no_crater = new Fl_Check_Button(c(2), r(6), iw - 15, ih, "不留弹坑");
-                check_no_ice_trail = new Fl_Check_Button(c(3), r(6), iw - 15, ih, "不留冰道");
-                check_zombie_not_explode = new Fl_Check_Button(c(4), r(6), iw - 15, ih, "小丑不爆");
+                choice_row = new Fl_Choice_(c(1), r(1), iw - 20, ih, "");
+                choice_col = new Fl_Choice_(c(1), r(2), iw - 20, ih, "");
+                choice_plant = new Fl_Choice_(c(2) - 20, r(1), iw + 20 + 60, ih, "");
+                choice_zombie = new Fl_Choice_(c(2) - 20, r(2), iw + 20 + 60, ih, "");
+                button_put_plant = new Fl_Button(c(3) + 60, r(1), iw - 60 + 30, ih, "Plant");
+                button_put_zombie = new Fl_Button(c(3) + 60, r(2), iw - 60 + 30, ih, "Zombie");
+                check_imitater = new Fl_Check_Button(c(4) + 30, r(1), iw - 30, ih, "Imitater");
+                button_put_grave = new Fl_Button(c(4) + 30, r(2), iw - 30, ih, "Grave");
+                button_direct_win = new Fl_Button(c(1), r(3), iw - 20, ih, "Level Complete");
+                choice_item = new Fl_Choice_(c(2) - 20, r(3), iw + 20 - 20, ih, "");
+                button_clear = new Fl_Button(c(2) + iw - 20 + m, r(3), iw - 75, ih, "Clear");
+                button_put_ladder = new Fl_Button(c(3) + 60, r(3), iw - 60 + 30, ih, "Ladder");
+                button_auto_ladder = new Fl_Button(c(4) + 30, r(3), iw - 30, ih, "Auto Ladder");
+                check_plant_invincible = new Fl_Check_Button(c(1), r(4), iw, ih, "Plant Invincible");
+                check_plant_weak = new Fl_Check_Button(c(2), r(4), iw, ih, "Plant Weak");
+                check_zombie_invincible = new Fl_Check_Button(c(3), r(4), iw, ih, "Zombie Invincible");
+                check_zombie_weak = new Fl_Check_Button(c(4), r(4), iw, ih, "Zombie Weak");
+                check_reload_instantly = new Fl_Check_Button(c(1), r(5), iw, ih, "Reload Instantly");
+                check_mushroom_awake = new Fl_Check_Button(c(2), r(5), iw, ih, "Mushroom Awake");
+                check_stop_spawning = new Fl_Check_Button(c(3), r(5), iw, ih, "Stop Spawning");
+                check_stop_zombies = new Fl_Check_Button(c(4), r(5), iw, ih, "Stop Zombies");
+                check_lock_butter = new Fl_Check_Button(c(1), r(6), iw, ih, "Lock Butter");
+                check_no_crater = new Fl_Check_Button(c(2), r(6), iw, ih, "No Crater");
+                check_no_ice_trail = new Fl_Check_Button(c(3), r(6), iw, ih, "No Ice Trail");
+                check_zombie_not_explode = new Fl_Check_Button(c(4), r(6), iw, ih, "Never Explode");
             }
             group_battle->end();
 
-            group_spawn = new Fl_Group(m, m + th, w - m * 2, h - m * 2 - th, "出怪");
+            group_spawn = new Fl_Group(m, m + th, w - m * 2, h - m * 2 - th, "Spawning");
             {
-                int tmp[20] = {2, 3, 4, 5, 6,       //
-                               7, 8, 11, 12, 14,    //
-                               15, 16, 17, 18, 19,  //
-                               20, 21, 22, 23, 32}; //
+                int tmp[20] = {2, 3, 4, 5,      //
+                               6, 7, 8, 11,     //
+                               12, 14, 15, 16,  //
+                               17, 18, 19, 20,  //
+                               21, 22, 23, 32}; //
                 memcpy(spawn_type, tmp, sizeof(tmp));
-                for (size_t row = 0; row < 4; row++)
-                    for (size_t col = 0; col < 5; col++)
-                        check_zombie[row * 5 + col] = new Fl_Check_Button                               //
-                            (x + 8 + (iw - 22 + m) * col, y + 5 + (ih + 7 + m) * row, iw - 42, ih, ""); //
-                button_show_details = new Fl_Button(c(1), r(6), iw, ih, "显示详情");
-                check_limit_count = new Fl_Check_Button(c(2), r(6), iw, ih, "限制种类");
-                button_internal_spawn = new Fl_Button(c(3), r(6), iw, ih, "自然出怪");
-                button_customize_spawn = new Fl_Button(c(4), r(6), iw, ih, "极限出怪");
+                for (size_t row = 0; row < 5; row++)
+                    for (size_t col = 0; col < 4; col++)
+                        check_zombie[row * 4 + col] = new Fl_Check_Button(c(col + 1), r(row + 1), iw, ih, "");
+                button_show_details = new Fl_Button(c(1), r(6), iw, ih, "Show Details");
+                check_limit_count = new Fl_Check_Button(c(2), r(6), iw, ih, "Limit Species");
+                button_internal_spawn = new Fl_Button(c(3), r(6), iw, ih, "Built-in Generate");
+                button_customize_spawn = new Fl_Button(c(4), r(6), iw, ih, "Filling Evenly");
             }
             group_spawn->end();
 
-            group_others = new Fl_Group(m, m + th, w - m * 2, h - m * 2 - th, "杂项");
+            group_others = new Fl_Group(m, m + th, w - m * 2, h - m * 2 - th, "Others");
             {
-                choice_mode = new Fl_Choice_(c(1), r(1), iw + m + iw + 20, ih, "");
-                button_mix = new Fl_Button(c(3) + 20, r(1), iw - 45, ih, "混乱");
-                button_userdata = new Fl_Button(c(4) - 15, r(1), iw + 15, ih, "打开存档目录");
-                check_no_fog = new Fl_Check_Button(c(1), r(2), iw - 15, ih, "清除浓雾");
-                check_see_vase = new Fl_Check_Button(c(2) - 10, r(2), iw - 15, ih, "罐子透视");
-                check_background = new Fl_Check_Button(c(3) - 20, r(2), iw + 12, ih, "允许后台运行");
-                check_readonly = new Fl_Check_Button(c(4) - 10, r(2), iw + 12, ih, "禁止存档删档");
-                button_file = new Fl_Button(c(1), r(3), iw - 30, ih, "选择文件");
+                choice_mode = new Fl_Choice_(c(1), r(1), iw + m + iw - 20, ih, "");
+                button_mix = new Fl_Button(c(3) - 20, r(1), iw + 20 - 50, ih, "Modify Mode");
+                button_userdata = new Fl_Button(c(4) - 30, r(1), iw + 30, ih, "Open Userdata Folder");
+                check_no_fog = new Fl_Check_Button(c(1), r(2), iw - 50, ih, "Clear Fog");
+                check_see_vase = new Fl_Check_Button(c(2) - 50, r(2), iw - 50, ih, "See Vase");
+                check_background = new Fl_Check_Button(c(3) - 100, r(2), iw + 25, ih, "Background Running");
+                check_readonly = new Fl_Check_Button(c(4) - 75, r(2), iw + 75, ih, "Disable Delete/Save Userdata");
+                button_file = new Fl_Button(c(1), r(3), iw - 30, ih, "Choose File");
                 input_file = new Fl_Input(c(2) - 30, r(3), iw + 30 + m + iw + 45, ih, "");
-                button_unpack = new Fl_Button(c(4) + 45, r(3), iw - 45, ih, "解包");
-                button_dir = new Fl_Button(c(1), r(4), iw - 30, ih, "选择目录");
+                button_unpack = new Fl_Button(c(4) + 45, r(3), iw - 45, ih, "Extract");
+                button_dir = new Fl_Button(c(1), r(4), iw - 30, ih, "Choose Folder");
                 input_dir = new Fl_Input(c(2) - 30, r(4), iw + 30 + m + iw + 45, ih, "");
-                button_pack = new Fl_Button(c(4) + 45, r(4), iw - 45, ih, "打包");
+                button_pack = new Fl_Button(c(4) + 45, r(4), iw - 45, ih, "Pack");
                 choice_debug = new Fl_Choice_(c(1), r(5), iw - 30, ih, "");
-                button_debug = new Fl_Button(c(2) - 30, r(5), 45, ih, "调试");
-                check_show_hidden_games = new Fl_Check_Button(c(2) - 30 + 45 + 10 + 60, r(5), 220, ih, "显示隐藏小游戏 (Limbo Page)");
-                button_download = new Fl_Button(c(1), r(6), iw, ih, "下载游戏");
-                button_update = new Fl_Button(c(2), r(6), iw, ih, "检查更新");
-                button_about = new Fl_Button(c(4), r(6), iw, ih, "关于...");
+                button_debug = new Fl_Button(c(2) - 30, r(5), 110, ih, "Debug Mode");
+                check_show_hidden_games = new Fl_Check_Button(c(3) + 35, r(5), 265, ih, "Show Hidden Games (Limbo Page)");
+                button_download = new Fl_Button(c(1), r(6), iw, ih, "Download PvZ");
+                button_update = new Fl_Button(c(2), r(6), iw, ih, "Check Updates");
+                button_about = new Fl_Button(c(4), r(6), iw, ih, "About ...");
             }
             group_others->end();
         }
         tabs->end();
-        game_status = new Fl_Box(220, 12, 200, 25, "");
-        game_status_tooltip = new Fl_Box(430, 12, 10, 25, "");
+        game_status = new Fl_Box(320, 12, 300, 25, "");
+        game_status_tooltip = new Fl_Box(630, 12, 10, 25, "");
     }
     this->end();
 
-    window_spawn = new Fl_Double_Window(860, 640, "出怪数量统计");
+    window_spawn = new Fl_Double_Window(860 + 120, 640, "Spawning Counting");
     {
-        table_spawn = new SpawnTable(10, 10, 860 - 20, 640 - 20);
-        button_update_details = new Fl_Button(10, 10, 75, 18 + 3, "↻");
+        table_spawn = new SpawnTable(10, 10, 860 + 120 - 20, 640 - 20);
+        button_update_details = new Fl_Button(10, 10, 75 + 120, 18 + 3, "↻");
     }
     window_spawn->end();
 
@@ -505,16 +542,16 @@ Window::Window(int width, int height, const char *title)
     input_wisdom_tree->value(1000);
     input_wisdom_tree->bounds(0, 99999);
 
-    choice_slot->add("第 1 格");
-    choice_slot->add("第 2 格");
-    choice_slot->add("第 3 格");
-    choice_slot->add("第 4 格");
-    choice_slot->add("第 5 格");
-    choice_slot->add("第 6 格");
-    choice_slot->add("第 7 格");
-    choice_slot->add("第 8 格");
-    choice_slot->add("第 9 格");
-    choice_slot->add("第 10 格");
+    choice_slot->add("1st Slot");
+    choice_slot->add("2nd Slot");
+    choice_slot->add("3rd Slot");
+    choice_slot->add("4th Slot");
+    choice_slot->add("5th Slot");
+    choice_slot->add("6th Slot");
+    choice_slot->add("7th Slot");
+    choice_slot->add("8th Slot");
+    choice_slot->add("9th Slot");
+    choice_slot->add("10th Slot");
     choice_slot->value(0);
 
     for (size_t i = 0; i < 48; i++)
@@ -541,25 +578,25 @@ Window::Window(int width, int height, const char *title)
     // 2+2*1009 = 2020
     input_level->value(1009);
 
-    choice_row->add("所有行");
-    choice_row->add("第 1 行");
-    choice_row->add("第 2 行");
-    choice_row->add("第 3 行");
-    choice_row->add("第 4 行");
-    choice_row->add("第 5 行");
-    choice_row->add("第 6 行");
+    choice_row->add("All Rows");
+    choice_row->add("1st Row");
+    choice_row->add("2nd Row");
+    choice_row->add("3rd Row");
+    choice_row->add("4th Row");
+    choice_row->add("5th Row");
+    choice_row->add("6th Row");
     choice_row->value(1);
 
-    choice_col->add("所有列");
-    choice_col->add("第 1 列");
-    choice_col->add("第 2 列");
-    choice_col->add("第 3 列");
-    choice_col->add("第 4 列");
-    choice_col->add("第 5 列");
-    choice_col->add("第 6 列");
-    choice_col->add("第 7 列");
-    choice_col->add("第 8 列");
-    choice_col->add("第 9 列");
+    choice_col->add("All Columns");
+    choice_col->add("1st Column");
+    choice_col->add("2nd Column");
+    choice_col->add("3rd Column");
+    choice_col->add("4th Column");
+    choice_col->add("5th Column");
+    choice_col->add("6th Column");
+    choice_col->add("7th Column");
+    choice_col->add("8th Column");
+    choice_col->add("9th Column");
     choice_col->value(1);
 
     for (size_t i = 0; i < 48; i++)
@@ -576,16 +613,16 @@ Window::Window(int width, int height, const char *title)
     }
     choice_zombie->value(0);
 
-    choice_item->add("植物");
-    choice_item->add("僵尸");
-    choice_item->add("推车");
-    choice_item->add("墓碑");
-    choice_item->add("梯子");
-    choice_item->add("钉耙");
+    choice_item->add("Plants");
+    choice_item->add("Zombies");
+    choice_item->add("Lawn Mowers");
+    choice_item->add("Graves");
+    choice_item->add("Ladders");
+    choice_item->add("Rakes");
     choice_item->value(2);
 
     for (size_t i = 0; i < 20; i++)
-        check_zombie[i]->label(zombies[spawn_type[i]]);
+        check_zombie[i]->label(zombies_s[spawn_type[i]]);
 
     // 默认限制出怪种类数
     check_limit_count->value(1);
@@ -613,11 +650,11 @@ Window::Window(int width, int height, const char *title)
     // 默认无尽模式
     choice_mode->value(50 + 13 - 1);
 
-    choice_debug->add("关闭");
-    choice_debug->add("出怪");
-    choice_debug->add("音乐");
-    choice_debug->add("内存");
-    choice_debug->add("碰撞");
+    choice_debug->add("Off");
+    choice_debug->add("Spawning");
+    choice_debug->add("Music");
+    choice_debug->add("Memory");
+    choice_debug->add("Collision");
     choice_debug->value(0);
 
     // 默认打开后台运行和显示隐藏游戏
@@ -829,38 +866,38 @@ void Window::cb_find_result(int result)
     switch (result)
     {
     case PVZ_1_0_0_1051_EN:
-        game_status->label("1.0.0.1051 英文原始版");
+        game_status->label("1.0.0.1051 Original (en)");
         break;
     case PVZ_1_2_0_1065_EN:
-        game_status->label("1.2.0.1065 英文原始修复版");
+        game_status->label("1.2.0.1065 Original (en)");
         break;
     case PVZ_1_2_0_1073_EN:
-        game_status->label("1.2.0.1073 英文年度版");
+        game_status->label("1.2.0.1073 GOTY (en)");
         break;
     case PVZ_1_2_0_1096_EN:
-        game_status->label("1.2.0.1096 Steam 英文年度版");
+        game_status->label("1.2.0.1096 GOTY Steam (en)");
         break;
     case PVZ_1_2_0_1093_DE_ES_FR_IT:
-        game_status->label("1.2.0.1093 多国语言年度版");
+        game_status->label("1.2.0.1093 GOTY (de/es/fr/it)");
         break;
     case PVZ_1_1_0_1056_ZH_JA_2010:
-        game_status->label("1.1.0.1056 年度汉化修正版");
+        game_status->label("1.1.0.1056 GOTY 2010 (zh/ja)");
         break;
     case PVZ_1_1_0_1056_ZH_2012_06:
-        game_status->label("1.1.0.1056 年度汉化加强版");
+        game_status->label("1.1.0.1056 GOTY 2012.06 (zh)");
         break;
     case PVZ_1_1_0_1056_ZH_2012_07:
-        game_status->label("1.1.0.1056 年度汉化加强版");
+        game_status->label("1.1.0.1056 GOTY 2012.07 (zh)");
         break;
     case PVZ_UNSUPPORTED:
-        game_status->label("不支持的游戏版本");
+        game_status->label("Unsupported game version.");
         break;
     case PVZ_OPEN_ERROR:
-        game_status->label("打开游戏进程出错");
+        game_status->label("Error opening game process.");
         break;
     case PVZ_NOT_FOUND:
     default:
-        game_status->label("没有找到游戏窗口");
+        game_status->label("Game window not found.");
         break;
     }
     game_status->redraw();
@@ -870,15 +907,15 @@ void Window::cb_find_result(int result)
         && result != PVZ_UNSUPPORTED)
     {
         this->keep_selected_feature(); // 重新找到游戏时应用所有已选功能
-        game_status_tooltip->label("?");
-        game_status_tooltip->tooltip("由于这个游戏修改技术的普遍存在， \n"
-                                     "无法完全收录识别所有改版的名称， \n"
-                                     "只能判断出其采用的原始底包版本。");
+        // game_status_tooltip->label("?");
+        // game_status_tooltip->tooltip("由于这个游戏修改技术的普遍存在， \n"
+        //                              "无法完全收录识别所有改版的名称， \n"
+        //                              "只能判断出其采用的原始底包版本。");
     }
     else
     {
-        game_status_tooltip->label("");
-        game_status_tooltip->tooltip(nullptr);
+        // game_status_tooltip->label("");
+        // game_status_tooltip->tooltip(nullptr);
     }
 }
 
@@ -1385,13 +1422,13 @@ void Window::cb_show_details()
 {
     if (window_spawn->shown() == 0)
     {
-        button_show_details->copy_label("隐藏详情");
+        button_show_details->copy_label("Hide Details");
         window_spawn->show();
         cb_update_details();
     }
     else
     {
-        button_show_details->copy_label("显示详情");
+        button_show_details->copy_label("Show Details");
         window_spawn->hide();
     }
 }
@@ -1420,7 +1457,7 @@ void Window::cb_update_details()
     for (int r = 0; r < 33; r++)
         if (zombies_count[r] == 0)
             deleted_rows += 1;
-    window_spawn->size(860, 640 - deleted_rows * 18);
+    window_spawn->size(860 + 120, 640 - deleted_rows * 18);
     window_spawn->redraw();
 }
 
@@ -1718,7 +1755,7 @@ void Window::cb_open_dir()
     bi.hwndOwner = nullptr;
     bi.pidlRoot = nullptr;
     // pszDisplayName
-    bi.lpszTitle = L"选择要打包的文件夹";
+    bi.lpszTitle = L"Select the folder to be packing.";
     bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_USENEWUI | BIF_NONEWFOLDERBUTTON;
     bi.lpfn = nullptr;
     // lParam
@@ -1779,13 +1816,13 @@ void Window::cb_unpack_thread()
 #endif
     if (ret == UNPACK_SUCCESS)
     {
-        std::wstring text = L"解包完成, 文件夹位于: \n" + dst_dir;
-        MessageBoxW(GetActiveWindow(), text.c_str(), L"提示", MB_OK | MB_ICONINFORMATION);
+        std::wstring text = L"Unpacking success, folder at: \n" + dst_dir;
+        MessageBoxW(GetActiveWindow(), text.c_str(), L"Status", MB_OK | MB_ICONINFORMATION);
     }
     else
     {
-        std::wstring text = L"解包出错.";
-        MessageBoxW(GetActiveWindow(), text.c_str(), L"提示", MB_OK | MB_ICONERROR);
+        std::wstring text = L"Unpacking error.";
+        MessageBoxW(GetActiveWindow(), text.c_str(), L"Status", MB_OK | MB_ICONERROR);
     }
 
     Fl::lock();
@@ -1840,14 +1877,14 @@ void Window::cb_pack_thread()
 #endif
     if (ret == PACK_SUCCESS)
     {
-        std::wstring text = L"打包完成, 文件位于: \n" + dst_file + L"\n\n" //
-                            + L"将名称修改为 \"main.pak\" 并替换同名原文件 (事先备份).";
-        MessageBoxW(GetActiveWindow(), text.c_str(), L"提示", MB_OK | MB_ICONINFORMATION);
+        std::wstring text = L"Packing success, file at: \n" + dst_file + L"\n\n" //
+                            + L"Rename it to \"main.pak\" and replace the original file which has the same name (backup first).";
+        MessageBoxW(GetActiveWindow(), text.c_str(), L"Status", MB_OK | MB_ICONINFORMATION);
     }
     else
     {
-        std::wstring text = L"打包出错.";
-        MessageBoxW(GetActiveWindow(), text.c_str(), L"提示", MB_OK | MB_ICONERROR);
+        std::wstring text = L"Packing error.";
+        MessageBoxW(GetActiveWindow(), text.c_str(), L"Status", MB_OK | MB_ICONERROR);
     }
 
     Fl::lock();
@@ -1908,25 +1945,25 @@ void Window::cb_about(Fl_Widget *, void *w)
 
 void Window::cb_about()
 {
-    std::wstring text = std::wstring()                                                  //
-                        + L"PvZ Toolkit 是一个适用于植物大战僵尸一代 PC 版的修改器\n"   //
-                        + L"\n"                                                         //
-                        + L"支持的游戏版本: \n"                                         //
-                        + L"✓ 英文原始版 1.0.0.1051 (en)\n"                             //
-                        + L"✓ 英文原始修复版 1.2.0.1065 (en)\n"                         //
-                        + L"✓ 英文年度版 1.2.0.1073 GOTY (en)\n"                        //
-                        + L"✓ Steam 英文年度版 1.2.0.1096 GOTY (en)\n"                  //
-                        + L"✓ Origin 多国语言年度版 1.2.0.1093 GOTY (de, es, fr, it)\n" //
-                        + L"✓ 年度汉化修正版/日语版 1.1.0.1056 GOTY 2010 (zh/ja)\n"     //
-                        + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.06 (zh)\n"            //
-                        + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.07 (zh)\n"            //
-                        + L"\n"                                                         //
-                        + L"版本号: 1.0.2\n"                                            //
-                        + L"构建日期: 2020/04/10\n"                                     //
-                        + L"工具链: MSVC 2017 / FLTK 1.3.5\n"                           //
-                        + L"版权所有: © 2020 lmintlcx\n"                                //
-                        + L"鸣谢: a418569882 kmtohoem\n";
-    MessageBoxW(GetActiveWindow(), text.c_str(), L"关于 PvZ Toolkit", MB_OK);
+    std::wstring text = std::wstring()                                                                 //
+                        + L"PvZ Toolkit is a trainer designed for PC versions of Plants vs. Zombies\n" //
+                        + L"\n"                                                                        //
+                        + L"Supported game versions: \n"                                               //
+                        + L"✓ 1.0.0.1051 (en)\n"                                                       //
+                        + L"✓ 1.2.0.1065 (en)\n"                                                       //
+                        + L"✓ 1.2.0.1073 GOTY (en)\n"                                                  //
+                        + L"✓ 1.2.0.1096 GOTY Steam (en)\n"                                            //
+                        + L"✓ 1.2.0.1093 GOTY Origin (de, es, fr, it)\n"                               //
+                        + L"✓ 1.1.0.1056 GOTY 2010 (zh/ja)\n"                                          //
+                        + L"✓ 1.1.0.1056 GOTY 2012.06 (zh)\n"                                          //
+                        + L"✓ 1.1.0.1056 GOTY 2012.07 (zh)\n"                                          //
+                        + L"\n"                                                                        //
+                        + L"Version: 1.0.2\n"                                                          //
+                        + L"Build Date: 2020/04/10\n"                                                  //
+                        + L"Toolchain: MSVC 2017 / FLTK 1.3.5\n"                                       //
+                        + L"Copyright: © 2020 lmintlcx\n"                                              //
+                        + L"Credit: a418569882 kmtohoem\n";
+    MessageBoxW(GetActiveWindow(), text.c_str(), L"About PvZ Toolkit", MB_OK);
 }
 
 void Window::cb_on_hide_details(Fl_Widget *, void *w)
@@ -1936,7 +1973,7 @@ void Window::cb_on_hide_details(Fl_Widget *, void *w)
 
 void Window::cb_on_hide_details()
 {
-    button_show_details->copy_label("显示详情");
+    button_show_details->copy_label("Show Details");
     window_spawn->hide();
 }
 
