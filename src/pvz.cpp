@@ -822,7 +822,168 @@ PvZ::PvZ()
             0x0043f4d0, // call_update_spawn_preview
         };
 
-    this->data_1_1_0_1056_zh_ja_2010 =
+    this->data_1_1_0_1056_zh =
+        {
+            0x7794f8, // pvz_base
+
+            0x768 + 0x100, // main_object
+
+            0x90 + 0x18, // zombie
+            0x28,        //   zombie_status
+            0xec,        //   zombie_dead
+            0x94 + 0x18, // zombie_count_max
+
+            0xac + 0x18, // plant
+            0x1c,        //   plant_row
+            0x24,        //   plant_type
+            0x28,        //   plant_col
+            0x138,       //   plant_imitater
+            0x141,       //   plant_dead
+            0x142,       //   plant_squished
+            0x143,       //   plant_asleep
+            0xb0 + 0x18, // plant_count_max
+
+            0x100 + 0x18, // lawn_mower
+            0x30,         //   lawn_mower_dead
+            0x104 + 0x18, // lawn_mower_count_max
+
+            0x11c + 0x18, // grid_item
+            0x08,         //   grid_item_type
+            0x10,         //   grid_item_col
+            0x14,         //   grid_item_row
+            0x20,         //   grid_item_dead
+            0x120 + 0x18, // grid_item_count_max
+
+            0x138 + 0x18, // cursor
+            0x30,         //   cursor_grab
+
+            0x144 + 0x18, // slot
+            0x5c,         //   slot_seed_type
+            0x60,         //   slot_seed_type_im
+
+            0x15c + 0x18, // spawn_preview
+
+            0x160 + 0x18, // indirect_base
+            0x6c,         //   endless_rounds
+
+            0x164 + 0x18,  // game_paused
+            0x168 + 0x18,  // block_type
+            0x624 + 0x18,  // ice_trail_cd
+            0x6b4 + 0x18,  // spawn_list
+            0x54d4 + 0x18, // spawn_type
+            0x554c + 0x18, // scene
+            0x5550 + 0x18, // adventure_level
+            0x5560 + 0x18, // sun
+            0x5568 + 0x18, // game_clock
+            0x55f8 + 0x18, // debug_mode
+
+            0x7f8 + 0x120 + 4, // game_mode
+            0x7fc + 0x120 + 4, // game_ui
+
+            0x814 + 0x120 + 4, // free_planting
+
+            0x82c + 0x120 + 4, // user_data
+            0x24 + 0x28,       //   level
+            0x28 + 0x28,       //   money
+            0xf4 + 0x28,       //   tree_height
+            0x1f8 + 0x28,      //   fertilizer
+            0x1fc + 0x28,      //   bug_spray
+            0x228 + 0x28,      //   chocolate
+            0x230 + 0x28,      //   tree_food
+
+            0x83c + 0x120 + 4, // background_music
+
+            {0x005cfd4e, {0xfe}, {0xc8}}, // safe_thread
+
+            {0x0044c5f2, {0xeb}, {0x75}},             // auto_collect
+            {0x00435854, {0x90, 0xe9}, {0x0f, 0x8f}}, // zombie_no_falling
+
+            {0x0054e0a4, {0x39}, {0xff}},                                 // fertilizer_unlimited
+            {0x0054e171, {0x39}, {0xff}},                                 // bug_spray_unlimited
+            {{0x0054ddc3, {0x39}, {0xff}}, {0x0054de0a, {0x39}, {0xff}}}, // chocolate_unlimited
+            {0x00447d49, {0x39}, {0xff}},                                 // tree_food_unlimited
+
+            {0x00425954, {0x81}, {0x84}},                                 // planting_anywhere
+            {0x00454b67, {0xeb}, {0x74}},                                 // planting_anywhere_preview
+            {0x004449e8, {0x8d}, {0x84}},                                 // planting_anywhere_iz
+            {{0x0043b8bf, {0x80}, {0x8f}}, {0x004b5b8e, {0x33}, {0x85}}}, // fast_belt
+            {0x00427f13, {0x39}, {0x89}},                                 // lock_shovel
+
+            {0x005654c1, {0x46, 0x40, 0x00}, {0x46, 0x40, 0xfc}}, // plant_immune_bite
+            {0x004354af, {0xeb}, {0x74}},                         // plant_immune_blast
+            {0x0055d00a, {0xeb}, {0x75}},                         // plant_immune_burn
+            {0x004920e5, {0x90, 0x90, 0x90}, {0x29, 0x46, 0x40}}, // plant_immune_pea
+            {0x00492942, {0x90, 0x90, 0x90}, {0x29, 0x56, 0x40}}, // plant_immune_ball
+            {0x0056404b, {0xeb}, {0x74}},                         // plant_immune_squish
+            {0x00482e33, {0x70}, {0x75}},                         // plant_immune_spikeweed
+            {0x00482ccb, {0x00}, {0xce}},                         // plant_immune_spikerock
+            {0x00486c90, {0xc2, 0x04, 0x00}, {0x53, 0x55, 0x8b}}, // plant_immune_zomboss
+
+            {0x005654c1, {0x66, 0x40, 0x00}, {0x46, 0x40, 0xfc}}, // _plant_immune_bite
+            {0x004920e5, {0x29, 0x76, 0x40}, {0x29, 0x46, 0x40}}, // _plant_immune_pea
+            {0x00492942, {0x29, 0x76, 0x40}, {0x29, 0x56, 0x40}}, // _plant_immune_ball
+            {0x00482e33, {0xeb}, {0x75}},                         // _plant_immune_spikeweed
+
+            {0x00566d06, {0x90909090}, {0x2024742b}}, // zombie_immune_damage
+            {0x00566891, {0xc0}, {0xc8}},             // zombie_immune_type1
+            {0x005663f8, {0xf633c033}, {0xf38b027c}}, // zombie_immune_type2
+            {0x00568626, {0x81}, {0x8d}},             // zombie_immune_ashes
+            {0x004361ee, {0xeb}, {0x7f}},             // zombie_immune_cherry
+            {0x0048a792, {0xeb}, {0x75}},             // zombie_immune_jalapeno
+            {0x0048550a, {0xeb}, {0x74}},             // zombie_immune_chomper
+            {0x00565243, {0x00}, {0x01}},             // zombie_immune_hypno
+            {0x0048a8b0, {0x90, 0x90}, {0x74, 0x05}}, // zombie_immune_blover
+            {0x004925b3, {0xeb}, {0x74}},             // zombie_immune_nearby
+            {0x0047bf85, {0xeb}, {0x74}},             // zombie_immune_lawnmower
+
+            {0x00566d06, {0x9090f631}, {0x2024742b}}, // _zombie_immune_damage
+            {0x00566891, {0xc9}, {0xc8}},             // _zombie_immune_type1
+            {0x005663f8, {0xf38bde8b}, {0xf38b027c}}, // _zombie_immune_type2
+            {0x00568626, {0x80}, {0x8d}},             // _zombie_immune_ashes
+
+            {0x0048517c, {0x80}, {0x85}},                                 // reload_instantly
+            {0x00481c44, {0xeb}, {0x74}},                                 // mushrooms_awake
+            {0x0043f17e, {0xeb}, {0x74}},                                 // stop_spawning
+            {{0x005604d7, {0x54}, {0x64}}, {0x005604e0, {0x54}, {0x44}}}, // stop_zombies
+            {0x00483207, {0x70}, {0x75}},                                 // lock_butter
+            {0x0043609d, {0x70}, {0x75}},                                 // no_crater
+            {{0x00560150, {0xc3}, {0x51}}, {0x004385f6, {0xeb}, {0x75}}}, // no_ice_trail
+            {{0x0055c5cc, {0x81}, {0x8f}}, {0x0055cf7a, {0x81}, {0x85}}}, // zombie_not_explode
+
+            {0x00456858, {0x80}, {0x85}}, // hack_spawn_preview
+
+            {0x00430d9d, {0xd231}, {0xf23b}},                // no_fog
+            {0x0046df1a, {0x0033b866}, {0x047ec085}},        // see_vase
+            {0x005cb249, {0x00eb}, {0x4074}},                // background_running
+            {0x005c6a73, {0x70}, {0x74}},                    // disable_delete_userdata
+            {0x004adf93, {0x00118239 + 0x28}, {0x00118239}}, // disable_save_userdata
+            {0x0044895a, {0x38}, {0x88}},                    // unlock_limbo_page
+
+            0x00447b20, // call_wisdom_tree
+            0x0047f240, // call_set_music
+
+            0x00422610, // call_put_plant
+            0x0048ae60, // call_put_plant_imitater
+            0x00444c10, // call_put_plant_iz_style
+            0x00444860, // call_put_zombie
+            0x004236d0, // call_put_zomboss
+            0x0043f1c0, // call_put_grave
+            0x0041e440, // call_put_ladder
+
+            0x0048bcc0, // call_delete_plant
+            0x0047c440, // call_delete_lawn_mower
+            0x0046ca10, // call_delete_grid_item
+
+            0x00421a20, // call_level_complete
+
+            0x00482900, // call_wakeup_plant
+
+            0x0041e840, // call_generate_spawn_list
+            0x004238d0, // call_clear_spawn_preview
+            0x00456840, // call_update_spawn_preview
+        };
+
+    this->data_1_1_0_1056_ja =
         {
             0x7578f8, // pvz_base
 
@@ -1314,7 +1475,8 @@ PvZ::PvZ()
     this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_2_0_1073_EN, data_1_2_0_1073_en));
     this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_2_0_1096_EN, data_1_2_0_1096_en));
     this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_2_0_1093_DE_ES_FR_IT, data_1_2_0_1093_de_es_fr_it));
-    this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_1_0_1056_ZH_JA_2010, data_1_1_0_1056_zh_ja_2010));
+    this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_1_0_1056_ZH, data_1_1_0_1056_zh));
+    this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_1_0_1056_JA, data_1_1_0_1056_ja));
     this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_1_0_1056_ZH_2012_06, data_1_1_0_1056_zh_2012_06));
     this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_1_0_1056_ZH_2012_07, data_1_1_0_1056_zh_2012_07));
 
@@ -1388,7 +1550,7 @@ bool PvZ::FindPvZ()
                              && ReadMemory<unsigned int>({0x00416a20}) == 0x001e887c)
                         this->find_result = PVZ_1_2_0_1073_EN;
 
-                    else if (this->version == L"1.2.0.1096" //
+                    else if ((this->version == L"1.2.0.1095" || this->version == L"1.2.0.1096") //
                              && ReadMemory<unsigned int>({0x004175b0}) == 0x001edd3c)
                         this->find_result = PVZ_1_2_0_1096_EN;
 
@@ -1396,9 +1558,13 @@ bool PvZ::FindPvZ()
                              && ReadMemory<unsigned int>({0x00417d80}) == 0x001efd9c)
                         this->find_result = PVZ_1_2_0_1093_DE_ES_FR_IT;
 
+                    else if ((this->version == L"1.2.0.1073" || this->version == L"GOTY") //
+                             && ReadMemory<unsigned int>({0x00429c79}) == 0x0016a043)
+                        this->find_result = PVZ_1_1_0_1056_ZH;
+
                     else if (this->version == L"1.2.0.1073" //
                              && ReadMemory<unsigned int>({0x00419b5c}) == 0x0016ab60)
-                        this->find_result = PVZ_1_1_0_1056_ZH_JA_2010;
+                        this->find_result = PVZ_1_1_0_1056_JA;
 
                     else if (this->version == L"1.2.0.1073" //
                              && ReadMemory<unsigned int>({0x004201a5}) == 0x001ceb17)
@@ -1491,7 +1657,8 @@ bool PvZ::isGOTY()
     return (this->find_result == PVZ_1_2_0_1073_EN              //
             || this->find_result == PVZ_1_2_0_1096_EN           //
             || this->find_result == PVZ_1_2_0_1093_DE_ES_FR_IT  //
-            || this->find_result == PVZ_1_1_0_1056_ZH_JA_2010   //
+            || this->find_result == PVZ_1_1_0_1056_ZH           //
+            || this->find_result == PVZ_1_1_0_1056_JA           //
             || this->find_result == PVZ_1_1_0_1056_ZH_2012_06   //
             || this->find_result == PVZ_1_1_0_1056_ZH_2012_07); //
 }
@@ -1611,7 +1778,7 @@ void PvZ::SetTreeHeight(int height)
 
         if (isGOTY())
         {
-            if (this->find_result == PVZ_1_1_0_1056_ZH_JA_2010)
+            if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
             {
                 asm_init();
                 asm_mov_exx_dword_ptr(Reg::EBX, data().pvz_base);
@@ -1622,8 +1789,7 @@ void PvZ::SetTreeHeight(int height)
                 asm_ret();
                 asm_code_inject();
             }
-            else if (this->find_result == PVZ_1_1_0_1056_ZH_2012_06 //
-                     || this->find_result == PVZ_1_1_0_1056_ZH_2012_07)
+            else if (this->find_result == PVZ_1_1_0_1056_ZH_2012_06 || this->find_result == PVZ_1_1_0_1056_ZH_2012_07)
             {
                 asm_init();
                 asm_mov_exx_dword_ptr(Reg::EDI, data().pvz_base);
@@ -1842,7 +2008,7 @@ void PvZ::PutPlant(int row, int col, int type, bool imitater)
 
 void PvZ::asm_put_zombie(int row, int col, int type)
 {
-    if (this->find_result == PVZ_1_1_0_1056_ZH_JA_2010)
+    if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
     {
         asm_push(type); // 0x6a byte(type)
         asm_mov_exx_dword_ptr(Reg::ECX, data().pvz_base);
@@ -2209,7 +2375,7 @@ void PvZ::DirectWin(bool light_cob)
         Sleep(10);
     }
 
-    if (this->find_result == PVZ_1_1_0_1056_ZH_JA_2010)
+    if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
     {
         asm_init();
         asm_mov_exx_dword_ptr(Reg::EAX, data().pvz_base);
@@ -2412,7 +2578,7 @@ void PvZ::ZombieNotExplode(bool on)
 // 根据出怪种类生成出怪列表
 void PvZ::generate_spawn_list()
 {
-    if (this->find_result == PVZ_1_1_0_1056_ZH_JA_2010)
+    if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
     {
         asm_init();
         asm_mov_exx_dword_ptr(Reg::EAX, data().pvz_base);

@@ -880,8 +880,21 @@ void Window::cb_find_result(int result)
     case PVZ_1_2_0_1093_DE_ES_FR_IT:
         game_status->label("1.2.0.1093 GOTY (de/es/fr/it)");
         break;
-    case PVZ_1_1_0_1056_ZH_JA_2010:
-        game_status->label("1.1.0.1056 GOTY 2010 (zh/ja)");
+    case PVZ_1_1_0_1056_ZH:
+        game_status->label("1.1.0.1056 GOTY (zh)");
+        {
+            int ret = MessageBoxW(GetActiveWindow(),                                                                           //
+                                  L"There are many problems with this version of game, it could crash at any time. "           //
+                                  L"It is recommended to use another normal version instead, do you want to download it now?", //
+                                  L"Warning",                                                                                  //
+                                  MB_OKCANCEL | MB_ICONWARNING);
+            if (ret == IDOK)
+                ShellExecuteW(nullptr, L"open", L"https://pvz.lmintlcx.com/pvz/", //
+                              nullptr, nullptr, SW_SHOWNORMAL);
+        }
+        break;
+    case PVZ_1_1_0_1056_JA:
+        game_status->label("1.1.0.1056 GOTY (ja)");
         break;
     case PVZ_1_1_0_1056_ZH_2012_06:
         game_status->label("1.1.0.1056 GOTY 2012.06 (zh)");
@@ -1954,12 +1967,13 @@ void Window::cb_about()
                         + L"✓ 1.2.0.1073 GOTY (en)\n"                                                  //
                         + L"✓ 1.2.0.1096 GOTY Steam (en)\n"                                            //
                         + L"✓ 1.2.0.1093 GOTY Origin (de, es, fr, it)\n"                               //
-                        + L"✓ 1.1.0.1056 GOTY 2010 (zh/ja)\n"                                          //
+                        + L"✓ 1.1.0.1056 GOTY (zh)\n"                                                  //
+                        + L"✓ 1.1.0.1056 GOTY (ja)\n"                                                  //
                         + L"✓ 1.1.0.1056 GOTY 2012.06 (zh)\n"                                          //
                         + L"✓ 1.1.0.1056 GOTY 2012.07 (zh)\n"                                          //
                         + L"\n"                                                                        //
-                        + L"Version: 1.0.2\n"                                                          //
-                        + L"Build Date: 2020/04/10\n"                                                  //
+                        + L"Version: 1.1.0\n"                                                          //
+                        + L"Build Date: 2020/04/16\n"                                                  //
                         + L"Toolchain: MSVC 2017 / FLTK 1.3.5\n"                                       //
                         + L"Copyright: © 2020 lmintlcx\n"                                              //
                         + L"Credit: a418569882 kmtohoem\n";
