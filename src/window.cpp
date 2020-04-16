@@ -832,7 +832,7 @@ void Window::cb_find_result(int result)
         game_status->label("1.0.0.1051 英文原始版");
         break;
     case PVZ_1_2_0_1065_EN:
-        game_status->label("1.2.0.1065 英文原始修复版");
+        game_status->label("1.2.0.1065 英文修复版");
         break;
     case PVZ_1_2_0_1073_EN:
         game_status->label("1.2.0.1073 英文年度版");
@@ -843,8 +843,21 @@ void Window::cb_find_result(int result)
     case PVZ_1_2_0_1093_DE_ES_FR_IT:
         game_status->label("1.2.0.1093 多国语言年度版");
         break;
-    case PVZ_1_1_0_1056_ZH_JA_2010:
-        game_status->label("1.1.0.1056 年度汉化修正版");
+    case PVZ_1_1_0_1056_ZH:
+        game_status->label("1.1.0.1056 粘度汗化版");
+        {
+            int ret = MessageBoxW(GetActiveWindow(),                                //
+                                  L"这个版本的游戏存在严重的问题, 随时可能会崩溃. " //
+                                  L"建议更换使用其他正常的版本, 现在去下载吗?",     //
+                                  L"警告",                                          //
+                                  MB_OKCANCEL | MB_ICONWARNING);
+            if (ret == IDOK)
+                ShellExecuteW(nullptr, L"open", L"https://pvz.lmintlcx.com/pvz/", //
+                              nullptr, nullptr, SW_SHOWNORMAL);
+        }
+        break;
+    case PVZ_1_1_0_1056_JA:
+        game_status->label("1.1.0.1056 日文年度版");
         break;
     case PVZ_1_1_0_1056_ZH_2012_06:
         game_status->label("1.1.0.1056 年度汉化加强版");
@@ -1913,16 +1926,17 @@ void Window::cb_about()
                         + L"\n"                                                         //
                         + L"支持的游戏版本: \n"                                         //
                         + L"✓ 英文原始版 1.0.0.1051 (en)\n"                             //
-                        + L"✓ 英文原始修复版 1.2.0.1065 (en)\n"                         //
+                        + L"✓ 英文修复版 1.2.0.1065 (en)\n"                             //
                         + L"✓ 英文年度版 1.2.0.1073 GOTY (en)\n"                        //
                         + L"✓ Steam 英文年度版 1.2.0.1096 GOTY (en)\n"                  //
                         + L"✓ Origin 多国语言年度版 1.2.0.1093 GOTY (de, es, fr, it)\n" //
-                        + L"✓ 年度汉化修正版/日语版 1.1.0.1056 GOTY 2010 (zh/ja)\n"     //
+                        + L"✓ 粘度汗化版 1.1.0.1056 GOTY (zh)\n"                        //
+                        + L"✓ 日文年度版 1.1.0.1056 GOTY (ja)\n"                        //
                         + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.06 (zh)\n"            //
                         + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.07 (zh)\n"            //
                         + L"\n"                                                         //
-                        + L"版本号: 1.0.2\n"                                            //
-                        + L"构建日期: 2020/04/10\n"                                     //
+                        + L"版本号: 1.1.0\n"                                            //
+                        + L"构建日期: 2020/04/16\n"                                     //
                         + L"工具链: MSVC 2017 / FLTK 1.3.5\n"                           //
                         + L"版权所有: © 2020 lmintlcx\n"                                //
                         + L"鸣谢: a418569882 kmtohoem\n";

@@ -23,9 +23,10 @@ namespace Pt
 #define PVZ_1_2_0_1073_EN 1003
 #define PVZ_1_2_0_1096_EN 1004
 #define PVZ_1_2_0_1093_DE_ES_FR_IT 1005
-#define PVZ_1_1_0_1056_ZH_JA_2010 1006
-#define PVZ_1_1_0_1056_ZH_2012_06 1007
-#define PVZ_1_1_0_1056_ZH_2012_07 1008
+#define PVZ_1_1_0_1056_ZH 1006
+#define PVZ_1_1_0_1056_JA 1007
+#define PVZ_1_1_0_1056_ZH_2012_06 1008
+#define PVZ_1_1_0_1056_ZH_2012_07 1009
 
 typedef void (*cb_func)(void *, int);
 
@@ -263,7 +264,8 @@ protected:
     PVZ_DATA data_1_2_0_1073_en;
     PVZ_DATA data_1_2_0_1096_en;
     PVZ_DATA data_1_2_0_1093_de_es_fr_it;
-    PVZ_DATA data_1_1_0_1056_zh_ja_2010;
+    PVZ_DATA data_1_1_0_1056_zh;
+    PVZ_DATA data_1_1_0_1056_ja;
     PVZ_DATA data_1_1_0_1056_zh_2012_06;
     PVZ_DATA data_1_1_0_1056_zh_2012_07;
 
