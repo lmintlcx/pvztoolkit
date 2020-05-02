@@ -147,12 +147,12 @@ PvZ::PvZ()
 
             {0x0043a153, {0x80}, {0x85}}, // hack_spawn_preview
 
-            {0x0041a68d, {0xd231}, {0xf23b}},                // no_fog
-            {0x0044e5cc, {0x0033b866}, {0x067ec085}},        // see_vase
-            {0x0054eba8, {0x00eb}, {0x2e74}},                // background_running
-            {0x0054b267, {0x70}, {0x74}},                    // disable_delete_userdata
-            {0x00482149, {0x000c8b13 + 0x1b}, {0x000c8b13}}, // disable_save_userdata
-            {0x0042df5d, {0x38}, {0x88}},                    // unlock_limbo_page
+            {0x0041a68d, {0xd231}, {0xf23b}},                     // no_fog
+            {0x0044e5cc, {0x0033b866}, {0x067ec085}},             // see_vase
+            {0x0054eba8, {0x00eb}, {0x2e74}},                     // background_running
+            {0x0054b267, {0x70}, {0x74}},                         // disable_delete_userdata
+            {0x00482149, {0x000c8b13 + 0x1b}, {0x000c8b13}},      // disable_save_userdata
+            {0x0042df5d, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
             0x0042d1f0, // call_wisdom_tree
             0x0045b750, // call_set_music
@@ -308,12 +308,12 @@ PvZ::PvZ()
 
             {0x0043a1c3, {0x80}, {0x85}}, // hack_spawn_preview
 
-            {0x0041a6ad, {0xd231}, {0xf23b}},                // no_fog
-            {0x0044e71c, {0x0033b866}, {0x067ec085}},        // see_vase
-            {0x0054edd8, {0x00eb}, {0x2e74}},                // background_running
-            {0x0054b497, {0x70}, {0x74}},                    // disable_delete_userdata
-            {0x00482499, {0x000c89f3 + 0x1b}, {0x000c89f3}}, // disable_save_userdata
-            {0x0042dfbd, {0x38}, {0x88}},                    // unlock_limbo_page
+            {0x0041a6ad, {0xd231}, {0xf23b}},                     // no_fog
+            {0x0044e71c, {0x0033b866}, {0x067ec085}},             // see_vase
+            {0x0054edd8, {0x00eb}, {0x2e74}},                     // background_running
+            {0x0054b497, {0x70}, {0x74}},                         // disable_delete_userdata
+            {0x00482499, {0x000c89f3 + 0x1b}, {0x000c89f3}},      // disable_save_userdata
+            {0x0042dfbd, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
             0x0042d250, // call_wisdom_tree
             0x0045b8b0, // call_set_music
@@ -469,12 +469,12 @@ PvZ::PvZ()
 
             {0x0043d363, {0x80}, {0x85}}, // hack_spawn_preview
 
-            {0x0041d17d, {0xd231}, {0xf23b}},                // no_fog
-            {0x004518aa, {0x0033b866}, {0x047ec085}},        // see_vase
-            {0x005d21d9, {0x00eb}, {0x4074}},                // background_running
-            {0x005cd993, {0x70}, {0x74}},                    // disable_delete_userdata
-            {0x0048cd63, {0x00140389 + 0x28}, {0x00140389}}, // disable_save_userdata
-            {0x00430c80, {0x38}, {0x88}},                    // unlock_limbo_page
+            {0x0041d17d, {0xd231}, {0xf23b}},                     // no_fog
+            {0x004518aa, {0x0033b866}, {0x047ec085}},             // see_vase
+            {0x005d21d9, {0x00eb}, {0x4074}},                     // background_running
+            {0x005cd993, {0x70}, {0x74}},                         // disable_delete_userdata
+            {0x0048cd63, {0x00140389 + 0x28}, {0x00140389}},      // disable_save_userdata
+            {0x00430c80, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
             0x0042ff00, // call_wisdom_tree
             0x0045efa0, // call_set_music
@@ -630,12 +630,12 @@ PvZ::PvZ()
 
             {0x0043e6a3, {0x80}, {0x85}}, // hack_spawn_preview
 
-            {0x0041df4d, {0xd231}, {0xf23b}},                // no_fog
-            {0x004531ca, {0x0033b866}, {0x047ec085}},        // see_vase
-            {0x005d87c9, {0x00eb}, {0x4074}},                // background_running
-            {0x005d3fd3, {0x70}, {0x74}},                    // disable_delete_userdata
-            {0x004907ea, {0x00142f42 + 0x28}, {0x00142f42}}, // disable_save_userdata
-            {0x00431ce0, {0x38}, {0x88}},                    // unlock_limbo_page
+            {0x0041df4d, {0xd231}, {0xf23b}},                     // no_fog
+            {0x004531ca, {0x0033b866}, {0x047ec085}},             // see_vase
+            {0x005d87c9, {0x00eb}, {0x4074}},                     // background_running
+            {0x005d3fd3, {0x70}, {0x74}},                         // disable_delete_userdata
+            {0x004907ea, {0x00142f42 + 0x28}, {0x00142f42}},      // disable_save_userdata
+            {0x00431ce0, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
             0x00430f60, // call_wisdom_tree
             0x004618f0, // call_set_music
@@ -791,12 +791,12 @@ PvZ::PvZ()
 
             {0x0043f4e3, {0x80}, {0x85}}, // hack_spawn_preview
 
-            {0x0041ea6d, {0xd231}, {0xf23b}},                // no_fog
-            {0x0045484a, {0x0033b866}, {0x047ec085}},        // see_vase
-            {0x005da319, {0x00eb}, {0x4074}},                // background_running
-            {0x005d5b43, {0x70}, {0x74}},                    // disable_delete_userdata
-            {0x00490af3, {0x001447a9 + 0x28}, {0x001447a9}}, // disable_save_userdata
-            {0x00432cdf, {0x38}, {0x88}},                    // unlock_limbo_page
+            {0x0041ea6d, {0xd231}, {0xf23b}},                     // no_fog
+            {0x0045484a, {0x0033b866}, {0x047ec085}},             // see_vase
+            {0x005da319, {0x00eb}, {0x4074}},                     // background_running
+            {0x005d5b43, {0x70}, {0x74}},                         // disable_delete_userdata
+            {0x00490af3, {0x001447a9 + 0x28}, {0x001447a9}},      // disable_save_userdata
+            {0x00432cdf, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
             0x00431f40, // call_wisdom_tree
             0x00462980, // call_set_music
@@ -952,12 +952,12 @@ PvZ::PvZ()
 
             {0x00456858, {0x80}, {0x85}}, // hack_spawn_preview
 
-            {0x00430d9d, {0xd231}, {0xf23b}},                // no_fog
-            {0x0046df1a, {0x0033b866}, {0x047ec085}},        // see_vase
-            {0x005cb249, {0x00eb}, {0x4074}},                // background_running
-            {0x005c6a73, {0x70}, {0x74}},                    // disable_delete_userdata
-            {0x004adf93, {0x00118239 + 0x28}, {0x00118239}}, // disable_save_userdata
-            {0x0044895a, {0x38}, {0x88}},                    // unlock_limbo_page
+            {0x00430d9d, {0xd231}, {0xf23b}},                     // no_fog
+            {0x0046df1a, {0x0033b866}, {0x047ec085}},             // see_vase
+            {0x005cb249, {0x00eb}, {0x4074}},                     // background_running
+            {0x005c6a73, {0x70}, {0x74}},                         // disable_delete_userdata
+            {0x004adf93, {0x00118239 + 0x28}, {0x00118239}},      // disable_save_userdata
+            {0x0044895a, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
             0x00447b20, // call_wisdom_tree
             0x0047f240, // call_set_music
@@ -1113,12 +1113,12 @@ PvZ::PvZ()
 
             {0x00445488, {0x80}, {0x85}}, // hack_spawn_preview
 
-            {0x0041fcbd, {0xd231}, {0xf23b}},                // no_fog
-            {0x0045c66a, {0x0033b866}, {0x047ec085}},        // see_vase
-            {0x00622fd9, {0x00eb}, {0x4074}},                // background_running
-            {0x0061e7f3, {0x70}, {0x74}},                    // disable_delete_userdata
-            {0x0049c733, {0x00181819 + 0x28}, {0x00181819}}, // disable_save_userdata
-            {0x004374da, {0x38}, {0x88}},                    // unlock_limbo_page
+            {0x0041fcbd, {0xd231}, {0xf23b}},                     // no_fog
+            {0x0045c66a, {0x0033b866}, {0x047ec085}},             // see_vase
+            {0x00622fd9, {0x00eb}, {0x4074}},                     // background_running
+            {0x0061e7f3, {0x70}, {0x74}},                         // disable_delete_userdata
+            {0x0049c733, {0x00181819 + 0x28}, {0x00181819}},      // disable_save_userdata
+            {0x004374da, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
             0x004366a0, // call_wisdom_tree
             0x0046dcf0, // call_set_music
@@ -1274,12 +1274,12 @@ PvZ::PvZ()
 
             {0x00445d33, {0x80}, {0x85}}, // hack_spawn_preview
 
-            {0x0042616d, {0xd231}, {0xf23b}},                // no_fog
-            {0x00459c1a, {0x0033b866}, {0x047ec085}},        // see_vase
-            {0x00624919, {0x00eb}, {0x4074}},                // background_running
-            {0x00620143, {0x70}, {0x74}},                    // disable_delete_userdata
-            {0x00497ed3, {0x001879c9 + 0x28}, {0x001879c9}}, // disable_save_userdata
-            {0x0043935a, {0x38}, {0x88}},                    // unlock_limbo_page
+            {0x0042616d, {0xd231}, {0xf23b}},                     // no_fog
+            {0x00459c1a, {0x0033b866}, {0x047ec085}},             // see_vase
+            {0x00624919, {0x00eb}, {0x4074}},                     // background_running
+            {0x00620143, {0x70}, {0x74}},                         // disable_delete_userdata
+            {0x00497ed3, {0x001879c9 + 0x28}, {0x001879c9}},      // disable_save_userdata
+            {0x0043935a, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
             0x004385d0, // call_wisdom_tree
             0x00469a10, // call_set_music
@@ -1435,12 +1435,12 @@ PvZ::PvZ()
 
             {0x00446953, {0x80}, {0x85}}, // hack_spawn_preview
 
-            {0x00426dbd, {0xd231}, {0xf23b}},                // no_fog
-            {0x0045aa7a, {0x0033b866}, {0x047ec085}},        // see_vase
-            {0x006226e9, {0x00eb}, {0x4074}},                // background_running
-            {0x0061df13, {0x70}, {0x74}},                    // disable_delete_userdata
-            {0x00498b63, {0x00184b09 + 0x28}, {0x00184b09}}, // disable_save_userdata
-            {0x00439fca, {0x38}, {0x88}},                    // unlock_limbo_page
+            {0x00426dbd, {0xd231}, {0xf23b}},                     // no_fog
+            {0x0045aa7a, {0x0033b866}, {0x047ec085}},             // see_vase
+            {0x006226e9, {0x00eb}, {0x4074}},                     // background_running
+            {0x0061df13, {0x70}, {0x74}},                         // disable_delete_userdata
+            {0x00498b63, {0x00184b09 + 0x28}, {0x00184b09}},      // disable_save_userdata
+            {0x00439fca, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
             0x00439240, // call_wisdom_tree
             0x0046a810, // call_set_music
