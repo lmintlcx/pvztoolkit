@@ -178,7 +178,7 @@ struct PVZ_DATA
     HACK<uint16_t, 1> background_running;
     HACK<uint8_t, 1> disable_delete_userdata;
     HACK<uint32_t, 1> disable_save_userdata;
-    HACK<uint8_t, 1> unlock_limbo_page;
+    HACK<uint8_t, 3> unlock_limbo_page;
 
     uintptr_t call_wisdom_tree;
     uintptr_t call_set_music;

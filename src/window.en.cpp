@@ -1972,8 +1972,8 @@ void Window::cb_about()
                         + L"✓ 1.1.0.1056 GOTY 2012.06 (zh)\n"                                          //
                         + L"✓ 1.1.0.1056 GOTY 2012.07 (zh)\n"                                          //
                         + L"\n"                                                                        //
-                        + L"Version: 1.1.0\n"                                                          //
-                        + L"Build Date: 2020/04/16\n"                                                  //
+                        + L"Version: 1.1.1\n"                                                          //
+                        + L"Build Date: 2020/05/02\n"                                                  //
                         + L"Toolchain: MSVC 2017 / FLTK 1.3.5\n"                                       //
                         + L"Copyright: © 2020 lmintlcx\n"                                              //
                         + L"Credit: a418569882 kmtohoem\n";
