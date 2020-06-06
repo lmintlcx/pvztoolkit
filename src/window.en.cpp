@@ -1,9 +1,9 @@
 
-#include "window.h"
+#include "window.en.h"
 
 #define IDI_ICON 1001
 
-namespace Pt
+namespace Pt::en
 {
 
 const char *plants[] =
@@ -808,7 +808,7 @@ Window::Window(int width, int height, const char *title)
 
     pvz = new PvZ();
     pvz->callback(cb_find_result, this);
-    pvz->FindPvZ();
+    // pvz->FindPvZ(); // 在 main() 里调用
 
     pak = new PAK();
 
@@ -1972,8 +1972,8 @@ void Window::cb_about()
                         + L"✓ 1.1.0.1056 GOTY 2012.06 (zh)\n"                                          //
                         + L"✓ 1.1.0.1056 GOTY 2012.07 (zh)\n"                                          //
                         + L"\n"                                                                        //
-                        + L"Version: 1.1.1\n"                                                          //
-                        + L"Build Date: 2020/05/02\n"                                                  //
+                        + L"Version: 1.2.0\n"                                                          //
+                        + L"Build Date: 2020/06/07\n"                                                  //
                         + L"Toolchain: MSVC 2017 / FLTK 1.3.5\n"                                       //
                         + L"Copyright: © 2020 lmintlcx\n"                                              //
                         + L"Credit: a418569882 kmtohoem\n";
