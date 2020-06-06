@@ -21,7 +21,7 @@
 #include <ShlObj.h>
 #include <ShellAPI.h>
 
-namespace Pt
+namespace Pt::zh
 {
 
 // const char *plants[];

@@ -6,7 +6,7 @@ CXX = cl
 CXXFLAGS_BARE = -c -nologo -Zc:wchar_t /MP /utf-8 /Zc:__cplusplus /std:c++17 /O1 /MT /W3 /EHsc
 DEFINES = -DUNICODE -DWIN32 -D_USING_V110_SDK71_ -D_ATL_XP_TARGETING -DPSAPI_VERSION=1 -D_WIN32_WINNT=0x0501
 INCPATH = -I.
-INCS = .\src\pak.h .\src\process.h .\src\code.h .\src\pvz.h .\src\window.h
+INCS = .\src\pak.h .\src\process.h .\src\code.h .\src\pvz.h .\src\window.en.h .\src\window.zh.h
 CXXFLAGS = /Fo"$(OUTDIR)\\" /Fd"$(OUTDIR)\$(TARGET).pdb" $(CXXFLAGS_BARE) $(DEFINES) $(INCPATH)
 
 RC = rc
@@ -22,7 +22,8 @@ OBJS = $(OUTDIR)\main.obj \
        $(OUTDIR)\process.obj \
        $(OUTDIR)\code.obj \
        $(OUTDIR)\pvz.obj \
-       $(OUTDIR)\window.obj
+       $(OUTDIR)\window.zh.obj \
+       $(OUTDIR)\window.en.obj
 RES = $(OUTDIR)\version.res
 LFLAGS = /NOLOGO /DYNAMICBASE /NXCOMPAT /INCREMENTAL:NO /SUBSYSTEM:WINDOWS,5.01 $(LIBS) $(OBJS) $(RES)
 
@@ -53,8 +54,11 @@ $(OUTDIR)\code.obj: .\src\code.cpp $(INCS)
 $(OUTDIR)\pvz.obj: .\src\pvz.cpp $(INCS)
     $(CXX) $(CXXFLAGS) /Fe"$(OUTDIR)\pvz.obj" .\src\pvz.cpp
 
-$(OUTDIR)\window.obj: .\src\window.cpp $(INCS)
-    $(CXX) $(CXXFLAGS) /Fe"$(OUTDIR)\window.obj" .\src\window.cpp
+$(OUTDIR)\window.zh.obj: .\src\window.zh.cpp $(INCS)
+    $(CXX) $(CXXFLAGS) /Fe"$(OUTDIR)\window.zh.obj" .\src\window.zh.cpp
+
+$(OUTDIR)\window.en.obj: .\src\window.en.cpp $(INCS)
+    $(CXX) $(CXXFLAGS) /Fe"$(OUTDIR)\window.en.obj" .\src\window.en.cpp
 
 clean:
     if exist "$(OUTDIR)" rmdir /s /q "$(OUTDIR)"
