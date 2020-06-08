@@ -80,6 +80,7 @@ int main(int argc, char **argv)
   Fl_Window launcher(280, 115, "选择界面语言");
   Pt::zh::Fl_Choice_ choice(130, 20, 120, 25, "语言(Language): ");
   Fl_Button button(130, 75, 120, 25, "启动(Launch)");
+  extern HINSTANCE fl_display;
   launcher.icon((char *)LoadIcon(fl_display, MAKEINTRESOURCE(IDI_ICON)));
   choice.add("简体中文");
   choice.add("English");

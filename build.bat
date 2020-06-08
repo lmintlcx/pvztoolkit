@@ -13,6 +13,8 @@ cd /d %~dp0
 
 set INCLUDE=.\fltk\include;%INCLUDE%
 set LIB=.\fltk\lib;%LIB%
+rem set INCLUDE=.\fltk_1.4.x\include;%INCLUDE%
+rem set LIB=.\fltk_1.4.x\lib;%LIB%
 
 set PATH=.\jom;%PATH%
 
