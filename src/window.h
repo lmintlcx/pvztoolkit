@@ -21,12 +21,17 @@
 #include <ShlObj.h>
 #include <ShellAPI.h>
 
-namespace Pt::zh
+namespace Pt
 {
 
-// const char *plants[];
-// const char *zombies[];
-// const char *modes[];
+enum class Language
+{
+    English = 0,
+    Chinese = 1,
+};
+
+// 全局语言变量
+extern Language LANG;
 
 // 实现 Fl_Choice 对滚轮的响应
 class Fl_Choice_ : public Fl_Choice

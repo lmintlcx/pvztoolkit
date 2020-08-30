@@ -5,7 +5,7 @@
             "name": "Launch",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/out/pvztoolkit.exe",
+            "program": "${workspaceFolder}/out/pvztoolkitd.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/out",

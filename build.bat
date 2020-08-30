@@ -13,21 +13,16 @@ cd /d %~dp0
 
 set INCLUDE=.\fltk\include;%INCLUDE%
 set LIB=.\fltk\lib;%LIB%
-rem set INCLUDE=.\fltk_1.4.x\include;%INCLUDE%
-rem set LIB=.\fltk_1.4.x\lib;%LIB%
 
+REM set MAKE_TOOL=nmake
 set PATH=.\jom;%PATH%
+set MAKE_TOOL=jom
 
+if exist .\out\pvztoolkitd.exe del .\out\pvztoolkitd.exe
 if exist .\out\pvztoolkit.exe del .\out\pvztoolkit.exe
 REM if exist .\out rmdir /s /q .\out
 
-REM set MAKE_TOOL=nmake
-set MAKE_TOOL=jom
-
-REM REM debug
 %MAKE_TOOL% -f makefile.debug
 
-REM REM release
 REM %MAKE_TOOL% -f makefile.release
-REM mt.exe -manifest ".\src\dpi.manifest" -outputresource:".\out\pvztoolkit.exe;1"
 REM .\upx\upx.exe --lzma --ultra-brute .\out\pvztoolkit.exe
