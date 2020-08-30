@@ -1,6 +1,4 @@
 //
-// "$Id$"
-//
 // Header file for Fl_Text_Editor class.
 //
 // Copyright 2001-2010 by Bill Spitzak and others.
@@ -11,11 +9,11 @@
 // the file "COPYING" which should have been included with this file.  If this
 // file is missing or damaged, see the license at:
 //
-//     http://www.fltk.org/COPYING.php
+//     https://www.fltk.org/COPYING.php
 //
-// Please report all bugs and problems on the following page:
+// Please see the following page on how to report bugs and issues:
 //
-//     http://www.fltk.org/str.php
+//     https://www.fltk.org/bugs.php
 //
 
 /* \file
@@ -44,33 +42,29 @@ class FL_EXPORT Fl_Text_Editor : public Fl_Text_Display {
 
     /** Simple linked list item associating a key/state to a function. */
     struct Key_Binding {
-      int          key;		///< the key pressed
-      int          state;	///< the state of key modifiers
-      Key_Func     function;	///< associated function
-      Key_Binding* next;	///< next key binding in the list
+      int          key;         ///< the key pressed
+      int          state;       ///< the state of key modifiers
+      Key_Func     function;    ///< associated function
+      Key_Binding* next;        ///< next key binding in the list
     };
 
     Fl_Text_Editor(int X, int Y, int W, int H, const char* l = 0);
     ~Fl_Text_Editor() { remove_all_key_bindings(); }
     virtual int handle(int e);
     /**
-	Sets the current insert mode; if non-zero, new text
-	is inserted before the current cursor position. Otherwise, new
-	text replaces text at the current cursor position.
+        Sets the current insert mode; if non-zero, new text
+        is inserted before the current cursor position. Otherwise, new
+        text replaces text at the current cursor position.
     */
     void insert_mode(int b) { insert_mode_ = b; }
     /**
-	Gets the current insert mode; if non-zero, new text
-	is inserted before the current cursor position. Otherwise, new
-	text replaces text at the current cursor position.
+        Gets the current insert mode; if non-zero, new text
+        is inserted before the current cursor position. Otherwise, new
+        text replaces text at the current cursor position.
     */
     int insert_mode() { return insert_mode_; }
-
-#if FLTK_ABI_VERSION >= 10304
     void tab_nav(int val);
     int tab_nav() const;
-#endif
-
     void add_key_binding(int key, int state, Key_Func f, Key_Binding** list);
     /** Adds a \p key of state \p state with the function \p f. */
     void add_key_binding(int key, int state, Key_Func f)
@@ -83,19 +77,10 @@ class FL_EXPORT Fl_Text_Editor : public Fl_Text_Display {
     /** Removes all of the key bindings associated with the text editor or list. */
     void remove_all_key_bindings() { remove_all_key_bindings(&key_bindings); }
     void add_default_key_bindings(Key_Binding** list);
-#if FLTK_ABI_VERSION < 10304
-    // OLD: non-const
-    Key_Func bound_key_function(int key, int state, Key_Binding* list);
-    /**  Returns the function associated with a key binding. */
-    Key_Func bound_key_function(int key, int state)
-      { return bound_key_function(key, state, key_bindings); }
-#else
-    // NEW: const (STR#3306)
     Key_Func bound_key_function(int key, int state, Key_Binding* list) const;
     /**  Returns the function associated with a key binding. */
     Key_Func bound_key_function(int key, int state) const
       { return bound_key_function(key, state, key_bindings); }
-#endif
     /**  Sets the default key function for unassigned keys. */
     void default_key_function(Key_Func f) { default_key_function_ = f; }
 
@@ -150,8 +135,4 @@ class FL_EXPORT Fl_Text_Editor : public Fl_Text_Display {
 };
 
 #endif
-
-//
-// End of "$Id$".
-//
 

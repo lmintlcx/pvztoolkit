@@ -1,6 +1,4 @@
 //
-// "$Id$"
-//
 // Tiled image header file for the Fast Light Tool Kit (FLTK).
 //
 // Copyright 1998-2015 by Bill Spitzak and others.
@@ -9,11 +7,11 @@
 // the file "COPYING" which should have been included with this file.  If this
 // file is missing or damaged, see the license at:
 //
-//     http://www.fltk.org/COPYING.php
+//     https://www.fltk.org/COPYING.php
 //
-// Please report all bugs and problems on the following page:
+// Please see the following page on how to report bugs and issues:
 //
-//     http://www.fltk.org/str.php
+//     https://www.fltk.org/bugs.php
 //
 
 /* \file
@@ -34,8 +32,8 @@
 class FL_EXPORT Fl_Tiled_Image : public Fl_Image {
   protected:
 
-  Fl_Image	*image_;		// The image that is tiled
-  int		alloc_image_;		// Did we allocate this image?
+  Fl_Image      *image_;                // The image that is tiled
+  int           alloc_image_;           // Did we allocate this image?
 
   public:
 
@@ -43,17 +41,13 @@ class FL_EXPORT Fl_Tiled_Image : public Fl_Image {
   virtual ~Fl_Tiled_Image();
 
   virtual Fl_Image *copy(int W, int H);
-  Fl_Image *copy() { return copy(w(), h()); }
+  Fl_Image *copy() { return Fl_Image::copy(); }
   virtual void color_average(Fl_Color c, float i);
   virtual void desaturate();
-  virtual void draw(int X, int Y, int W, int H, int cx, int cy);
+  virtual void draw(int X, int Y, int W, int H, int cx = 0, int cy = 0);
   void draw(int X, int Y) { draw(X, Y, w(), h(), 0, 0); }
   /** Gets The image that is tiled */
   Fl_Image *image() { return image_; }
 };
 
 #endif // !Fl_Tiled_Image_H
-
-//
-// End of "$Id$"
-//

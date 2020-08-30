@@ -1,6 +1,4 @@
 //
-// "$Id$"
-//
 // Double-buffered window header file for the Fast Light Tool Kit (FLTK).
 //
 // Copyright 1998-2010 by Bill Spitzak and others.
@@ -9,11 +7,11 @@
 // the file "COPYING" which should have been included with this file.  If this
 // file is missing or damaged, see the license at:
 //
-//     http://www.fltk.org/COPYING.php
+//     https://www.fltk.org/COPYING.php
 //
-// Please report all bugs and problems on the following page:
+// Please see the following page on how to report bugs and issues:
 //
-//     http://www.fltk.org/str.php
+//     https://www.fltk.org/bugs.php
 //
 
 /* \file
@@ -37,28 +35,26 @@
   This makes sure you can use Xdbe on servers where double buffering
   does not exist for every visual.
 */
-class FL_EXPORT Fl_Double_Window : public Fl_Window {
-protected:
-  void flush(int eraseoverlay);
-  /**
-    Force double buffering, even if the OS already buffers windows
-    (overlays need that on MacOS and Windows2000)
-  */
-  char force_doublebuffering_;
+class FL_EXPORT Fl_Double_Window : public Fl_Window
+{
 public:
+  /**
+    Return non-null if this is an Fl_Overlay_Window object.
+  */
+  virtual Fl_Double_Window *as_double_window() {return this; }
   void show();
   void show(int a, char **b) {Fl_Window::show(a,b);}
-  void flush();
   void resize(int,int,int,int);
   void hide();
+  void flush();
   ~Fl_Double_Window();
-  
+
   /**
    Creates a new Fl_Double_Window widget using the given
    position, size, and label (title) string.
   */
   Fl_Double_Window(int W, int H, const char *l = 0);
-  
+
   /**
    See  Fl_Double_Window::Fl_Double_Window(int w, int h, const char *label = 0)
   */
@@ -67,7 +63,3 @@ public:
 };
 
 #endif
-
-//
-// End of "$Id$".
-//

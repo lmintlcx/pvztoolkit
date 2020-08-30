@@ -1,11 +1,9 @@
 //
-// "$Id$"
-//
 
 #ifndef FL_TREE_PREFS_H
 #define FL_TREE_PREFS_H
 
-#include <FL/Fl.H>	// needed for ABI version features (via Enumerations.H)
+#include <FL/Fl.H>      // needed for ABI version features (via Enumerations.H)
 
 //////////////////////
 // FL/Fl_Tree_Prefs.H
@@ -18,11 +16,11 @@
 // the file "COPYING" which should have been included with this file.  If this
 // file is missing or damaged, see the license at:
 //
-//     http://www.fltk.org/COPYING.php
+//     https://www.fltk.org/COPYING.php
 //
-// Please report all bugs and problems on the following page:
+// Please see the following page on how to report bugs and issues:
 //
-//     http://www.fltk.org/str.php
+//     https://www.fltk.org/bugs.php
 //
 
 ///
@@ -47,40 +45,39 @@
 /// Sort order options for items added to the tree
 ///
 enum Fl_Tree_Sort {
-  FL_TREE_SORT_NONE=0,		///< No sorting; items are added in the order defined (default).
-  FL_TREE_SORT_ASCENDING=1,	///< Add items in ascending sort order.
-  FL_TREE_SORT_DESCENDING=2	///< Add items in descending sort order.
+  FL_TREE_SORT_NONE=0,          ///< No sorting; items are added in the order defined (default).
+  FL_TREE_SORT_ASCENDING=1,     ///< Add items in ascending sort order.
+  FL_TREE_SORT_DESCENDING=2     ///< Add items in descending sort order.
 };
 
 /// \enum Fl_Tree_Connector
 /// Defines the style of connection lines between items.
 ///
 enum Fl_Tree_Connector {
-  FL_TREE_CONNECTOR_NONE=0,	///< Use no lines connecting items
-  FL_TREE_CONNECTOR_DOTTED=1,	///< Use dotted lines connecting items (default)
-  FL_TREE_CONNECTOR_SOLID=2	///< Use solid lines connecting items
+  FL_TREE_CONNECTOR_NONE=0,     ///< Use no lines connecting items
+  FL_TREE_CONNECTOR_DOTTED=1,   ///< Use dotted lines connecting items (default)
+  FL_TREE_CONNECTOR_SOLID=2     ///< Use solid lines connecting items
 };
 
 /// \enum Fl_Tree_Select
 /// Tree selection style.
 ///
 enum Fl_Tree_Select {
-  FL_TREE_SELECT_NONE=0,	///< Nothing selected when items are clicked
-  FL_TREE_SELECT_SINGLE=1,	///< Single item selected when item is clicked (default)
-  FL_TREE_SELECT_MULTI=2,	///< Multiple items can be selected by clicking
-  				///< with SHIFT, CTRL or mouse drags.
+  FL_TREE_SELECT_NONE=0,            ///< Nothing selected when items are clicked
+  FL_TREE_SELECT_SINGLE=1,          ///< Single item selected when item is clicked (default)
+  FL_TREE_SELECT_MULTI=2,           ///< Multiple items can be selected by clicking
+                                    ///< with SHIFT, CTRL or mouse drags.
   FL_TREE_SELECT_SINGLE_DRAGGABLE=3 ///< Single items may be selected, and they may be
-                                     ///< reordered by mouse drag.
+                                    ///< reordered by mouse drag.
 };
 
-#if FLTK_ABI_VERSION >= 10301
 /// \enum Fl_Tree_Item_Reselect_Mode
 /// Defines the ways an item can be (re) selected
 /// via item_reselect_mode().
 ///
 enum Fl_Tree_Item_Reselect_Mode {
-  FL_TREE_SELECTABLE_ONCE=0,	///< Item can only be selected once (default)
-  FL_TREE_SELECTABLE_ALWAYS, 	///< Enables FL_TREE_REASON_RESELECTED events for callbacks
+  FL_TREE_SELECTABLE_ONCE=0,    ///< Item can only be selected once (default)
+  FL_TREE_SELECTABLE_ALWAYS,    ///< Enables FL_TREE_REASON_RESELECTED events for callbacks
 };
 
 /// \enum Fl_Tree_Item_Draw_Mode
@@ -88,17 +85,14 @@ enum Fl_Tree_Item_Reselect_Mode {
 /// via item_draw_mode().
 ///
 enum Fl_Tree_Item_Draw_Mode {
-  FL_TREE_ITEM_DRAW_DEFAULT=0,		///< If widget() defined, draw in place of label,
+  FL_TREE_ITEM_DRAW_DEFAULT=0,          ///< If widget() defined, draw in place of label,
                                         ///< and widget() tracks item height (default)
-  FL_TREE_ITEM_DRAW_LABEL_AND_WIDGET=1,	///< If widget() defined, include label to the left of the widget
-  FL_TREE_ITEM_HEIGHT_FROM_WIDGET=2	///< If widget() defined, widget()'s height controls item's height
+  FL_TREE_ITEM_DRAW_LABEL_AND_WIDGET=1, ///< If widget() defined, include label to the left of the widget
+  FL_TREE_ITEM_HEIGHT_FROM_WIDGET=2     ///< If widget() defined, widget()'s height controls item's height
 };
-#endif /*FLTK_ABI_VERSION*/
 
-#if FLTK_ABI_VERSION >= 10303
 class Fl_Tree_Item;
 typedef void (Fl_Tree_Item_Draw_Callback)(Fl_Tree_Item*, void*);
-#endif
 
 /// \class Fl_Tree_Prefs
 ///
@@ -109,53 +103,41 @@ typedef void (Fl_Tree_Item_Draw_Callback)(Fl_Tree_Item*, void*);
 /// instead of trying to accessing tree's preferences settings directly.
 ///
 class FL_EXPORT Fl_Tree_Prefs {
-  Fl_Font _labelfont;			// label's font face
-  Fl_Fontsize _labelsize;		// label's font size
-  int _margintop;			// -- 
-  int _marginleft;			//   |- tree's controllable margins
-#if FLTK_ABI_VERSION >= 10301
-  int _marginbottom;			// --
-#endif
-  int _openchild_marginbottom;		// extra space below an open child tree
-  int _usericonmarginleft;		// space to left of user icon (if any)
-  int _labelmarginleft;			// space to left of label
-#if FLTK_ABI_VERSION >= 10301
-  int _widgetmarginleft;		// space to left of widget
-#endif
-  int _connectorwidth;			// connector width (right of open/close icon)
-  int _linespacing;			// vertical space between lines
+  Fl_Font _labelfont;                   // label's font face
+  Fl_Fontsize _labelsize;               // label's font size
+  int _margintop;                       // --
+  int _marginleft;                      //   |- tree's controllable margins
+  int _marginbottom;                    // --
+  int _openchild_marginbottom;          // extra space below an open child tree
+  int _usericonmarginleft;              // space to left of user icon (if any)
+  int _labelmarginleft;                 // space to left of label
+  int _widgetmarginleft;                // space to left of widget
+  int _connectorwidth;                  // connector width (right of open/close icon)
+  int _linespacing;                     // vertical space between lines
   // Colors
-  Fl_Color _labelfgcolor;		// label's foreground color
-  Fl_Color _labelbgcolor;		// label's background color
-  Fl_Color _connectorcolor;		// connector dotted line color
-  Fl_Tree_Connector _connectorstyle;	// connector line style
-  Fl_Image *_openimage;			// the 'open' icon [+]
-  Fl_Image *_closeimage;		// the 'close' icon [-]
-  Fl_Image *_userimage;			// user's own icon
-#if FLTK_ABI_VERSION >= 10304
-  Fl_Image *_opendeimage;		// deactivated 'open' icon
-  Fl_Image *_closedeimage;		// deactivated 'close' icon
-  Fl_Image *_userdeimage;		// deactivated user icon
-#endif
-  char _showcollapse;			// 1=show collapse icons, 0=don't
-  char _showroot;			// show the root item as part of the tree
-  Fl_Tree_Sort   _sortorder;		// none, ascening, descending, etc.
-  Fl_Boxtype     _selectbox;		// selection box type
-  Fl_Tree_Select _selectmode;		// selection mode
-#if FLTK_ABI_VERSION >= 10301
-  Fl_Tree_Item_Reselect_Mode _itemreselectmode;	// controls item selection callback() behavior
-  Fl_Tree_Item_Draw_Mode     _itemdrawmode;	// controls how items draw label + widget()
-#endif /*FLTK_ABI_VERSION*/
-#if FLTK_ABI_VERSION >= 10303
-  Fl_Tree_Item_Draw_Callback *_itemdrawcallback;	// callback to handle drawing items (0=none)
-  void                       *_itemdrawuserdata;	// data for drawing items (0=none)
-#endif
+  Fl_Color _labelfgcolor;               // label's foreground color
+  Fl_Color _labelbgcolor;               // label's background color
+  Fl_Color _connectorcolor;             // connector dotted line color
+  Fl_Tree_Connector _connectorstyle;    // connector line style
+  Fl_Image *_openimage;                 // the 'open' icon [+]
+  Fl_Image *_closeimage;                // the 'close' icon [-]
+  Fl_Image *_userimage;                 // user's own icon
+  Fl_Image *_opendeimage;               // deactivated 'open' icon
+  Fl_Image *_closedeimage;              // deactivated 'close' icon
+  Fl_Image *_userdeimage;               // deactivated user icon
+  char _showcollapse;                   // 1=show collapse icons, 0=don't
+  char _showroot;                       // show the root item as part of the tree
+  Fl_Tree_Sort   _sortorder;            // none, ascening, descending, etc.
+  Fl_Boxtype     _selectbox;            // selection box type
+  Fl_Tree_Select _selectmode;           // selection mode
+  Fl_Tree_Item_Reselect_Mode _itemreselectmode; // controls item selection callback() behavior
+  Fl_Tree_Item_Draw_Mode     _itemdrawmode;     // controls how items draw label + widget()
+  Fl_Tree_Item_Draw_Callback *_itemdrawcallback;        // callback to handle drawing items (0=none)
+  void                       *_itemdrawuserdata;        // data for drawing items (0=none)
 public:
   Fl_Tree_Prefs();
-#if FLTK_ABI_VERSION >= 10304
   ~Fl_Tree_Prefs();
-#endif
-  
+
   ////////////////////////////
   // Labels
   ////////////////////////////
@@ -171,7 +153,6 @@ public:
   inline Fl_Color item_labelfgcolor() const { return(_labelfgcolor); }
   /// Set the default label foreground color
   inline void item_labelfgcolor(Fl_Color val) { _labelfgcolor = val; }
-#if FLTK_ABI_VERSION >= 10301
   /// Get the default label background color.
   ///    This returns the Fl_Tree::color() unless item_labelbgcolor()
   ///    has been set explicitly.
@@ -185,16 +166,6 @@ public:
   inline void item_labelbgcolor(Fl_Color val) {
     _labelbgcolor = val;
   }
-#else /*FLTK_ABI_VERSION*/
-  /// Get the default label background color
-  inline Fl_Color item_labelbgcolor() const {
-    return(_labelbgcolor);
-  }
-  /// Set the default label background color
-  inline void item_labelbgcolor(Fl_Color val) {
-    _labelbgcolor = val;
-  }
-#endif /*FLTK_ABI_VERSION*/
 
   /////////////////
   // Obsolete names - for 1.3.0 backwards compat
@@ -215,7 +186,7 @@ public:
   inline Fl_Color labelbgcolor() const { return(item_labelbgcolor()); }
   /// Obsolete: Set the default label background color. Please use item_labelbgcolor(Fl_Color) instead.
   inline void labelbgcolor(Fl_Color val) { item_labelbgcolor(val); }
-  
+
   ////////////////////////////
   // Margins
   ////////////////////////////
@@ -235,7 +206,6 @@ public:
   inline void margintop(int val) {
     _margintop = val;
   }
-#if FLTK_ABI_VERSION >= 10301
   /// Get the bottom margin's value in pixels.
   /// This is the extra distance the vertical scroller lets you travel.
   inline int marginbottom() const {
@@ -246,7 +216,6 @@ public:
   inline void marginbottom(int val) {
     _marginbottom = val;
   }
-#endif /*FLTK_ABI_VERSION*/
   /// Get the margin below an open child in pixels
   inline int openchild_marginbottom() const {
     return(_openchild_marginbottom);
@@ -271,7 +240,6 @@ public:
   inline void labelmarginleft(int val) {
     _labelmarginleft = val;
   }
-#if FLTK_ABI_VERSION >= 10301
   /// Get the widget()'s left margin value in pixels
   inline int widgetmarginleft() const {
     return(_widgetmarginleft);
@@ -280,7 +248,6 @@ public:
   inline void widgetmarginleft(int val) {
     _widgetmarginleft = val;
   }
-#endif /*FLTK_ABI_VERSION*/
   /// Get the line spacing value in pixels
   inline int linespacing() const {
     return(_linespacing);
@@ -289,7 +256,7 @@ public:
   inline void linespacing(int val) {
     _linespacing = val;
   }
-  
+
   ////////////////////////////
   // Colors and Styles
   ////////////////////////////
@@ -321,7 +288,7 @@ public:
   inline void connectorwidth(int val) {
     _connectorwidth = val;
   }
-  
+
   ////////////////////////////
   // Icons
   ////////////////////////////
@@ -348,7 +315,6 @@ public:
   ///
   inline void usericon(Fl_Image *val) {
     _userimage = val;
-#if FLTK_ABI_VERSION >= 10304
     // Update deactivated version of icon..
     if ( _userdeimage ) delete _userdeimage;
     if ( _userimage ) {
@@ -357,10 +323,8 @@ public:
     } else {
       _userdeimage = 0;
     }
-#endif
   }
 
-#if FLTK_ABI_VERSION >= 10304
   /// Return the deactivated version of the open icon, if any.
   /// Returns 0 if none.
   inline Fl_Image *opendeicon() const {
@@ -376,8 +340,7 @@ public:
   inline Fl_Image *userdeicon() const {
     return _userdeimage;
   }
-#endif
-  
+
   ////////////////////////////
   // Options
   ////////////////////////////
@@ -438,7 +401,6 @@ public:
   inline void selectmode(Fl_Tree_Select val) {
     _selectmode = val;
   }
-#if FLTK_ABI_VERSION >= 10301
   /// Returns the current item re/selection mode
   Fl_Tree_Item_Reselect_Mode item_reselect_mode() const {
     return _itemreselectmode;
@@ -453,14 +415,12 @@ public:
   }
   /// Set the 'item draw mode' used for the tree to \p val.
   ///     This affects how items in the tree are drawn,
-  ///     such as when a widget() is defined. 
+  ///     such as when a widget() is defined.
   ///     See Fl_Tree_Item_Draw_Mode for possible values.
   ///
   inline void item_draw_mode(Fl_Tree_Item_Draw_Mode val) {
     _itemdrawmode = val;
   }
-#endif
-#if FLTK_ABI_VERSION >= 10303
   void item_draw_callback(Fl_Tree_Item_Draw_Callback *cb, void *data=0) {
     _itemdrawcallback = cb;
     _itemdrawuserdata = data;
@@ -474,11 +434,6 @@ public:
   void do_item_draw_callback(Fl_Tree_Item *o) const {
     _itemdrawcallback(o, _itemdrawuserdata);
   }
-#endif
 };
 
 #endif /*FL_TREE_PREFS_H*/
-
-//
-// End of "$Id$".
-//

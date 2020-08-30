@@ -1,99 +1,125 @@
 //
-// "$Id$"
-//
 // Draw-to-image code for the Fast Light Tool Kit (FLTK).
 //
-// Copyright 1998-2014 by Bill Spitzak and others.
+// Copyright 1998-2016 by Bill Spitzak and others.
 //
 // This library is free software. Distribution and use rights are outlined in
 // the file "COPYING" which should have been included with this file.  If this
 // file is missing or damaged, see the license at:
 //
-//     http://www.fltk.org/COPYING.php
+//     https://www.fltk.org/COPYING.php
 //
-// Please report all bugs and problems on the following page:
+// Please see the following page on how to report bugs and issues:
 //
-//     http://www.fltk.org/str.php
+//     https://www.fltk.org/bugs.php
 //
 
 #ifndef Fl_Image_Surface_H
 #define Fl_Image_Surface_H
 
-#include <FL/Fl_Copy_Surface.H>
+#include <FL/Fl_Widget_Surface.H>
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Shared_Image.H>
+#include <FL/platform_types.h> // for Fl_Offscreen
 
 
-/** Directs all graphics requests to an Fl_Image.
- 
- After creation of an Fl_Image_Surface object, call set_current() on it, and all subsequent graphics requests
- will be recorded in the image. It's possible to draw widgets (using Fl_Image_Surface::draw()) 
- or to use any of the \ref fl_drawings or the \ref fl_attributes.
- Finally, call image() on the object to obtain a newly allocated Fl_RGB_Image object.
- <br> Fl_GL_Window objects can be drawn in the image as well. 
- 
- <br> Usage example:
+/**
+ \brief Directs all graphics requests to an Fl_Image.
+
+ After creation of an Fl_Image_Surface object, make it the current drawing
+ surface calling Fl_Surface_Device::push_current(), and all
+ subsequent graphics requests will be recorded in the image. It's possible to
+ draw widgets (using Fl_Image_Surface::draw()) or to use any of the
+ \ref fl_drawings or the \ref fl_attributes. Finally, call image() on the object
+ to obtain a newly allocated Fl_RGB_Image object.
+ Fl_Gl_Window objects can be drawn in the image as well.
+
+ Usage example:
  \code
- Fl_Widget *g = ...; // a widget you want to draw in an image
- Fl_Image_Surface *img_surf = new Fl_Image_Surface(g->w(), g->h()); // create an Fl_Image_Surface object
- img_surf->set_current(); // direct graphics requests to the image
- fl_color(FL_WHITE); fl_rectf(0, 0, g->w(), g->h()); // draw a white background
- img_surf->draw(g); // draw the g widget in the image
- Fl_RGB_Image* image = img_surf->image(); // get the resulting image
- delete img_surf; // delete the img_surf object
- Fl_Display_Device::display_device()->set_current();  // direct graphics requests back to the display
+ // this is the widget that you want to draw into an image
+ Fl_Widget *g = ...;
+
+ // create an Fl_Image_Surface object
+ Fl_Image_Surface *image_surface = new Fl_Image_Surface(g->w(), g->h());
+
+ // direct all further graphics requests to the image
+ Fl_Surface_Device::push_current(image_surface);
+
+ // draw a white background
+ fl_color(FL_WHITE);
+ fl_rectf(0, 0, g->w(), g->h());
+
+ // draw the g widget in the image
+ image_surface->draw(g);
+
+ // get the resulting image
+ Fl_RGB_Image* image = image_surface->image();
+
+ // direct graphics requests back to their previous destination
+ Fl_Surface_Device::pop_current();
+
+ // delete the image_surface object, but not the image itself
+ delete image_surface;
  \endcode
 */
-class FL_EXPORT Fl_Image_Surface : public Fl_Surface_Device {
+class FL_EXPORT Fl_Image_Surface : public Fl_Widget_Surface {
+  friend class Fl_Graphics_Driver;
 private:
-  void prepare_(int w, int h, int highres);
-  Fl_Offscreen offscreen;
-  int width;
-  int height;
-  Fl_Paged_Device *helper;
-#ifdef __APPLE__
-#elif defined(WIN32)
-  HDC _sgc; 
-  Window _sw; 
-  Fl_Surface_Device *_ss;
-  int _savedc;
-#else
-  Fl_Surface_Device *previous;
-  Window pre_window;
-  GC gc;
-#endif
-public:
-  static const char *class_id;
-  const char *class_name() {return class_id;};
-#if FLTK_ABI_VERSION >= 10304 || defined(FL_DOXYGEN)
-  Fl_Image_Surface(int w, int h, int highres = 0);
-#else
-  Fl_Image_Surface(int w, int h, int highres);
-  Fl_Image_Surface(int w, int h);
-#endif
-  ~Fl_Image_Surface();
-  void set_current();
-  void draw(Fl_Widget*, int delta_x = 0, int delta_y = 0);
-  void draw_decorated_window(Fl_Window* win, int delta_x = 0, int delta_y = 0);
-  Fl_RGB_Image *image();
-  Fl_Shared_Image *highres_image();
-};
-
-#ifdef __APPLE__
-/* Mac class to implement translate()/untranslate() for a flipped bitmap graphics context */
-class FL_EXPORT Fl_Quartz_Flipped_Surface_ : public Fl_Quartz_Surface_ {
-public:
-  static const char *class_id;
-  const char *class_name() {return class_id;};
-  Fl_Quartz_Flipped_Surface_(int w, int h);
+  class Fl_Image_Surface_Driver *platform_surface;
+  Fl_Offscreen get_offscreen_before_delete_();
+protected:
   void translate(int x, int y);
   void untranslate();
-  virtual ~Fl_Quartz_Flipped_Surface_() {};
+public:
+  Fl_Image_Surface(int w, int h, int high_res = 0, Fl_Offscreen off = 0);
+  ~Fl_Image_Surface();
+  void set_current();
+  virtual bool is_current();
+  Fl_RGB_Image *image();
+  Fl_Shared_Image *highres_image();
+  void origin(int *x, int *y);
+  void origin(int x, int y);
+  int printable_rect(int *w, int *h);
+  Fl_Offscreen offscreen();
+  void rescale();
 };
-#endif 
+
+
+/**
+ \cond DriverDev
+ \addtogroup DriverDeveloper
+ \{
+ */
+
+/** A base class describing the interface between FLTK and draw-to-image operations.
+ This class is only for internal use by the FLTK library.
+ A supported platform should implement the virtual methods of this class
+ in order to support drawing to an Fl_RGB_Image through class Fl_Image_Surface.
+ */
+class Fl_Image_Surface_Driver : public Fl_Widget_Surface {
+  friend class Fl_Image_Surface;
+protected:
+  int width;
+  int height;
+  Fl_Offscreen offscreen;
+  int external_offscreen;
+  Fl_Image_Surface_Driver(int w, int h, int high_res, Fl_Offscreen off) : Fl_Widget_Surface(NULL), width(w), height(h), offscreen(off) {external_offscreen = (off != 0);}
+  virtual ~Fl_Image_Surface_Driver() {}
+  virtual void set_current() = 0;
+  virtual void translate(int x, int y) = 0;
+  virtual void untranslate() = 0;
+  int printable_rect(int *w, int *h);
+  virtual Fl_RGB_Image *image() = 0;
+  /** Each platform implements this function its own way.
+   It returns an object implementing all virtual functions
+   of class Fl_Image_Surface_Driver for the plaform.
+   */
+  static Fl_Image_Surface_Driver *newImageSurfaceDriver(int w, int h, int high_res, Fl_Offscreen off);
+};
+
+/**
+ \}
+ \endcond
+ */
 
 #endif // Fl_Image_Surface_H
-
-//
-// End of "$Id$".
-//

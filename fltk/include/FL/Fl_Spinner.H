@@ -1,259 +1,207 @@
 //
-// "$Id$"
-//
 // Spinner widget for the Fast Light Tool Kit (FLTK).
 //
-// Copyright 1998-2010 by Bill Spitzak and others.
+// Copyright 1998-2017 by Bill Spitzak and others.
 //
 // This library is free software. Distribution and use rights are outlined in
 // the file "COPYING" which should have been included with this file.  If this
 // file is missing or damaged, see the license at:
 //
-//     http://www.fltk.org/COPYING.php
+//     https://www.fltk.org/COPYING.php
 //
-// Please report all bugs and problems on the following page:
+// Please see the following page on how to report bugs and issues:
 //
-//     http://www.fltk.org/str.php
+//     https://www.fltk.org/bugs.php
 //
 
 /* \file
    Fl_Spinner widget . */
 
 #ifndef Fl_Spinner_H
-#  define Fl_Spinner_H
+#define Fl_Spinner_H
 
-//
-// Include necessary headers...
-//
-
-#  include <FL/Enumerations.H>
-#  include <FL/Fl_Group.H>
-#  include <FL/Fl_Input.H>
-#  include <FL/Fl_Repeat_Button.H>
-#  include <stdio.h>
-#  include <stdlib.h>
-
+#include <FL/Enumerations.H>
+#include <FL/Fl_Group.H>
+#include <FL/Fl_Input.H>
+#include <FL/Fl_Repeat_Button.H>
 
 /**
-  This widget is a combination of the input
-  widget and repeat buttons. The user can either type into the
-  input area or use the buttons to change the value.
+  This widget is a combination of a numerical input widget and repeat buttons.
+
+  The user can either type into the input area or use the buttons to
+  change the value.
 
   \image html Fl_Spinner.png "Fl_Spinner widget"
   \image latex Fl_Spinner.png "Fl_Spinner widget" width=6cm
 */
 class FL_EXPORT Fl_Spinner : public Fl_Group {
- 
-  double	value_;			// Current value
-  double	minimum_;		// Minimum value
-  double	maximum_;		// Maximum value
-  double	step_;			// Amount to add/subtract for up/down
-  const char	*format_;		// Format string
 
-#if FLTK_ABI_VERSION >= 10301
-// NEW
-protected:
-#endif
-  Fl_Input	input_;			// Input field for the value
-  Fl_Repeat_Button
-		up_button_,		// Up button
-		down_button_;		// Down button
+  double        value_;                 // Current value
+  double        minimum_;               // Minimum value
+  double        maximum_;               // Maximum value
+  double        step_;                  // Amount to add/subtract for up/down
+  const char    *format_;               // Format string for input field
+  int           wrap_;                  // wrap around at bounds (1/0)
 
 private:
-  static void	sb_cb(Fl_Widget *w, Fl_Spinner *sb) {
-		  double v;		// New value
 
-		  if (w == &(sb->input_)) {
-		    // Something changed in the input field...
-		    v = atof(sb->input_.value());
+  static void sb_cb(Fl_Widget *w, Fl_Spinner *sb); // internal callback
+  void update();                                   // update input field
 
-		    if (v < sb->minimum_) {
-		      sb->value_ = sb->minimum_;
-		      sb->update();
-		    } else if (v > sb->maximum_) {
-		      sb->value_ = sb->maximum_;
-		      sb->update();
-		    } else sb->value_ = v;
-		  } else if (w == &(sb->up_button_)) {
-		    // Up button pressed...
-		    v = sb->value_ + sb->step_;
+protected:
 
-		    if (v > sb->maximum_) sb->value_ = sb->minimum_;
-		    else sb->value_ = v;
+  // This class works like Fl_Input but ignores FL_Up and FL_Down key
+  // presses so they are handled by its parent, the Fl_Spinner widget.
+  // See STR #2989.
 
-		    sb->update();
-		  } else if (w == &(sb->down_button_)) {
-		    // Down button pressed...
-		    v = sb->value_ - sb->step_;
-
-		    if (v < sb->minimum_) sb->value_ = sb->maximum_;
-		    else sb->value_ = v;
-
-		    sb->update();
-		  }
-
-		  sb->set_changed();
-		  sb->do_callback();
-		}
-  void		update() {
-		  char s[255];		// Value string
-
-		  if (format_[0]=='%'&&format_[1]=='.'&&format_[2]=='*') {  // precision argument
-		    // this code block is a simplified version of
-		    // Fl_Valuator::format() and works well (but looks ugly)
-		    int c = 0;
-		    char temp[64], *sp = temp;
-		    sprintf(temp, "%.12f", step_);
-		    while (*sp) sp++;
-		    sp--;
-		    while (sp>temp && *sp=='0') sp--;
-		    while (sp>temp && (*sp>='0' && *sp<='9')) { sp--; c++; }
-		    sprintf(s, format_, c, value_);
-		  } else {
-		    sprintf(s, format_, value_);
-		  }
-		  input_.value(s);
-		}
-
+  class FL_EXPORT Fl_Spinner_Input : public Fl_Input {
   public:
+    Fl_Spinner_Input(int X, int Y, int W, int H)
+    : Fl_Input(X, Y, W, H) {}
+    int handle(int event);              // implemented in src/Fl_Spinner.cxx
+  };
 
-		/**
-		  Creates a new Fl_Spinner widget using the given position, size,
-		  and label string.
-		  <P>Inherited destructor Destroys the widget and any value associated with it.
-		*/
+  Fl_Spinner_Input input_;              // Input field for the value
+  Fl_Repeat_Button
+                up_button_,             // Up button
+                down_button_;           // Down button
+
+public:
+
+  // Constructor
   Fl_Spinner(int X, int Y, int W, int H, const char *L = 0);
+  // Event handling
+  int handle(int event);
+  // Resize group and subwidgets
+  void resize(int X, int Y, int W, int H);
 
-  /** Sets or returns the format string for the value. */
-  const char	*format() { return (format_); }
-  /** Sets or returns the format string for the value. */
-  void		format(const char *f) { format_ = f; update(); }
+  /** Returns the format string for the value. */
+  const char *format() const { return (format_); }
 
-  int		handle(int event) {
-		  switch (event) {
-		    case FL_KEYDOWN :
-		    case FL_SHORTCUT :
-		      if (Fl::event_key() == FL_Up) {
-			up_button_.do_callback();
-			return 1;
-		      } else if (Fl::event_key() == FL_Down) {
-			down_button_.do_callback();
-			return 1;
-		      } else return 0;
+  /** Sets the format string for the value. */
+  void format(const char *f) { format_ = f; update(); }
 
-		    case FL_FOCUS :
-		      if (input_.take_focus()) return 1;
-		      else return 0;
-		  }
-
-		  return Fl_Group::handle(event);
-		}
-
-  /** Speling mistakes retained for source compatibility \deprecated */
-  double	maxinum() const { return (maximum_); }
   /** Gets the maximum value of the widget. */
-  double	maximum() const { return (maximum_); }
-  /** Sets the maximum value of the widget. */
-  void		maximum(double m) { maximum_ = m; }
-  /** Speling mistakes retained for source compatibility \deprecated */
-  double	mininum() const { return (minimum_); }
-  /** Gets the minimum value of the widget. */
-  double	minimum() const { return (minimum_); }
-  /** Sets the minimum value of the widget. */
-  void		minimum(double m) { minimum_ = m; }
-  /** Sets the minimum and maximum values for the widget. */
-  void		range(double a, double b) { minimum_ = a; maximum_ = b; }
-  void		resize(int X, int Y, int W, int H) {
-		  Fl_Group::resize(X,Y,W,H);
+  double maximum() const { return (maximum_); }
 
-		  input_.resize(X, Y, W - H / 2 - 2, H);
-		  up_button_.resize(X + W - H / 2 - 2, Y, H / 2 + 2, H / 2);
-		  down_button_.resize(X + W - H / 2 - 2, Y + H - H / 2,
-		                      H / 2 + 2, H / 2);
-		}
+  /** Sets the maximum value of the widget. */
+  void maximum(double m) { maximum_ = m; }
+
+  /** Gets the minimum value of the widget. */
+  double minimum() const { return (minimum_); }
+
+  /** Sets the minimum value of the widget. */
+  void minimum(double m) { minimum_ = m; }
+
+  /** Sets the minimum and maximum values for the widget. */
+  void range(double a, double b) { minimum_ = a; maximum_ = b; }
+
+  // Sets the amount to change the value when the user clicks a button.
+  // Docs in src/Fl_Spinner.cxx
+  void step(double s);
+
   /**
-    Sets or returns the amount to change the value when the user clicks a button.
-    Before setting step to a non-integer value, the spinner
-    type() should be changed to floating point.
+    Gets the amount to change the value when the user clicks a button.
+    \see Fl_Spinner::step(double)
   */
-  double	step() const { return (step_); }
-  /** See double Fl_Spinner::step() const */
-  void		step(double s) {
-		  step_ = s;
-		  if (step_ != (int)step_) input_.type(FL_FLOAT_INPUT);
-		  else input_.type(FL_INT_INPUT);
-		  update();
-		}
+  double step() const { return (step_); }
+
+  /** Sets whether the spinner wraps around at upper and lower bounds.
+
+    If wrap mode is on the spinner value is set to the minimum() or
+    maximum() if the value exceeds the upper or lower bounds, resp., if
+    it was changed by one of the buttons or the FL_Up or FL_Down keys.
+
+    The spinner stops at the upper and lower bounds if wrap mode is off.
+
+    The default wrap mode is on for backwards compatibility with
+    FLTK 1.3.x and older versions.
+
+    \note Wrap mode does not apply to the input field if the input value
+          is edited directly as a number. The input value is always
+          clipped to the allowed range as if wrap mode was off when the
+          input field is left (i.e. loses focus).
+
+    \see minimum(), maximum()
+
+    \param[in] set non-zero sets wrap mode, zero resets wrap mode
+
+    \since 1.4.0
+  */
+  void wrap(int set) { wrap_ = set ? 1 : 0; }
+
+  /** Gets the wrap mode of the Fl_Spinner widget.
+    \see void wrap(int)
+    \since 1.4.0
+  */
+  int wrap() const { return wrap_; }
+
   /** Gets the color of the text in the input field. */
-  Fl_Color	textcolor() const {
-		  return (input_.textcolor());
-		}
+  Fl_Color textcolor() const { return (input_.textcolor()); }
+
   /** Sets the color of the text in the input field. */
-  void		textcolor(Fl_Color c) {
-		  input_.textcolor(c);
-		}
+  void textcolor(Fl_Color c) { input_.textcolor(c); }
+
   /** Gets the font of the text in the input field. */
-  Fl_Font       textfont() const {
-		  return (input_.textfont());
-		}
+  Fl_Font textfont() const { return (input_.textfont()); }
+
   /** Sets the font of the text in the input field. */
-  void		textfont(Fl_Font f) {
-		  input_.textfont(f);
-		}
+  void textfont(Fl_Font f) { input_.textfont(f); }
+
   /** Gets the size of the text in the input field. */
-  Fl_Fontsize  textsize() const {
-		  return (input_.textsize());
-		}
+  Fl_Fontsize textsize() const { return (input_.textsize()); }
+
   /** Sets the size of the text in the input field. */
-  void		textsize(Fl_Fontsize s) {
-		  input_.textsize(s);
-		}
+  void textsize(Fl_Fontsize s) { input_.textsize(s); }
+
+  // Sets the numeric representation in the input field.
+  // Docs see src/Fl_Spinner.cxx
+  void type(uchar v);
+
   /** Gets the numeric representation in the input field.
-   \see Fl_Spinner::type(uchar)
+    \see Fl_Spinner::type(uchar)
   */
-  uchar		type() const { return (input_.type()); }
-  /** Sets the numeric representation in the input field.
-   Valid values are FL_INT_INPUT and FL_FLOAT_INPUT.
-   Also changes the format() template.
-   Setting a new spinner type via a superclass pointer will not work.
-   \note  type is not a virtual function.
-   */
-  void		type(uchar v) {
-		  if (v==FL_FLOAT_INPUT) {
-		    format("%.*f");
-		  } else {
-		    format("%.0f");
-		  }
-		  input_.type(v);
-		}
+  uchar type() const { return (input_.type()); }
+
   /** Gets the current value of the widget. */
-  double	value() const { return (value_); }
+  double value() const { return (value_); }
+
   /**
-    Sets the current value of the widget.
+    Sets the current value of the input widget.
     Before setting value to a non-integer value, the spinner
     type() should be changed to floating point.
   */
-  void		value(double v) { value_ = v; update(); }
+  void value(double v) { value_ = v; update(); }
+
   /**
-    Change the background color of the spinner widget's input field.
+    Sets the background color of the spinner widget's input field.
   */
-  void		color(Fl_Color v) { input_.color(v); }
+  void color(Fl_Color v) { input_.color(v); }
+
   /**
-    Return the background color of the spinner widget's input field.
+    Returns the background color of the spinner widget's input field.
   */
-  Fl_Color	color() const { return(input_.color()); }
+  Fl_Color color() const { return(input_.color()); }
+
   /**
-    Change the selection color of the spinner widget's input field.
+    Sets the selection color of the spinner widget's input field.
   */
-  void		selection_color(Fl_Color val) { input_.selection_color(val); }
+  void selection_color(Fl_Color val) { input_.selection_color(val); }
+
   /**
-    Return the selection color of the spinner widget's input field.
+    Returns the selection color of the spinner widget's input field.
   */
-  Fl_Color	selection_color() const { return input_.selection_color(); }
+  Fl_Color selection_color() const { return input_.selection_color(); }
+
+  /**
+   Sets the maximum width of the input field.
+   */
+  void maximum_size(int m) { if (m > 0) input_.maximum_size(m); }
+
+  /**
+   Returns the maximum width of the input field.
+   */
+  int maximum_size() const { return input_.maximum_size(); }
 };
 
 #endif // !Fl_Spinner_H
-
-//
-// End of "$Id$".
-//

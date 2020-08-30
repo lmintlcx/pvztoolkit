@@ -1,19 +1,17 @@
 //
-// "$Id$"
-//
 // Clock header file for the Fast Light Tool Kit (FLTK).
 //
-// Copyright 1998-2010 by Bill Spitzak and others.
+// Copyright 1998-2017 by Bill Spitzak and others.
 //
 // This library is free software. Distribution and use rights are outlined in
 // the file "COPYING" which should have been included with this file.  If this
 // file is missing or damaged, see the license at:
 //
-//     http://www.fltk.org/COPYING.php
+//     https://www.fltk.org/COPYING.php
 //
-// Please report all bugs and problems on the following page:
+// Please see the following page on how to report bugs and issues:
 //
-//     http://www.fltk.org/str.php
+//     https://www.fltk.org/bugs.php
 //
 
 /* \file
@@ -26,34 +24,48 @@
 #include "Fl_Widget.H"
 #endif
 
-// values for type:
-#define FL_SQUARE_CLOCK		0	/**< type() of Square Clock variant */
-#define FL_ROUND_CLOCK		1	/**< type() of Round Clock variant */
-#define FL_ANALOG_CLOCK FL_SQUARE_CLOCK	/**< An analog clock is square */
+// Values for type():
+// Please change doxygen documentation below (class Fl_Clock_Output)
+// accordingly as well when changing the following type values:
+
+#define FL_SQUARE_CLOCK         0       /**< type() of Square Clock variant */
+#define FL_ROUND_CLOCK          1       /**< type() of Round Clock variant */
+#define FL_ANALOG_CLOCK FL_SQUARE_CLOCK /**< An analog clock is square */
 #define FL_DIGITAL_CLOCK FL_SQUARE_CLOCK /**< Not yet implemented */
 
-// fabien: Please keep the horizontal formatting of both images in class desc, 
-// don't lose vert. space for nothing!
+// fabien: Please keep the horizontal formatting of both images in class desc,
+// don't lose vertical space for nothing!
 
 /**
   \class Fl_Clock_Output
   \brief This widget can be used to display a program-supplied time.
-  
+
   The time shown on the clock is not updated. To display the current time,
   use Fl_Clock instead.
 
-  \htmlonly <BR>  <table align=CENTER border=1 cellpadding=5 >  
+  \htmlonly <BR>  <table align=CENTER border=1 cellpadding=5 >
   <caption align=bottom>type() FL_SQUARE_CLOCK and FL_ROUND_CLOCK </caption> <TR><TD> \endhtmlonly
-  \image html clock.png  
+  \image html clock.png
   \htmlonly </TD> <TD> \endhtmlonly
-  \image html round_clock.png 
+  \image html round_clock.png
   \htmlonly </TD> </TR> </table> \endhtmlonly
   \image latex clock.png "FL_SQUARE_CLOCK type" width=4cm
   \image latex round_clock.png "FL_ROUND_CLOCK type" width=4cm
+
+  Values for clock type() (\#include \<FL/Clock.H\>):
+
+  \code
+    #define FL_SQUARE_CLOCK             0       // Square Clock variant
+    #define FL_ROUND_CLOCK              1       // Round Clock variant
+    #define FL_ANALOG_CLOCK FL_SQUARE_CLOCK     // An analog clock is square
+    #define FL_DIGITAL_CLOCK FL_SQUARE_CLOCK    // Not yet implemented
+  \endcode
+
  */
 class FL_EXPORT Fl_Clock_Output : public Fl_Widget {
   int hour_, minute_, second_;
   ulong value_;
+  int shadow_; // draw shadows of hands
   void drawhands(Fl_Color,Fl_Color); // part of draw
 protected:
   void draw();
@@ -62,8 +74,8 @@ public:
 
   Fl_Clock_Output(int X, int Y, int W, int H, const char *L = 0);
 
-  void value(ulong v);	// set to this Unix time
-  
+  void value(ulong v);  // set to this Unix time
+
   void value(int H, int m, int s);
 
   /**
@@ -90,6 +102,29 @@ public:
     \see value(), hour(), minute()
    */
   int second() const {return second_;}
+
+  /**
+    Returns the shadow drawing mode of the hands.
+
+    \returns    shadow drawing mode of the hands
+    \retval 0   no shadows
+    \retval 1   draw shadows of hands (default)
+  */
+  int shadow() const {return shadow_;}
+
+  /**
+    Sets the shadow drawing mode of the hands.
+
+    Enables (1) or disables (0) drawing the hands with shadows.
+
+    Values except 0 and 1 are reserved for future extensions and
+    yield undefined behavior.
+
+    The default is to draw the shadows (1).
+
+    \param[in]  mode    1 = shadows (default), 0 = no shadows
+  */
+  void shadow(int mode) { shadow_ = mode ? 1 : 0; }
 };
 
 // a Fl_Clock displays the current time always by using a timeout:
@@ -98,31 +133,31 @@ public:
   \class Fl_Clock
   \brief This widget provides a round analog clock display.
 
-  Fl_Clock is provided for Forms compatibility. 
+  Fl_Clock is provided for Forms compatibility.
   It installs a 1-second timeout callback using Fl::add_timeout().
-  You can choose the rounded or square type of the clock with type(), see below.
-  \htmlonly <BR>  <table align=CENTER border=1 cellpadding=5 >  
+  You can choose the rounded or square type of the clock with type().
+  Please see Fl_Clock_Output widget for applicable values.
+
+  \htmlonly <BR>  <table align=CENTER border=1 cellpadding=5 >
   <caption align=bottom>type() FL_SQUARE_CLOCK and FL_ROUND_CLOCK </caption> <TR><TD> \endhtmlonly
-  \image html clock.png  
+  \image html clock.png
   \htmlonly </TD> <TD> \endhtmlonly
-  \image html round_clock.png 
+  \image html round_clock.png
   \htmlonly </TD> </TR> </table> \endhtmlonly
-  \image latex clock.png "FL_SQUARE_CLOCK type" width=4cm  
+  \image latex clock.png "FL_SQUARE_CLOCK type" width=4cm
   \image latex round_clock.png "FL_ROUND_CLOCK type" width=4cm
+
+  \see class Fl_Clock_Output
  */
 class FL_EXPORT Fl_Clock : public Fl_Clock_Output {
 public:
   int handle(int);
 
   Fl_Clock(int X, int Y, int W, int H,  const char *L = 0);
-  
+
   Fl_Clock(uchar t, int X, int Y, int W, int H, const char *L);
-  
+
   ~Fl_Clock();
 };
 
 #endif
-
-//
-// End of "$Id$".
-//

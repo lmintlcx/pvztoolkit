@@ -1,6 +1,4 @@
 //
-// "$Id$"
-//
 // Multi-label header file for the Fast Light Tool Kit (FLTK).
 //
 // Copyright 1998-2015 by Bill Spitzak and others.
@@ -9,11 +7,11 @@
 // the file "COPYING" which should have been included with this file.  If this
 // file is missing or damaged, see the license at:
 //
-//     http://www.fltk.org/COPYING.php
+//     https://www.fltk.org/COPYING.php
 //
-// Please report all bugs and problems on the following page:
+// Please see the following page on how to report bugs and issues:
 //
-//     http://www.fltk.org/str.php
+//     https://www.fltk.org/bugs.php
 //
 
 #ifndef Fl_Multi_Label_H
@@ -22,16 +20,16 @@
 class Fl_Widget;
 struct Fl_Menu_Item;
 
-/** This struct allows multiple labels to be added to objects that might normally have only one label.
-
-    This struct allows a mixed text and/or graphics label to be applied to an object that
-    would normally only have a single (usually text only) label.
+/** Allows a mixed text and/or graphics label to be applied to an Fl_Menu_Item or Fl_Widget.
 
     Most regular FLTK widgets now support the ability to associate both images and text
     with a label but some special cases, notably the non-widget Fl_Menu_Item objects, do not.
     Fl_Multi_Label may be used to create menu items that have an icon and text, which would
     not normally be possible for an Fl_Menu_Item.
     For example, Fl_Multi_Label is used in the New->Code submenu in fluid, and others.
+
+    \image html Fl_Multi_Label-menu-item.png "Menu items with icons using Fl_Multi_Label"
+    \image latex Fl_Multi_Label-menu-item.png "Menu items with icons using Fl_Multi_Label" width=4cm
 
     Each Fl_Multi_Label holds two elements, labela and labelb; each may hold either a
     text label (const char*) or an image (Fl_Image*). When displayed, labela is drawn first
@@ -43,7 +41,31 @@ struct Fl_Menu_Item;
     When assigning a label element to one of labela or labelb, they should be explicitly cast
     to (const char*) if they are not of that type already.
 
-    \see Fl_Label and Fl_Labeltype
+    Example Use: Fl_Menu_Bar
+    \code
+      Fl_Pixmap *image = new Fl_Pixmap(..);     // image for menu item; any Fl_Image based widget
+      Fl_Menu_Bar *menu = new Fl_Menu_Bar(..);  // can be any Fl_Menu_ oriented widget (Fl_Choice, Fl_Menu_Button..)
+
+      // Create a menu item
+      int i = menu->add("File/New", ..);
+      Fl_Menu_Item *item = (Fl_Menu_Item*)&(menu->menu()[i]);
+
+      // Create a multi label, assign it an image + text
+      Fl_Multi_Label *ml = new Fl_Multi_Label;
+
+      // Left side of label is an image
+      ml->typea  = FL_IMAGE_LABEL;
+      ml->labela = (const char*)image;           // any Fl_Image widget: Fl_Pixmap, Fl_PNG_Image, etc..
+
+      // Right side of label is label text
+      ml->typeb  = FL_NORMAL_LABEL;
+      ml->labelb = item->label();
+
+      // Assign the multilabel to the menu item
+      ml->label(item);
+    \endcode
+
+    \see Fl_Label and Fl_Labeltype and examples/howto-menu-with-images.cxx
  */
 struct FL_EXPORT Fl_Multi_Label {
   /** Holds the "leftmost" of the two elements in the composite label.
@@ -56,12 +78,12 @@ struct FL_EXPORT Fl_Multi_Label {
   const char* labelb;
   /** Holds the "type" of labela.
     Typically this is set to FL_NORMAL_LABEL for a text label,
-    _FL_IMAGE_LABEL for an image (based on Fl_image) or _FL_MULTI_LABEL
+    FL_IMAGE_LABEL for an image (based on Fl_image) or FL_MULTI_LABEL
     if "chaining" multiple Fl_Multi_Label elements together. */
   uchar typea;
   /** Holds the "type" of labelb.
     Typically this is set to FL_NORMAL_LABEL for a text label,
-    _FL_IMAGE_LABEL for an image (based on Fl_image) or _FL_MULTI_LABEL
+    FL_IMAGE_LABEL for an image (based on Fl_image) or FL_MULTI_LABEL
     if "chaining" multiple Fl_Multi_Label elements together. */
   uchar typeb;
 
@@ -72,7 +94,3 @@ struct FL_EXPORT Fl_Multi_Label {
 };
 
 #endif
-
-//
-// End of "$Id$".
-//

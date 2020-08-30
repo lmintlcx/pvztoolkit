@@ -1,19 +1,17 @@
 //
-// "$Id$"
-//
 // Tab header file for the Fast Light Tool Kit (FLTK).
 //
-// Copyright 1998-2010 by Bill Spitzak and others.
+// Copyright 1998-2017 by Bill Spitzak and others.
 //
 // This library is free software. Distribution and use rights are outlined in
 // the file "COPYING" which should have been included with this file.  If this
 // file is missing or damaged, see the license at:
 //
-//     http://www.fltk.org/COPYING.php
+//     https://www.fltk.org/COPYING.php
 //
-// Please report all bugs and problems on the following page:
+// Please see the following page on how to report bugs and issues:
 //
-//     http://www.fltk.org/str.php
+//     https://www.fltk.org/bugs.php
 //
 
 /* \file
@@ -28,20 +26,22 @@
   The Fl_Tabs widget is the "file card tabs"
   interface that allows you to put lots and lots of buttons and
   switches in a panel, as popularized by many toolkits.
-  
+
   \image html  tabs.png
   \image latex tabs.png "Fl_Tabs" width=8cm
-  
+
   Clicking the tab makes a child visible() by calling
   show() on it, and all other children are made invisible
   by calling hide() on them. Usually the children are Fl_Group widgets
   containing several widgets themselves.
-  
+
   Each child makes a card, and its label() is printed
   on the card tab, including the label font and style.  The
   selection color of that child is used to color the tab, while
   the color of the child determines the background color of the pane.
-  
+  '&' in labels are used to prefix a shortcut that is drawn underlined and
+  that activates the corresponding tab; repeated '&&' avoids that.
+
   The size of the tabs is controlled by the bounding box of the
   children (there should be some space between the children and
   the edge of the Fl_Tabs), and the tabs may be placed
@@ -49,7 +49,7 @@
   gap is larger. It is easiest to lay this out in fluid, using the
   fluid browser to select each child group and resize them until
   the tabs look the way you want them to.
-  
+
   The background area behind and to the right of the tabs is
   "transparent", exposing the background detail of the parent. The
   value of Fl_Tabs::box() does not affect this area. So if Fl_Tabs is
@@ -68,15 +68,15 @@
       Fl_Tabs *tabs = new Fl_Tabs(10,10,300,200);
       {
           Fl_Group *grp1 = new Fl_Group(20,30,280,170,"Tab1");
-	  {
-	      ..widgets that go in tab#1..
+          {
+              ..widgets that go in tab#1..
           }
-	  grp1->end();
+          grp1->end();
           Fl_Group *grp2 = new Fl_Group(20,30,280,170,"Tab2");
-	  {
-	      ..widgets that go in tab#2..
-	  }
-	  grp2->end();
+          {
+              ..widgets that go in tab#2..
+          }
+          grp2->end();
       }
       tabs->end();
   \endcode
@@ -113,7 +113,7 @@
   \b Uniform \b Tab \b and \b Panel \b Appearance
 
   In order to have uniform tab and panel appearance, not only must the color()
-  and selection_color() for each child group be set, but also the 
+  and selection_color() for each child group be set, but also the
   selection_color() of the Fl_Tab itself any time a new "tab" is selected.
   This can be achieved within the Fl_Tab callback, e.g.
 
@@ -172,7 +172,7 @@
     grp2 = new Fl_Group(..);
     ..
     tabs->end();
-    tabs->resizable(grp1);	// keeps tab height constant
+    tabs->resizable(grp1);      // keeps tab height constant
   \endcode
 
   \par Callback's Use Of when()
@@ -188,36 +188,40 @@
 
     -#  The above flags can be logically OR-ed (|) or added (+) to combine behaviors.
     -#  The default value for when() is \ref FL_WHEN_RELEASE (inherited from Fl_Widget).
-    -#  If \ref FL_WHEN_RELEASE is the \em only flag specified, 
+    -#  If \ref FL_WHEN_RELEASE is the \em only flag specified,
         the behavior will be as if (\ref FL_WHEN_RELEASE|\ref FL_WHEN_CHANGED) was specified.
     -#  The value of changed() will be valid during the callback.
-    -#  If both \ref FL_WHEN_CHANGED and \ref FL_WHEN_NOT_CHANGED are specified, 
+    -#  If both \ref FL_WHEN_CHANGED and \ref FL_WHEN_NOT_CHANGED are specified,
         the callback is invoked whether the tab has been changed or not.
-	The changed() method can be used to determine the cause.
+        The changed() method can be used to determine the cause.
     -#  \ref FL_WHEN_NOT_CHANGED can happen if someone clicks on an already selected tab,
         or if a keyboard navigation attempt results in no change to the tabs,
-	such as using the arrow keys while at the left or right end of the tabs.
+        such as using the arrow keys while at the left or right end of the tabs.
 */
 class FL_EXPORT Fl_Tabs : public Fl_Group {
-#if FLTK_ABI_VERSION >= 10304
-  // NEW (nothing)
-#else
-  // OLD (maintained for ABI compat)
-  Fl_Widget *value_;	// NOTE: this member no longer used -- STR #3169
-#endif
+
   Fl_Widget *push_;
-  int *tab_pos;		// array of x-offsets of tabs per child + 1
-  int *tab_width;	// array of widths of tabs per child + 1
-  int tab_count;	// array size
-  int tab_positions();	// allocate and calculate tab positions
-  void clear_tab_positions();
-  int tab_height();
-  void draw_tab(int x1, int x2, int W, int H, Fl_Widget* o, int sel=0);
+
 protected:
-  void redraw_tabs();
+
+  int *tab_pos;         // array of x-offsets of tabs per child + 1
+  int *tab_width;       // array of widths of tabs per child + 1
+  int tab_count;        // array size
+  Fl_Align tab_align_;  // tab label alignment
+
+  virtual void redraw_tabs();
+  virtual int tab_positions();  // allocate and calculate tab positions
+  virtual void clear_tab_positions();
+  virtual void draw_tab(int x1, int x2, int W, int H, Fl_Widget* o, int sel=0);
+  virtual int tab_height();
+
   void draw();
 
 public:
+
+  Fl_Tabs(int X, int Y, int W, int H, const char *L = 0);
+  virtual ~Fl_Tabs();
+
   int handle(int);
   Fl_Widget *value();
   int value(Fl_Widget *);
@@ -233,14 +237,31 @@ public:
   */
   Fl_Widget *push() const {return push_;}
   int push(Fl_Widget *);
-  Fl_Tabs(int,int,int,int,const char * = 0);
-  Fl_Widget *which(int event_x, int event_y);
-  ~Fl_Tabs();
+
+  // Returns the widget of the tab the user clicked on at event_x/event_y.
+  virtual Fl_Widget *which(int event_x, int event_y);
+
+  // Returns the position and size available to be used by its children.
   void client_area(int &rx, int &ry, int &rw, int &rh, int tabh=0);
+
+  /**
+    Sets the tab label alignment.
+
+    The default is FL_ALIGN_CENTER so tab labels are centered, but since
+    the label space is measured (per label) to fit the labels, there
+    wouldn't be any difference if labels were aligned left or right.
+
+    If you want to show an image (icon) next to the group's label you can
+    set a different label alignment. FL_ALIGN_IMAGE_NEXT_TO_TEXT is the
+    recommended alignment to show the icon left of the text.
+  */
+  void tab_align(Fl_Align a) {tab_align_ = a;}
+  /**
+    Gets the tab label alignment.
+
+    \see tab_align(Fl_Align)
+  */
+  Fl_Align tab_align() const {return tab_align_;}
 };
 
 #endif
-
-//
-// End of "$Id$".
-//

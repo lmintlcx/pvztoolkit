@@ -1,19 +1,17 @@
 //
-// "$Id$"
-//
 // Pixmap header file for the Fast Light Tool Kit (FLTK).
 //
-// Copyright 1998-2012 by Bill Spitzak and others.
+// Copyright 1998-2017 by Bill Spitzak and others.
 //
 // This library is free software. Distribution and use rights are outlined in
 // the file "COPYING" which should have been included with this file.  If this
 // file is missing or damaged, see the license at:
 //
-//     http://www.fltk.org/COPYING.php
+//     https://www.fltk.org/COPYING.php
 //
-// Please report all bugs and problems on the following page:
+// Please see the following page on how to report bugs and issues:
 //
-//     http://www.fltk.org/str.php
+//     https://www.fltk.org/bugs.php
 //
 
 /* \file
@@ -22,9 +20,6 @@
 #ifndef Fl_Pixmap_H
 #define Fl_Pixmap_H
 #  include "Fl_Image.H"
-#if defined(WIN32)
-#  include "x.H"
-#endif
 
 class Fl_Widget;
 struct Fl_Menu_Item;
@@ -39,41 +34,25 @@ struct Fl_Menu_Item;
   (pixmap) images, including transparency.
 */
 class FL_EXPORT Fl_Pixmap : public Fl_Image {
-  friend class Fl_Quartz_Graphics_Driver;
-  friend class Fl_GDI_Graphics_Driver;
-  friend class Fl_GDI_Printer_Graphics_Driver;
-  friend class Fl_Xlib_Graphics_Driver;
+  friend class Fl_Graphics_Driver;
   void copy_data();
   void delete_data();
   void set_data(const char * const *p);
-  int prepare(int XP, int YP, int WP, int HP, int &cx, int &cy,
-			 int &X, int &Y, int &W, int &H);
 
-  protected:
-
+protected:
   void measure();
 
-  public:
+public:
 
   int alloc_data; // Non-zero if data was allocated
-  
-  private:
 
-#if defined(WIN32)
-#if FLTK_ABI_VERSION < 10301
-  static // a static member is needed for ABI compatibility
-#endif
-  UINT pixmap_bg_color; // RGB color used for pixmap background
-#endif // WIN32
-#if defined(__APPLE__) || defined(WIN32)
-  void *id_; // for internal use
-  void *mask_; // for internal use (mask bitmap)
-#else
-  unsigned id_; // for internal use
-  unsigned mask_; // for internal use (mask bitmap)
-#endif // __APPLE__ || WIN32
-  
-  public:
+private:
+  // for internal use
+  fl_uintptr_t id_;
+  fl_uintptr_t mask_;
+  int cache_w_, cache_h_; // size of pixmap when cached
+
+public:
 
   /**    The constructors create a new pixmap from the specified XPM data.  */
   explicit Fl_Pixmap(char * const * D) : Fl_Image(-1,0,1), alloc_data(0), id_(0), mask_(0) {set_data((const char*const*)D); measure();}
@@ -85,7 +64,7 @@ class FL_EXPORT Fl_Pixmap : public Fl_Image {
   explicit Fl_Pixmap(const uchar* const * D) : Fl_Image(-1,0,1), alloc_data(0), id_(0), mask_(0) {set_data((const char*const*)D); measure();}
   virtual ~Fl_Pixmap();
   virtual Fl_Image *copy(int W, int H);
-  Fl_Image *copy() { return copy(w(), h()); }
+  Fl_Image *copy() { return Fl_Image::copy(); }
   virtual void color_average(Fl_Color c, float i);
   virtual void desaturate();
   virtual void draw(int X, int Y, int W, int H, int cx=0, int cy=0);
@@ -96,7 +75,3 @@ class FL_EXPORT Fl_Pixmap : public Fl_Image {
 };
 
 #endif
-
-//
-// End of "$Id$".
-//

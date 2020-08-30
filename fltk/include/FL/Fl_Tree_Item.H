@@ -1,6 +1,4 @@
 //
-// "$Id$"
-//
 
 #ifndef FL_TREE_ITEM_H
 #define FL_TREE_ITEM_H
@@ -24,11 +22,11 @@
 // the file "COPYING" which should have been included with this file.  If this
 // file is missing or damaged, see the license at:
 //
-//     http://www.fltk.org/COPYING.php
+//     https://www.fltk.org/COPYING.php
 //
-// Please report all bugs and problems on the following page:
+// Please see the following page on how to report bugs and issues:
 //
-//     http://www.fltk.org/str.php
+//     https://www.fltk.org/bugs.php
 //
 
 ///
@@ -65,51 +63,31 @@
 ///
 class Fl_Tree;
 class FL_EXPORT Fl_Tree_Item {
-#if FLTK_ABI_VERSION >= 10303
-  Fl_Tree                *_tree;		// parent tree
-#endif
-  const char             *_label;		// label (memory managed)
-  Fl_Font                 _labelfont;		// label's font face
-  Fl_Fontsize             _labelsize;		// label's font size
-  Fl_Color                _labelfgcolor;	// label's fg color
-  Fl_Color                _labelbgcolor;	// label's bg color (0xffffffff is 'transparent')
-#if FLTK_ABI_VERSION >= 10303
+  Fl_Tree                *_tree;                // parent tree
+  const char             *_label;               // label (memory managed)
+  Fl_Font                 _labelfont;           // label's font face
+  Fl_Fontsize             _labelsize;           // label's font size
+  Fl_Color                _labelfgcolor;        // label's fg color
+  Fl_Color                _labelbgcolor;        // label's bg color (0xffffffff is 'transparent')
   /// \enum Fl_Tree_Item_Flags
   enum Fl_Tree_Item_Flags {
-#else
-  /// \enum
-  enum {
-#endif
-    OPEN                = 1<<0,		///> item is open
-    VISIBLE             = 1<<1,		///> item is visible
-    ACTIVE              = 1<<2,		///> item is active
-    SELECTED            = 1<<3		///> item is selected
+    OPEN                = 1<<0,         ///> item is open
+    VISIBLE             = 1<<1,         ///> item is visible
+    ACTIVE              = 1<<2,         ///> item is active
+    SELECTED            = 1<<3          ///> item is selected
   };
-#if FLTK_ABI_VERSION >= 10301
-  // NEW
-  unsigned short _flags;		// misc flags
-#else /*FLTK_ABI_VERSION*/
-  // OLD: this will go away after 1.3.x
-  char                    _open;		// item is open?
-  char                    _visible;		// item is visible?
-  char                    _active;		// item activated?
-  char                    _selected;		// item selected?
-#endif /*FLTK_ABI_VERSION*/
-  int                     _xywh[4];		// xywh of this widget (if visible)
-  int                     _collapse_xywh[4];	// xywh of collapse icon (if visible)
-  int                     _label_xywh[4];	// xywh of label
-  Fl_Widget              *_widget;		// item's label widget (optional)
-  Fl_Image               *_usericon;		// item's user-specific icon (optional)
-#if FLTK_ABI_VERSION >= 10304
-  Fl_Image               *_userdeicon;		// deactivated usericon
-#endif
-  Fl_Tree_Item_Array      _children;		// array of child items
-  Fl_Tree_Item           *_parent;		// parent item (=0 if root)
-  void                   *_userdata;    	// user data that can be associated with an item
-#if FLTK_ABI_VERSION >= 10301
-  Fl_Tree_Item           *_prev_sibling;	// previous sibling (same level)
-  Fl_Tree_Item           *_next_sibling;	// next sibling (same level)
-#endif /*FLTK_ABI_VERSION*/
+  unsigned short _flags;                // misc flags
+  int                     _xywh[4];             // xywh of this widget (if visible)
+  int                     _collapse_xywh[4];    // xywh of collapse icon (if visible)
+  int                     _label_xywh[4];       // xywh of label
+  Fl_Widget              *_widget;              // item's label widget (optional)
+  Fl_Image               *_usericon;            // item's user-specific icon (optional)
+  Fl_Image               *_userdeicon;          // deactivated usericon
+  Fl_Tree_Item_Array      _children;            // array of child items
+  Fl_Tree_Item           *_parent;              // parent item (=0 if root)
+  void                   *_userdata;            // user data that can be associated with an item
+  Fl_Tree_Item           *_prev_sibling;        // previous sibling (same level)
+  Fl_Tree_Item           *_next_sibling;        // next sibling (same level)
   // Protected methods
 protected:
   void _Init(const Fl_Tree_Prefs &prefs, Fl_Tree *tree);
@@ -119,20 +97,14 @@ protected:
   void draw_horizontal_connector(int x1, int x2, int y, const Fl_Tree_Prefs &prefs);
   void recalc_tree();
   int calc_item_height(const Fl_Tree_Prefs &prefs) const;
-#if FLTK_ABI_VERSION >= 10303
   Fl_Color drawfgcolor() const;
   Fl_Color drawbgcolor() const;
-#endif
 
 public:
-  Fl_Tree_Item(const Fl_Tree_Prefs &prefs);	// CTOR -- backwards compatible
-#if FLTK_ABI_VERSION >= 10303
-  Fl_Tree_Item(Fl_Tree *tree);			// CTOR -- ABI 1.3.3+
-  virtual ~Fl_Tree_Item();			// DTOR -- ABI 1.3.3+
-#else
-  ~Fl_Tree_Item();				// DTOR -- backwards compatible
-#endif
-  Fl_Tree_Item(const Fl_Tree_Item *o);		// COPY CTOR
+  Fl_Tree_Item(const Fl_Tree_Prefs &prefs);     // CTOR -- backwards compatible
+  Fl_Tree_Item(Fl_Tree *tree);                  // CTOR -- ABI 1.3.3+
+  virtual ~Fl_Tree_Item();                      // DTOR -- ABI 1.3.3+
+  Fl_Tree_Item(const Fl_Tree_Item *o);          // COPY CTOR
   /// The item's x position relative to the window
   int x() const { return(_xywh[0]); }
   /// The item's y position relative to the window
@@ -155,14 +127,9 @@ public:
   /// The item's label height
   /// \version 1.3.3
   int label_h() const { return(_label_xywh[3]); }
-#if FLTK_ABI_VERSION >= 10303
   virtual int draw_item_content(int render);
-  void draw(int X, int &Y, int W, Fl_Tree_Item *itemfocus, 
-	    int &tree_item_xmax, int lastchild=1, int render=1);
-#else
-  void draw(int X, int &Y, int W, Fl_Widget *tree, 
-            Fl_Tree_Item *itemfocus, const Fl_Tree_Prefs &prefs, int lastchild=1);
-#endif
+  void draw(int X, int &Y, int W, Fl_Tree_Item *itemfocus,
+            int &tree_item_xmax, int lastchild=1, int render=1);
   void show_self(const char *indent = "") const;
   void label(const char *val);
   const char *label() const;
@@ -172,11 +139,11 @@ public:
 
   /// Retrieve the user-data value that has been assigned to the item.
   inline void* user_data() const { return _userdata; }
-  
+
   /// Set item's label font face.
   void labelfont(Fl_Font val) {
-    _labelfont = val; 
-    recalc_tree();		// may change tree geometry
+    _labelfont = val;
+    recalc_tree();              // may change tree geometry
   }
   /// Get item's label font face.
   Fl_Font labelfont() const {
@@ -184,8 +151,8 @@ public:
   }
   /// Set item's label font size.
   void labelsize(Fl_Fontsize val) {
-    _labelsize = val; 
-    recalc_tree();		// may change tree geometry
+    _labelsize = val;
+    recalc_tree();              // may change tree geometry
   }
   /// Get item's label font size.
   Fl_Fontsize labelsize() const {
@@ -193,11 +160,11 @@ public:
   }
   /// Set item's label foreground text color.
   void labelfgcolor(Fl_Color val) {
-    _labelfgcolor = val; 
+    _labelfgcolor = val;
   }
   /// Return item's label foreground text color.
   Fl_Color labelfgcolor() const {
-    return(_labelfgcolor); 
+    return(_labelfgcolor);
   }
   /// Set item's label text color. Alias for labelfgcolor(Fl_Color)).
   void labelcolor(Fl_Color val) {
@@ -205,42 +172,42 @@ public:
   }
   /// Return item's label text color. Alias for labelfgcolor() const).
   Fl_Color labelcolor() const {
-    return labelfgcolor(); 
+    return labelfgcolor();
   }
   /// Set item's label background color.
   /// A special case is made for color 0xffffffff which uses the parent tree's bg color.
   void labelbgcolor(Fl_Color val) {
-    _labelbgcolor = val; 
+    _labelbgcolor = val;
   }
   /// Return item's label background text color.
   /// If the color is 0xffffffff, the default behavior is the parent tree's
   /// bg color will be used. (An overloaded draw_item_content() can override
   /// this behavior.)
   Fl_Color labelbgcolor() const {
-    return(_labelbgcolor); 
+    return(_labelbgcolor);
   }
   /// Assign an FLTK widget to this item.
   void widget(Fl_Widget *val) {
-    _widget = val; 
-    recalc_tree();		// may change tree geometry
+    _widget = val;
+    recalc_tree();              // may change tree geometry
   }
   /// Return FLTK widget assigned to this item.
   Fl_Widget *widget() const {
-    return(_widget); 
+    return(_widget);
   }
   /// Return the number of children this item has.
   int children() const {
-    return(_children.total()); 
+    return(_children.total());
   }
   /// Return the child item for the given 'index'.
   Fl_Tree_Item *child(int index) {
-    return(_children[index]); 
+    return(_children[index]);
   }
   /// Return the const child item for the given 'index'.
   const Fl_Tree_Item *child(int t) const;
   /// See if this item has children.
   int has_children() const {
-    return(children()); 
+    return(children());
   }
   int find_child(const char *name);
   int find_child(Fl_Tree_Item *item);
@@ -259,19 +226,17 @@ public:
   // Adding items
   //////////////////
   Fl_Tree_Item *add(const Fl_Tree_Prefs &prefs,
-  		    const char *new_label,
-  		    Fl_Tree_Item *newitem);
+                    const char *new_label,
+                    Fl_Tree_Item *newitem);
   Fl_Tree_Item *add(const Fl_Tree_Prefs &prefs,
-  		    const char *new_label);
+                    const char *new_label);
   Fl_Tree_Item *add(const Fl_Tree_Prefs &prefs,
-  		    char **arr,
-		    Fl_Tree_Item *newitem);
+                    char **arr,
+                    Fl_Tree_Item *newitem);
   Fl_Tree_Item *add(const Fl_Tree_Prefs &prefs,
-  		    char **arr);
-#if FLTK_ABI_VERSION >= 10303
+                    char **arr);
   Fl_Tree_Item *replace(Fl_Tree_Item *new_item);
   Fl_Tree_Item *replace_child(Fl_Tree_Item *olditem, Fl_Tree_Item *newitem);
-#endif
   Fl_Tree_Item *insert(const Fl_Tree_Prefs &prefs, const char *new_label, int pos=0);
   Fl_Tree_Item *insert_above(const Fl_Tree_Prefs &prefs, const char *new_label);
   Fl_Tree_Item* deparent(int index);
@@ -287,11 +252,11 @@ public:
   Fl_Tree_Item *next_sibling();
   Fl_Tree_Item *prev_sibling();
   void update_prev_next(int index);
-  Fl_Tree_Item *next_displayed(Fl_Tree_Prefs &prefs);	// deprecated
-  Fl_Tree_Item *prev_displayed(Fl_Tree_Prefs &prefs);	// deprecated
+  Fl_Tree_Item *next_displayed(Fl_Tree_Prefs &prefs);   // deprecated
+  Fl_Tree_Item *prev_displayed(Fl_Tree_Prefs &prefs);   // deprecated
   Fl_Tree_Item *next_visible(Fl_Tree_Prefs &prefs);
   Fl_Tree_Item *prev_visible(Fl_Tree_Prefs &prefs);
-  
+
   /// Return the parent for this item. Returns NULL if we are the root.
   Fl_Tree_Item *parent() {
     return(_parent);
@@ -306,21 +271,17 @@ public:
   void parent(Fl_Tree_Item *val) {
     _parent = val;
   }
-#if FLTK_ABI_VERSION >= 10303
   const Fl_Tree_Prefs& prefs() const;
   /// Return the tree for this item.
-  /// \version 1.3.3 (ABI feature)
+  /// \version 1.3.3
   const Fl_Tree *tree() const {
     return(_tree);
   }
-#endif
-#if FLTK_ABI_VERSION >= 10304
   /// Return the tree for this item.
-  /// \version 1.3.4 (ABI feature)
+  /// \version 1.3.4
   Fl_Tree *tree() {
     return(_tree);
   }
-#endif
   //////////////////
   // State
   //////////////////
@@ -336,7 +297,7 @@ public:
   }
   /// Toggle the item's open/closed state.
   void open_toggle() {
-    is_open()?close():open();	// handles calling recalc_tree()
+    is_open()?close():open();   // handles calling recalc_tree()
   }
   /// Change the item's selection state to the optionally specified 'val'.
   /// If 'val' is not specified, the item will be selected.
@@ -347,9 +308,9 @@ public:
   /// Toggle the item's selection state.
   void select_toggle() {
     if ( is_selected() ) {
-      deselect();	// deselect if selected
+      deselect();       // deselect if selected
     } else {
-      select();		// select if deselected
+      select();         // select if deselected
     }
   }
   /// Select item and all its children.
@@ -392,7 +353,7 @@ public:
   }
   /// Change the item's activation state to the optionally specified 'val'.
   ///
-  /// When deactivated, the item will be 'grayed out'; the callback() 
+  /// When deactivated, the item will be 'grayed out'; the callback()
   /// won't be invoked if the user clicks on the label. If a widget()
   /// is associated with the item, its activation state will be changed as well.
   ///
@@ -402,9 +363,9 @@ public:
     set_flag(ACTIVE,val);
     if ( _widget && val != (int)_widget->active() ) {
       if ( val ) {
-	_widget->activate();
+        _widget->activate();
       } else {
-	_widget->deactivate();
+        _widget->deactivate();
       }
       _widget->redraw();
     }
@@ -444,7 +405,7 @@ public:
   ///
   void usericon(Fl_Image *val) {
     _usericon = val;
-    recalc_tree();		// may change tree geometry
+    recalc_tree();              // may change tree geometry
   }
   /// Get the item's user icon as an Fl_Image. Returns '0' if disabled.
   Fl_Image *usericon() const {
@@ -476,7 +437,6 @@ public:
   ///
   /// \version 1.3.4
   ///
-#if FLTK_ABI_VERSION >= 10304
   void userdeicon(Fl_Image* val) {
     _userdeicon = val;
   }
@@ -485,18 +445,14 @@ public:
   Fl_Image* userdeicon() const {
     return _userdeicon;
   }
-#endif
   //////////////////
   // Events
   //////////////////
-#if FLTK_ABI_VERSION >= 10303
   const Fl_Tree_Item* find_clicked(const Fl_Tree_Prefs &prefs, int yonly=0) const;
   Fl_Tree_Item* find_clicked(const Fl_Tree_Prefs &prefs, int yonly=0);
-#else
-  const Fl_Tree_Item* find_clicked(const Fl_Tree_Prefs &prefs) const;
-  Fl_Tree_Item* find_clicked(const Fl_Tree_Prefs &prefs);
-#endif
+  int event_on_item(const Fl_Tree_Prefs &prefs) const;
   int event_on_collapse_icon(const Fl_Tree_Prefs &prefs) const;
+  int event_on_user_icon(const Fl_Tree_Prefs &prefs) const;
   int event_on_label(const Fl_Tree_Prefs &prefs) const;
   /// Is this item the root of the tree?
   int is_root() const {
@@ -506,11 +462,10 @@ public:
   // Protected methods
   // TODO: move these to top 'protected:' section
 protected:
-#if FLTK_ABI_VERSION >= 10301
   /// Set a flag to an on or off value. val is 0 or 1.
   inline void set_flag(unsigned short flag,int val) {
     if ( flag==OPEN || flag==VISIBLE ) {
-      recalc_tree();		// may change tree geometry
+      recalc_tree();            // may change tree geometry
     }
     if ( val ) _flags |= flag; else _flags &= ~flag;
   }
@@ -518,32 +473,7 @@ protected:
   inline int is_flag(unsigned short val) const {
     return(_flags & val ? 1 : 0);
   }
-#else /*FLTK_ABI_VERSION*/
-  /// Set a flag to an on or off value. val is 0 or 1.
-  void set_flag(unsigned short flag,int val) {
-    switch (flag) {
-      case     OPEN: _open     = val; break;
-      case  VISIBLE: _visible  = val; break;
-      case   ACTIVE: _active   = val; break;
-      case SELECTED: _selected = val; break;
-    }
-  }
-  /// See if flag set. Returns 0 or 1.
-  int is_flag(unsigned short flag) const {
-    switch (flag) {
-      case     OPEN: return(_open ? 1 : 0);
-      case  VISIBLE: return(_visible ? 1 : 0);
-      case   ACTIVE: return(_active ? 1 : 0);
-      case SELECTED: return(_selected ? 1 : 0);
-      default:       return(0);
-    }
-  }
-#endif /*FLTK_ABI_VERSION*/
 
 };
 
 #endif /*FL_TREE_ITEM_H*/
-
-//
-// End of "$Id$".
-//

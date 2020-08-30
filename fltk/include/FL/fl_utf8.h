@@ -1,18 +1,17 @@
 /*
- * "$Id$"
- *
  * Author: Jean-Marc Lienher ( http://oksid.ch )
  * Copyright 2000-2010 by O'ksi'D.
+ * Copyright 2016-2020 by Bill Spitzak and others.
  *
  * This library is free software. Distribution and use rights are outlined in
  * the file "COPYING" which should have been included with this file.  If this
  * file is missing or damaged, see the license at:
  *
- *     http://www.fltk.org/COPYING.php
+ *     https://www.fltk.org/COPYING.php
  *
- * Please report all bugs and problems on the following page:
+ * Please see the following page on how to report bugs and issues:
  *
- *     http://www.fltk.org/str.php
+ *     https://www.fltk.org/bugs.php
  */
 
 /* Merged in some functionality from the fltk-2 version. IMM.
@@ -30,43 +29,9 @@
 
 #include "Fl_Export.H"
 #include "fl_types.h"
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
-#ifdef WIN32
-#  include <sys/types.h>
-#  include <sys/stat.h>
-#  include <locale.h>
-#  include <ctype.h>
-#  define xchar wchar_t
-#  if !defined(FL_DLL) && !defined(__CYGWIN__)
-#    undef strdup
-#    define strdup _strdup
-#    undef putenv
-#    define putenv _putenv
-#    undef stricmp
-#    define stricmp _stricmp
-#    undef strnicmp
-#    define strnicmp _strnicmp
-#    undef chdir
-#    define chdir _chdir
-#  endif
-#elif defined(__APPLE__)
-#  include <wchar.h>
-#  include <sys/stat.h>
-#  define xchar wchar_t
-#else /* X11 */
-#  include <sys/types.h>
-#  include <sys/stat.h>
-#  if defined(FL_LIBRARY) /* don't expose X11 headers in user space */
-#    include <X11/Xlocale.h>
-#    include <X11/Xlib.h>
-#  endif /* defined(FL_LIBRARY) -- don't expose X11 headers in user space */
-#  include <locale.h>
-#  define xchar unsigned short
-#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -137,7 +102,7 @@ FL_EXPORT int fl_utf8test(const char *src, unsigned len);
  * for internal use only */
 FL_EXPORT int fl_wcwidth_(unsigned int ucs);
 
-/* XX: return width of utf-8 character string in columns.
+/* XX: return width of UTF-8 character string in columns.
  * NOTE: this may also do C1 control character (0x80 to 0x9f) to CP1252 mapping,
  * depending on original build options */
 FL_EXPORT int fl_wcwidth(const char *src);
@@ -154,13 +119,14 @@ FL_EXPORT char* fl_utf2mbcs(const char *src);
 FL_EXPORT unsigned fl_utf8from_mb(char *dst, unsigned dstlen, const char *src, unsigned srclen);
 
 /*****************************************************************************/
-#ifdef WIN32
+#ifdef _WIN32
+/* these two Windows-only functions are kept for API compatibility */
 /* OD: Attempt to convert the UTF-8 string to the current locale */
 FL_EXPORT char *fl_utf8_to_locale(const char *s, int len, unsigned int codepage);
 
 /* OD: Attempt to convert a string in the current locale to UTF-8 */
 FL_EXPORT char *fl_locale_to_utf8(const char *s, int len, unsigned int codepage);
-#endif
+#endif /* _WIN32 */
 
 /*****************************************************************************
  * The following functions are intended to provide portable, UTF-8 aware
@@ -192,10 +158,13 @@ FL_EXPORT int fl_chmod(const char* f, int mode);
 FL_EXPORT int fl_access(const char* f, int mode);
 
 /* OD: Portable UTF-8 aware stat wrapper */
-FL_EXPORT int fl_stat( const char *path, struct stat *buffer );
+FL_EXPORT int fl_stat(const char *path, struct stat *buffer);
 
 /* OD: Portable UTF-8 aware getcwd wrapper */
-FL_EXPORT char* fl_getcwd( char *buf, int maxlen);
+FL_EXPORT char *fl_getcwd(char *buf, int len);
+
+/* Portable UTF-8 aware chdir wrapper */
+FL_EXPORT int fl_chdir(const char *path);
 
 /* OD: Portable UTF-8 aware fopen wrapper */
 FL_EXPORT FILE *fl_fopen(const char *f, const char *mode);
@@ -207,16 +176,21 @@ FL_EXPORT int fl_system(const char* f);
 FL_EXPORT int fl_execvp(const char *file, char *const *argv);
 
 /* OD: Portable UTF-8 aware open wrapper */
-FL_EXPORT int fl_open(const char* f, int o, ...);
+FL_EXPORT int fl_open(const char *fname, int oflags, ...);
+
+FL_EXPORT int fl_open_ext(const char *fname, int binary, int oflags, ...);
 
 /* OD: Portable UTF-8 aware unlink wrapper */
-FL_EXPORT int fl_unlink(const char *f);
+FL_EXPORT int fl_unlink(const char *fname);
 
 /* OD: Portable UTF-8 aware rmdir wrapper */
 FL_EXPORT int fl_rmdir(const char *f);
 
 /* OD: Portable UTF-8 aware getenv wrapper */
 FL_EXPORT char* fl_getenv(const char *name);
+
+/* Portable UTF-8 aware putenv wrapper */
+FL_EXPORT int fl_putenv(const char *var);
 
 /* OD: Portable UTF-8 aware execvp wrapper */
 FL_EXPORT int fl_mkdir(const char* f, int mode);
@@ -242,7 +216,3 @@ FL_EXPORT char fl_make_path( const char *path );
 
 
 #endif /* _HAVE_FL_UTF8_HDR_ */
-
-/*
- * End of "$Id$".
- */

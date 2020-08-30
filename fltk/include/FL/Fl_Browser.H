@@ -1,6 +1,4 @@
 //
-// "$Id$"
-//
 // Browser header file for the Fast Light Tool Kit (FLTK).
 //
 // Copyright 1998-2016 by Bill Spitzak and others.
@@ -9,11 +7,11 @@
 // the file "COPYING" which should have been included with this file.  If this
 // file is missing or damaged, see the license at:
 //
-//     http://www.fltk.org/COPYING.php
+//     https://www.fltk.org/COPYING.php
 //
-// Please report all bugs and problems on the following page:
+// Please see the following page on how to report bugs and issues:
 //
-//     http://www.fltk.org/str.php
+//     https://www.fltk.org/bugs.php
 //
 
 /* \file
@@ -36,7 +34,15 @@ struct FL_BLINE;
   lines, and manages all the storage for the text.  This is not a text
   editor or spreadsheet!  But it is useful for showing a vertical list of
   named objects to the user.
-  
+
+  \image html  fl_hold_browser.png "Fl_Hold_Browser"
+  \image latex fl_hold_browser.png "Fl_Hold_Browser" width=4cm
+
+  \par
+
+  \image html  fl_multi_browser.png "Fl_Multi_Browser"
+  \image latex fl_multi_browser.png "Fl_Multi_Browser" width=4cm
+
   Each line in the browser is identified by number. <I>The numbers
   start at one</I> (this is so that zero can be reserved for "no line" in
   the selective browsers). <I>Unless otherwise noted, the methods do not
@@ -49,9 +55,9 @@ struct FL_BLINE;
   describes.
 
   The base class does nothing when the user clicks on it.  The
-  subclasses 
-  Fl_Select_Browser, 
-  Fl_Hold_Browser, and 
+  subclasses
+  Fl_Select_Browser,
+  Fl_Hold_Browser, and
   Fl_Multi_Browser react to user clicks to select lines in
   the browser and do callbacks.
 
@@ -68,7 +74,7 @@ struct FL_BLINE;
   \code
       // How to loop through all the items in the browser
       for ( int t=1; t<=browser->size(); t++ ) {       // index 1 based..!
-	  printf("item #%d, label='%s'\n", t, browser->text(t));
+          printf("item #%d, label='%s'\n", t, browser->text(t));
       }
   \endcode
 
@@ -79,15 +85,15 @@ struct FL_BLINE;
 */
 class FL_EXPORT Fl_Browser : public Fl_Browser_ {
 
-  FL_BLINE *first;		// the array of lines
+  FL_BLINE *first;              // the array of lines
   FL_BLINE *last;
   FL_BLINE *cache;
-  int cacheline;		// line number of cache
-  int lines;                	// Number of lines
+  int cacheline;                // line number of cache
+  int lines;                    // Number of lines
   int full_height_;
   const int* column_widths_;
-  char format_char_;		// alternative to @-sign
-  char column_char_;		// alternative to tab
+  char format_char_;            // alternative to @-sign
+  char column_char_;            // alternative to tab
 
 protected:
 
@@ -210,9 +216,10 @@ public:
     Gets the current format code prefix character, which by default is '\@'.
     A string of formatting codes at the start of each column are stripped off
     and used to modify how the rest of the line is printed:
-    
+
     \li <tt>'\@.'</tt> Print rest of line, don't look for more '\@' signs
-    \li <tt>'\@\@'</tt> Print rest of line starting with '\@'
+    \li <tt>'\@\@'</tt> Doubling the format character prints the format
+      character once, followed by the rest of line
     \li <tt>'\@l'</tt> Use a LARGE (24 point) font
     \li <tt>'\@m'</tt> Use a medium large (18 point) font
     \li <tt>'\@s'</tt> Use a <SMALL>small</SMALL> (11 point) font
@@ -222,8 +229,9 @@ public:
     font (sets font to FL_COURIER)
     \li <tt>'\@c'</tt> Center the line horizontally
     \li <tt>'\@r'</tt> Right-justify the text
+    \li <tt>'\@N'</tt> Use fl_inactive_color() to draw the text
     \li <tt>'\@B0', '\@B1', ... '\@B255'</tt> Fill the backgound with
-    fl_color(n)
+      fl_color(n)
     \li <tt>'\@C0', '\@C1', ... '\@C255'</tt> Use fl_color(n) to draw the text
     \li <tt>'\@F0', '\@F1', ...</tt> Use fl_font(n) to draw the text
     \li <tt>'\@S1', '\@S2', ...</tt> Use point size n to draw the text
@@ -231,7 +239,7 @@ public:
     \li <tt>'\@-'</tt> draw an engraved line through the middle.
 
     Notice that the '\@.' command can be used to reliably
-    terminate the parsing.  To print a random string in a random color, use 
+    terminate the parsing.  To print a random string in a random color, use
     <tt>sprintf("@C%d@.%s", color, string)</tt> and it will work even if the
     string starts with a digit or has the format character in it.
   */
@@ -320,7 +328,3 @@ public:
 };
 
 #endif
-
-//
-// End of "$Id$".
-//

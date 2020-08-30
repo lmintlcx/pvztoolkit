@@ -1,6 +1,4 @@
 //
-// "$Id$"
-//
 // Fl_Check_Browser header file for the Fast Light Tool Kit (FLTK).
 //
 // Copyright 1998-2010 by Bill Spitzak and others.
@@ -9,11 +7,11 @@
 // the file "COPYING" which should have been included with this file.  If this
 // file is missing or damaged, see the license at:
 //
-//     http://www.fltk.org/COPYING.php
+//     https://www.fltk.org/COPYING.php
 //
-// Please report all bugs and problems on the following page:
+// Please see the following page on how to report bugs and issues:
 //
-//     http://www.fltk.org/str.php
+//     https://www.fltk.org/bugs.php
 //
 
 /* \file
@@ -30,8 +28,9 @@
   lines that may be selected and/or checked by the user.
 */
 class FL_EXPORT Fl_Check_Browser : public Fl_Browser_ {
-  /* required routines for Fl_Browser_ subclass: */
 
+protected:
+  /* required routines for Fl_Browser_ subclass: */
   void *item_first() const;
   void *item_next(void *) const;
   void *item_prev(void *) const;
@@ -40,6 +39,12 @@ class FL_EXPORT Fl_Check_Browser : public Fl_Browser_ {
   void item_draw(void *, int, int, int, int) const;
   void item_select(void *, int);
   int item_selected(void *) const;
+  const char *item_text(void *item) const /* override */;
+
+public:
+  void *item_at(int index) const /* override */;
+  void item_swap(int ia, int ib) /* override */;
+  void item_swap(void *a, void *b) /* override */;
 
   /* private data */
 
@@ -48,11 +53,11 @@ class FL_EXPORT Fl_Check_Browser : public Fl_Browser_ {
 #ifndef FL_DOXYGEN
   /** For internal use only. */
   struct cb_item {
-	  cb_item *next;	/**< For internal use only. */
-	  cb_item *prev;	/**< For internal use only. */
-	  char checked;		/**< For internal use only. */
-	  char selected;	/**< For internal use only. */
-	  char *text;		/**< For internal use only. */
+          cb_item *next;        /**< For internal use only. */
+          cb_item *prev;        /**< For internal use only. */
+          char checked;         /**< For internal use only. */
+          char selected;        /**< For internal use only. */
+          char *text;           /**< For internal use only. */
   };
 #endif // !FL_DOXYGEN
 
@@ -74,7 +79,7 @@ class FL_EXPORT Fl_Check_Browser : public Fl_Browser_ {
   ~Fl_Check_Browser() { clear(); }
   int add(char *s);               // add an (unchecked) item
   int add(char *s, int b);        // add an item and set checked
-				  // both return the new nitems()
+                                  // both return the new nitems()
   int remove(int item);           // delete an item. Returns nitems()
 
   // inline const char * methods to avoid breaking binary compatibility...
@@ -106,8 +111,4 @@ class FL_EXPORT Fl_Check_Browser : public Fl_Browser_ {
 };
 
 #endif // Fl_Check_Browser_H
-
-//
-// End of "$Id$".
-//
 

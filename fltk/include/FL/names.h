@@ -1,19 +1,17 @@
 //
-// "$Id$"
-//
 // Event names header file for the Fast Light Tool Kit (FLTK).
 //
-// Copyright 1998-2010 by Bill Spitzak and others.
+// Copyright 1998-2016 by Bill Spitzak and others.
 //
 // This library is free software. Distribution and use rights are outlined in
 // the file "COPYING" which should have been included with this file.  If this
 // file is missing or damaged, see the license at:
 //
-//     http://www.fltk.org/COPYING.php
+//     https://www.fltk.org/COPYING.php
 //
-// Please report all bugs and problems on the following page:
+// Please see the following page on how to report bugs and issues:
 //
-//     http://www.fltk.org/str.php
+//     https://www.fltk.org/bugs.php
 //
 
 // Thanks to Greg Ercolano for this addition.
@@ -32,7 +30,7 @@
 
   \b Example:
   \code
-  #include <FL/names.h>		// array will be defined here
+  #include <FL/names.h>         // array will be defined here
   int MyClass::handle(int e) {
       printf("Event was %s (%d)\n", fl_eventnames[e], e);
       // ..resulting output might be e.g. "Event was FL_PUSH (1)"..
@@ -69,10 +67,10 @@ const char * const fl_eventnames[] =
   "FL_SCREEN_CONFIGURATION_CHANGED",
   "FL_FULLSCREEN",
   "FL_ZOOM_GESTURE",
-  "FL_EVENT_27",  // not yet defined, just in case they /will/ be defined ...
-  "FL_EVENT_28",
-  "FL_EVENT_29",
-  "FL_EVENT_30"
+  "FL_ZOOM_EVENT",
+  "FL_EVENT_28", // not yet defined, just in case it /will/ be defined ...
+  "FL_EVENT_29", // not yet defined, just in case it /will/ be defined ...
+  "FL_EVENT_30"  // not yet defined, just in case it /will/ be defined ...
 };
 
 /**
@@ -82,7 +80,7 @@ const char * const fl_eventnames[] =
 
   \b Example:
   \code
-  #include <FL/names.h>		// array will be defined here
+  #include <FL/names.h>         // array will be defined here
   int MyClass::my_callback(Fl_Widget *w, void*) {
       int fnum = w->labelfont();
       // Resulting output might be e.g. "Label's font is FL_HELVETICA (0)"
@@ -115,7 +113,3 @@ const char * const fl_fontnames[] =
 /** @} */
 
 #endif /* FL_NAMES_H */
-
-//
-// End of "$Id$".
-//
