@@ -7,6 +7,10 @@
 #include <vector>
 #include <initializer_list>
 #include <stdint.h>
+#include <bitset>
+#include <regex>
+
+#include "zlib.h"
 
 #include "process.h"
 #include "code.h"
@@ -63,6 +67,7 @@ struct PVZ_DATA
     uintptr_t plant_squished;
     uintptr_t plant_asleep;
     uintptr_t plant_count_max;
+    uintptr_t plant_next_pos;
 
     uintptr_t lawn_mower;
     uintptr_t lawn_mower_dead;
@@ -354,6 +359,7 @@ public:
 
     // 清理场地物品
     void ClearGridItems(int);
+    void ClearGridItems(std::vector<int>);
 
     // 直接过关
     void DirectWin(bool);
@@ -393,6 +399,18 @@ public:
 
     // 小丑(辣椒)不爆
     void ZombieNotExplode(bool);
+
+    // 水路种睡莲
+    void LilyPadOnPool(int, int);
+
+    // 屋顶放花盆
+    void FlowerPotOnRoof(int, int);
+
+    // 获取字符串
+    std::string GetLineup();
+
+    // 布置阵型
+    void SetLineup(std::string);
 
     // 根据出怪种类生成出怪列表
     void generate_spawn_list();

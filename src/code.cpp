@@ -11,7 +11,7 @@ namespace Pt
 
 Code::Code()
 {
-    unsigned int page = 16; // 1或者2大部分场合下足够了
+    unsigned int page = 256; // 1MB
     code = new unsigned char[4096 * page];
     length = 0;
 }
@@ -42,6 +42,12 @@ void Code::asm_add_dword(unsigned int value)
 {
     (unsigned int &)code[length] = value;
     length += 4;
+}
+
+void Code::asm_add_list(std::initializer_list<unsigned char> value)
+{
+    for (auto it = value.begin(); it != value.end(); it++)
+        asm_add_byte(*it);
 }
 
 void Code::asm_push(int value)
