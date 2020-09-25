@@ -10,9 +10,13 @@
 #include <FL/Fl_Value_Input.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Check_Button.H>
+#include <FL/Fl_Menu_Button.H>
+#include <FL/Fl_Text_Editor.H>
 #include <FL/Fl_Choice.H>
 #include <FL/Fl_Table.H>
 #include <FL/fl_draw.H>
+
+#include "zlib.h"
 
 #include "pvz.h"
 #include "pak.h"
@@ -20,6 +24,10 @@
 #include <Windows.h>
 #include <ShlObj.h>
 #include <ShellAPI.h>
+#include <wincrypt.h>
+
+#include <bitset>
+#include <regex>
 
 namespace Pt
 {
@@ -125,6 +133,25 @@ public:
     Fl_Check_Button *check_no_ice_trail;
     Fl_Check_Button *check_zombie_not_explode;
 
+    Fl_Group *group_lineup;
+    Fl_Check_Button *check_lineup_mode;
+    int lily_pad_col_lower[9] = {1, 1, 1, 1, 1, 1, 1, 1, 1};
+    int lily_pad_col_upper[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int flower_pot_col_lower[9] = {1, 1, 1, 1, 1, 1, 1, 1, 1};
+    int flower_pot_col_upper[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    Fl_Menu_Button *button_put_lily_pad;
+    Fl_Menu_Button *button_put_flower_pot;
+    Fl_Button *button_array_design;
+    Fl_Choice_ *choice_lineup_scene;
+    int lineup_count[6];
+    Fl_Choice_ *choice_lineup_name[6];
+    Fl_Button *button_get_lineup;
+    Fl_Button *button_copy_lineup;
+    Fl_Button *button_paste_lineup;
+    Fl_Button *button_set_lineup;
+    Fl_Text_Buffer *buffer_lineup_string;
+    Fl_Text_Editor *editor_lineup_string;
+
     Fl_Group *group_spawn;
     int spawn_type[20];
     Fl_Check_Button *check_zombie[20];
@@ -165,10 +192,10 @@ public:
     PAK *pak;
 
 private:
-    static std::string get_nt_version();
-
     std::string utf8_encode(const std::wstring &);
     std::wstring utf8_decode(const std::string &);
+
+    std::string convert_lineup(const std::string &);
 
     static void cb_find_result(void *, int);
     inline void cb_find_result(int);
@@ -282,6 +309,36 @@ private:
 
     static void cb_zombie_not_explode(Fl_Widget *, void *);
     inline void cb_zombie_not_explode();
+
+    static void cb_lineup_mode(Fl_Widget *, void *);
+    inline void cb_lineup_mode();
+
+    static void cb_put_lily_pad(Fl_Widget *, void *);
+    inline void cb_put_lily_pad();
+
+    static void cb_put_flower_pot(Fl_Widget *, void *);
+    inline void cb_put_flower_pot();
+
+    static void cb_array_design(Fl_Widget *, void *);
+    inline void cb_array_design();
+
+    static void cb_switch_lineup_scene(Fl_Widget *, void *);
+    inline void cb_switch_lineup_scene();
+
+    static void cb_show_lineup_string(Fl_Widget *, void *);
+    inline void cb_show_lineup_string();
+
+    static void cb_copy_lineup(Fl_Widget *, void *);
+    inline void cb_copy_lineup();
+
+    static void cb_paste_lineup(Fl_Widget *, void *);
+    inline void cb_paste_lineup();
+
+    static void cb_get_lineup(Fl_Widget *, void *);
+    inline void cb_get_lineup();
+
+    static void cb_set_lineup(Fl_Widget *, void *);
+    inline void cb_set_lineup();
 
     static void cb_spawn_mutex_0(Fl_Widget *, void *);
     inline void cb_spawn_mutex_0();

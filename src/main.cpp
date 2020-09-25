@@ -56,6 +56,7 @@ int main(int argc, char **argv)
     // 调试输出中文
 #ifdef _DEBUG
     std::wcout.imbue(std::locale("chs"));
+    system("chcp 65001");
 #endif
 
     // 测试版在 2020-12-31 之后失效

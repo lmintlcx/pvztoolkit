@@ -11,8 +11,8 @@ set LIB=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Lib;%LIB%
 
 cd /d %~dp0
 
-set INCLUDE=.\fltk\include;%INCLUDE%
-set LIB=.\fltk\lib;%LIB%
+set INCLUDE=.\fltk\include;.\zlib\include;%INCLUDE%
+set LIB=.\fltk\lib;.\zlib\lib;%LIB%
 
 REM set MAKE_TOOL=nmake
 set PATH=.\jom;%PATH%
