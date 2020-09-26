@@ -135,15 +135,15 @@ public:
 
     Fl_Group *group_lineup;
     Fl_Check_Button *check_lineup_mode;
-    int lily_pad_col_lower[9] = {1, 1, 1, 1, 1, 1, 1, 1, 1};
-    int lily_pad_col_upper[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    int flower_pot_col_lower[9] = {1, 1, 1, 1, 1, 1, 1, 1, 1};
-    int flower_pot_col_upper[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    unsigned int lily_pad_col_lower[8] = {1, 1, 1, 1, 1, 1, 1, 1};
+    unsigned int lily_pad_col_upper[8] = {2, 3, 4, 5, 6, 7, 8, 9};
+    unsigned int flower_pot_col_lower[7] = {1, 4, 4, 4, 4, 4, 4};
+    unsigned int flower_pot_col_upper[7] = {3, 4, 5, 6, 7, 8, 9};
     Fl_Menu_Button *button_put_lily_pad;
     Fl_Menu_Button *button_put_flower_pot;
     Fl_Button *button_array_design;
     Fl_Choice_ *choice_lineup_scene;
-    int lineup_count[6];
+    int lineup_count[6] = {0};
     Fl_Choice_ *choice_lineup_name[6];
     Fl_Button *button_get_lineup;
     Fl_Button *button_copy_lineup;
@@ -156,9 +156,10 @@ public:
     int spawn_type[20];
     Fl_Check_Button *check_zombie[20];
     Fl_Button *button_show_details;
-    Fl_Check_Button *check_limit_count;
-    Fl_Button *button_internal_spawn;
-    Fl_Button *button_customize_spawn;
+    Fl_Choice_ *choice_giga_weight;
+    Fl_Check_Button *check_giga_limit;
+    Fl_Button *button_set_spawn;
+    Fl_Menu_Button *button_spawn_mode;
 
     Fl_Group *group_others;
     Fl_Choice_ *choice_mode;
@@ -355,11 +356,11 @@ private:
     static void cb_spawn_count_check(Fl_Widget *, void *);
     inline void cb_spawn_count_check();
 
-    static void cb_internal_spawn(Fl_Widget *, void *);
-    inline void cb_internal_spawn();
+    static void cb_switch_spawn_mode(Fl_Widget *, void *);
+    inline void cb_switch_spawn_mode();
 
-    static void cb_customize_spawn(Fl_Widget *, void *);
-    inline void cb_customize_spawn();
+    static void cb_set_spawn(Fl_Widget *, void *);
+    inline void cb_set_spawn();
 
     static void cb_mix_mode(Fl_Widget *, void *);
     inline void cb_mix_mode();
