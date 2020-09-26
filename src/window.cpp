@@ -1368,10 +1368,11 @@ Window::Window(int width, int height, const char *title)
                     for (size_t col = 0; col < 5; col++)
                         check_zombie[row * 5 + col] = new Fl_Check_Button                               //
                             (x + 8 + (iw - 22 + m) * col, y + 5 + (ih + 7 + m) * row, iw - 42, ih, ""); //
-                button_show_details = new Fl_Button(c(1), r(6), iw, ih, "显示详情");
-                check_limit_count = new Fl_Check_Button(c(2), r(6), iw - 15, ih, "限制种数");
-                button_internal_spawn = new Fl_Button(c(3), r(6), iw, ih, "自然出怪");
-                button_customize_spawn = new Fl_Button(c(4), r(6), iw, ih, "极限出怪");
+                button_show_details = new Fl_Button(c(1), r(6), iw - 15, ih, "显示详情");
+                choice_giga_weight = new Fl_Choice_(c(2), r(6), iw - 20, ih, "");
+                check_giga_limit = new Fl_Check_Button(c(3) - 55 + 40, r(6), iw - 40, ih, "变速");
+                button_set_spawn = new Fl_Button(c(4) - 55, r(6), iw + 55, ih, "极限出怪 (均匀填充)");
+                button_spawn_mode = new Fl_Menu_Button(c(4) - 55, r(6), iw + 55, ih, nullptr);
             }
             group_spawn->end();
 
@@ -1499,10 +1500,11 @@ Window::Window(int width, int height, const char *title)
                 for (size_t row = 0; row < 5; row++)
                     for (size_t col = 0; col < 4; col++)
                         check_zombie[row * 4 + col] = new Fl_Check_Button(c(col + 1), r(row + 1), iw, ih, "");
-                button_show_details = new Fl_Button(c(1), r(6), iw, ih, "Show Details");
-                check_limit_count = new Fl_Check_Button(c(2), r(6), iw, ih, "Limit Species");
-                button_internal_spawn = new Fl_Button(c(3), r(6), iw, ih, "Built-in Generate");
-                button_customize_spawn = new Fl_Button(c(4), r(6), iw, ih, "Filling Evenly");
+                button_show_details = new Fl_Button(c(1), r(6), iw - 20, ih, "Show Details");
+                choice_giga_weight = new Fl_Choice_(c(2), r(6), iw - 70, ih, "");
+                check_giga_limit = new Fl_Check_Button(c(3) - 75 + 5, r(6), iw - 5, ih, "Limit Giga Waves");
+                button_set_spawn = new Fl_Button(c(4) - 75, r(6), iw + 75, ih, "Extreme (Filling Evenly)");
+                button_spawn_mode = new Fl_Menu_Button(c(4) - 75, r(6), iw + 75, ih, nullptr);
             }
             group_spawn->end();
 
@@ -1721,17 +1723,23 @@ Window::Window(int width, int height, const char *title)
     }
     choice_item->value(2);
 
-    for (size_t i = 0; i < 9; i++)
+    for (size_t i = 0; i < 8; i++)
     {
-        std::string label = std::to_string(lily_pad_col_lower[i]) //
-                            + " -> " + std::to_string(lily_pad_col_upper[i]);
+        std::string label;
+        for (unsigned int c = 1; c <= 9; c++)
+            label += (lily_pad_col_lower[i] <= c && c <= lily_pad_col_upper[i])
+                         ? "■"
+                         : "□";
         button_put_lily_pad->add(label.c_str(), 0, cb_put_lily_pad, this);
     }
 
-    for (size_t i = 0; i < 9; i++)
+    for (size_t i = 0; i < 7; i++)
     {
-        std::string label = std::to_string(flower_pot_col_lower[i]) //
-                            + " -> " + std::to_string(flower_pot_col_upper[i]);
+        std::string label;
+        for (unsigned int c = 1; c <= 9; c++)
+            label += (flower_pot_col_lower[i] <= c && c <= flower_pot_col_upper[i])
+                         ? "■"
+                         : "□";
         button_put_flower_pot->add(label.c_str(), 0, cb_put_flower_pot, this);
     }
 
@@ -1806,8 +1814,27 @@ Window::Window(int width, int height, const char *title)
         else
             check_zombie[i]->label(zombies_s[spawn_type[i]]);
 
-    // 默认限制出怪种类数
-    check_limit_count->value(1);
+    // 非旗帜波红眼权重范围
+    for (size_t w = 1000; w <= 6000; w += 100)
+        choice_giga_weight->add(std::to_string(w).c_str());
+    choice_giga_weight->value(0);
+
+    choice_giga_weight->deactivate();
+    check_giga_limit->activate();
+
+    if (LANG == Language::Chinese)
+    {
+        button_spawn_mode->add("自然出怪 (游戏生成)", 0, cb_switch_spawn_mode, this);
+        button_spawn_mode->add("极限出怪 (均匀填充)", 0, cb_switch_spawn_mode, this);
+        button_spawn_mode->add("模拟出怪 (加权随机)", 0, cb_switch_spawn_mode, this);
+    }
+    else
+    {
+        button_spawn_mode->add("Natural (Built-in Generate)", 0, cb_switch_spawn_mode, this);
+        button_spawn_mode->add("Extreme (Filling Evenly)", 0, cb_switch_spawn_mode, this);
+        button_spawn_mode->add("Simulate (Weighted Random)", 0, cb_switch_spawn_mode, this);
+    }
+    button_spawn_mode->type(Fl_Menu_Button::POPUP3);
 
     for (size_t i = 0; i < 73; i++)
     {
@@ -1936,9 +1963,7 @@ Window::Window(int width, int height, const char *title)
     }
     button_show_details->callback(cb_show_details, this);
     button_update_details->callback(cb_update_details, this);
-    check_limit_count->callback(cb_spawn_count_check, this);
-    button_internal_spawn->callback(cb_internal_spawn, this);
-    button_customize_spawn->callback(cb_customize_spawn, this);
+    button_set_spawn->callback(cb_set_spawn, this);
 
     button_mix->callback(cb_mix_mode, this);
     button_userdata->callback(cb_userdata, this);
@@ -1964,67 +1989,69 @@ Window::Window(int width, int height, const char *title)
 
     // 根据系统换字体
 
-    static Fl_Font pt_font = (FL_FREE_FONT + 1);
+    static Fl_Font ui_font = (FL_FREE_FONT + 1);
     static Fl_Font ls_font = (FL_FREE_FONT + 2);
-    Fl::set_font(pt_font, "Microsoft YaHei");
+    Fl::set_font(ui_font, "Microsoft YaHei");
     Fl::set_font(ls_font, "Courier New");
 
     for (int i = 0; i < this->children(); i++)
-        this->child(i)->labelfont(pt_font);
+        this->child(i)->labelfont(ui_font);
     {
         for (int i = 0; i < tabs->children(); i++)
         {
-            tabs->child(i)->labelfont(pt_font);
+            tabs->child(i)->labelfont(ui_font);
             tabs->child(i)->labelsize(tabs->child(i)->labelsize() + 1);
         }
         {
             for (int i = 0; i < group_resource->children(); i++)
-                group_resource->child(i)->labelfont(pt_font);
-            input_sun->textfont(pt_font);
-            input_money->textfont(pt_font);
-            input_wisdom_tree->textfont(pt_font);
-            choice_slot->textfont(pt_font);
-            choice_seed->textfont(pt_font);
-            choice_music->textfont(pt_font);
-            input_level->textfont(pt_font);
+                group_resource->child(i)->labelfont(ui_font);
+            input_sun->textfont(ui_font);
+            input_money->textfont(ui_font);
+            input_wisdom_tree->textfont(ui_font);
+            choice_slot->textfont(ui_font);
+            choice_seed->textfont(ui_font);
+            choice_music->textfont(ui_font);
+            input_level->textfont(ui_font);
         }
         {
             for (int i = 0; i < group_battle->children(); i++)
-                group_battle->child(i)->labelfont(pt_font);
-            choice_row->textfont(pt_font);
-            choice_col->textfont(pt_font);
-            choice_plant->textfont(pt_font);
-            choice_zombie->textfont(pt_font);
-            choice_item->textfont(pt_font);
+                group_battle->child(i)->labelfont(ui_font);
+            choice_row->textfont(ui_font);
+            choice_col->textfont(ui_font);
+            choice_plant->textfont(ui_font);
+            choice_zombie->textfont(ui_font);
+            choice_item->textfont(ui_font);
         }
         {
             for (int i = 0; i < group_lineup->children(); i++)
-                group_lineup->child(i)->labelfont(pt_font);
-            choice_lineup_scene->textfont(pt_font);
-            choice_lineup_name[0]->textfont(pt_font);
-            choice_lineup_name[1]->textfont(pt_font);
-            choice_lineup_name[2]->textfont(pt_font);
-            choice_lineup_name[3]->textfont(pt_font);
-            choice_lineup_name[4]->textfont(pt_font);
-            choice_lineup_name[5]->textfont(pt_font);
+                group_lineup->child(i)->labelfont(ui_font);
+            choice_lineup_scene->textfont(ui_font);
+            choice_lineup_name[0]->textfont(ui_font);
+            choice_lineup_name[1]->textfont(ui_font);
+            choice_lineup_name[2]->textfont(ui_font);
+            choice_lineup_name[3]->textfont(ui_font);
+            choice_lineup_name[4]->textfont(ui_font);
+            choice_lineup_name[5]->textfont(ui_font);
             editor_lineup_string->textfont(ls_font); // 阵型字符串特殊字体
             editor_lineup_string->textsize(16);
         }
         {
             for (int i = 0; i < group_spawn->children(); i++)
-                group_spawn->child(i)->labelfont(pt_font);
+                group_spawn->child(i)->labelfont(ui_font);
+            // choice_giga_weight->textfont(ui_font);
+            button_spawn_mode->textfont(ui_font);
         }
         {
             for (int i = 0; i < group_others->children(); i++)
-                group_others->child(i)->labelfont(pt_font);
-            choice_mode->textfont(pt_font);
-            input_file->textfont(pt_font);
-            input_dir->textfont(pt_font);
-            choice_debug->textfont(pt_font);
+                group_others->child(i)->labelfont(ui_font);
+            choice_mode->textfont(ui_font);
+            input_file->textfont(ui_font);
+            input_dir->textfont(ui_font);
+            choice_debug->textfont(ui_font);
         }
     }
-    table_spawn->labelfont(pt_font);
-    button_update_details->labelfont(pt_font);
+    table_spawn->labelfont(ui_font);
+    button_update_details->labelfont(ui_font);
     button_update_details->labelsize(12);
 
     // 显示默认阵型的字符串
@@ -2265,10 +2292,10 @@ void Window::cb_find_result(int result)
         case PVZ_1_1_0_1056_ZH:
             game_status->label("1.1.0.1056 粘度汗化版");
             {
-                int ret = MessageBoxW(GetActiveWindow(),                                //
-                                      L"这个版本的游戏存在严重的问题, 随时可能会崩溃. " //
-                                      L"建议更换使用其他正常的版本, 现在去下载吗?",     //
-                                      L"警告",                                          //
+                int ret = MessageBoxW(GetActiveWindow(),                                 //
+                                      L"这个版本的游戏存在严重的问题, 随时可能会崩溃.\n" //
+                                      L"建议更换使用其他正常的版本, 现在去下载吗?",      //
+                                      L"警告",                                           //
                                       MB_OKCANCEL | MB_ICONWARNING);
                 if (ret == IDOK)
                     ShellExecuteW(nullptr, L"open", L"https://pvz.lmintlcx.com/download/", //
@@ -2319,7 +2346,7 @@ void Window::cb_find_result(int result)
             game_status->label("1.1.0.1056 GOTY (zh)");
             {
                 int ret = MessageBoxW(GetActiveWindow(),                                                                           //
-                                      L"There are many problems with this version of game, it could crash at any time. "           //
+                                      L"There are many problems with this version of game, it could crash at any time.\n"          //
                                       L"It is recommended to use another normal version instead, do you want to download it now?", //
                                       L"Warning",                                                                                  //
                                       MB_OKCANCEL | MB_ICONWARNING);
@@ -2976,12 +3003,20 @@ void Window::cb_paste_lineup()
     buffer_lineup_string->text("");
     Fl_Text_Editor::kf_paste(0, editor_lineup_string);
 
-    // 网页布阵器格式转成新格式
+    // 去掉换行和首尾空格
     std::string str = buffer_lineup_string->text();
+    str.erase(std::remove(str.begin(), str.end(), '\r'), str.end());
+    str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
+    str.erase(0, str.find_first_not_of(' '));
+    str.erase(str.find_last_not_of(' ') + 1);
+    buffer_lineup_string->text(str.c_str());
+
+    // 网页布阵器格式转成新格式
+    std::string old_str = buffer_lineup_string->text();
     std::regex reg("[0-5](,[a-fA-F0-9]{1,2} [1-6] [1-9] [0-2] [0-4] [0-1]){0,}");
-    if (std::regex_match(str, reg))
+    if (std::regex_match(old_str, reg))
     {
-        std::string new_str = convert_lineup(str);
+        std::string new_str = convert_lineup(old_str);
         buffer_lineup_string->text(new_str.c_str());
     }
 }
@@ -3033,7 +3068,7 @@ void Window::cb_spawn_mutex_0(Fl_Widget *, void *w)
 
 void Window::cb_spawn_mutex_0()
 {
-    if (check_zombie[0]->value() == 1 && check_limit_count->value() == 1)
+    if (check_zombie[0]->value() == 1 && true)
         check_zombie[3]->value(0);
     cb_spawn_count_check();
 }
@@ -3045,7 +3080,7 @@ void Window::cb_spawn_mutex_3(Fl_Widget *, void *w)
 
 void Window::cb_spawn_mutex_3()
 {
-    if (check_zombie[3]->value() == 1 && check_limit_count->value() == 1)
+    if (check_zombie[3]->value() == 1 && true)
         check_zombie[0]->value(0);
     cb_spawn_count_check();
 }
@@ -3126,7 +3161,7 @@ void Window::cb_spawn_count_check()
     {
         if ((spawn_type[i] != 19) && (spawn_type[i] != 20))
         {
-            if (check_limit_count->value() == 1 && count >= 11)
+            if (true && count >= 11) // 限制出怪类型总数
             {
                 // 超限了, 把没选的停用
                 if (check_zombie[i]->value() == 0)
@@ -3142,40 +3177,81 @@ void Window::cb_spawn_count_check()
     }
 }
 
-void Window::cb_internal_spawn(Fl_Widget *, void *w)
+void Window::cb_switch_spawn_mode(Fl_Widget *, void *w)
 {
-    ((Window *)w)->cb_internal_spawn();
+    ((Window *)w)->cb_switch_spawn_mode();
 }
 
-void Window::cb_internal_spawn()
+void Window::cb_switch_spawn_mode()
+{
+    switch (button_spawn_mode->value())
+    {
+    case 0: // 自然
+        choice_giga_weight->deactivate();
+        check_giga_limit->deactivate();
+        if (LANG == Language::Chinese)
+            button_set_spawn->label("自然出怪 (游戏生成)");
+        else
+            button_set_spawn->label("Natural (Built-in Generate)");
+        break;
+    case 1: // 极限
+    default:
+        choice_giga_weight->deactivate();
+        check_giga_limit->activate();
+        if (LANG == Language::Chinese)
+            button_set_spawn->label("极限出怪 (均匀填充)");
+        else
+            button_set_spawn->label("Extreme (Filling Evenly)");
+        break;
+    case 2: // 模拟
+        choice_giga_weight->activate();
+        check_giga_limit->activate();
+        if (LANG == Language::Chinese)
+            button_set_spawn->label("模拟出怪 (加权随机)");
+        else
+            button_set_spawn->label("Simulate (Weighted Random)");
+        break;
+    }
+}
+
+void Window::cb_set_spawn(Fl_Widget *, void *w)
+{
+    ((Window *)w)->cb_set_spawn();
+}
+
+void Window::cb_set_spawn()
 {
     std::array<bool, 33> zombies = {false};
     for (size_t i = 0; i < 20; i++)
         zombies[spawn_type[i]] = (check_zombie[i]->value() == 1);
-    zombies[0] = true;
-    pvz->InternalSpawn(zombies);
+    int giga_weight = 1000 + 100 * choice_giga_weight->value();
+    bool limit_giga = check_giga_limit->value() == 1;
+
+    switch (button_spawn_mode->value())
+    {
+    case 0: // 自然
+        zombies[0] = true;
+        pvz->InternalSpawn(zombies);
+        break;
+
+    case 1: // 极限
+    default:
+        zombies[0] = true;
+        zombies[1] = true;
+        pvz->CustomizeSpawn(zombies, limit_giga, false, 1000);
+        break;
+
+    case 2: // 模拟
+        zombies[0] = true;
+        zombies[1] = true;
+        pvz->CustomizeSpawn(zombies, limit_giga, true, giga_weight);
+        break;
+    }
 
     if (window_spawn->shown() == 1)
         cb_update_details();
 }
 
-void Window::cb_customize_spawn(Fl_Widget *, void *w)
-{
-    ((Window *)w)->cb_customize_spawn();
-}
-
-void Window::cb_customize_spawn()
-{
-    std::array<bool, 33> zombies = {false};
-    for (size_t i = 0; i < 20; i++)
-        zombies[spawn_type[i]] = (check_zombie[i]->value() == 1);
-    zombies[0] = true;
-    zombies[1] = true;
-    pvz->CustomizeSpawn(zombies);
-
-    if (window_spawn->shown() == 1)
-        cb_update_details();
-}
 void Window::cb_mix_mode(Fl_Widget *, void *w)
 {
     ((Window *)w)->cb_mix_mode();
@@ -3655,9 +3731,9 @@ void Window::cb_about()
                             + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.06 (zh)\n"            //
                             + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.07 (zh)\n"            //
                             + L"\n"                                                         //
-                            + L"版本号: 1.4.0.10400\n"                                      //
-                            + L"构建日期: 2020/09/25\n"                                     //
-                            + L"工具链: MSVC 2017 / FLTK 1.4.x / zlib 1.2.11\n"             //
+                            + L"版本号: 1.5.0.10500\n"                                      //
+                            + L"构建日期: 2020/09/26\n"                                     //
+                            + L"依赖库: FLTK 1.4.x / zlib 1.2.11\n"                         //
                             + L"版权所有: © 2020 lmintlcx\n"                                //
                             + L"鸣谢: a418569882 kmtohoem\n";
         MessageBoxW(GetActiveWindow(), text.c_str(), L"关于 PvZ Toolkit", MB_OK);
@@ -3678,9 +3754,9 @@ void Window::cb_about()
                             + L"✓ 1.1.0.1056 GOTY 2012.06 (zh)\n"                                          //
                             + L"✓ 1.1.0.1056 GOTY 2012.07 (zh)\n"                                          //
                             + L"\n"                                                                        //
-                            + L"Version: 1.4.0.10400\n"                                                    //
-                            + L"Build Date: 2020/09/25\n"                                                  //
-                            + L"Toolchain: MSVC 2017 / FLTK 1.4.x / zlib 1.2.11\n"                         //
+                            + L"Version: 1.5.0.10500\n"                                                    //
+                            + L"Build Date: 2020/09/26\n"                                                  //
+                            + L"Dependencies: FLTK 1.4.x / zlib 1.2.11\n"                                  //
                             + L"Copyright: © 2020 lmintlcx\n"                                              //
                             + L"Credit: a418569882 kmtohoem\n";
         MessageBoxW(GetActiveWindow(), text.c_str(), L"About PvZ Toolkit", MB_OK);

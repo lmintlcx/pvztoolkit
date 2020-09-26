@@ -1866,8 +1866,21 @@ void PvZ::LockShovel(bool on)
         return;
 
     enable_hack(data().lock_shovel, on);
+
+    int ui = GameUI();
+    if (ui != 2 && ui != 3)
+        return;
+
+    auto cursor_offset = ReadMemory<int>({data().pvz_base, data().main_object, data().cursor});
     if (on)
-        WriteMemory<int>(6, {data().pvz_base, data().main_object, data().cursor, data().cursor_grab});
+    {
+        WriteMemory<int>(6, {cursor_offset + data().cursor_grab});
+    }
+    else
+    {
+        if (ReadMemory<int>({cursor_offset + data().cursor_grab}) == 6)
+            WriteMemory<int>(0, {cursor_offset + data().cursor_grab});
+    }
 }
 
 int PvZ::GetSlotSeed(int index)
@@ -3161,7 +3174,7 @@ void PvZ::InternalSpawn(std::array<bool, 33> zombies)
         update_spawn_preview();
 }
 
-void PvZ::CustomizeSpawn(std::array<bool, 33> zombies)
+void PvZ::CustomizeSpawn(std::array<bool, 33> zombies, bool limit_giga, bool simulate, int giga_weight)
 {
     if (!GameOn())
         return;
@@ -3169,12 +3182,31 @@ void PvZ::CustomizeSpawn(std::array<bool, 33> zombies)
     if (ui != 2 && ui != 3)
         return;
 
+    std::array<bool, 20> giga_waves;
+    std::fill(giga_waves.begin(), giga_waves.end(), true);
+    if (limit_giga)
+        for (size_t w = 11; w <= 19; w++)
+            giga_waves[w - 1] = false;
+
+    std::vector<double> weights = {4000, 0, 4000, 2000, 3000, 1000, 3500, 2000, 1000, 0, 0, 2000, 2000, 2000, 1500, 1000, 2000, 1000, 1000, 1, 1000, 1000, 1500, 1500, 0, 0, 4000, 3000, 1000, 2000, 2000, 2000, 6000};
+    weights[0] = 400;
+    weights[2] = 1000;
+    std::vector<double> weights_flag = weights;
+    weights[32] = giga_weight;
+    std::vector<double> weights_normal = weights;
+    std::discrete_distribution<unsigned int> dist_flag(weights_flag.begin(), weights_flag.end());
+    std::discrete_distribution<unsigned int> dist_normal(weights_normal.begin(), weights_normal.end());
+    auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    std::mt19937 gen(static_cast<unsigned int>(seed));
+
+    // 僵尸列表
     std::array<int, 1000> zombies_list;
-    std::fill(zombies_list.begin(), zombies_list.end(), 0);
+    std::fill(zombies_list.begin(), zombies_list.end(), -1);
 
     bool has_flag = zombies[1];
     bool has_yeti = zombies[19];
     bool has_bungee = zombies[20];
+    bool has_giga = zombies[32];
 
     bool limit_flag = true;
     bool limit_yeti = true;
@@ -3192,38 +3224,48 @@ void PvZ::CustomizeSpawn(std::array<bool, 33> zombies)
         {
             do
             {
-                type += 1;
-                type %= 33;
-            } while ((!zombies[type])                                //
-                     || (has_flag && limit_flag && type == 1)        //
-                     || (has_yeti && limit_yeti && type == 19)       //
-                     || (has_bungee && limit_bungee && type == 20)); //
+                if (simulate)
+                {
+                    if (((i / 50) % 10) == 9) // 旗帜波
+                        type = dist_flag(gen);
+                    else
+                        type = dist_normal(gen);
+                }
+                else
+                {
+                    type += 1;
+                    type %= 33;
+                }
+            } while ((!zombies[type])                                                          //
+                     || (has_flag && limit_flag && type == 1)                                  //
+                     || (has_yeti && limit_yeti && type == 19)                                 //
+                     || (has_bungee && limit_bungee && type == 20)                             //
+                     || (has_giga && limit_giga && type == 32 && !giga_waves[(i / 50) % 20])); //
 
             zombies_list[i] = type;
         }
 
-        std::vector<size_t> index_flag = {450, 950};
-        std::vector<size_t> index_bungee = {451, 452, 453, 454, 951, 952, 953, 954};
+        std::vector<size_t> index_flag = {450,                                       //
+                                          950};                                      //
+        std::vector<size_t> index_zombie = {451, 452, 453, 454, 455, 456, 457, 458,  //
+                                            951, 952, 953, 954, 955, 956, 957, 958}; //
+        std::vector<size_t> index_bungee = {459, 460, 461, 462,                      //
+                                            959, 960, 961, 962};                     //
 
-        if (has_flag && limit_flag)
-        {
-            // for (auto i : index_flag) zombies_list[i] = 1;
-            for (size_t i = 0; i < index_flag.size(); i++)
-                zombies_list[index_flag[i]] = 1;
-        }
+        if ((has_flag && limit_flag) || simulate)
+            for (auto i : index_flag)
+                zombies_list[i] = 1;
+
+        if (simulate)
+            for (auto i : index_zombie)
+                zombies_list[i] = 0;
 
         if (has_bungee && limit_bungee)
-        {
-            // for (auto i : index_bungee) zombies_list[i] = 20;
-            for (size_t i = 0; i < index_bungee.size(); i++)
-                zombies_list[index_bungee[i]] = 20;
-        }
+            for (auto i : index_bungee)
+                zombies_list[i] = 20;
 
         if (has_yeti && limit_yeti)
-        {
-            int i = rand() % 1000;
-            zombies_list[i] = 19;
-        }
+            zombies_list[rand() % 1000] = 19;
     }
 
     WriteMemory(zombies_list, {data().pvz_base, data().main_object, data().spawn_list});

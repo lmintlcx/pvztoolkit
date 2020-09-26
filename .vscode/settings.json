@@ -60,6 +60,9 @@
         "locale": "cpp",
         "regex": "cpp",
         "xlocbuf": "cpp",
-        "xlocmes": "cpp"
+        "xlocmes": "cpp",
+        "random": "cpp",
+        "chrono": "cpp",
+        "ratio": "cpp"
     }
 }

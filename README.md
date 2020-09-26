@@ -1,7 +1,7 @@
 
 # 植物大战僵尸全版本辅助工具
 
-Plants vs. Zombies Toolkit.
+Plants vs. Zombies All Version Toolkit.
 
 ## 预览图
 

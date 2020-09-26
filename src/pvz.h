@@ -9,6 +9,8 @@
 #include <stdint.h>
 #include <bitset>
 #include <regex>
+#include <random>
+#include <chrono>
 
 #include "zlib.h"
 
@@ -425,7 +427,7 @@ public:
     void InternalSpawn(std::array<bool, 33>);
 
     // 自定义填充出怪列表
-    void CustomizeSpawn(std::array<bool, 33>);
+    void CustomizeSpawn(std::array<bool, 33>, bool, bool, int);
 
     // 关卡混乱
     void MixMode(int, int);
