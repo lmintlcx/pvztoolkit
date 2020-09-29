@@ -26,13 +26,15 @@ namespace Pt
 
 #define PVZ_1_0_0_1051_EN 1001
 #define PVZ_1_2_0_1065_EN 1002
-#define PVZ_1_2_0_1073_EN 1003
-#define PVZ_1_2_0_1096_EN 1004
-#define PVZ_1_2_0_1093_DE_ES_FR_IT 1005
-#define PVZ_1_1_0_1056_ZH 1006
-#define PVZ_1_1_0_1056_JA 1007
-#define PVZ_1_1_0_1056_ZH_2012_06 1008
-#define PVZ_1_1_0_1056_ZH_2012_07 1009
+#define PVZ_1_0_4_7924_ES 1003
+#define PVZ_1_0_7_3556_ES 1004
+#define PVZ_1_2_0_1073_EN 1005
+#define PVZ_1_2_0_1096_EN 1006
+#define PVZ_1_2_0_1093_DE_ES_FR_IT 1007
+#define PVZ_1_1_0_1056_ZH 1008
+#define PVZ_1_1_0_1056_JA 1009
+#define PVZ_1_1_0_1056_ZH_2012_06 1010
+#define PVZ_1_1_0_1056_ZH_2012_07 1011
 
 typedef void (*cb_func)(void *, int);
 
@@ -268,6 +270,8 @@ protected:
     // 不同版本的内存基址数据
     PVZ_DATA data_1_0_0_1051_en;
     PVZ_DATA data_1_2_0_1065_en;
+    PVZ_DATA data_1_0_4_7924_es;
+    PVZ_DATA data_1_0_7_3556_es;
     PVZ_DATA data_1_2_0_1073_en;
     PVZ_DATA data_1_2_0_1096_en;
     PVZ_DATA data_1_2_0_1093_de_es_fr_it;
