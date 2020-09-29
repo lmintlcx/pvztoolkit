@@ -25,6 +25,8 @@ Plants vs. Zombies All Version Toolkit.
 
 - 英文原始版 1.0.0.1051 (en)
 - 英文修复版 1.2.0.1065 (en)
+- 西班牙语版 1.0.4.7924 (es)
+- 西班牙语版 1.0.7.3556 (es)
 - 英文年度版 1.2.0.1073 GOTY (en)
 - Steam 英文年度版 1.2.0.1096 GOTY (en)
 - Origin 多国语言年度版 1.2.0.1093 GOTY (de, es, fr, it)
@@ -35,8 +37,8 @@ Plants vs. Zombies All Version Toolkit.
 
 ## 项目构建
 
-PvZ Toolkit 使用 MSVC 2017 编译, 依赖于 FLTK 界面库.
+PvZ Toolkit 使用 MSVC 2017 编译, 依赖于 FLTK 界面库和 zlib 压缩库.
 
 ## 鸣谢名单
 
-PvZ Toolkit 基于 [zhumxiang/PVZ_Helper](https://github.com/zhumxiang/PVZ_Helper) 开发, 得到了 [Lazuplis-Mei](https://github.com/Lazuplis-Mei) 的帮助.
+PvZ Toolkit 基于 [zhumxiang/PVZ_Helper](https://github.com/zhumxiang/PVZ_Helper) 开发, 得到了 [63enjoy](https://github.com/63enjoy) 和 [Lazuplis-Mei](https://github.com/Lazuplis-Mei) 的帮助.

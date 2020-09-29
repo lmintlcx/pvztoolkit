@@ -2280,6 +2280,12 @@ void Window::cb_find_result(int result)
         case PVZ_1_2_0_1065_EN:
             game_status->label("1.2.0.1065 英文修复版");
             break;
+        case PVZ_1_0_4_7924_ES:
+            game_status->label("1.0.4.7924 西班牙语版");
+            break;
+        case PVZ_1_0_7_3556_ES:
+            game_status->label("1.0.7.3556 西班牙语版");
+            break;
         case PVZ_1_2_0_1073_EN:
             game_status->label("1.2.0.1073 英文年度版");
             break;
@@ -2332,6 +2338,12 @@ void Window::cb_find_result(int result)
             break;
         case PVZ_1_2_0_1065_EN:
             game_status->label("1.2.0.1065 Original (en)");
+            break;
+        case PVZ_1_0_4_7924_ES:
+            game_status->label("1.0.4.7924 Original (es)");
+            break;
+        case PVZ_1_0_7_3556_ES:
+            game_status->label("1.0.7.3556 Original (es)");
             break;
         case PVZ_1_2_0_1073_EN:
             game_status->label("1.2.0.1073 GOTY (en)");
@@ -3007,6 +3019,10 @@ void Window::cb_paste_lineup()
     std::string str = buffer_lineup_string->text();
     str.erase(std::remove(str.begin(), str.end(), '\r'), str.end());
     str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
+    str.erase(std::remove(str.begin(), str.end(), '\t'), str.end());
+    str.erase(std::remove(str.begin(), str.end(), '\v'), str.end());
+    str.erase(std::remove(str.begin(), str.end(), '\f'), str.end());
+    str.erase(std::remove(str.begin(), str.end(), ' '), str.end());
     str.erase(0, str.find_first_not_of(' '));
     str.erase(str.find_last_not_of(' ') + 1);
     buffer_lineup_string->text(str.c_str());
@@ -3723,6 +3739,8 @@ void Window::cb_about()
                             + L"支持的游戏版本: \n"                                         //
                             + L"✓ 英文原始版 1.0.0.1051 (en)\n"                             //
                             + L"✓ 英文修复版 1.2.0.1065 (en)\n"                             //
+                            + L"✓ 西班牙语版 1.0.4.7924 (es)\n"                             //
+                            + L"✓ 西班牙语版 1.0.7.3556 (es)\n"                             //
                             + L"✓ 英文年度版 1.2.0.1073 GOTY (en)\n"                        //
                             + L"✓ Steam 英文年度版 1.2.0.1096 GOTY (en)\n"                  //
                             + L"✓ Origin 多国语言年度版 1.2.0.1093 GOTY (de, es, fr, it)\n" //
@@ -3731,11 +3749,11 @@ void Window::cb_about()
                             + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.06 (zh)\n"            //
                             + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.07 (zh)\n"            //
                             + L"\n"                                                         //
-                            + L"版本号: 1.5.0.10500\n"                                      //
-                            + L"构建日期: 2020/09/26\n"                                     //
+                            + L"版本号: 1.6.0.10600\n"                                      //
+                            + L"构建日期: 2020/09/29\n"                                     //
                             + L"依赖库: FLTK 1.4.x / zlib 1.2.11\n"                         //
                             + L"版权所有: © 2020 lmintlcx\n"                                //
-                            + L"鸣谢: a418569882 kmtohoem\n";
+                            + L"鸣谢: a418569882 63enjoy kmtohoem\n";
         MessageBoxW(GetActiveWindow(), text.c_str(), L"关于 PvZ Toolkit", MB_OK);
     }
     else
@@ -3746,6 +3764,8 @@ void Window::cb_about()
                             + L"Supported game versions: \n"                                               //
                             + L"✓ 1.0.0.1051 (en)\n"                                                       //
                             + L"✓ 1.2.0.1065 (en)\n"                                                       //
+                            + L"✓ 1.0.4.7924 (es)\n"                                                       //
+                            + L"✓ 1.0.7.3556 (es)\n"                                                       //
                             + L"✓ 1.2.0.1073 GOTY (en)\n"                                                  //
                             + L"✓ 1.2.0.1096 GOTY Steam (en)\n"                                            //
                             + L"✓ 1.2.0.1093 GOTY Origin (de, es, fr, it)\n"                               //
@@ -3754,11 +3774,11 @@ void Window::cb_about()
                             + L"✓ 1.1.0.1056 GOTY 2012.06 (zh)\n"                                          //
                             + L"✓ 1.1.0.1056 GOTY 2012.07 (zh)\n"                                          //
                             + L"\n"                                                                        //
-                            + L"Version: 1.5.0.10500\n"                                                    //
-                            + L"Build Date: 2020/09/26\n"                                                  //
+                            + L"Version: 1.6.0.10600\n"                                                    //
+                            + L"Build Date: 2020/09/29\n"                                                  //
                             + L"Dependencies: FLTK 1.4.x / zlib 1.2.11\n"                                  //
                             + L"Copyright: © 2020 lmintlcx\n"                                              //
-                            + L"Credit: a418569882 kmtohoem\n";
+                            + L"Credit: a418569882 63enjoy kmtohoem\n";
         MessageBoxW(GetActiveWindow(), text.c_str(), L"About PvZ Toolkit", MB_OK);
     }
 }
