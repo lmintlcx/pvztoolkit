@@ -8,8 +8,8 @@
 IDI_ICON ICON DISCARDABLE "logo.ico"
 
 VS_VERSION_INFO VERSIONINFO
-    FILEVERSION 1, 6, 0, 10600
-    PRODUCTVERSION 1, 6, 0, 10600
+    FILEVERSION 1, 7, 0, 10700
+    PRODUCTVERSION 1, 7, 0, 10700
     FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
     FILEFLAGS VS_FF_DEBUG
@@ -26,12 +26,12 @@ VS_VERSION_INFO VERSIONINFO
             BEGIN
                 VALUE "CompanyName", "Cube Studio"
                 VALUE "FileDescription", "PvZ Toolkit"
-                VALUE "FileVersion", "1.6.0.10600"
+                VALUE "FileVersion", "1.7.0.10700"
                 VALUE "LegalCopyright", "(C) 2020 lmintlcx"
                 VALUE "InternalName", "pvztoolkit"
                 VALUE "OriginalFilename", "pvztoolkit.exe"
                 VALUE "ProductName", "PvZ Toolkit"
-                VALUE "ProductVersion", "1.6.0.10600"
+                VALUE "ProductVersion", "1.7.0.10700"
             END
         END
         BLOCK "VarFileInfo"

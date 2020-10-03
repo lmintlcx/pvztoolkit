@@ -375,13 +375,12 @@ int PAK::Pack(std::wstring src_dir, std::wstring dst_file)
     {
         eof_flag = (unsigned char)(0x00);
 
-        std::wstring file_name_wstr = files_name.at(i);
-        unsigned int name_size = file_name_wstr.size();
+        std::string file_name_str = utf8_encode(files_name.at(i));
+        unsigned int name_size = file_name_str.size();
         name_width = static_cast<unsigned char>(name_size);
 
-        // 所有文件名应该都是英文, 可以放心地 std::wstring -> char[]
         for (size_t i = 0; i < name_size; i++)
-            file_name[i] = static_cast<char>(file_name_wstr.at(i));
+            file_name[i] = file_name_str.at(i);
         file_name[name_size] = 0;
 
         file_size = files_size.at(i);

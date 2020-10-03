@@ -177,9 +177,12 @@ public:
     Fl_Button *button_pack;
     Fl_Choice_ *choice_debug;
     Fl_Button *button_debug;
-    Fl_Check_Button *check_show_hidden_games;
+    Fl_Choice_ *choice_speed;
+    Fl_Button *button_speed;
+    Fl_Check_Button *check_limbo_page;
     Fl_Button *button_download;
     Fl_Button *button_update;
+    Fl_Box *box_version;
     Fl_Button *button_about;
 
     Fl_Box *game_status;
@@ -265,6 +268,8 @@ private:
 
     static void cb_direct_win(Fl_Widget *, void *);
     inline void cb_direct_win();
+    static DWORD WINAPI cb_direct_win_thread(void *);
+    inline void cb_direct_win_thread();
 
     static void cb_clear(Fl_Widget *, void *);
     inline void cb_clear();
@@ -399,8 +404,11 @@ private:
     static void cb_debug_mode(Fl_Widget *, void *);
     inline void cb_debug_mode();
 
-    static void cb_show_hidden_games(Fl_Widget *, void *);
-    inline void cb_show_hidden_games();
+    static void cb_speed(Fl_Widget *, void *);
+    inline void cb_speed();
+
+    static void cb_limbo_page(Fl_Widget *, void *);
+    inline void cb_limbo_page();
 
     static void cb_download(Fl_Widget *, void *);
     inline void cb_download();

@@ -55,6 +55,8 @@ struct PVZ_DATA
 {
     uintptr_t pvz_base;
 
+    uintptr_t ms_per_frame;
+
     uintptr_t main_object;
 
     uintptr_t zombie;
@@ -450,6 +452,10 @@ public:
 
     // 内置调试模式
     void DebugMode(int);
+
+    // 帧生成时间
+    int GetFrameDuration();
+    void SetFrameDuration(int);
 
     // 显示隐藏小游戏
     void UnlockLimboPage(bool);

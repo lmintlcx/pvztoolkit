@@ -1392,10 +1392,13 @@ Window::Window(int width, int height, const char *title)
                 input_dir = new Fl_Input(c(2) - 30, r(4), iw + 30 + m + iw + 45, ih, "");
                 button_pack = new Fl_Button(c(4) + 45, r(4), iw - 45, ih, "打包");
                 choice_debug = new Fl_Choice_(c(1), r(5), iw - 30, ih, "");
-                button_debug = new Fl_Button(c(2) - 30, r(5), 45, ih, "调试");
-                check_show_hidden_games = new Fl_Check_Button(c(2) - 30 + 45 + 10 + 60, r(5), 220, ih, "显示隐藏小游戏 (Limbo Page)");
+                button_debug = new Fl_Button(c(2) - 30, r(5), iw - 30, ih, "调试");
+                choice_speed = new Fl_Choice_(c(3) - 60 + 10, r(5), iw - 30, ih, "");
+                button_speed = new Fl_Button(c(3) + 15 + 10, r(5), iw - 30, ih, "速度");
+                check_limbo_page = new Fl_Check_Button(c(4), r(5), iw, ih, "显示隐藏关");
                 button_download = new Fl_Button(c(1), r(6), iw, ih, "下载游戏");
                 button_update = new Fl_Button(c(2), r(6), iw, ih, "检查更新");
+                box_version = new Fl_Box(c(3), r(6), iw, ih, "版本 1.7.0");
                 button_about = new Fl_Button(c(4), r(6), iw, ih, "关于...");
             }
             group_others->end();
@@ -1523,11 +1526,14 @@ Window::Window(int width, int height, const char *title)
                 button_dir = new Fl_Button(c(1), r(4), iw - 30, ih, "Choose Folder");
                 input_dir = new Fl_Input(c(2) - 30, r(4), iw + 30 + m + iw + 45, ih, "");
                 button_pack = new Fl_Button(c(4) + 45, r(4), iw - 45, ih, "Pack");
-                choice_debug = new Fl_Choice_(c(1), r(5), iw - 30, ih, "");
-                button_debug = new Fl_Button(c(2) - 30, r(5), 110, ih, "Debug Mode");
-                check_show_hidden_games = new Fl_Check_Button(c(3) + 35, r(5), 265, ih, "Show Hidden Games (Limbo Page)");
+                choice_debug = new Fl_Choice_(c(1), r(5), iw - 45, ih, "");
+                button_debug = new Fl_Button(c(2) - 45, r(5), iw - 35, ih, "Debug Mode");
+                choice_speed = new Fl_Choice_(c(3) - 80 + 10, r(5), iw - 75, ih, "");
+                button_speed = new Fl_Button(c(3) + 10, r(5), iw - 30, ih, "Change Speed");
+                check_limbo_page = new Fl_Check_Button(c(4) - 10, r(5), iw + 10, ih, "Unlock Limbo Page");
                 button_download = new Fl_Button(c(1), r(6), iw, ih, "Download PvZ");
                 button_update = new Fl_Button(c(2), r(6), iw, ih, "Check Updates");
+                box_version = new Fl_Box(c(3), r(6), iw, ih, "Version 1.7.0");
                 button_about = new Fl_Button(c(4), r(6), iw, ih, "About ...");
             }
             group_others->end();
@@ -1886,9 +1892,20 @@ Window::Window(int width, int height, const char *title)
     }
     choice_debug->value(0);
 
+    choice_speed->add("10x");
+    choice_speed->add("5x");
+    choice_speed->add("2x");
+    choice_speed->add("1x");
+    choice_speed->add("0.5x");
+    choice_speed->add("0.2x");
+    choice_speed->add("0.1x");
+    choice_speed->value(3); // 1x
+
     // 默认打开后台运行和显示隐藏游戏
     check_background->value(1);
-    check_show_hidden_games->value(1);
+    check_limbo_page->value(1);
+
+    box_version->deactivate();
 
     // 默认显示出怪选项卡
     tabs->value(group_spawn);
@@ -1979,7 +1996,8 @@ Window::Window(int width, int height, const char *title)
     button_pack->callback(cb_pack, this);
 
     button_debug->callback(cb_debug_mode, this);
-    check_show_hidden_games->callback(cb_show_hidden_games, this);
+    button_speed->callback(cb_speed, this);
+    check_limbo_page->callback(cb_limbo_page, this);
 
     button_download->callback(cb_download, this);
     button_update->callback(cb_update, this);
@@ -2158,53 +2176,58 @@ std::string Window::convert_lineup(const std::string &str)
     {
         std::vector<std::string> item_str = split(str_list[i + 1], ' ');
         int item_type = hex2dec(item_str[0]);
-        int item_row = atoi(item_str[1].c_str()) - 1;
-        int item_col = atoi(item_str[2].c_str()) - 1;
-        int item_state_row = atoi(item_str[3].c_str());
-        int item_state_col = atoi(item_str[4].c_str());
-        bool item_imitater = atoi(item_str[5].c_str()) != 0;
 
         if (item_type < 0 || item_type > 0x32)
             continue;
 
-        if (item_type == 16 || item_type == 33 || item_type == 50)
+        if (item_type == 16 || item_type == 33) // 睡莲 花盆
         {
-            if (item_type == 16) // 睡莲
-            {
-                base[item_row * 9 + item_col] = 1;
-                base_im[item_row * 9 + item_col] = item_imitater ? 1 : 0;
-            }
-            else if (item_type == 33) // 花盆
-            {
-                base[item_row * 9 + item_col] = 2;
-                base_im[item_row * 9 + item_col] = item_imitater ? 1 : 0;
-            }
-            else // 墓碑 0x32
-            {
-                base[item_row * 9 + item_col] = 3;
-                base_im[item_row * 9 + item_col] = 0;
-            }
+            int item_row = atoi(item_str[1].c_str()) - 1;
+            int item_col = atoi(item_str[2].c_str()) - 1;
+            bool item_imitater = item_str[5] == "1";
+            base[item_row * 9 + item_col] = (item_type == 16) ? 1 : 2;
+            base_im[item_row * 9 + item_col] = item_imitater ? 1 : 0;
+        }
+        else if (item_type == 50) // 墓碑
+        {
+            int item_row = atoi(item_str[1].c_str()) - 1;
+            int item_col = atoi(item_str[2].c_str()) - 1;
+            base[item_row * 9 + item_col] = 3;
+            base_im[item_row * 9 + item_col] = 0;
         }
         else if (item_type == 30) // 南瓜
         {
+            int item_row = atoi(item_str[1].c_str()) - 1;
+            int item_col = atoi(item_str[2].c_str()) - 1;
+            bool item_imitater = item_str[5] == "1";
             pumpkin[item_row * 9 + item_col] = 1;
             pumpkin_im[item_row * 9 + item_col] = item_imitater ? 1 : 0;
         }
         else if (item_type == 35) // 咖啡
         {
+            int item_row = atoi(item_str[1].c_str()) - 1;
+            int item_col = atoi(item_str[2].c_str()) - 1;
+            bool item_imitater = item_str[5] == "1";
             coffee[item_row * 9 + item_col] = 1;
             coffee_im[item_row * 9 + item_col] = item_imitater ? 1 : 0;
         }
         else if (item_type == 48) // 梯子 0x30
         {
+            int item_row = atoi(item_str[1].c_str()) - 1;
+            int item_col = atoi(item_str[2].c_str()) - 1;
             ladder[item_row * 9 + item_col] = 1;
         }
         else if (item_type == 49) // 钉耙 0x31
         {
+            int item_row = atoi(item_str[1].c_str()) - 1;
             rake_row = item_row + 1;
         }
         else // 主要植物
         {
+            int item_row = atoi(item_str[1].c_str()) - 1;
+            int item_col = atoi(item_str[2].c_str()) - 1;
+            int item_state_row = atoi(item_str[3].c_str());
+            bool item_imitater = item_str[5] == "1";
             plant[item_row * 9 + item_col] = item_type + 1;
             plant_im[item_row * 9 + item_col] = item_imitater ? 1 : 0;
             plant_awake[item_row * 9 + item_col] = ((scene == 0 || scene == 2 || scene == 4) && may_sleep[item_type] && item_state_row == 0) ? 0 : 1;
@@ -2444,7 +2467,7 @@ void Window::keep_selected_feature()
         check_see_vase,
         check_background,
         check_readonly,
-        check_show_hidden_games,
+        check_limbo_page,
         check_lineup_mode, // 这个放在最后
     };
 
@@ -2693,7 +2716,29 @@ void Window::cb_direct_win(Fl_Widget *, void *w)
 
 void Window::cb_direct_win()
 {
+    HANDLE hThread = CreateThread(nullptr, 0, cb_direct_win_thread, this, 0, nullptr);
+    CloseHandle(hThread);
+}
+
+DWORD Window::cb_direct_win_thread(void *w)
+{
+    ((Window *)w)->cb_direct_win_thread();
+    return 0;
+}
+
+void Window::cb_direct_win_thread()
+{
+    Fl::lock();
+    button_direct_win->deactivate();
+    Fl::unlock();
+    Fl::awake();
+
     pvz->DirectWin(true);
+
+    Fl::lock();
+    button_direct_win->activate();
+    Fl::unlock();
+    Fl::awake();
 }
 
 void Window::cb_clear(Fl_Widget *, void *w)
@@ -2897,6 +2942,7 @@ void Window::cb_lineup_mode()
         check_auto_collect,
         check_free_planting,
         check_plant_invincible,
+        check_plant_weak,
         check_reload_instantly,
         check_stop_spawning,
         check_no_fog,
@@ -2908,6 +2954,8 @@ void Window::cb_lineup_mode()
         for (size_t i = 0; i < check_buttons.size(); i++)
         {
             check_buttons[i]->deactivate();
+            if (check_buttons[i] == check_plant_weak)
+                continue;
             int ori_val = check_buttons[i]->value();
             check_buttons[i]->value(1);
             check_buttons[i]->do_callback();
@@ -2920,6 +2968,8 @@ void Window::cb_lineup_mode()
         for (size_t i = 0; i < check_buttons.size(); i++)
         {
             check_buttons[i]->activate();
+            if (check_buttons[i] == check_plant_weak)
+                continue;
             check_buttons[i]->do_callback();
         }
     }
@@ -3015,26 +3065,35 @@ void Window::cb_paste_lineup()
     buffer_lineup_string->text("");
     Fl_Text_Editor::kf_paste(0, editor_lineup_string);
 
-    // 去掉换行和首尾空格
     std::string str = buffer_lineup_string->text();
+
+    // 去掉不可见字符
     str.erase(std::remove(str.begin(), str.end(), '\r'), str.end());
     str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
     str.erase(std::remove(str.begin(), str.end(), '\t'), str.end());
     str.erase(std::remove(str.begin(), str.end(), '\v'), str.end());
     str.erase(std::remove(str.begin(), str.end(), '\f'), str.end());
-    str.erase(std::remove(str.begin(), str.end(), ' '), str.end());
+    // 去掉首尾空格
     str.erase(0, str.find_first_not_of(' '));
     str.erase(str.find_last_not_of(' ') + 1);
-    buffer_lineup_string->text(str.c_str());
+    // 去掉多余空格
+    str = std::regex_replace(str, std::regex("( ){2,}"), " ");
+    str = std::regex_replace(str, std::regex(", "), ",");
+    str = std::regex_replace(str, std::regex(" ,"), ",");
 
-    // 网页布阵器格式转成新格式
-    std::string old_str = buffer_lineup_string->text();
-    std::regex reg("[0-5](,[a-fA-F0-9]{1,2} [1-6] [1-9] [0-2] [0-4] [0-1]){0,}");
-    if (std::regex_match(old_str, reg))
+    std::regex reg("[0-5](,[a-fA-F0-9]{1,2} [1-6] [1-9] [0-2] [0-4]( [a-zA-Z0-9]{1,}){0,}){0,}");
+    if (std::regex_match(str, reg))
     {
-        std::string new_str = convert_lineup(old_str);
-        buffer_lineup_string->text(new_str.c_str());
+        // 网页布阵器格式转成新格式
+        str = convert_lineup(str);
     }
+    else if (str[0] == 'L')
+    {
+        // 新格式去掉所有空格
+        str.erase(std::remove(str.begin(), str.end(), ' '), str.end());
+    }
+
+    buffer_lineup_string->text(str.c_str());
 }
 
 void Window::cb_get_lineup(Fl_Widget *, void *w)
@@ -3694,14 +3753,33 @@ void Window::cb_debug_mode()
     pvz->DebugMode(choice_debug->value());
 }
 
-void Window::cb_show_hidden_games(Fl_Widget *, void *w)
+void Window::cb_speed(Fl_Widget *, void *w)
 {
-    ((Window *)w)->cb_show_hidden_games();
+    ((Window *)w)->cb_speed();
 }
 
-void Window::cb_show_hidden_games()
+void Window::cb_speed()
 {
-    pvz->UnlockLimboPage(check_show_hidden_games->value());
+    int time_ms[] = {
+        1,   // 10x
+        2,   // 5x
+        5,   // 2x
+        10,  // 1x
+        20,  // 0.5x
+        50,  // 0.2x
+        100, // 0.1x
+    };
+    pvz->SetFrameDuration(time_ms[choice_speed->value()]);
+}
+
+void Window::cb_limbo_page(Fl_Widget *, void *w)
+{
+    ((Window *)w)->cb_limbo_page();
+}
+
+void Window::cb_limbo_page()
+{
+    pvz->UnlockLimboPage(check_limbo_page->value());
 }
 
 void Window::cb_download(Fl_Widget *, void *w)
@@ -3749,8 +3827,8 @@ void Window::cb_about()
                             + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.06 (zh)\n"            //
                             + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.07 (zh)\n"            //
                             + L"\n"                                                         //
-                            + L"版本号: 1.6.0.10600\n"                                      //
-                            + L"构建日期: 2020/09/29\n"                                     //
+                            + L"版本号: 1.7.0.10700\n"                                      //
+                            + L"构建日期: 2020/10/03\n"                                     //
                             + L"依赖库: FLTK 1.4.x / zlib 1.2.11\n"                         //
                             + L"版权所有: © 2020 lmintlcx\n"                                //
                             + L"鸣谢: a418569882 63enjoy kmtohoem\n";
@@ -3774,8 +3852,8 @@ void Window::cb_about()
                             + L"✓ 1.1.0.1056 GOTY 2012.06 (zh)\n"                                          //
                             + L"✓ 1.1.0.1056 GOTY 2012.07 (zh)\n"                                          //
                             + L"\n"                                                                        //
-                            + L"Version: 1.6.0.10600\n"                                                    //
-                            + L"Build Date: 2020/09/29\n"                                                  //
+                            + L"Version: 1.7.0.10700\n"                                                    //
+                            + L"Build Date: 2020/10/03\n"                                                  //
                             + L"Dependencies: FLTK 1.4.x / zlib 1.2.11\n"                                  //
                             + L"Copyright: © 2020 lmintlcx\n"                                              //
                             + L"Credit: a418569882 63enjoy kmtohoem\n";

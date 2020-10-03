@@ -21,6 +21,8 @@ PvZ::PvZ()
         {
             0x6a9ec0, // pvz_base
 
+            0x454, // ms_per_frame
+
             0x768, // main_object
 
             0x90, // zombie
@@ -182,6 +184,8 @@ PvZ::PvZ()
     this->data_1_2_0_1065_en =
         {
             0x6a9ec0, // pvz_base
+
+            0x454, // ms_per_frame
 
             0x768, // main_object
 
@@ -345,6 +349,8 @@ PvZ::PvZ()
         {
             0x6b9fe0, // pvz_base
 
+            0x454, // ms_per_frame
+
             0x768, // main_object
 
             0x90, // zombie
@@ -506,6 +512,8 @@ PvZ::PvZ()
     this->data_1_0_7_3556_es =
         {
             0x6ba008, // pvz_base
+
+            0x454, // ms_per_frame
 
             0x768, // main_object
 
@@ -669,6 +677,8 @@ PvZ::PvZ()
         {
             0x729670, // pvz_base
 
+            0x454 + 0x60, // ms_per_frame
+
             0x768 + 0x100, // main_object
 
             0x90 + 0x18, // zombie
@@ -830,6 +840,8 @@ PvZ::PvZ()
     this->data_1_2_0_1096_en =
         {
             0x731c50, // pvz_base
+
+            0x454 + 0x60, // ms_per_frame
 
             0x768 + 0x100, // main_object
 
@@ -993,6 +1005,8 @@ PvZ::PvZ()
         {
             0x73d7e8, // pvz_base
 
+            0x454 + 0x60, // ms_per_frame
+
             0x768 + 0x100, // main_object
 
             0x90 + 0x18, // zombie
@@ -1154,6 +1168,8 @@ PvZ::PvZ()
     this->data_1_1_0_1056_zh =
         {
             0x7794f8, // pvz_base
+
+            0x454 + 0x60, // ms_per_frame
 
             0x768 + 0x100, // main_object
 
@@ -1317,6 +1333,8 @@ PvZ::PvZ()
         {
             0x7578f8, // pvz_base
 
+            0x454 + 0x60, // ms_per_frame
+
             0x768 + 0x100, // main_object
 
             0x90 + 0x18, // zombie
@@ -1479,6 +1497,8 @@ PvZ::PvZ()
         {
             0x755e0c, // pvz_base
 
+            0x454 + 0x60, // ms_per_frame
+
             0x768 + 0x100, // main_object
 
             0x90 + 0x18, // zombie
@@ -1640,6 +1660,8 @@ PvZ::PvZ()
     this->data_1_1_0_1056_zh_2012_07 =
         {
             0x757e0c, // pvz_base
+
+            0x454 + 0x60, // ms_per_frame
 
             0x768 + 0x100, // main_object
 
@@ -1828,7 +1850,7 @@ void PvZ::asm_code_inject()
     // if (GameOn())
     // {
     enable_hack(data().safe_thread, true);
-    Sleep(10);
+    Sleep(GetFrameDuration() * 2);
     Code::asm_code_inject(this->handle);
     enable_hack(data().safe_thread, false);
     // }
@@ -2744,18 +2766,20 @@ void PvZ::DirectWin(bool light_cob)
     if (GameUI() != 3)
         return;
 
+    int frame_time = GetFrameDuration();
+
     if (light_cob)
     {
         int game_clock = ReadMemory<int>({data().pvz_base, data().main_object, data().game_clock});
-        int time_to_wait = 75 - ((game_clock + 500) % 75);
+        int frame_to_wait = 75 - ((game_clock + 500) % 75);
         if (ReadMemory<bool>({data().pvz_base, data().main_object, data().game_paused}))
         {
-            if (time_to_wait != 0)
+            if (frame_to_wait != 0)
             {
                 // 解除暂停
                 PostMessage(hwnd, WM_KEYDOWN, VK_SPACE, 0);
                 PostMessage(hwnd, WM_KEYUP, VK_SPACE, 0);
-                Sleep(time_to_wait * 10);
+                Sleep(frame_to_wait * frame_time);
                 // 暂停
                 PostMessage(hwnd, WM_KEYDOWN, VK_SPACE, 0);
                 PostMessage(hwnd, WM_KEYUP, VK_SPACE, 0);
@@ -2763,12 +2787,12 @@ void PvZ::DirectWin(bool light_cob)
         }
         else
         {
-            Sleep(time_to_wait * 10);
+            Sleep(frame_to_wait * frame_time);
             // 暂停
             PostMessage(hwnd, WM_KEYDOWN, VK_SPACE, 0);
             PostMessage(hwnd, WM_KEYUP, VK_SPACE, 0);
         }
-        Sleep(10);
+        Sleep(frame_time);
     }
 
     if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
@@ -2793,11 +2817,16 @@ void PvZ::DirectWin(bool light_cob)
 
     if (light_cob)
     {
-        Sleep(10);
+        Sleep(frame_time);
         // 解除暂停
         PostMessage(hwnd, WM_KEYDOWN, VK_SPACE, 0);
         PostMessage(hwnd, WM_KEYUP, VK_SPACE, 0);
     }
+
+    // #ifdef _DEBUG
+    //     Sleep(frame_time * (500 + 10));
+    //     std::cout << ReadMemory<int>({data().pvz_base, data().main_object, data().game_clock}) % 75 << std::endl;
+    // #endif
 
     // unsigned int slot_seed_struct_size = 0x50;
     // std::vector<int> seed_types = {40, 41, 42, 43, 44, 45, 46, 47, 8, 48};
@@ -3398,7 +3427,7 @@ void PvZ::SetLineup(std::string lineup)
     asm_ret();
     asm_code_inject();
 
-    Sleep(10);
+    Sleep(GetFrameDuration());
 }
 
 // 根据出怪种类生成出怪列表
@@ -3671,6 +3700,26 @@ void PvZ::DebugMode(int mode)
         return;
 
     WriteMemory<int>(mode, {data().pvz_base, data().main_object, data().debug_mode});
+}
+
+int PvZ::GetFrameDuration()
+{
+    int time_ms = 10;
+
+    if (!GameOn())
+        return time_ms;
+
+    time_ms = ReadMemory<int>({data().pvz_base, data().ms_per_frame});
+
+    return time_ms;
+}
+
+void PvZ::SetFrameDuration(int time_ms)
+{
+    if (!GameOn())
+        return;
+
+    WriteMemory<int>(time_ms, {data().pvz_base, data().ms_per_frame});
 }
 
 void PvZ::UnlockLimboPage(bool on)
