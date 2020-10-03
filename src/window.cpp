@@ -1398,7 +1398,7 @@ Window::Window(int width, int height, const char *title)
                 check_limbo_page = new Fl_Check_Button(c(4), r(5), iw, ih, "显示隐藏关");
                 button_download = new Fl_Button(c(1), r(6), iw, ih, "下载游戏");
                 button_update = new Fl_Button(c(2), r(6), iw, ih, "检查更新");
-                box_version = new Fl_Box(c(3), r(6), iw, ih, "版本 1.7.0");
+                box_version = new Fl_Box(c(3), r(6), iw, ih, "版本 1.7.1");
                 button_about = new Fl_Button(c(4), r(6), iw, ih, "关于...");
             }
             group_others->end();
@@ -1533,7 +1533,7 @@ Window::Window(int width, int height, const char *title)
                 check_limbo_page = new Fl_Check_Button(c(4) - 10, r(5), iw + 10, ih, "Unlock Limbo Page");
                 button_download = new Fl_Button(c(1), r(6), iw, ih, "Download PvZ");
                 button_update = new Fl_Button(c(2), r(6), iw, ih, "Check Updates");
-                box_version = new Fl_Box(c(3), r(6), iw, ih, "Version 1.7.0");
+                box_version = new Fl_Box(c(3), r(6), iw, ih, "Version 1.7.1");
                 button_about = new Fl_Button(c(4), r(6), iw, ih, "About ...");
             }
             group_others->end();
@@ -3081,6 +3081,8 @@ void Window::cb_paste_lineup()
     str = std::regex_replace(str, std::regex(", "), ",");
     str = std::regex_replace(str, std::regex(" ,"), ",");
 
+    // try
+    // {
     std::regex reg("[0-5](,[a-fA-F0-9]{1,2} [1-6] [1-9] [0-2] [0-4]( [a-zA-Z0-9]{1,}){0,}){0,}");
     if (std::regex_match(str, reg))
     {
@@ -3092,6 +3094,11 @@ void Window::cb_paste_lineup()
         // 新格式去掉所有空格
         str.erase(std::remove(str.begin(), str.end(), ' '), str.end());
     }
+    // }
+    // catch (const std::regex_error &e)
+    // {
+    //     std::cout << "regex_error: what(): " << e.what() << std::endl;
+    // }
 
     buffer_lineup_string->text(str.c_str());
 }
@@ -3827,7 +3834,7 @@ void Window::cb_about()
                             + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.06 (zh)\n"            //
                             + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.07 (zh)\n"            //
                             + L"\n"                                                         //
-                            + L"版本号: 1.7.0.10700\n"                                      //
+                            + L"版本号: 1.7.1.10701\n"                                      //
                             + L"构建日期: 2020/10/03\n"                                     //
                             + L"依赖库: FLTK 1.4.x / zlib 1.2.11\n"                         //
                             + L"版权所有: © 2020 lmintlcx\n"                                //
@@ -3852,7 +3859,7 @@ void Window::cb_about()
                             + L"✓ 1.1.0.1056 GOTY 2012.06 (zh)\n"                                          //
                             + L"✓ 1.1.0.1056 GOTY 2012.07 (zh)\n"                                          //
                             + L"\n"                                                                        //
-                            + L"Version: 1.7.0.10700\n"                                                    //
+                            + L"Version: 1.7.1.10701\n"                                                    //
                             + L"Build Date: 2020/10/03\n"                                                  //
                             + L"Dependencies: FLTK 1.4.x / zlib 1.2.11\n"                                  //
                             + L"Copyright: © 2020 lmintlcx\n"                                              //
