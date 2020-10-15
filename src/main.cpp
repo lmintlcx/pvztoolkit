@@ -34,7 +34,7 @@ void choice_callback(Fl_Widget *w, void *)
     }
 }
 
-void button_callback(Fl_Widget *w, void *data)
+void button_callback(Fl_Widget *, void *data)
 {
     ((Fl_Double_Window *)data)->hide();
 }
@@ -44,6 +44,14 @@ void window_callback(Fl_Widget *, void *)
     if (Fl::event() == FL_SHORTCUT && Fl::event_key() == FL_Escape)
         return; // 无视 Escape
     exit(0);
+}
+
+void callback_pvz_check(void *w)
+{
+    // 定期检查游戏进程状态
+    bool on = ((Pt::Window *)w)->pvz->GameOn();
+    double t = on ? 2.0 : 0.5;
+    Fl::repeat_timeout(t, callback_pvz_check, w);
 }
 
 /// main ///
@@ -135,6 +143,9 @@ int main(int argc, char **argv)
     window.callback(window_callback);
     window.show(argc, argv);
     window.pvz->FindPvZ();
+#ifndef _DEBUG // 调试的时候不要频繁输出
+    Fl::add_timeout(0.01, callback_pvz_check, &window);
+#endif
 
     int ret = Fl::run();
 

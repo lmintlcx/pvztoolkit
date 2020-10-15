@@ -1268,9 +1268,9 @@ Window::Window(int width, int height, const char *title)
     // resizable(this);
     this->size(w, h);
     if (LANG == Language::Chinese)
-        this->label("植物大战僵尸全版本辅助工具");
+        this->label("PvZ Toolkit 1.7.2  -  植物大战僵尸全版本辅助工具");
     else
-        this->label("Plants vs. Zombies All Version Toolkit");
+        this->label("PvZ Toolkit 1.7.2  -  Plants vs. Zombies All Version Toolkit");
 
     if (LANG == Language::Chinese)
     {
@@ -1398,7 +1398,7 @@ Window::Window(int width, int height, const char *title)
                 check_limbo_page = new Fl_Check_Button(c(4), r(5), iw, ih, "显示隐藏关");
                 button_download = new Fl_Button(c(1), r(6), iw, ih, "下载游戏");
                 button_update = new Fl_Button(c(2), r(6), iw, ih, "检查更新");
-                box_version = new Fl_Box(c(3), r(6), iw, ih, "版本 1.7.1");
+                box_version = new Fl_Box(c(3), r(6), iw, ih, "版本 1.7.2");
                 button_about = new Fl_Button(c(4), r(6), iw, ih, "关于...");
             }
             group_others->end();
@@ -1533,7 +1533,7 @@ Window::Window(int width, int height, const char *title)
                 check_limbo_page = new Fl_Check_Button(c(4) - 10, r(5), iw + 10, ih, "Unlock Limbo Page");
                 button_download = new Fl_Button(c(1), r(6), iw, ih, "Download PvZ");
                 button_update = new Fl_Button(c(2), r(6), iw, ih, "Check Updates");
-                box_version = new Fl_Box(c(3), r(6), iw, ih, "Version 1.7.1");
+                box_version = new Fl_Box(c(3), r(6), iw, ih, "Version 1.7.2");
                 button_about = new Fl_Button(c(4), r(6), iw, ih, "About ...");
             }
             group_others->end();
@@ -3834,9 +3834,9 @@ void Window::cb_about()
                             + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.06 (zh)\n"            //
                             + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.07 (zh)\n"            //
                             + L"\n"                                                         //
-                            + L"版本号: 1.7.1.10701\n"                                      //
-                            + L"构建日期: 2020/10/03\n"                                     //
-                            + L"依赖库: FLTK 1.4.x / zlib 1.2.11\n"                         //
+                            + L"版本号: 1.7.2.10702\n"                                      //
+                            + L"构建日期: 2020/10/15\n"                                     //
+                            + L"依赖库: FLTK 1.4.x / zlib 1.2.11.x\n"                       //
                             + L"版权所有: © 2020 lmintlcx\n"                                //
                             + L"鸣谢: a418569882 63enjoy kmtohoem\n";
         MessageBoxW(GetActiveWindow(), text.c_str(), L"关于 PvZ Toolkit", MB_OK);
@@ -3859,9 +3859,9 @@ void Window::cb_about()
                             + L"✓ 1.1.0.1056 GOTY 2012.06 (zh)\n"                                          //
                             + L"✓ 1.1.0.1056 GOTY 2012.07 (zh)\n"                                          //
                             + L"\n"                                                                        //
-                            + L"Version: 1.7.1.10701\n"                                                    //
-                            + L"Build Date: 2020/10/03\n"                                                  //
-                            + L"Dependencies: FLTK 1.4.x / zlib 1.2.11\n"                                  //
+                            + L"Version: 1.7.2.10702\n"                                                    //
+                            + L"Build Date: 2020/10/15\n"                                                  //
+                            + L"Dependencies: FLTK 1.4.x / zlib 1.2.11.x\n"                                //
                             + L"Copyright: © 2020 lmintlcx\n"                                              //
                             + L"Credit: a418569882 63enjoy kmtohoem\n";
         MessageBoxW(GetActiveWindow(), text.c_str(), L"About PvZ Toolkit", MB_OK);

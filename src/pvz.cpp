@@ -1871,7 +1871,6 @@ bool PvZ::FindPvZ()
         L"Piante contro zombi 1.2.0.1093",        //
         L"植物大战僵尸中文版",                    //
         L"植物大战僵尸汉化版",                    //
-        L"PlantsVsZombies Plus Version 95",       //
     };                                            //
 
     for (size_t i = 0; i <= pvz_titles.size(); i++)
