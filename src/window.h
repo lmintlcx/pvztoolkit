@@ -20,6 +20,7 @@
 
 #include "pvz.h"
 #include "pak.h"
+#include "version.h"
 
 #include <Windows.h>
 #include <ShlObj.h>
@@ -47,9 +48,9 @@ class Fl_Choice_ : public Fl_Choice
 public:
     Fl_Choice_(int, int, int, int, const char *);
     ~Fl_Choice_();
+    int handle(int);
 
 public:
-    int Fl_Choice_::handle(int);
     bool scrollable = false;
 };
 
@@ -72,11 +73,12 @@ public:
     void draw_cell(TableContext, int, int, int, int, int, int);
 };
 
-class Window : public Fl_Window
+class Window : public Fl_Double_Window
 {
 public:
     Window(int, int, const char *);
     ~Window();
+    int handle(int);
 
     Fl_Tabs *tabs;
 

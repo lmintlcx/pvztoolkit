@@ -39,10 +39,33 @@ void button_callback(Fl_Widget *, void *data)
     ((Fl_Double_Window *)data)->hide();
 }
 
-void window_callback(Fl_Widget *, void *)
+void window_callback(Fl_Widget *w, void *)
 {
+    HKEY hKey;
+    DWORD ret;
+    ret = RegOpenKeyExW(HKEY_CURRENT_USER, L"Software\\Cube Studio\\PvZ Toolkit\\v1", //
+                        0, KEY_SET_VALUE, &hKey);
+    if (ret != ERROR_SUCCESS)
+        ret = RegCreateKeyExW(HKEY_CURRENT_USER, L"Software\\Cube Studio\\PvZ Toolkit\\v1", //
+                              0, nullptr, 0, KEY_SET_VALUE, nullptr, &hKey, nullptr);
+    if (ret == ERROR_SUCCESS)
+    {
+        float scale = Fl::screen_scale(((Fl_Double_Window *)w)->screen_num());
+        if (scale > 0.9f && scale < 1.1f)
+            scale = 1.0;
+        if (scale > 1.7f && scale < 2.4f)
+            scale = 2.0;
+        ret = RegSetValueExW(hKey, L"ScaleFactor", 0, REG_DWORD, (LPBYTE)&scale, sizeof(scale));
+        RegCloseKey(hKey);
+    }
+
+    // 按 Esc 不退出, 而是还原默认窗口大小
     if (Fl::event() == FL_SHORTCUT && Fl::event_key() == FL_Escape)
-        return; // 无视 Escape
+    {
+        if (Fl::screen_scale(((Fl_Double_Window *)w)->screen_num()) != 1.0f)
+            Fl::screen_scale(((Fl_Double_Window *)w)->screen_num(), 1.0f);
+        return;
+    }
     exit(0);
 }
 
@@ -106,7 +129,7 @@ int main(int argc, char **argv)
         DWORD dwType = REG_SZ;
         TCHAR szLang[260];
         DWORD dwSize = 260;
-        DWORD r = RegQueryValueExW(hKey, L"Language", 0, &dwType, (LPBYTE)&szLang, &dwSize);
+        LSTATUS r = RegQueryValueExW(hKey, L"Language", 0, &dwType, (LPBYTE)&szLang, &dwSize);
         if (r == ERROR_SUCCESS && std::wstring(szLang) == L"简体中文")
             choice.value(1);
         else
@@ -146,6 +169,28 @@ int main(int argc, char **argv)
 #ifndef _DEBUG // 调试的时候不要频繁输出
     Fl::add_timeout(0.01, callback_pvz_check, &window);
 #endif
+
+    // 读取保存的缩放比例
+    {
+        HKEY hKey;
+        DWORD r = RegOpenKeyExW(HKEY_CURRENT_USER, L"Software\\Cube Studio\\PvZ Toolkit\\v1", //
+                                0, KEY_QUERY_VALUE, &hKey);
+        if (r == ERROR_SUCCESS)
+        {
+            DWORD dwType = REG_DWORD;
+            DWORD scale;
+            DWORD dwSize = sizeof(DWORD);
+            LSTATUS r = RegQueryValueExW(hKey, L"ScaleFactor", 0, &dwType, (LPBYTE)&scale, &dwSize);
+            RegCloseKey(hKey);
+            if (r == ERROR_SUCCESS)
+            {
+                float factor = *(float *)(&scale);
+                std::cout << "ScaleFactor: " << factor << std::endl;
+                if (factor != 1.0f)
+                    Fl::screen_scale(window.screen_num(), factor);
+            }
+        }
+    }
 
     int ret = Fl::run();
 
