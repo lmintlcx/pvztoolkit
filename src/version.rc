@@ -5,11 +5,13 @@
 
 #include <Windows.h>
 
+#include "version.h"
+
 IDI_ICON ICON DISCARDABLE "logo.ico"
 
 VS_VERSION_INFO VERSIONINFO
-    FILEVERSION 1, 7, 2, 10702
-    PRODUCTVERSION 1, 7, 2, 10702
+    FILEVERSION VERSION_VER
+    PRODUCTVERSION VERSION_VER
     FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
     FILEFLAGS VS_FF_DEBUG
@@ -26,12 +28,12 @@ VS_VERSION_INFO VERSIONINFO
             BEGIN
                 VALUE "CompanyName", "Cube Studio"
                 VALUE "FileDescription", "PvZ Toolkit"
-                VALUE "FileVersion", "1.7.2.10702"
+                VALUE "FileVersion", VERSION_NAME_FULL
                 VALUE "LegalCopyright", "(C) 2020 lmintlcx"
                 VALUE "InternalName", "pvztoolkit"
                 VALUE "OriginalFilename", "pvztoolkit.exe"
                 VALUE "ProductName", "PvZ Toolkit"
-                VALUE "ProductVersion", "1.7.2.10702"
+                VALUE "ProductVersion", VERSION_NAME_FULL
             END
         END
         BLOCK "VarFileInfo"

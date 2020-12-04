@@ -133,6 +133,8 @@ private:
 
   static int use_high_res_GL_;
   static int draw_GL_text_with_textures_;
+  static int box_shadow_width_;
+  static int box_border_radius_max_;
 
 public:
 
@@ -140,6 +142,34 @@ public:
   static Fl_System_Driver *system_driver();
   static void reset_marked_text(); // resets marked text
   static void insertion_point_location(int x, int y, int height); // sets window coordinates & height of insertion point
+
+  /** Get the box shadow width of all "shadow" boxtypes in pixels.
+    \since 1.4.0
+  */
+  static int box_shadow_width() { return box_shadow_width_; }
+  /** Set the box shadow width of all "shadow" boxtypes in pixels.
+    Must be at least 1, default = 3. There is no upper limit.
+    \since 1.4.0
+  */
+  static void box_shadow_width(int W) { box_shadow_width_ = W < 1 ? 1 : W; }
+
+  /** Get the maximum border radius of all "rounded" boxtypes in pixels.
+      \since 1.4.0
+  */
+  static int box_border_radius_max() { return box_border_radius_max_; }
+  /** Set the maximum border radius of all "rounded" boxtypes in pixels.
+    Must be at least 5, default = 15.
+
+    \note This does \b not apply to the "round" boxtypes which have really round sides
+      (i.e. composed of half circles) as opposed to "rounded" boxtypes that have only
+      rounded corners with a straight border between corners.
+
+    The box border radius of "rounded" boxtypes is typically calculated as about 2/5 of
+    the box height or width, whichever is smaller. The upper limit can be set by this
+    method for all "rounded" boxtypes.
+    \since 1.4.0
+  */
+  static void box_border_radius_max(int R) { box_border_radius_max_ = R < 5 ? 5 : R; }
 
 public: // run time information about compile time configuration
   /** \defgroup cfg_gfx runtime graphics driver configuration */
@@ -1009,14 +1039,14 @@ int main() {
  The scaling factor is initialized by the library to a value
  based on information obtained from the OS. If this initial value
  is not satisfactory, the FLTK_SCALING_FACTOR environment variable
- can be set to a value FLTK will use as initial scaling factor.
- The scaling factor value can be further changed at runtime
- by typing ctrl-/+/-/0/ (cmd-/+/-/0/ under MacOS). FLTK sends the
+ can be set to a value FLTK will multiply to the OS-given value.
+ The 2 variants of functions Fl::screen_scale() allow to programmatically get and set
+ scaling factor values. The scaling factor value can be further changed at runtime
+ by typing ctrl-/+/-/0/ (cmd-/+/-/0/ under macOS). FLTK sends the
  \ref FL_ZOOM_EVENT when the factor value is changed, to which a
  callback can be associated with Fl::add_handler().
- By default, FLTK also displays the new scaling factor value in a yellow, transient window.
+ By default, FLTK displays the new scaling factor value in a yellow, transient window.
  This can be changed with option Fl::OPTION_SHOW_SCALING.
- The scaling factor value is programmatically get and set with the Fl::screen_scale() functions.
      @{ */
   static int x(); // via screen driver
   static int y(); // via screen driver

@@ -13,15 +13,13 @@ Plants vs. Zombies All Version Toolkit.
 
 ## 运行平台
 
-支持操作系统:
+支持操作系统: (x86/x64)
 
-- Windows XP
-- Windows Vista
-- Windows 7
-- Windows 8 / 8.1
-- Windows 10
+- Windows XP SP3 以及更高版本, 包括 Vista / 7 / 8.x / 10.
 
-支持游戏版本:
+支持游戏版本: (PC)
+
+[点击下载](https://pvz.lmintlcx.com/download/)
 
 - 英文原始版 1.0.0.1051 (en)
 - 英文修复版 1.2.0.1065 (en)

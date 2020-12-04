@@ -40,10 +40,10 @@
  Displays.
 
  \image html editor.png "Fl_Text_Display widget"
- \image latex editor.png "Fl_Text_Display widget" width=6cm
+ \image latex editor.png "Fl_Text_Display widget" width=10cm
  <BR><BR>
  \image html editor-linenumbers.png "Fl_Text_Display widget with line numbers enabled"
- \image latex editor-linenumbers.png "Fl_Text_Display widget with line numbers enabled" width=6cm
+ \image latex editor-linenumbers.png "Fl_Text_Display widget with line numbers enabled" width=10cm
 
  \b Example \b Use
  \code
@@ -171,6 +171,13 @@ public:
    \see Fl_Text_Display::buffer(Fl_Text_Buffer& buf)
    */
   Fl_Text_Buffer* buffer() const { return mBuffer; }
+  /**
+   Gets the current style buffer associated with the text widget.
+   Multiple text widgets can be associated with the same style buffer.
+   \return current style buffer
+   \see Fl_Text_Display::highlight_data()
+   */
+  Fl_Text_Buffer* style_buffer() const { return mStyleBuffer; }
 
   void redisplay_range(int start, int end);
   void scroll(int topLineNum, int horizOffset);

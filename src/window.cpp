@@ -389,6 +389,7 @@ const char *lineup_names[] =
         "[DE].屑四炮",
         "[DE].后置四炮",
         "[DE].奥赛罗五炮",
+        "[DE].柱子五炮",
         "[DE].双核底线五炮",
         "[DE].底线五炮",
         "[DE].无保护六炮",
@@ -413,8 +414,8 @@ const char *lineup_names[] =
         "[DE].守城十二炮",
         "[DE].撞南墙十二炮",
         "[DE].挂机十二炮",
-        "[DE].雪花十四炮",
         "[DE].中开十四炮",
+        "[DE].雪花十四炮",
         "[DE].守全场十四炮",
         "[DE].连拦十四炮",
         "[DE].十四炮",
@@ -439,6 +440,7 @@ const char *lineup_names[] =
         "[NE].变奏一炮",
         "[NE].小二炮",
         "[NE].双七列曾神之二炮",
+        "[NE].点赞三炮",
         "[NE].瞬杀三炮",
         "[NE].土豆四炮",
         "[NE].前置四炮",
@@ -449,6 +451,7 @@ const char *lineup_names[] =
         "[NE].智商五炮",
         "[NE].压碑五炮",
         "[NE].神之五炮",
+        "[NE].鬼位五炮",
         "[NE].底线五炮",
         "[NE].神之六炮",
         "[NE].镂空六炮",
@@ -470,6 +473,7 @@ const char *lineup_names[] =
         "[NE].丑十四炮",
         "[NE].十五炮",
         "[NE].十八炮",
+        "[NE].十九炮",
         "[PE].最简无炮",
         "[PE].伪无伤无炮",
         "[PE].自然控丑无炮",
@@ -495,9 +499,11 @@ const char *lineup_names[] =
         "[PE].青四炮",
         "[PE].水路无植物四炮",
         "[PE].方四炮",
+        "[PE].葬花吟",
         "[PE].神之四炮",
         "[PE].双核底线四炮",
         "[PE].经典四炮",
+        "[PE].心四炮",
         "[PE].火焰四炮",
         "[PE].底线四炮",
         "[PE].传统四炮",
@@ -506,8 +512,8 @@ const char *lineup_names[] =
         "[PE].心五炮",
         "[PE].陆路无植物六炮",
         "[PE].水路无植物六炮",
-        "[PE].青苔六炮",
         "[PE].禅房花木深",
+        "[PE].青苔六炮",
         "[PE].神之六炮",
         "[PE].玉米六炮",
         "[PE].空炸六炮",
@@ -521,6 +527,8 @@ const char *lineup_names[] =
         "[PE].树八炮",
         "[PE].全对称树八炮",
         "[PE].矩形八炮",
+        "[PE].无套神之八炮",
+        "[PE].灯台八炮",
         "[PE].神之八炮",
         "[PE].阴阳八炮",
         "[PE].浮萍八炮",
@@ -530,6 +538,7 @@ const char *lineup_names[] =
         "[PE].经典八炮",
         "[PE].花海八炮",
         "[PE].C2八炮",
+        "[PE].冰心灯八炮",
         "[PE].分离八炮",
         "[PE].全对称八炮",
         "[PE].3C八炮",
@@ -540,8 +549,8 @@ const char *lineup_names[] =
         "[PE].轮炸九炮",
         "[PE].②炮",
         "[PE].六芒星十炮",
-        "[PE].六边形十炮",
         "[PE].方块十炮",
+        "[PE].六边形十炮",
         "[PE].斜方十炮",
         "[PE].简化十炮",
         "[PE].后置十炮",
@@ -580,8 +589,8 @@ const char *lineup_names[] =
         "[PE].钻石十五炮",
         "[PE].神之十五炮",
         "[PE].真·二炮",
-        "[PE].冰箱灯",
         "[PE].炮环十二花",
+        "[PE].冰箱灯",
         "[PE].对称十六炮",
         "[PE].神之十六炮",
         "[PE].裸奔十六炮",
@@ -589,11 +598,12 @@ const char *lineup_names[] =
         "[PE].超前置十六炮",
         "[PE].火焰十六炮",
         "[PE].经典十六炮",
-        "[PE].纯十八炮",
-        "[PE].真·十八炮",
         "[PE].冰魄十八炮",
+        "[PE].真·十八炮",
+        "[PE].纯十八炮",
         "[PE].尾炸十八炮",
         "[PE].经典十八炮",
+        "[PE].日花二十炮",
         "[PE].纯二十炮",
         "[PE].空炸二十炮",
         "[PE].钉耙二十炮",
@@ -636,22 +646,24 @@ const char *lineup_names[] =
         "[FE].神之四炮",
         "[FE].磁铁四炮",
         "[FE].雾四炮",
+        "[FE].三角板六炮",
         "[FE].玲珑六炮",
         "[FE].烈焰八炮",
         "[FE].无保护八炮",
         "[FE].神之八炮",
         "[FE].经典八炮",
-        "[FE].河洛十炮",
+        "[FE].七夕灯",
         "[FE].斜方十炮",
+        "[FE].河洛十炮",
         "[FE].纯十二炮",
         "[FE].水路无植物十二炮",
         "[FE].神之十二炮",
         "[FE].曲径通幽处",
-        "[FE].礼物盒十四炮",
         "[FE].某十四炮",
+        "[FE].礼物盒十四炮",
         "[FE].弦十四炮",
-        "[FE].半场十四炮",
         "[FE].奇门九劫",
+        "[FE].半场十四炮",
         "[FE].灯笼十六炮",
         "[FE].花环十六炮",
         "[FE].中压制十八炮",
@@ -677,8 +689,10 @@ const char *lineup_names[] =
         "[RE].螺旋十炮",
         "[RE].镂铭灯",
         "[RE].天台十炮",
+        "[RE].十一炮",
         "[RE].花灯十二炮",
         "[RE].椭盘十二炮",
+        "[RE].螺旋十二炮",
         "[RE].鸟居十二炮",
         "[RE].天台十二炮",
         "[RE].椭盘十四炮",
@@ -704,6 +718,7 @@ const char *lineup_names[] =
         "[ME].瓮中捉鳖",
         "[ME].十三炮",
         "[ME].十八炮",
+        "[ME].十九炮",
 };
 
 const char *lineup_strings[] =
@@ -717,6 +732,7 @@ const char *lineup_strings[] =
         "LI5HjH7tASbx1HrXeldAXJjACF9AjX7kQlCVdmIU7EbQTQIWgfgxbFzwWmaUVQRaGVBUYCxbMlQ=",
         "LI5H5MUIf+3BtXRXSFyYUN74MIye5EJ6UMDBeBEF50IJ2dTZsBgAJ1SYb1otVA==",
         "LI435DU0xAiflJQkxFVSFPjpVn/VsB78XAQKJnFVYSK8slRUfQ9fLVQ=",
+        "LI5HzH3tAibxsALS11gEdBRxRVTCikaVVA==",
         "LI43bJyUdOQCNHGXHlJMVN4c+kEMn+RBnCJUFtycHuTOwQyAlBEEmVVUq+dblVQ=",
         "LI43bJyUdOQGNHFXV9dZlwJSRFTd+FHeVWWXDuwcd0yOdN34UaZ1aDBhDzVWVGL6RDRU",
         "LI43bJyUlORD3BVgUIxk+FHf+FAWXGzcErcG1zZaVBScX6VU",
@@ -741,8 +757,8 @@ const char *lineup_strings[] =
         "LI43bJyUlFSX3VhYHGjQ3FlM+lAXCD5kEFTSOFn1VA==",
         "LI43bJyUdO0GJnFXxFI3ZH3tAiZ5xtxZ19nweFBmcrYE1zVaVE2WRItU",
         "LI43bJyUdO0CJn9XxFI3ZF1HxQh/5EJ+5gYmcQCQUvNOQCdUmXBArVQ=",
-        "LI43DJ3kxrV0V1dMF1TWW0dv3NJNTDhkgIx03dVVVPcZWWpU",
         "LI43DJ3kxrV0V1dIZ2Q03oxUdX5s3NLl3FRU85BZ/1Q=",
+        "LI43DJ3kxrV0V1dMF1TWW0dv3NJNTDhkgIx03dVVVPcZWWpU",
         "LI43bJyUlNTYdbAefBBCNVTHXEVPUm9kEtz0zFdUpKZbLVQ=",
         "LI43bJyUdO0CJnlXxFI3ZN1+duRGVsUQOLQ43Ep4dlQkBUV3VA==",
         "LI43bJyUdO0CJn9XxFI3ZN0RMPGwHlJPfEvDTkBFVDttRstU",
@@ -767,6 +783,7 @@ const char *lineup_strings[] =
         "LI5HDH3tAgYDFMMVw1VeUDJWEQJe+EAMn+RCfiBEfA5eQDVEDH9UQkcM3/oSNPGwGAAnVHByRMRV",
         "LI5HDH3tAiZ/lxVSbEQMfW1HFzD5sB7VwVY/TRxUVNxjXZRV",
         "LI43NBRTVj9xgx76wIh+5AE0+ZQO5IQVUlL0nB5E2QdZUlRU3O5Z/1U=",
+        "LI43NJRQxj8FrVZ/cTMe+jBs3HbmAiZ/zpwYAEVUAEZd6VU=",
         "LI5HDH3tAib/1HrXeldAXJhADH/kQVyDXvjR3vgwjJ4kRBx3/TUMX0INX0OVBFdUUHRamlU=",
         "LI43NJRQxj9xAx76MGxcQ1TlEHHj1r3hbIA0VFTgkF19VQ==",
         "LI43NMSIXtZYU020FCb5sBhgxcF0nGTHNXlKYTyyVFSoaVulVQ==",
@@ -777,6 +794,7 @@ const char *lineup_strings[] =
         "LI43NFRVncFYU00EVLF2VAjJU8RV",
         "LI43NMQIfe0BJr/W11NMWmQU1LAOnc08dn8V/lz+FWVTVOJUTlRV",
         "LI43NJRUU01MUIJe+FGFXEWdwcYPlWZ/FVZWf3GDVrUecGFMVFS7Y17EVQ==",
+        "LI5HDH3kxrV0V0ZEzH3tQnB25EJ6lnRdAndkR9vOwcY8slRUO6dY0lU=",
         "LI43bJyUdORGWONmFFQcMHlE+kAM33CGXNK8Pk4l/1VUGTBFClU=",
         "LI43NJRUU01McIMe+jEMXTaVEQIe+jCM3nbW/lJXVFRG/V9+VQ==",
         "LI43bJyUdO3C1RU2f1fEUVV06rAe5ExQSNCmA0YE1zZaVMT+WY5V",
@@ -798,6 +816,7 @@ const char *lineup_strings[] =
         "LI43NDRsnNSUWFMUkB5kL3kQUFgEgNQBFID40N9IEANRVPTtWvRV",
         "LI43bJyUdO0CJnFXxFI3ZF1ADd9y5sZcYXyyVFQplEaoVQ==",
         "LI43bJyUlFSWf5VwV8DTCVDS3UZVVO78WrFV",
+        "LI43bJyUlNTYBS0kRdXBVn9d/RVBVVSx51uSVQ==",
         "LI43NBRTVn9RgvbebPggzL3kRpBeDN925kV11v1fR1RUKNleulY=",
         "LI43jH/9X9ZYXOQDJvKwAvScDszUlx7TwVhPSThI4laNPzV2FOxBkNfcNL42lGRNVC9jR75W",
         "LI5HDH5d0FYfTTZN9BQ0+bAYnflW7ljuZEXTwXSc5GU0OZQOMEVTT9DclB4gCVYPcYP23lRUQEBBvFY=",
@@ -823,9 +842,11 @@ const char *lineup_strings[] =
         "LI43NDQ0xMh9ZMdVXRz6wQh95AY0edi75EZcOUg4VgJS+NDe+FHeSCA0VN6UAWVI0DYw1JZTVLkbRDJW",
         "LI5H5MXIfe3GtXRXSFz4wQh/7UEN0EzU/R80ce6dVMPfX8BW",
         "LI43NDQ0xAh97cZVXRz6wchd0D81KNPXWlhaYhRc8CXdNL42lGRNVNuRW4lW",
+        "LI43NDQ0xAidlHRUkGR07cLVFSRiBDh50Etlh7X0VxfUSczI2UTd5BXcFCAdmhC8NpRkTVSYK0VtVg==",
         "LI43NJRQxj9xMx46MQxft29IIFS31MEU7ELvXPJ6GFRU5c9EnVY=",
         "LI43bJyUdOQCNHmXAlJSUlNSRFTeHPpBzF1GRSRU3W2YIAy95GZUXBWGWnRFTzBFIAlcReydNFRUUexBjFY=",
         "LI43NMQIfe3BldJVXRz6wchdQA9ft29IIFS3VM/U4Tx2f1eCtoaR1DVmVFO7RlZW",
+        "LI4B3+VFVGRcVk2VwgkG7HrRMVKcMsXnnLFfLe1XXAVUQSkZAEBjkTknx3PF/yeN0r2KO7wJtdcuKlXzIUWJVg==",
         "LI5HDH7tAib9sAbSDFJ8RMzderYkhFXYVwJSjFD4EUcNXUWVgHHUNWZUGEZD+lY=",
         "LI43bJyUdO0CJvGUAlIJUlyURCUMvWSHNTHU2ZSS1MFVP8URVuJS+NHc1CBd+EGMfvTfOFr+XFQj00OhVg==",
         "LI5HjH7kAjT/1HrXeldAXJhQ3vhBDH3kwTV5EJC19FdMU/hY5F0MX9Ycdg91dszuUGQYUlR6YUggVg==",
@@ -834,8 +855,8 @@ const char *lineup_strings[] =
         "LI43NMQIf23H1RU08ZQeUlxsnFRGj172UYLWUEg4SFpuZNQklJ7U4UQRWj8VKNXZZGpcHJrAiH7UtLtRFlIdCdBoVO/lR89W",
         "LI43NHRYSFpulCWUHnQI330W0GVYVIQCWTFW",
         "LI43bJyUdO0CJnFXxNJWGEV21NRZ7kr0nBid+Zx2VPkWX2NW",
-        "LI43NDRsnFSVXOQGJvmwDtLBZPqXHlNP09daWBQmcXpFGAlYTHJXVJx9RINW",
         "LI43NDRsnFSVXGQHJvmwDtLNZPqXFVNS08EUXPD1dn9JOJT2Ylp/Jb1W1sE0J7V+VIfTRSVW",
+        "LI43NDRsnFSVXOQGJvmwDtLBZPqXHlNP09daWBQmcXpFGAlYTHJXVJx9RINW",
         "LI43NJRQxj9xMx46MWxct29IIFS31MFVYlU/5d80vpZQVNmXRENW",
         "LI43NMS4URVSRNBWneHGZ3HjZkjQpUlabtQllB50CN8JUAdDV9KdVEV/Q11W",
         "LI43NMQIXdAPTcTUsA6dzRTF4WTqlxVTXApN5GI0ed7cGVREFsFJ0DZQDJ9kx5VSlVFUGfBFkVY=",
@@ -849,6 +870,8 @@ const char *lineup_strings[] =
         "LI43NFTV0h5SQITk4jUylw5Qi7X0V9eXHkTdlgvdeJIkRPw7ctwQto/UdBhYVIKyRzJW",
         "LI43NNTU0h5SQITk4jUylw5Qi7X0V9eXHkTdlgvdeJIkRPw7ctwQto/UdBBYVORIRzJW",
         "LI5H5MUIf+0GJnGXFVJ8RJREJWy8VJPsENxVVHJSWmFW",
+        "LI43NJRWgma4UYdTdQjTwVo/SVpuZJTlWfJc8noYVFTOUUTVVg==",
+        "LI435DUMncRd0H9NOEx0tHRX17AOneF0TlZIAm6MbEggNFTGf7U2dGpEd1Xc2uEcdlP1TF5UvN9bgVY=",
         "LI43NJRQxj/VJH+XFUyLtfRX15cYZF2QjBFkITVWVCQ/WztW",
         "LI43NMSIfu0GJnnXWVdAXDjBCH9tByZxBDB5EJA18ZcYdOIlbLxUAbfkQpxTpkR2WFPFZO5MQFRU/iFHVFY=",
         "LI43bJyUdO0GJnFXxFI3ZH3tAiZ5xlwFVPiTUg3TsAL07Rx2VHKpWPlW",
@@ -858,6 +881,7 @@ const char *lineup_strings[] =
         "LI43NMSIXtZYU020FCb5sBgwRdPXWjRI5GE0MpQOYMXBREUYCVhMcldUcSdDG1Y=",
         "LI5HDH1d0lhTTUxMAlZl15QeneEU3HC25EZeW25k1CTUWfJc8npVWMdVgpZLTVY=",
         "LI5HDJ8kxNVV2PUUNHmXGGQreRiQlZo18ZcVU9LUwVUEZVNPIEUYCVZMcldUCDpHFVY=",
+        "LI43bJyUdO0CJnlXxNJVdCtxRPrRpUlabmRsjFR1xJJx1v3fVZcwVATYR2VW",
         "LI5HzH3tAiZ/lxVSUFTmlTbuFFxSWlNJTEiC1pzU+VU/5d80vkaUZE1UrtxCaVY=",
         "LI43NDQ0RAx/5MY1/5Qe1eFYBNR+tiSEVdbjlg1MdlgQzFdU9XdOI1Y=",
         "LI5HjH7kAjT/lALS11hYWC/VzBU0cgwwchaQtfRXTFP4UJbhdNx91v0fVJcwVFwNdNtW",
@@ -868,8 +892,8 @@ const char *lineup_strings[] =
         "LI43NMQIf+3BtXRXRsTI3X625IG19FdXXFP4IcxdQtWmdTZVP5Xugva/xwhe0OVcRVTbgkEPVg==",
         "LI43NDRsnFSVZCRE2TIkDF1yW25kbIx0EBQoUuxclx7sLk9wqXwyV1T2O1huVg==",
         "LI43NFTW11ictHRG0lbT11o02JoTQjcMXYI1l9R45kac099UVO0lWO5W",
-        "LI43NJReWhZlQGxIIDQkDL00V/ZFKGRfelIC68aVUg1L/m1U3CdZblY=",
         "LI43NHRYSFpuFKQeU08IdlhTxWRaRVRy/lgBVg==",
+        "LI43NJReWhZlQGxIIDQkDL00V/ZFKGRfelIC68aVUg1L/m1U3CdZblY=",
         "LI43NFTX11j8tHT+zJcVU1JTT3RQhoysjKA0zl9U2ZBfL1Y=",
         "LI43NNTW11i8VHq2JIRV1QNujDRHNXSWSFS2FlkBVg==",
         "LI43NMQIf+3BtXRXRsTI3X62JIRV2iXdNL42lGRNVJ3ZROdW",
@@ -908,8 +932,8 @@ const char *lineup_strings[] =
         "LI43NFTX11j8tHT+zJcVU2wSsxeRApahlKCNdN3VVVR1GkQKVg==",
         "LI43NDTkNVRVXF1WU01McIMe+lGFNJi0JIRVUVP4kEDV/9K/llBUBHVHElY=",
         "LI43NDRsnNSUWDxgzLnkRlhbbmTUZAyQkjVyZktcOASYFIJbQ1NUWYJGCVY=",
-        "LI43bJyUlNTYTUwC1j1PdGhcsmVsSCA0JOTVFnRPz1zyelJYx1XkQEHRVg==",
         "LI43bJyUlNTYdbAefFDfbEggNCQMvTRX0H8VODh2zO5MZBhSVD8vTLlW",
+        "LI43bJyUlNTYTUwC1j1PdGhcsmVsSCA0JOTVFnRPz1zyelJYx1XkQEHRVg==",
         "LI43NFTW1xToRhiWVN7clxVTXOLV52QQTNxkU1Rj1Ef5Vg==",
         "LI43NJRUU4Vk15cVUwA4133W/V9HVFTlfUVdVg==",
         "LI43NHRYSFpu9LRUTxhF0tcU0ZzMVQdQVImORX1W",
@@ -917,11 +941,12 @@ const char *lineup_strings[] =
         "LI43NDSMX9JTTUyUTFxwgx6awAjdRCVsvNTW5d1kjFUh+dC+1Mw3V2JRHVBUC6dDrFY=",
         "LI5HDH7tAib9MHiXFVJSZDJElEQlbLzU1lcCNtyMXEQ1WlRgAUgGVg==",
         "LI43bJyUdO0CJnlXxNJWWEXT11p8TM9cV0WyVFSl5EIVVg==",
-        "LI43bJyUlFSXRNR1tiSEVdUDNkM1dJZIVEkURjFW",
-        "LI43bJxUVlP1TM05V9A0ZdPXWgRGlhbkSQJWdRBY8j9xRHaYEGVNVBBEQHtW",
         "LI43bJyUlNTYBS00RdPXWnxMeOKGlVLSTUxkoDVBVVTbaUeWVg==",
+        "LI43bJxUVlP1TM05V9A0ZdPXWgRGlhbkSQJWdRBY8j9xRHaYEGVNVBBEQHtW",
+        "LI43bJyUlFSXRNR1tiSEVdUDNkM1dJZIVEkURjFW",
         "LI43bJyUlFSXRNR1tiSEVVE3R1X9wgh/7UL4P3lXFjByDDB/HFRUJdxBrVY=",
         "LI43NMQIX9APTVpmZNRlzBBBJWy81Nbl3TS+NpRkTVTbWU07Vg==",
+        "LI43bJyUlNTYdfBZQNYRSFpu9DQ4djTBf/VENVrenVSXjEL9Vg==",
         "LI43bJyUlFSXRNR1tiSEVVFT+JBANXSWSFTNaEFTVg==",
         "LI435MUIf+3G1dW1dEBnZIwcmhBBJWy81Nbl3ZQBd5iVRFVUqrxC3VY=",
         "LI43bJyUdO0CJnFXxFI3ZF1ADd9EJWy81NZXOGQRZCFlNMxYVO3jTgF2",
@@ -964,22 +989,24 @@ const char *lineup_strings[] =
         "LI43NJRQxj9xMx46MQxft29IIFS31MFVPyXdNL6WUFQbk1qDVw==",
         "LI43bJyUdOQC9AU0cVdYlBCCXjjRXGxgFrUe1dlVPwURVgIWEGQhZTTMWFQMm0wVVw==",
         "LI5HDH9tByb/1HrXeldAXPjACN9+tiSEVdhXglL4kXHW/R9UlzBUKUBH4Vc=",
+        "LI43bJzUUlAyZvTdUfgwNCRsvNRwRuVGEHbfHZjQZrQuUQIe+sGIfmQHNHEYWFRts1jeVw==",
         "LI43NFRVnc1WZ03E1LAOncFWf1GClqxaU0m0TMNc8nogx1XRI0RtVw==",
         "LI5HDH7tACb5sAZVZDDcMTREVN34EEIlbLzU1uXdNL5GlGRNVLiuS5lX",
         "LI43NNTW11hc5EIBkDVxRPohbLyUVJaMEWQhZTTMWFQaDVq1Vw==",
         "LI43NJRQxj/VJH+XFUyLtfRX15cYZF2QjBFkITVWVCQ/WztX",
         "LI43NMQIfe0BJn+XFVJsxAh/bUcNkLX0V0xTOFnMTeRCGXBHdtb931WXMFRBR0KjVw==",
-        "LI43NHRSbEgg1DdwxcEUXEM1bFyQf9WkdFfmXFhXVVR87ll7Vw==",
+        "LI43NDRsnFSVnFSQC920bkggNCQMXXblp5U0cQIHxJBUiQZY+1c=",
         "LI43NFTX11j8tHT+zJcVU1LTwRRc8OWl5b2VYENUuXBZe1c=",
+        "LI43NHRSbEgg1DdwxcEUXEM1bFyQf9WkdFfmXFhXVVR87ll7Vw==",
         "LI43NFRVncFYU00EVObclxVTQNgZ0NVcJ1QrAURBVw==",
         "LI43bJyUdO0CJnFXxFI3ZN1yFlh0lkhUB31beVc=",
         "LI43NBRTVn9xg1a1HtLXFFpcZ2xIIBSVjBBkITVWVGCmR09X",
         "LI43bJyUlNTYBS00RdPXWlhaB9WgAERdQg29ZMfVVZbX3lYBHvpRlsEEBzR2f0V2VNLPQfJX",
-        "LI43bJxUVWROkhK2b0gg1DdwxcEUXENV/wtd0FNlGNXfVFQKyURnVw==",
         "LI43NDRsnNSUZNSSIwy9JITVVdgDtkaVN14AWFTcsURnVw==",
+        "LI43bJxUVWROkhK2b0gg1DdwxcEUXENV/wtd0FNlGNXfVFQKyURnVw==",
         "LI43jJ8kxNVV2DU0e5cYAGXTwVpTSUw0TO9c8npSWMdVObhH01c=",
-        "LI43NHRYSFpudKQe08GMEExa9jV4dlS0vkVnVw==",
         "LI43NFTW1wRYV3SiHnTQ3m1IIDQkDN105d00vjaUZE1UBmRHg1c=",
+        "LI43NHRYSFpudKQe08GMEExa9jV4dlS0vkVnVw==",
         "LI43bJyUlFSXRORGmpvQXGxIINQ3CHbM7kxkGFJUsulFYVc=",
         "LI43NDRsnNSURFQ2+VAW/NyXFVNS08FcRs9c8npSWMdV8vRBDVc=",
         "LI43bJyUlFSXRNR1tiSEVdUDNkM1dJZIVEkURjFX",
@@ -1005,13 +1032,15 @@ const char *lineup_strings[] =
         "LI43NDxsjFSSZFSy+zjkFdzVEThOMlYRBZEEAGX0zVBU2PpMB1A=",
         "LI43NDxsjJSUVHFN9PjSwVliFNh+wh0MWeZtVMO1TMRQ",
         "LI4/bIyUZCe5mPln42JUDXRU9tWozTx2cP9VVIgtcJlQ",
+        "LI4/jI4k5NU1so7NDzPWDVhYWWf1dme1dhRGeNIbWdJtVPcYfYBQ",
         "LI4/bIyUhFSRRIQ0U7djjBURFLjBFBwcWd5tVFyFTgNQ",
         "LI43NDxsjFSVIlg0VLOPYIxhjPTcFGUMOHFMdt3UkcSsVEoHSPFQ",
+        "LI4/DI00hyTk1VXQdfQ1cthbRz8UBocU0E5cVFTAUkk6UA==",
         "LI4/bIyUhNTQTQQsREVSGVI5QFgBYSe5mOEEQQTFXWJHODR2VGV7TtVQ",
         "LI4/bIyUZDW/mOFn45qIjlQwZ2TUHERS3TXc+Mg0h+RCw04AJ1QijH1QUA==",
         "LI4/5D1sjJRUklhEVDKXEbV2HEx85kaa49XfmBDc1lRU21dLg1A=",
         "LI4/bIyUhNTQTQQsLBE4MvrJ7UKW09/4yO1GclZUJBR2zVA=",
-        "LI4/bIyUhFSXf084TERouHYUGMhOVNIAd9VQ",
+        "LI4/bIyUhFSXf084TERoNhHUTM9cVNyId9VQ",
         "LI4/bIyUhNTQTQQsEN34OOSVclZUIDR3CVA=",
         "LI7P5CGWnl0UmFRTFIoYdIredhbSTlS8OkyxUQ==",
         "LI7P5CGWHnSAMdTXXQ9zmFC24UeClhEC1rUCcEUYYUyyVFQN4E8kUQ==",
@@ -1032,6 +1061,7 @@ const char *lineup_strings[] =
         "LI43NDxsjFSSZFS3d5CU6ME03H7SF3NQVFTDv0zcUQ==",
         "LI4/bIyUhFSRRIQU8JyY4WczmghfR1ff+FCW+WRFVBvKSgpR",
         "LI4/bIyUhFSWfxVwXGC0QtU2thBUd7B1sVE=",
+        "LI4/bIyUhFSXf09MTERofHIDUFQ+fHapUQ==",
 };
 
 Fl_Choice_::Fl_Choice_(int x, int y, int w, int h, const char *l)
@@ -1211,7 +1241,7 @@ void SpawnTable::draw_cell(TableContext context, int ROW = 0, int COL = 0, //
 }
 
 Window::Window(int width, int height, const char *title)
-    : Fl_Window(width, height, title)
+    : Fl_Double_Window(width, height, title)
 {
     // int w = width;
     // int h = height;
@@ -1267,10 +1297,7 @@ Window::Window(int width, int height, const char *title)
     // 位置大小标签
     // resizable(this);
     this->size(w, h);
-    if (LANG == Language::Chinese)
-        this->label("PvZ Toolkit 1.7.2  -  植物大战僵尸全版本辅助工具");
-    else
-        this->label("PvZ Toolkit 1.7.2  -  Plants vs. Zombies All Version Toolkit");
+    this->label("PvZ Toolkit " VERSION_NAME);
 
     if (LANG == Language::Chinese)
     {
@@ -1398,7 +1425,7 @@ Window::Window(int width, int height, const char *title)
                 check_limbo_page = new Fl_Check_Button(c(4), r(5), iw, ih, "显示隐藏关");
                 button_download = new Fl_Button(c(1), r(6), iw, ih, "下载游戏");
                 button_update = new Fl_Button(c(2), r(6), iw, ih, "检查更新");
-                box_version = new Fl_Box(c(3), r(6), iw, ih, "版本 1.7.2");
+                box_version = new Fl_Box(c(3), r(6), iw, ih, "版本 " VERSION_NAME);
                 button_about = new Fl_Button(c(4), r(6), iw, ih, "关于...");
             }
             group_others->end();
@@ -1533,7 +1560,7 @@ Window::Window(int width, int height, const char *title)
                 check_limbo_page = new Fl_Check_Button(c(4) - 10, r(5), iw + 10, ih, "Unlock Limbo Page");
                 button_download = new Fl_Button(c(1), r(6), iw, ih, "Download PvZ");
                 button_update = new Fl_Button(c(2), r(6), iw, ih, "Check Updates");
-                box_version = new Fl_Box(c(3), r(6), iw, ih, "Version 1.7.2");
+                box_version = new Fl_Box(c(3), r(6), iw, ih, "Version " VERSION_NAME);
                 button_about = new Fl_Button(c(4), r(6), iw, ih, "About ...");
             }
             group_others->end();
@@ -1782,7 +1809,7 @@ Window::Window(int width, int height, const char *title)
     lineup_count[3] = 0;
     lineup_count[4] = 0;
     lineup_count[5] = 0;
-    for (size_t i = 0; i < 324; i++) // TODO 阵型数量
+    for (size_t i = 0; i < 339; i++) // TODO 阵型数量
     {
         std::string name = std::string(lineup_names[i]);
         char *scene[] = {"[DE]", "[NE]", "[PE]", "[FE]", "[RE]", "[ME]"};
@@ -1796,10 +1823,10 @@ Window::Window(int width, int height, const char *title)
             }
         }
     }
-    choice_lineup_name[0]->value(15); // DE双冰六炮
-    choice_lineup_name[1]->value(28); // NE快六炮
-    choice_lineup_name[2]->value(57); // PE经典八炮
-    choice_lineup_name[3]->value(33); // FE经典八炮
+    choice_lineup_name[0]->value(16); // DE双冰六炮
+    choice_lineup_name[1]->value(30); // NE快六炮
+    choice_lineup_name[2]->value(61); // PE经典八炮
+    choice_lineup_name[3]->value(34); // FE经典八炮
     choice_lineup_name[4]->value(17); // RE天台十炮
     choice_lineup_name[5]->value(15); // ME月夜十炮
 
@@ -1809,9 +1836,9 @@ Window::Window(int width, int height, const char *title)
 
 #ifdef _DEBUG
     size_t lineup_length_total = 0;
-    for (size_t i = 0; i < 324; i++)
+    for (size_t i = 0; i < 339; i++)
         lineup_length_total += std::string(lineup_strings[i]).size();
-    std::cout << "lineup string length avg: " << (lineup_length_total / 324) << std::endl;
+    std::cout << "lineup string length avg: " << (lineup_length_total / 339) << std::endl;
 #endif
 
     for (size_t i = 0; i < 20; i++)
@@ -2088,6 +2115,25 @@ Window::Window(int width, int height, const char *title)
 
 Window::~Window()
 {
+}
+
+int Window::handle(int event)
+{
+    // std::cout << event << std::endl;
+    switch (event)
+    {
+    case FL_FOCUS:
+        if (LANG == Language::Chinese)
+            this->label("植物大战僵尸全版本辅助工具");
+        else
+            this->label("Plants vs. Zombies All Version Toolkit");
+        return 1;
+    case FL_UNFOCUS:
+        this->label("PvZ Toolkit " VERSION_NAME);
+        return 1;
+    default:
+        return Fl_Double_Window::handle(event);
+    }
 }
 
 // TODO fl_utf8fromwc fl_utf8towc
@@ -3816,6 +3862,9 @@ void Window::cb_about(Fl_Widget *, void *w)
 
 void Window::cb_about()
 {
+    std::wstring version = utf8_decode(std::string(VERSION_NAME_FULL));
+    std::wstring build_date = utf8_decode(std::string(BUILD_DATE));
+
     if (LANG == Language::Chinese)
     {
         std::wstring text = std::wstring()                                                  //
@@ -3834,8 +3883,8 @@ void Window::cb_about()
                             + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.06 (zh)\n"            //
                             + L"✓ 年度汉化加强版 1.1.0.1056 GOTY 2012.07 (zh)\n"            //
                             + L"\n"                                                         //
-                            + L"版本号: 1.7.2.10702\n"                                      //
-                            + L"构建日期: 2020/10/15\n"                                     //
+                            + L"版本号: " + version + L"\n"                                 //
+                            + L"构建日期: " + build_date + L"\n"                            //
                             + L"依赖库: FLTK 1.4.x / zlib 1.2.11.x\n"                       //
                             + L"版权所有: © 2020 lmintlcx\n"                                //
                             + L"鸣谢: a418569882 63enjoy kmtohoem\n";
@@ -3859,8 +3908,8 @@ void Window::cb_about()
                             + L"✓ 1.1.0.1056 GOTY 2012.06 (zh)\n"                                          //
                             + L"✓ 1.1.0.1056 GOTY 2012.07 (zh)\n"                                          //
                             + L"\n"                                                                        //
-                            + L"Version: 1.7.2.10702\n"                                                    //
-                            + L"Build Date: 2020/10/15\n"                                                  //
+                            + L"Version: " + version + L"\n"                                               //
+                            + L"Build Date: " + build_date + L"\n"                                         //
                             + L"Dependencies: FLTK 1.4.x / zlib 1.2.11.x\n"                                //
                             + L"Copyright: © 2020 lmintlcx\n"                                              //
                             + L"Credit: a418569882 63enjoy kmtohoem\n";
