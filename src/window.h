@@ -78,7 +78,6 @@ class Window : public Fl_Double_Window
 public:
     Window(int, int, const char *);
     ~Window();
-    int handle(int);
 
     Fl_Tabs *tabs;
 

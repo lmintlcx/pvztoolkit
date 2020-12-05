@@ -1297,7 +1297,13 @@ Window::Window(int width, int height, const char *title)
     // 位置大小标签
     // resizable(this);
     this->size(w, h);
-    this->label("PvZ Toolkit " VERSION_NAME);
+    // this->label("PvZ Toolkit " VERSION_NAME);
+    if (LANG == Language::Chinese)
+        this->label("植物大战僵尸全版本辅助工具"
+                    " " VERSION_NAME);
+    else
+        this->label("Plants vs. Zombies All Version Toolkit"
+                    " " VERSION_NAME);
 
     if (LANG == Language::Chinese)
     {
@@ -2115,25 +2121,6 @@ Window::Window(int width, int height, const char *title)
 
 Window::~Window()
 {
-}
-
-int Window::handle(int event)
-{
-    // std::cout << event << std::endl;
-    switch (event)
-    {
-    case FL_FOCUS:
-        if (LANG == Language::Chinese)
-            this->label("植物大战僵尸全版本辅助工具");
-        else
-            this->label("Plants vs. Zombies All Version Toolkit");
-        return 1;
-    case FL_UNFOCUS:
-        this->label("PvZ Toolkit " VERSION_NAME);
-        return 1;
-    default:
-        return Fl_Double_Window::handle(event);
-    }
 }
 
 // TODO fl_utf8fromwc fl_utf8towc
