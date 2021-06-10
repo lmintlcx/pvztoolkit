@@ -3873,7 +3873,7 @@ void Window::cb_about()
                             + L"版本号: " + version + L"\n"                                 //
                             + L"构建日期: " + build_date + L"\n"                            //
                             + L"依赖库: FLTK 1.4.x / zlib 1.2.11.x\n"                       //
-                            + L"版权所有: © 2020 lmintlcx\n"                                //
+                            + L"版权所有: © 2020-2021 lmintlcx\n"                                //
                             + L"鸣谢: a418569882 63enjoy kmtohoem\n";
         MessageBoxW(GetActiveWindow(), text.c_str(), L"关于 PvZ Toolkit", MB_OK);
     }
@@ -3898,7 +3898,7 @@ void Window::cb_about()
                             + L"Version: " + version + L"\n"                                               //
                             + L"Build Date: " + build_date + L"\n"                                         //
                             + L"Dependencies: FLTK 1.4.x / zlib 1.2.11.x\n"                                //
-                            + L"Copyright: © 2020 lmintlcx\n"                                              //
+                            + L"Copyright: © 2020-2021 lmintlcx\n"                                              //
                             + L"Credit: a418569882 63enjoy kmtohoem\n";
         MessageBoxW(GetActiveWindow(), text.c_str(), L"About PvZ Toolkit", MB_OK);
     }

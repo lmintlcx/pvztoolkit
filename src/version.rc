@@ -29,7 +29,7 @@ VS_VERSION_INFO VERSIONINFO
                 VALUE "CompanyName", "Cube Studio"
                 VALUE "FileDescription", "PvZ Toolkit"
                 VALUE "FileVersion", VERSION_NAME_FULL
-                VALUE "LegalCopyright", "(C) 2020 lmintlcx"
+                VALUE "LegalCopyright", "(C) 2020-2021 lmintlcx"
                 VALUE "InternalName", "pvztoolkit"
                 VALUE "OriginalFilename", "pvztoolkit.exe"
                 VALUE "ProductName", "PvZ Toolkit"
