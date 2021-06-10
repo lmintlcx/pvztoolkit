@@ -135,6 +135,7 @@ struct PVZ_DATA
     std::vector<HACK<uint8_t, 1>> chocolate_unlimited;
     HACK<uint8_t, 1> tree_food_unlimited;
 
+    HACK<uint8_t, 1> clear_cooldown;
     HACK<uint8_t, 1> planting_anywhere;
     HACK<uint8_t, 1> planting_anywhere_preview;
     HACK<uint8_t, 1> planting_anywhere_iz;

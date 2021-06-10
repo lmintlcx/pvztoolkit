@@ -101,6 +101,7 @@ PvZ::PvZ()
             {{0x0051ec38, {0x00}, {0xff}}, {0x0051ecb8, {0x00}, {0xff}}}, // chocolate_unlimited
             {0x0042d463, {0x00}, {0xff}},                                 // tree_food_unlimited
 
+            {0x00487296, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x0040fe30, {0x81}, {0x84}},                                 // planting_anywhere
             {0x00438e40, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x0042a2d9, {0x8d}, {0x84}},                                 // planting_anywhere_iz
@@ -265,6 +266,7 @@ PvZ::PvZ()
             {{0x0051ef88, {0x00}, {0xff}}, {0x0051f008, {0x00}, {0xff}}}, // chocolate_unlimited
             {0x0042d4c3, {0x00}, {0xff}},                                 // tree_food_unlimited
 
+            {0x004875e6, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x0040fe20, {0x81}, {0x84}},                                 // planting_anywhere
             {0x00438eb0, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x0042a339, {0x8d}, {0x84}},                                 // planting_anywhere_iz
@@ -429,6 +431,7 @@ PvZ::PvZ()
             {{0x005230b8, {0x00}, {0xff}}, {0x00523138, {0x00}, {0xff}}}, // chocolate_unlimited
             {0x0042f103, {0x00}, {0xff}},                                 // tree_food_unlimited
 
+            {0x0048b006, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x00411370, {0x81}, {0x84}},                                 // planting_anywhere
             {0x0043ac50, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x0042bf49, {0x8d}, {0x84}},                                 // planting_anywhere_iz
@@ -593,6 +596,7 @@ PvZ::PvZ()
             {{0x00523108, {0x00}, {0xff}}, {0x00523188, {0x00}, {0xff}}}, // chocolate_unlimited
             {0x0042f053, {0x00}, {0xff}},                                 // tree_food_unlimited
 
+            {0x0048afa6, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x00411340, {0x81}, {0x84}},                                 // planting_anywhere
             {0x0043abc0, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x0042be99, {0x8d}, {0x84}},                                 // planting_anywhere_iz
@@ -757,6 +761,7 @@ PvZ::PvZ()
             {{0x00529545, {0x39}, {0xff}}, {0x005295c7, {0x39}, {0xff}}}, // chocolate_unlimited
             {0x0043018d, {0x39}, {0xff}},                                 // tree_food_unlimited
 
+            {0x00491e55, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x004127f0, {0x81}, {0x84}},                                 // planting_anywhere
             {0x0043c030, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x0042ce79, {0x8d}, {0x84}},                                 // planting_anywhere_iz
@@ -921,6 +926,7 @@ PvZ::PvZ()
             {{0x0052d6a5, {0x39}, {0xff}}, {0x0052d727, {0x39}, {0xff}}}, // chocolate_unlimited
             {0x004311ed, {0x39}, {0xff}},                                 // tree_food_unlimited
 
+            {0x004958c5, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x00413350, {0x81}, {0x84}},                                 // planting_anywhere
             {0x0043d100, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x0042dec9, {0x8d}, {0x84}},                                 // planting_anywhere_iz
@@ -1085,6 +1091,7 @@ PvZ::PvZ()
             {{0x0052d9c5, {0x39}, {0xff}}, {0x0052da47, {0x39}, {0xff}}}, // chocolate_unlimited
             {0x004321cd, {0x39}, {0xff}},                                 // tree_food_unlimited
 
+            {0x00495b85, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x00413b60, {0x81}, {0x84}},                                 // planting_anywhere
             {0x0043df40, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x0042ee69, {0x8d}, {0x84}},                                 // planting_anywhere_iz
@@ -1249,6 +1256,7 @@ PvZ::PvZ()
             {{0x0054ddc3, {0x39}, {0xff}}, {0x0054de0a, {0x39}, {0xff}}}, // chocolate_unlimited
             {0x00447d49, {0x39}, {0xff}},                                 // tree_food_unlimited
 
+            {0x004b2ff3, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x00425954, {0x81}, {0x84}},                                 // planting_anywhere
             {0x00454b67, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x004449e8, {0x8d}, {0x84}},                                 // planting_anywhere_iz
@@ -1413,6 +1421,7 @@ PvZ::PvZ()
             {{0x0053c583, {0x39}, {0xff}}, {0x0053c5ca, {0x39}, {0xff}}}, // chocolate_unlimited
             {0x004368c9, {0x39}, {0xff}},                                 // tree_food_unlimited
 
+            {0x004a1764, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x004156b4, {0x81}, {0x84}},                                 // planting_anywhere
             {0x00443797, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x004334d8, {0x8d}, {0x84}},                                 // planting_anywhere_iz
@@ -1577,6 +1586,7 @@ PvZ::PvZ()
             {{0x00534995, {0x39}, {0xff}}, {0x00534a17, {0x39}, {0xff}}}, // chocolate_unlimited
             {0x0043885d, {0x39}, {0xff}},                                 // tree_food_unlimited
 
+            {0x0049ce02, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x0041bd2e, {0x81}, {0x84}},                                 // planting_anywhere
             {0x00444790, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x00435579, {0x8d}, {0x84}},                                 // planting_anywhere_iz
@@ -1741,6 +1751,7 @@ PvZ::PvZ()
             {{0x00535565, {0x39}, {0xff}}, {0x005355e7, {0x39}, {0xff}}}, // chocolate_unlimited
             {0x004394cd, {0x39}, {0xff}},                                 // tree_food_unlimited
 
+            {0x0049da12, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x0041c9ae, {0x81}, {0x84}},                                 // planting_anywhere
             {0x004453b0, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x004361e9, {0x8d}, {0x84}},                                 // planting_anywhere_iz
@@ -2195,6 +2206,7 @@ void PvZ::FreePlanting(bool on)
         return;
 
     WriteMemory<int>(static_cast<int>(on), {data().pvz_base, data().free_planting});
+    enable_hack(data().clear_cooldown, on);
 }
 
 void PvZ::PlantingAnywhere(bool on)
