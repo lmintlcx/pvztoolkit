@@ -14,7 +14,7 @@ namespace Pt
 #define UNPACK_SRC_SIZE_ERROR 2    // 获取源文件大小失败
 #define UNPACK_SRC_LOAD_ERROR 3    // 读取源文件内容失败
 #define UNPACK_SRC_HEADER_ERROR 4  // 文件头格式不正确
-#define UNPACK_SRC_DATA_ERROR 5    // 文件大小与索引区数据不符
+#define UNPACK_SRC_DATA_ERROR 5    // 文件数据已经损坏
 #define UNPACK_PATH_CREATE_ERROR 6 // 解包路径创建失败
 #define UNPACK_FILE_CREATE_ERROR 7 // 解包文件创建失败
 #define UNPACK_FILE_WRITE_ERROR 8  // 解包文件写入失败
@@ -29,11 +29,11 @@ namespace Pt
 
 class PAK
 {
-public:
+  public:
     PAK();
     ~PAK();
 
-private:
+  private:
     std::string utf8_encode(const std::wstring &);
     std::wstring utf8_decode(const std::string &);
 
@@ -46,7 +46,7 @@ private:
                     std::vector<int> &,          //
                     std::vector<FILETIME> &);
 
-public:
+  public:
     // 解包, 参数分别为源文件名和解包文件夹
     int Unpack(std::wstring, std::wstring);
     int Unpack(std::string, std::string);

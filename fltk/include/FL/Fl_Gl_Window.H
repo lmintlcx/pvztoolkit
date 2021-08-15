@@ -77,8 +77,6 @@ public:
   void hide();
   void resize(int,int,int,int);
   int handle(int);
-  /** Returns a pointer to the window's Fl_Gl_Window_Driver object */
-  Fl_Gl_Window_Driver *gl_driver() {return pGlWindowDriver;}
 
   /**
     Is turned off when FLTK creates a new context for this window or

@@ -22,7 +22,7 @@ enum class Reg : unsigned int
 
 class Code
 {
-public:
+  public:
     Code();
     ~Code();
 
@@ -44,7 +44,7 @@ public:
     void asm_ret();
     void asm_code_inject(HANDLE);
 
-protected:
+  protected:
     unsigned char *code;
     unsigned int length;
 };

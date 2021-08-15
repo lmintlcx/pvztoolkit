@@ -78,6 +78,7 @@ struct PVZ_DATA
     uintptr_t lawn_mower;
     uintptr_t lawn_mower_dead;
     uintptr_t lawn_mower_count_max;
+    uintptr_t lawn_mower_count;
 
     uintptr_t grid_item;
     uintptr_t grid_item_type;
@@ -90,6 +91,9 @@ struct PVZ_DATA
     uintptr_t cursor_grab;
 
     uintptr_t slot;
+    uintptr_t slot_count;
+    uintptr_t slot_seed_cd_past;
+    uintptr_t slot_seed_cd_total;
     uintptr_t slot_seed_type;
     uintptr_t slot_seed_type_im;
 
@@ -100,6 +104,7 @@ struct PVZ_DATA
 
     uintptr_t game_paused;
     uintptr_t block_type;
+    uintptr_t row_type;
     uintptr_t ice_trail_cd;
     uintptr_t spawn_list;
     uintptr_t spawn_type;
@@ -108,20 +113,26 @@ struct PVZ_DATA
     uintptr_t sun;
     uintptr_t game_clock;
     uintptr_t debug_mode;
+    uintptr_t particle_systems_addr;
 
     uintptr_t game_mode;
     uintptr_t game_ui;
 
     uintptr_t free_planting;
 
+    uintptr_t anim;
+    uintptr_t unnamed;
+    uintptr_t particle_system;
+    uintptr_t particle_system_type;
+    uintptr_t particle_system_dead;
+    uintptr_t particle_system_count_max;
+
     uintptr_t user_data;
     uintptr_t level;
     uintptr_t money;
+    uintptr_t playthrough;
     uintptr_t tree_height;
-    uintptr_t fertilizer;
-    uintptr_t bug_spray;
-    uintptr_t chocolate;
-    uintptr_t tree_food;
+    uintptr_t twiddydinky;
 
     uintptr_t background_music;
 
@@ -135,12 +146,16 @@ struct PVZ_DATA
     std::vector<HACK<uint8_t, 1>> chocolate_unlimited;
     HACK<uint8_t, 1> tree_food_unlimited;
 
-    HACK<uint8_t, 1> clear_cooldown;
     HACK<uint8_t, 1> planting_anywhere;
     HACK<uint8_t, 1> planting_anywhere_preview;
     HACK<uint8_t, 1> planting_anywhere_iz;
     std::vector<HACK<uint8_t, 1>> fast_belt;
     HACK<uint8_t, 1> lock_shovel;
+
+    HACK<uint16_t, 1> hack_put_rake;
+    HACK<uint16_t, 1> restore_lawn_mower_1;
+    HACK<uint8_t, 1> restore_lawn_mower_2;
+    HACK<uint32_t, 1> restore_lawn_mower_3;
 
     HACK<uint8_t, 3> plant_immune_bite;
     HACK<uint8_t, 1> plant_immune_blast;
@@ -192,8 +207,12 @@ struct PVZ_DATA
     HACK<uint32_t, 1> disable_save_userdata;
     HACK<uint8_t, 3> unlock_limbo_page;
 
+    uintptr_t call_update_main_ui;
+    uintptr_t call_reload_main_ui;
+
+    uintptr_t call_level_complete;
+
     uintptr_t call_wisdom_tree;
-    uintptr_t call_set_music;
 
     uintptr_t call_put_plant;
     uintptr_t call_put_plant_imitater;
@@ -202,27 +221,36 @@ struct PVZ_DATA
     uintptr_t call_put_zomboss;
     uintptr_t call_put_grave;
     uintptr_t call_put_ladder;
+    uintptr_t call_put_rake;
+    uintptr_t call_put_rake_row;
+    uintptr_t call_put_rake_col;
+
+    uintptr_t call_start_lawn_mower;
+    uintptr_t call_delete_lawn_mower;
+    uintptr_t call_restore_lawn_mower;
 
     uintptr_t call_delete_plant;
-    uintptr_t call_delete_lawn_mower;
     uintptr_t call_delete_grid_item;
 
-    uintptr_t call_level_complete;
-
     uintptr_t call_wakeup_plant;
+
+    uintptr_t call_set_background;
+    uintptr_t call_delete_particle_system;
 
     uintptr_t call_generate_spawn_list;
     uintptr_t call_clear_spawn_preview;
     uintptr_t call_update_spawn_preview;
+
+    uintptr_t call_set_music;
 };
 
 class PvZ : public Process, public Code
 {
-public:
+  public:
     PvZ();
     ~PvZ();
 
-    // 安全地注♂入
+    // 安全地注入
     void asm_code_inject();
 
     // 查找植物大战僵尸, 找到了支持的版本返回真
@@ -246,6 +274,7 @@ public:
 
     // 游戏场地
     int GetScene();
+    void SetScene(int);
 
     // 场地行数
     int GetRowCount();
@@ -254,7 +283,7 @@ public:
     template <typename T, size_t size>
     void enable_hack(HACK<T, size>, bool);
 
-    // 应用 hack(s)
+    // 应用 hacks
     template <typename T, size_t size>
     void enable_hack(std::vector<HACK<T, size>>, bool);
 
@@ -262,7 +291,7 @@ public:
     // 每次调用前都要用 GameOn() 检查
     PVZ_DATA data();
 
-protected:
+  protected:
     // 查找结果
     int find_result;
 
@@ -286,13 +315,19 @@ protected:
     // 将版本和对应数据联系起来的键值对
     std::map<int, PVZ_DATA> ver_map;
 
-public:
+  public:
     // 以下是修改功能
+
+    // 解锁游戏
+    void UnlockTrophy();
+
+    // 直接过关
+    void DirectWin();
 
     // 修改阳光
     void SetSun(int);
 
-    // 修改金钱
+    // 修改金币
     void SetMoney(int);
 
     // 自动收集
@@ -328,14 +363,8 @@ public:
     // 锁定铲子
     void LockShovel(bool);
 
-    // 获取卡槽某格卡片, 模仿者额外加 48
-    int GetSlotSeed(int);
-
-    // 修改卡槽某格卡片
-    void SetSlotSeed(int, int, bool);
-
-    // 修改背景音乐
-    void SetMusic(int);
+    // 关卡混乱
+    void MixMode(int, int);
 
     // 无尽模式跳关
     void JumpLevel(int);
@@ -357,21 +386,21 @@ public:
     void PutLadder(int, int);
     void AutoLadder(bool);
 
+    // 生成钉耙
+    void asm_put_rake(int, int);
+    void PutRake(int, int);
+
+    // 启动/删除/恢复小推车
+    void SetLawnMowers(int);
+
     // 清除所有植物
     void ClearAllPlants();
 
     // 杀死所有僵尸
     void KillAllZombies();
 
-    // 去掉所有小推车
-    void ClearAllLawnMowers();
-
     // 清理场地物品
-    void ClearGridItems(int);
     void ClearGridItems(std::vector<int>);
-
-    // 直接过关
-    void DirectWin(bool);
 
     // 植物无敌
     void PlantInvincible(bool);
@@ -409,11 +438,20 @@ public:
     // 小丑(辣椒)不爆
     void ZombieNotExplode(bool);
 
+    // 获取卡槽某格卡片, 模仿者额外加 48
+    int GetSlotSeed(int);
+
+    // 修改卡槽某格卡片
+    void SetSlotSeed(int, int, bool);
+
     // 水路种睡莲
     void LilyPadOnPool(int, int);
 
     // 屋顶放花盆
     void FlowerPotOnRoof(int, int);
+
+    // 窗口截图
+    void Screenshot();
 
     // 获取字符串
     std::string GetLineup();
@@ -436,8 +474,8 @@ public:
     // 自定义填充出怪列表
     void CustomizeSpawn(std::array<bool, 33>, bool, bool, int);
 
-    // 关卡混乱
-    void MixMode(int, int);
+    // 修改背景音乐
+    void SetMusic(int);
 
     // 清除浓雾
     void NoFog(bool);

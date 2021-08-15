@@ -23,7 +23,7 @@ typedef NTSTATUS(NTAPI *NtQueryInformationProcess) //
 
 class Process
 {
-public:
+  public:
     Process();
     ~Process();
 
@@ -59,19 +59,19 @@ public:
     // template <typename T, size_t size, typename... Args>
     // void WriteMemory(std::array<T, size>, Args...);
 
-protected:
+  protected:
     HWND hwnd;     // 窗口句柄
     DWORD pid;     // 进程标识
     HANDLE handle; // 进程句柄
 
-public:
+  public:
     std::wstring path;    // 文件路径
     std::wstring name;    // 产品名称
     std::wstring version; // 产品版本
     std::wstring of_name; // 原始文件名
 
 #ifdef _DEBUG
-private:
+  private:
     std::string int_to_hex_string(unsigned int num)
     {
         std::stringstream sstream;

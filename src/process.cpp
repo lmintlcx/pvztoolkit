@@ -39,7 +39,8 @@ bool Process::OpenByWindow(const wchar_t *class_name, const wchar_t *window_name
     this->version = L"";
     this->of_name = L"";
 
-    auto get_path = [&]() {
+    auto get_path = [&]()
+    {
         wchar_t file_path[MAX_PATH]; // 游戏本体路径
         DWORD name_size = GetModuleFileNameExW(this->handle, nullptr, file_path, MAX_PATH);
         if (name_size == 0)
@@ -100,7 +101,8 @@ bool Process::OpenByWindow(const wchar_t *class_name, const wchar_t *window_name
         }
     };
 
-    auto get_info = [&]() {
+    auto get_info = [&]()
+    {
         if (this->path == L"")
             return;
         DWORD size = GetFileVersionInfoSizeW(this->path.c_str(), nullptr);

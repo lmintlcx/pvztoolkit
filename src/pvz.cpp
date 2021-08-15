@@ -44,6 +44,7 @@ PvZ::PvZ()
             0x100, // lawn_mower
             0x30,  //   lawn_mower_dead
             0x104, // lawn_mower_count_max
+            0x110, // lawn_mower_count
 
             0x11c, // grid_item
             0x08,  //   grid_item_type
@@ -56,6 +57,9 @@ PvZ::PvZ()
             0x30,  //   cursor_grab
 
             0x144, // slot
+            0x24,  //   slot_count
+            0x4c,  //   slot_seed_cd_past
+            0x50,  //   slot_seed_cd_total
             0x5c,  //   slot_seed_type
             0x60,  //   slot_seed_type_im
 
@@ -66,6 +70,7 @@ PvZ::PvZ()
 
             0x164,  // game_paused
             0x168,  // block_type
+            0x5d8,  // row_type
             0x624,  // ice_trail_cd
             0x6b4,  // spawn_list
             0x54d4, // spawn_type
@@ -74,20 +79,26 @@ PvZ::PvZ()
             0x5560, // sun
             0x5568, // game_clock
             0x55f8, // debug_mode
+            0x5620, // particle_systems_addr
 
             0x7f8, // game_mode
             0x7fc, // game_ui
 
             0x814, // free_planting
 
+            0x820, // anim
+            0x00,  //   unnamed
+            0x00,  //     particle_system
+            0x00,  //       particle_system_type
+            0x1c,  //       particle_system_dead
+            0x04,  //     particle_system_count_max
+
             0x82c, // user_data
             0x24,  //   level
             0x28,  //   money
+            0x2c,  //   playthrough
             0xf4,  //   tree_height
-            0x1f8, //   fertilizer
-            0x1fc, //   bug_spray
-            0x228, //   chocolate
-            0x230, //   tree_food
+            0x1c0, //   twiddydinky
 
             0x83c, // background_music
 
@@ -101,12 +112,16 @@ PvZ::PvZ()
             {{0x0051ec38, {0x00}, {0xff}}, {0x0051ecb8, {0x00}, {0xff}}}, // chocolate_unlimited
             {0x0042d463, {0x00}, {0xff}},                                 // tree_food_unlimited
 
-            {0x00487296, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x0040fe30, {0x81}, {0x84}},                                 // planting_anywhere
             {0x00438e40, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x0042a2d9, {0x8d}, {0x84}},                                 // planting_anywhere_iz
             {{0x00422d20, {0x80}, {0x8f}}, {0x00489ca1, {0x33}, {0x85}}}, // fast_belt
             {0x004123a3, {0x39}, {0x89}},                                 // lock_shovel
+
+            {0x0040b9e2, {0x800f}, {0x840f}},             // hack_put_rake
+            {0x0040bc98, {0x60eb}, {0x0975}},             // restore_lawn_mower_1
+            {0x0040bd14 + 3, {0x01}, {0x00}},             // restore_lawn_mower_2
+            {0x00458000 + 2, {0x006799fc}, {0x00679bf8}}, // restore_lawn_mower_3
 
             {0x0052fcf1, {0x46, 0x40, 0x00}, {0x46, 0x40, 0xfc}}, // plant_immune_bite
             {0x0041cc2f, {0xeb}, {0x74}},                         // plant_immune_blast
@@ -158,8 +173,12 @@ PvZ::PvZ()
             {0x00482149, {0x000c8b13 + 0x1b}, {0x000c8b13}},      // disable_save_userdata
             {0x0042df5d, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
+            0x0044faf0, // call_update_main_ui
+            0x0044f8e0, // call_reload_main_ui
+
+            0x0040c3e0, // call_level_complete
+
             0x0042d1f0, // call_wisdom_tree
-            0x0045b750, // call_set_music
 
             0x0040d120, // call_put_plant
             0x00466b80, // call_put_plant_imitater
@@ -168,18 +187,27 @@ PvZ::PvZ()
             0x0040ddc0, // call_put_zomboss
             0x00426620, // call_put_grave
             0x00408f40, // call_put_ladder
+            0x0040b9c0, // call_put_rake
+            0x0040bb25, // call_put_rake_row
+            0x0040ba8e, // call_put_rake_col
+
+            0x00458da0, // call_start_lawn_mower
+            0x00458d10, // call_delete_lawn_mower
+            0x0040bc70, // call_restore_lawn_mower
 
             0x004679b0, // call_delete_plant
-            0x00458d10, // call_delete_lawn_mower
             0x0044d000, // call_delete_grid_item
 
-            0x0040c3e0, // call_level_complete
-
             0x0045e860, // call_wakeup_plant
+
+            0x0040a160, // call_set_background
+            0x005160c0, // call_delete_particle_system
 
             0x004092e0, // call_generate_spawn_list
             0x0040df70, // call_clear_spawn_preview
             0x0043a140, // call_update_spawn_preview
+
+            0x0045b750, // call_set_music
         };
 
     this->data_1_2_0_1065_en =
@@ -209,6 +237,7 @@ PvZ::PvZ()
             0x100, // lawn_mower
             0x30,  //   lawn_mower_dead
             0x104, // lawn_mower_count_max
+            0x110, // lawn_mower_count
 
             0x11c, // grid_item
             0x08,  //   grid_item_type
@@ -221,6 +250,9 @@ PvZ::PvZ()
             0x30,  //   cursor_grab
 
             0x144, // slot
+            0x24,  //   slot_count
+            0x4c,  //   slot_seed_cd_past
+            0x50,  //   slot_seed_cd_total
             0x5c,  //   slot_seed_type
             0x60,  //   slot_seed_type_im
 
@@ -231,6 +263,7 @@ PvZ::PvZ()
 
             0x164,  // game_paused
             0x168,  // block_type
+            0x5d8,  // row_type
             0x624,  // ice_trail_cd
             0x6b4,  // spawn_list
             0x54d4, // spawn_type
@@ -239,20 +272,26 @@ PvZ::PvZ()
             0x5560, // sun
             0x5568, // game_clock
             0x55f8, // debug_mode
+            0x5620, // particle_systems_addr
 
             0x7f8, // game_mode
             0x7fc, // game_ui
 
             0x814, // free_planting
 
+            0x820, // anim
+            0x00,  //   unnamed
+            0x00,  //     particle_system
+            0x00,  //       particle_system_type
+            0x1c,  //       particle_system_dead
+            0x04,  //     particle_system_count_max
+
             0x82c, // user_data
             0x24,  //   level
             0x28,  //   money
+            0x2c,  //   playthrough
             0xf4,  //   tree_height
-            0x1f8, //   fertilizer
-            0x1fc, //   bug_spray
-            0x228, //   chocolate
-            0x230, //   tree_food
+            0x1c0, //   twiddydinky
 
             0x83c, // background_music
 
@@ -266,12 +305,16 @@ PvZ::PvZ()
             {{0x0051ef88, {0x00}, {0xff}}, {0x0051f008, {0x00}, {0xff}}}, // chocolate_unlimited
             {0x0042d4c3, {0x00}, {0xff}},                                 // tree_food_unlimited
 
-            {0x004875e6, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x0040fe20, {0x81}, {0x84}},                                 // planting_anywhere
             {0x00438eb0, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x0042a339, {0x8d}, {0x84}},                                 // planting_anywhere_iz
             {{0x00422d80, {0x80}, {0x8f}}, {0x00489ff1, {0x33}, {0x85}}}, // fast_belt
             {0x00412393, {0x39}, {0x89}},                                 // lock_shovel
+
+            {0x0040b9f2, {0x800f}, {0x840f}},             // hack_put_rake
+            {0x0040bca8, {0x60eb}, {0x0975}},             // restore_lawn_mower_1
+            {0x0040bd24 + 3, {0x01}, {0x00}},             // restore_lawn_mower_2
+            {0x00458160 + 2, {0x00679b5c}, {0x00679d58}}, // restore_lawn_mower_3
 
             {0x00530041, {0x46, 0x40, 0x00}, {0x46, 0x40, 0xfc}}, // plant_immune_bite
             {0x0041cc5f, {0xeb}, {0x74}},                         // plant_immune_blast
@@ -323,8 +366,12 @@ PvZ::PvZ()
             {0x00482499, {0x000c89f3 + 0x1b}, {0x000c89f3}},      // disable_save_userdata
             {0x0042dfbd, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
+            0x0044fc30, // call_update_main_ui
+            0x0044fa20, // call_reload_main_ui
+
+            0x0040c3f0, // call_level_complete
+
             0x0042d250, // call_wisdom_tree
-            0x0045b8b0, // call_set_music
 
             0x0040d130, // call_put_plant
             0x00466d00, // call_put_plant_imitater
@@ -333,18 +380,27 @@ PvZ::PvZ()
             0x0040ddd0, // call_put_zomboss
             0x00426680, // call_put_grave
             0x00408f50, // call_put_ladder
+            0x0040b9d0, // call_put_rake
+            0x0040bb35, // call_put_rake_row
+            0x0040ba9e, // call_put_rake_col
+
+            0x00458f00, // call_start_lawn_mower
+            0x00458e70, // call_delete_lawn_mower
+            0x0040bc80, // call_restore_lawn_mower
 
             0x00467b30, // call_delete_plant
-            0x00458e70, // call_delete_lawn_mower
             0x0044d150, // call_delete_grid_item
 
-            0x0040c3f0, // call_level_complete
-
             0x0045e960, // call_wakeup_plant
+
+            0x0040a170, // call_set_background
+            0x005163b0, // call_delete_particle_system
 
             0x004092f0, // call_generate_spawn_list
             0x0040df80, // call_clear_spawn_preview
             0x0043a1b0, // call_update_spawn_preview
+
+            0x0045b8b0, // call_set_music
         };
 
     this->data_1_0_4_7924_es =
@@ -374,6 +430,7 @@ PvZ::PvZ()
             0x100, // lawn_mower
             0x30,  //   lawn_mower_dead
             0x104, // lawn_mower_count_max
+            0x110, // lawn_mower_count
 
             0x11c, // grid_item
             0x08,  //   grid_item_type
@@ -386,6 +443,9 @@ PvZ::PvZ()
             0x30,  //   cursor_grab
 
             0x144, // slot
+            0x24,  //   slot_count
+            0x4c,  //   slot_seed_cd_past
+            0x50,  //   slot_seed_cd_total
             0x5c,  //   slot_seed_type
             0x60,  //   slot_seed_type_im
 
@@ -396,6 +456,7 @@ PvZ::PvZ()
 
             0x164,  // game_paused
             0x168,  // block_type
+            0x5d8,  // row_type
             0x624,  // ice_trail_cd
             0x6b4,  // spawn_list
             0x54d4, // spawn_type
@@ -404,20 +465,26 @@ PvZ::PvZ()
             0x5560, // sun
             0x5568, // game_clock
             0x55f8, // debug_mode
+            0x5620, // particle_systems_addr
 
             0x7f8, // game_mode
             0x7fc, // game_ui
 
             0x814, // free_planting
 
+            0x820, // anim
+            0x00,  //   unnamed
+            0x00,  //     particle_system
+            0x00,  //       particle_system_type
+            0x1c,  //       particle_system_dead
+            0x04,  //     particle_system_count_max
+
             0x82c, // user_data
             0x24,  //   level
             0x28,  //   money
+            0x2c,  //   playthrough
             0xf4,  //   tree_height
-            0x1f8, //   fertilizer
-            0x1fc, //   bug_spray
-            0x228, //   chocolate
-            0x230, //   tree_food
+            0x1c0, //   twiddydinky
 
             0x83c, // background_music
 
@@ -431,12 +498,16 @@ PvZ::PvZ()
             {{0x005230b8, {0x00}, {0xff}}, {0x00523138, {0x00}, {0xff}}}, // chocolate_unlimited
             {0x0042f103, {0x00}, {0xff}},                                 // tree_food_unlimited
 
-            {0x0048b006, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x00411370, {0x81}, {0x84}},                                 // planting_anywhere
             {0x0043ac50, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x0042bf49, {0x8d}, {0x84}},                                 // planting_anywhere_iz
             {{0x00424960, {0x80}, {0x8f}}, {0x0048da11, {0x33}, {0x85}}}, // fast_belt
             {0x004138f3, {0x39}, {0x89}},                                 // lock_shovel
+
+            {0x0040cef2, {0x800f}, {0x840f}},             // hack_put_rake
+            {0x0040d1a8, {0x60eb}, {0x0975}},             // restore_lawn_mower_1
+            {0x0040d224 + 3, {0x01}, {0x00}},             // restore_lawn_mower_2
+            {0x0045b490 + 2, {0x00688cc4}, {0x00688eb8}}, // restore_lawn_mower_3
 
             {0x00534161, {0x46, 0x40, 0x00}, {0x46, 0x40, 0xfc}}, // plant_immune_bite
             {0x0041e5bf, {0xeb}, {0x74}},                         // plant_immune_blast
@@ -488,8 +559,12 @@ PvZ::PvZ()
             {0x00485e99, {0x000caed3 + 0x1b}, {0x000caed3}},      // disable_save_userdata
             {0x0042fc18, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
+            0x00452920, // call_update_main_ui
+            0x00452710, // call_reload_main_ui
+
+            0x0040d8f0, // call_level_complete
+
             0x0042ee90, // call_wisdom_tree
-            0x0045eda0, // call_set_music
 
             0x0040e620, // call_put_plant
             0x0046a3d0, // call_put_plant_imitater
@@ -498,18 +573,27 @@ PvZ::PvZ()
             0x0040f2c0, // call_put_zomboss
             0x004282b0, // call_put_grave
             0x0040a450, // call_put_ladder
+            0x0040ced0, // call_put_rake
+            0x0040d035, // call_put_rake_row
+            0x0040cf9e, // call_put_rake_col
+
+            0x0045c230, // call_start_lawn_mower
+            0x0045c1a0, // call_delete_lawn_mower
+            0x0040d180, // call_restore_lawn_mower
 
             0x0046b200, // call_delete_plant
-            0x0045c1a0, // call_delete_lawn_mower
             0x0044fdf0, // call_delete_grid_item
 
-            0x0040d8f0, // call_level_complete
-
             0x00462030, // call_wakeup_plant
+
+            0x0040b670, // call_set_background
+            0x0051a350, // call_delete_particle_system
 
             0x0040a7f0, // call_generate_spawn_list
             0x0040f470, // call_clear_spawn_preview
             0x0043c1d0, // call_update_spawn_preview
+
+            0x0045eda0, // call_set_music
         };
 
     this->data_1_0_7_3556_es =
@@ -539,6 +623,7 @@ PvZ::PvZ()
             0x100, // lawn_mower
             0x30,  //   lawn_mower_dead
             0x104, // lawn_mower_count_max
+            0x110, // lawn_mower_count
 
             0x11c, // grid_item
             0x08,  //   grid_item_type
@@ -551,6 +636,9 @@ PvZ::PvZ()
             0x30,  //   cursor_grab
 
             0x144, // slot
+            0x24,  //   slot_count
+            0x4c,  //   slot_seed_cd_past
+            0x50,  //   slot_seed_cd_total
             0x5c,  //   slot_seed_type
             0x60,  //   slot_seed_type_im
 
@@ -561,6 +649,7 @@ PvZ::PvZ()
 
             0x164,  // game_paused
             0x168,  // block_type
+            0x5d8,  // row_type
             0x624,  // ice_trail_cd
             0x6b4,  // spawn_list
             0x54d4, // spawn_type
@@ -569,20 +658,26 @@ PvZ::PvZ()
             0x5560, // sun
             0x5568, // game_clock
             0x55f8, // debug_mode
+            0x5620, // particle_systems_addr
 
             0x7f8, // game_mode
             0x7fc, // game_ui
 
             0x814, // free_planting
 
+            0x820, // anim
+            0x00,  //   unnamed
+            0x00,  //     particle_system
+            0x00,  //       particle_system_type
+            0x1c,  //       particle_system_dead
+            0x04,  //     particle_system_count_max
+
             0x82c, // user_data
             0x24,  //   level
             0x28,  //   money
+            0x2c,  //   playthrough
             0xf4,  //   tree_height
-            0x1f8, //   fertilizer
-            0x1fc, //   bug_spray
-            0x228, //   chocolate
-            0x230, //   tree_food
+            0x1c0, //   twiddydinky
 
             0x83c, // background_music
 
@@ -596,12 +691,16 @@ PvZ::PvZ()
             {{0x00523108, {0x00}, {0xff}}, {0x00523188, {0x00}, {0xff}}}, // chocolate_unlimited
             {0x0042f053, {0x00}, {0xff}},                                 // tree_food_unlimited
 
-            {0x0048afa6, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x00411340, {0x81}, {0x84}},                                 // planting_anywhere
             {0x0043abc0, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x0042be99, {0x8d}, {0x84}},                                 // planting_anywhere_iz
             {{0x004248b0, {0x80}, {0x8f}}, {0x0048d9b1, {0x33}, {0x85}}}, // fast_belt
             {0x004138c3, {0x39}, {0x89}},                                 // lock_shovel
+
+            {0x0040cec2, {0x800f}, {0x840f}},             // hack_put_rake
+            {0x0040d178, {0x60eb}, {0x0975}},             // restore_lawn_mower_1
+            {0x0040d1f4 + 3, {0x01}, {0x00}},             // restore_lawn_mower_2
+            {0x0045b4f0 + 2, {0x00688d4c}, {0x00688f40}}, // restore_lawn_mower_3
 
             {0x005341f1, {0x46, 0x40, 0x00}, {0x46, 0x40, 0xfc}}, // plant_immune_bite
             {0x0041e57f, {0xeb}, {0x74}},                         // plant_immune_blast
@@ -653,8 +752,12 @@ PvZ::PvZ()
             {0x00485eb9, {0x000cb033 + 0x1b}, {0x000cb033}},      // disable_save_userdata
             {0x0042fb68, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
+            0x004529a0, // call_update_main_ui
+            0x00452790, // call_reload_main_ui
+
+            0x0040d8c0, // call_level_complete
+
             0x0042ede0, // call_wisdom_tree
-            0x0045ee00, // call_set_music
 
             0x0040e5f0, // call_put_plant
             0x0046a480, // call_put_plant_imitater
@@ -663,18 +766,27 @@ PvZ::PvZ()
             0x0040f290, // call_put_zomboss
             0x00428200, // call_put_grave
             0x0040a420, // call_put_ladder
+            0x0040cea0, // call_put_rake
+            0x0040d005, // call_put_rake_row
+            0x0040cf6e, // call_put_rake_col
+
+            0x0045c290, // call_start_lawn_mower
+            0x0045c200, // call_delete_lawn_mower
+            0x0040d150, // call_restore_lawn_mower
 
             0x0046b2b0, // call_delete_plant
-            0x0045c200, // call_delete_lawn_mower
             0x0044fe70, // call_delete_grid_item
 
-            0x0040d8c0, // call_level_complete
-
             0x004620e0, // call_wakeup_plant
+
+            0x0040b640, // call_set_background
+            0x0051a330, // call_delete_particle_system
 
             0x0040a7c0, // call_generate_spawn_list
             0x0040f440, // call_clear_spawn_preview
             0x0043c140, // call_update_spawn_preview
+
+            0x0045ee00, // call_set_music
         };
 
     this->data_1_2_0_1073_en =
@@ -704,6 +816,7 @@ PvZ::PvZ()
             0x100 + 0x18, // lawn_mower
             0x30,         //   lawn_mower_dead
             0x104 + 0x18, // lawn_mower_count_max
+            0x110 + 0x18, // lawn_mower_count
 
             0x11c + 0x18, // grid_item
             0x08,         //   grid_item_type
@@ -716,6 +829,9 @@ PvZ::PvZ()
             0x30,         //   cursor_grab
 
             0x144 + 0x18, // slot
+            0x24,         //   slot_count
+            0x4c,         //   slot_seed_cd_past
+            0x50,         //   slot_seed_cd_total
             0x5c,         //   slot_seed_type
             0x60,         //   slot_seed_type_im
 
@@ -726,6 +842,7 @@ PvZ::PvZ()
 
             0x164 + 0x18,  // game_paused
             0x168 + 0x18,  // block_type
+            0x5d8 + 0x18,  // row_type
             0x624 + 0x18,  // ice_trail_cd
             0x6b4 + 0x18,  // spawn_list
             0x54d4 + 0x18, // spawn_type
@@ -734,20 +851,26 @@ PvZ::PvZ()
             0x5560 + 0x18, // sun
             0x5568 + 0x18, // game_clock
             0x55f8 + 0x18, // debug_mode
+            0x5620 + 0x18, // particle_systems_addr
 
             0x7f8 + 0x120, // game_mode
             0x7fc + 0x120, // game_ui
 
             0x814 + 0x120, // free_planting
 
+            0x820 + 0x120, // anim
+            0x00,          //   unnamed
+            0x00,          //     particle_system
+            0x00,          //       particle_system_type
+            0x1c,          //       particle_system_dead
+            0x04,          //     particle_system_count_max
+
             0x82c + 0x120, // user_data
             0x24 + 0x28,   //   level
             0x28 + 0x28,   //   money
+            0x2c + 0x28,   //   playthrough
             0xf4 + 0x28,   //   tree_height
-            0x1f8 + 0x28,  //   fertilizer
-            0x1fc + 0x28,  //   bug_spray
-            0x228 + 0x28,  //   chocolate
-            0x230 + 0x28,  //   tree_food
+            0x1c0 + 0x28,  //   twiddydinky
 
             0x83c + 0x120, // background_music
 
@@ -761,12 +884,16 @@ PvZ::PvZ()
             {{0x00529545, {0x39}, {0xff}}, {0x005295c7, {0x39}, {0xff}}}, // chocolate_unlimited
             {0x0043018d, {0x39}, {0xff}},                                 // tree_food_unlimited
 
-            {0x00491e55, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x004127f0, {0x81}, {0x84}},                                 // planting_anywhere
             {0x0043c030, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x0042ce79, {0x8d}, {0x84}},                                 // planting_anywhere_iz
             {{0x004257ff, {0x80}, {0x8f}}, {0x004948ae, {0x33}, {0x85}}}, // fast_belt
             {0x00414d53, {0x39}, {0x89}},                                 // lock_shovel
+
+            {0x0040e291, {0x800f}, {0x840f}},             // hack_put_rake
+            {0x0040e538, {0x60eb}, {0x0975}},             // restore_lawn_mower_1
+            {0x0040e5b4 + 3, {0x01}, {0x00}},             // restore_lawn_mower_2
+            {0x0045b8d0 + 2, {0x006fe1e4}, {0x006fe3c8}}, // restore_lawn_mower_3
 
             {0x00540681, {0x46, 0x40, 0x00}, {0x46, 0x40, 0xfc}}, // plant_immune_bite
             {0x0041f9ef, {0xeb}, {0x74}},                         // plant_immune_blast
@@ -818,8 +945,12 @@ PvZ::PvZ()
             {0x0048cd63, {0x00140389 + 0x28}, {0x00140389}},      // disable_save_userdata
             {0x00430c80, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
+            0x00452d80, // call_update_main_ui
+            0x00452b80, // call_reload_main_ui
+
+            0x0040ecd0, // call_level_complete
+
             0x0042ff00, // call_wisdom_tree
-            0x0045efa0, // call_set_music
 
             0x0040fa10, // call_put_plant
             0x0046a630, // call_put_plant_imitater
@@ -828,18 +959,27 @@ PvZ::PvZ()
             0x00410700, // call_put_zomboss
             0x00429120, // call_put_grave
             0x0040b870, // call_put_ladder
+            0x0040e270, // call_put_rake
+            0x0040e3ca, // call_put_rake_row
+            0x0040e333, // call_put_rake_col
+
+            0x0045c660, // call_start_lawn_mower
+            0x0045c5d0, // call_delete_lawn_mower
+            0x0040e510, // call_restore_lawn_mower
 
             0x0046b470, // call_delete_plant
-            0x0045c5d0, // call_delete_lawn_mower
             0x004502b0, // call_delete_grid_item
 
-            0x0040ecd0, // call_level_complete
-
             0x00462190, // call_wakeup_plant
+
+            0x0040c9f0, // call_set_background
+            0x00520770, // call_delete_particle_system
 
             0x0040bc20, // call_generate_spawn_list
             0x004108e0, // call_clear_spawn_preview
             0x0043d350, // call_update_spawn_preview
+
+            0x0045efa0, // call_set_music
         };
 
     this->data_1_2_0_1096_en =
@@ -869,6 +1009,7 @@ PvZ::PvZ()
             0x100 + 0x18, // lawn_mower
             0x30,         //   lawn_mower_dead
             0x104 + 0x18, // lawn_mower_count_max
+            0x110 + 0x18, // lawn_mower_count
 
             0x11c + 0x18, // grid_item
             0x08,         //   grid_item_type
@@ -881,6 +1022,9 @@ PvZ::PvZ()
             0x30,         //   cursor_grab
 
             0x144 + 0x18, // slot
+            0x24,         //   slot_count
+            0x4c,         //   slot_seed_cd_past
+            0x50,         //   slot_seed_cd_total
             0x5c,         //   slot_seed_type
             0x60,         //   slot_seed_type_im
 
@@ -891,6 +1035,7 @@ PvZ::PvZ()
 
             0x164 + 0x18,  // game_paused
             0x168 + 0x18,  // block_type
+            0x5d8 + 0x18,  // row_type
             0x624 + 0x18,  // ice_trail_cd
             0x6b4 + 0x18,  // spawn_list
             0x54d4 + 0x18, // spawn_type
@@ -899,20 +1044,26 @@ PvZ::PvZ()
             0x5560 + 0x18, // sun
             0x5568 + 0x18, // game_clock
             0x55f8 + 0x18, // debug_mode
+            0x5620 + 0x18, // particle_systems_addr
 
             0x7f8 + 0x120, // game_mode
             0x7fc + 0x120, // game_ui
 
             0x814 + 0x120, // free_planting
 
+            0x820 + 0x120, // anim
+            0x00,          //   unnamed
+            0x00,          //     particle_system
+            0x00,          //       particle_system_type
+            0x1c,          //       particle_system_dead
+            0x04,          //     particle_system_count_max
+
             0x82c + 0x120,    // user_data
             0x24 + 0x28 + 4,  //   level
             0x28 + 0x28 + 4,  //   money
+            0x2c + 0x28 + 4,  //   playthrough
             0xf4 + 0x28 + 4,  //   tree_height
-            0x1f8 + 0x28 + 4, //   fertilizer
-            0x1fc + 0x28 + 4, //   bug_spray
-            0x228 + 0x28 + 4, //   chocolate
-            0x230 + 0x28 + 4, //   tree_food
+            0x1c0 + 0x28 + 4, //   twiddydinky
 
             0x83c + 0x120, // background_music
 
@@ -926,12 +1077,16 @@ PvZ::PvZ()
             {{0x0052d6a5, {0x39}, {0xff}}, {0x0052d727, {0x39}, {0xff}}}, // chocolate_unlimited
             {0x004311ed, {0x39}, {0xff}},                                 // tree_food_unlimited
 
-            {0x004958c5, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x00413350, {0x81}, {0x84}},                                 // planting_anywhere
             {0x0043d100, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x0042dec9, {0x8d}, {0x84}},                                 // planting_anywhere_iz
             {{0x0042684f, {0x80}, {0x8f}}, {0x0049831e, {0x33}, {0x85}}}, // fast_belt
             {0x004158b3, {0x39}, {0x89}},                                 // lock_shovel
+
+            {0x0040ee41, {0x800f}, {0x840f}},             // hack_put_rake
+            {0x0040f0e8, {0x60eb}, {0x0975}},             // restore_lawn_mower_1
+            {0x0040f164 + 3, {0x01}, {0x00}},             // restore_lawn_mower_2
+            {0x0045e220 + 2, {0x00706704}, {0x007068e8}}, // restore_lawn_mower_3
 
             {0x005447a1, {0x46, 0x40, 0x00}, {0x46, 0x40, 0xfc}}, // plant_immune_bite
             {0x004207df, {0xeb}, {0x74}},                         // plant_immune_blast
@@ -983,8 +1138,12 @@ PvZ::PvZ()
             {0x004907ea, {0x00142f42 + 0x28}, {0x00142f42}},      // disable_save_userdata
             {0x00431ce0, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
+            0x00454830, // call_update_main_ui
+            0x00454630, // call_reload_main_ui
+
+            0x0040f860, // call_level_complete
+
             0x00430f60, // call_wisdom_tree
-            0x004618f0, // call_set_music
 
             0x004105a0, // call_put_plant
             0x0046d010, // call_put_plant_imitater
@@ -993,18 +1152,27 @@ PvZ::PvZ()
             0x00411290, // call_put_zomboss
             0x0042a170, // call_put_grave
             0x0040c420, // call_put_ladder
+            0x0040ee20, // call_put_rake
+            0x0040ef7a, // call_put_rake_row
+            0x0040eee3, // call_put_rake_col
+
+            0x0045efb0, // call_start_lawn_mower
+            0x0045ef20, // call_delete_lawn_mower
+            0x0040f0c0, // call_restore_lawn_mower
 
             0x0046de50, // call_delete_plant
-            0x0045ef20, // call_delete_lawn_mower
             0x00451bd0, // call_delete_grid_item
 
-            0x0040f860, // call_level_complete
-
             0x00464b70, // call_wakeup_plant
+
+            0x0040d5a0, // call_set_background
+            0x00524840, // call_delete_particle_system
 
             0x0040c7d0, // call_generate_spawn_list
             0x00411470, // call_clear_spawn_preview
             0x0043e690, // call_update_spawn_preview
+
+            0x004618f0, // call_set_music
         };
 
     this->data_1_2_0_1093_de_es_fr_it =
@@ -1034,6 +1202,7 @@ PvZ::PvZ()
             0x100 + 0x18, // lawn_mower
             0x30,         //   lawn_mower_dead
             0x104 + 0x18, // lawn_mower_count_max
+            0x110 + 0x18, // lawn_mower_count
 
             0x11c + 0x18, // grid_item
             0x08,         //   grid_item_type
@@ -1046,6 +1215,9 @@ PvZ::PvZ()
             0x30,         //   cursor_grab
 
             0x144 + 0x18, // slot
+            0x24,         //   slot_count
+            0x4c,         //   slot_seed_cd_past
+            0x50,         //   slot_seed_cd_total
             0x5c,         //   slot_seed_type
             0x60,         //   slot_seed_type_im
 
@@ -1056,6 +1228,7 @@ PvZ::PvZ()
 
             0x164 + 0x18,  // game_paused
             0x168 + 0x18,  // block_type
+            0x5d8 + 0x18,  // row_type
             0x624 + 0x18,  // ice_trail_cd
             0x6b4 + 0x18,  // spawn_list
             0x54d4 + 0x18, // spawn_type
@@ -1064,20 +1237,26 @@ PvZ::PvZ()
             0x5560 + 0x18, // sun
             0x5568 + 0x18, // game_clock
             0x55f8 + 0x18, // debug_mode
+            0x5620 + 0x18, // particle_systems_addr
 
             0x7f8 + 0x120, // game_mode
             0x7fc + 0x120, // game_ui
 
             0x814 + 0x120, // free_planting
 
+            0x820 + 0x120, // anim
+            0x00,          //   unnamed
+            0x00,          //     particle_system
+            0x00,          //       particle_system_type
+            0x1c,          //       particle_system_dead
+            0x04,          //     particle_system_count_max
+
             0x82c + 0x120, // user_data
             0x24 + 0x28,   //   level
             0x28 + 0x28,   //   money
+            0x2c + 0x28,   //   playthrough
             0xf4 + 0x28,   //   tree_height
-            0x1f8 + 0x28,  //   fertilizer
-            0x1fc + 0x28,  //   bug_spray
-            0x228 + 0x28,  //   chocolate
-            0x230 + 0x28,  //   tree_food
+            0x1c0 + 0x28,  //   twiddydinky
 
             0x83c + 0x120, // background_music
 
@@ -1091,12 +1270,16 @@ PvZ::PvZ()
             {{0x0052d9c5, {0x39}, {0xff}}, {0x0052da47, {0x39}, {0xff}}}, // chocolate_unlimited
             {0x004321cd, {0x39}, {0xff}},                                 // tree_food_unlimited
 
-            {0x00495b85, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x00413b60, {0x81}, {0x84}},                                 // planting_anywhere
             {0x0043df40, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x0042ee69, {0x8d}, {0x84}},                                 // planting_anywhere_iz
             {{0x0042775f, {0x80}, {0x8f}}, {0x004985fe, {0x33}, {0x85}}}, // fast_belt
             {0x004160e3, {0x39}, {0x89}},                                 // lock_shovel
+
+            {0x0040f531, {0x800f}, {0x840f}},             // hack_put_rake
+            {0x0040f7d8, {0x60eb}, {0x0975}},             // restore_lawn_mower_1
+            {0x0040f854 + 3, {0x01}, {0x00}},             // restore_lawn_mower_2
+            {0x0045f110 + 2, {0x00711ee4}, {0x007120c8}}, // restore_lawn_mower_3
 
             {0x00544aa1, {0x46, 0x40, 0x00}, {0x46, 0x40, 0xfc}}, // plant_immune_bite
             {0x0042138f, {0xeb}, {0x74}},                         // plant_immune_blast
@@ -1148,8 +1331,12 @@ PvZ::PvZ()
             {0x00490af3, {0x001447a9 + 0x28}, {0x001447a9}},      // disable_save_userdata
             {0x00432cdf, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
+            0x00455d90, // call_update_main_ui
+            0x00455b90, // call_reload_main_ui
+
+            0x0040ff50, // call_level_complete
+
             0x00431f40, // call_wisdom_tree
-            0x00462980, // call_set_music
 
             0x00410c50, // call_put_plant
             0x0046e0b0, // call_put_plant_imitater
@@ -1158,18 +1345,27 @@ PvZ::PvZ()
             0x00411940, // call_put_zomboss
             0x0042b120, // call_put_grave
             0x0040cb10, // call_put_ladder
+            0x0040f510, // call_put_rake
+            0x0040f66a, // call_put_rake_row
+            0x0040f5d3, // call_put_rake_col
+
+            0x0045fea0, // call_start_lawn_mower
+            0x0045fe10, // call_delete_lawn_mower
+            0x0040f7b0, // call_restore_lawn_mower
 
             0x0046eef0, // call_delete_plant
-            0x0045fe10, // call_delete_lawn_mower
             0x00453250, // call_delete_grid_item
 
-            0x0040ff50, // call_level_complete
-
             0x00465c10, // call_wakeup_plant
+
+            0x0040dc90, // call_set_background
+            0x005247d0, // call_delete_particle_system
 
             0x0040cec0, // call_generate_spawn_list
             0x00411b20, // call_clear_spawn_preview
             0x0043f4d0, // call_update_spawn_preview
+
+            0x00462980, // call_set_music
         };
 
     this->data_1_1_0_1056_zh =
@@ -1199,6 +1395,7 @@ PvZ::PvZ()
             0x100 + 0x18, // lawn_mower
             0x30,         //   lawn_mower_dead
             0x104 + 0x18, // lawn_mower_count_max
+            0x110 + 0x18, // lawn_mower_count
 
             0x11c + 0x18, // grid_item
             0x08,         //   grid_item_type
@@ -1211,6 +1408,9 @@ PvZ::PvZ()
             0x30,         //   cursor_grab
 
             0x144 + 0x18, // slot
+            0x24,         //   slot_count
+            0x4c,         //   slot_seed_cd_past
+            0x50,         //   slot_seed_cd_total
             0x5c,         //   slot_seed_type
             0x60,         //   slot_seed_type_im
 
@@ -1221,6 +1421,7 @@ PvZ::PvZ()
 
             0x164 + 0x18,  // game_paused
             0x168 + 0x18,  // block_type
+            0x5d8 + 0x18,  // row_type
             0x624 + 0x18,  // ice_trail_cd
             0x6b4 + 0x18,  // spawn_list
             0x54d4 + 0x18, // spawn_type
@@ -1229,20 +1430,26 @@ PvZ::PvZ()
             0x5560 + 0x18, // sun
             0x5568 + 0x18, // game_clock
             0x55f8 + 0x18, // debug_mode
+            0x5620 + 0x18, // particle_systems_addr
 
             0x7f8 + 0x120 + 4, // game_mode
             0x7fc + 0x120 + 4, // game_ui
 
             0x814 + 0x120 + 4, // free_planting
 
+            0x820 + 0x120 + 4, // anim
+            0x00,              //   unnamed
+            0x00,              //     particle_system
+            0x00,              //       particle_system_type
+            0x1c,              //       particle_system_dead
+            0x04,              //     particle_system_count_max
+
             0x82c + 0x120 + 4, // user_data
             0x24 + 0x28,       //   level
             0x28 + 0x28,       //   money
+            0x2c + 0x28,       //   playthrough
             0xf4 + 0x28,       //   tree_height
-            0x1f8 + 0x28,      //   fertilizer
-            0x1fc + 0x28,      //   bug_spray
-            0x228 + 0x28,      //   chocolate
-            0x230 + 0x28,      //   tree_food
+            0x1c0 + 0x28,      //   twiddydinky
 
             0x83c + 0x120 + 4, // background_music
 
@@ -1256,12 +1463,16 @@ PvZ::PvZ()
             {{0x0054ddc3, {0x39}, {0xff}}, {0x0054de0a, {0x39}, {0xff}}}, // chocolate_unlimited
             {0x00447d49, {0x39}, {0xff}},                                 // tree_food_unlimited
 
-            {0x004b2ff3, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x00425954, {0x81}, {0x84}},                                 // planting_anywhere
             {0x00454b67, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x004449e8, {0x8d}, {0x84}},                                 // planting_anywhere_iz
             {{0x0043b8bf, {0x80}, {0x8f}}, {0x004b5b8e, {0x33}, {0x85}}}, // fast_belt
             {0x00427f13, {0x39}, {0x89}},                                 // lock_shovel
+
+            {0x00420fc2, {0x800f}, {0x840f}},             // hack_put_rake
+            {0x00421218, {0x60eb}, {0x0975}},             // restore_lawn_mower_1
+            {0x00421293 + 3, {0x01}, {0x00}},             // restore_lawn_mower_2
+            {0x0047b807 + 2, {0x00746664}, {0x00746ab8}}, // restore_lawn_mower_3
 
             {0x005654c1, {0x46, 0x40, 0x00}, {0x46, 0x40, 0xfc}}, // plant_immune_bite
             {0x004354af, {0xeb}, {0x74}},                         // plant_immune_blast
@@ -1313,8 +1524,12 @@ PvZ::PvZ()
             {0x004adf93, {0x00118239 + 0x28}, {0x00118239}},      // disable_save_userdata
             {0x0044895a, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
+            0x004720d0, // call_update_main_ui
+            0x00471ed0, // call_reload_main_ui
+
+            0x00421a20, // call_level_complete
+
             0x00447b20, // call_wisdom_tree
-            0x0047f240, // call_set_music
 
             0x00422610, // call_put_plant
             0x0048ae60, // call_put_plant_imitater
@@ -1323,18 +1538,27 @@ PvZ::PvZ()
             0x004236d0, // call_put_zomboss
             0x0043f1c0, // call_put_grave
             0x0041e440, // call_put_ladder
+            0x00420fa0, // call_put_rake
+            0x00421101, // call_put_rake_row
+            0x0042106c, // call_put_rake_col
+
+            0x0047c4d0, // call_start_lawn_mower
+            0x0047c440, // call_delete_lawn_mower
+            0x004211f0, // call_restore_lawn_mower
 
             0x0048bcc0, // call_delete_plant
-            0x0047c440, // call_delete_lawn_mower
             0x0046ca10, // call_delete_grid_item
 
-            0x00421a20, // call_level_complete
-
             0x00482900, // call_wakeup_plant
+
+            0x0041f3d0, // call_set_background
+            0x005435f0, // call_delete_particle_system
 
             0x0041e840, // call_generate_spawn_list
             0x004238d0, // call_clear_spawn_preview
             0x00456840, // call_update_spawn_preview
+
+            0x0047f240, // call_set_music
         };
 
     this->data_1_1_0_1056_ja =
@@ -1364,6 +1588,7 @@ PvZ::PvZ()
             0x100 + 0x18, // lawn_mower
             0x30,         //   lawn_mower_dead
             0x104 + 0x18, // lawn_mower_count_max
+            0x110 + 0x18, // lawn_mower_count
 
             0x11c + 0x18, // grid_item
             0x08,         //   grid_item_type
@@ -1376,6 +1601,9 @@ PvZ::PvZ()
             0x30,         //   cursor_grab
 
             0x144 + 0x18, // slot
+            0x24,         //   slot_count
+            0x4c,         //   slot_seed_cd_past
+            0x50,         //   slot_seed_cd_total
             0x5c,         //   slot_seed_type
             0x60,         //   slot_seed_type_im
 
@@ -1386,6 +1614,7 @@ PvZ::PvZ()
 
             0x164 + 0x18,  // game_paused
             0x168 + 0x18,  // block_type
+            0x5d8 + 0x18,  // row_type
             0x624 + 0x18,  // ice_trail_cd
             0x6b4 + 0x18,  // spawn_list
             0x54d4 + 0x18, // spawn_type
@@ -1394,20 +1623,26 @@ PvZ::PvZ()
             0x5560 + 0x18, // sun
             0x5568 + 0x18, // game_clock
             0x55f8 + 0x18, // debug_mode
+            0x5620 + 0x18, // particle_systems_addr
 
             0x7f8 + 0x120, // game_mode
             0x7fc + 0x120, // game_ui
 
             0x814 + 0x120, // free_planting
 
+            0x820 + 0x120, // anim
+            0x00,          //   unnamed
+            0x00,          //     particle_system
+            0x00,          //       particle_system_type
+            0x1c,          //       particle_system_dead
+            0x04,          //     particle_system_count_max
+
             0x82c + 0x120, // user_data
             0x24 + 0x28,   //   level
             0x28 + 0x28,   //   money
+            0x2c + 0x28,   //   playthrough
             0xf4 + 0x28,   //   tree_height
-            0x1f8 + 0x28,  //   fertilizer
-            0x1fc + 0x28,  //   bug_spray
-            0x228 + 0x28,  //   chocolate
-            0x230 + 0x28,  //   tree_food
+            0x1c0 + 0x28,  //   twiddydinky
 
             0x83c + 0x120, // background_music
 
@@ -1421,12 +1656,16 @@ PvZ::PvZ()
             {{0x0053c583, {0x39}, {0xff}}, {0x0053c5ca, {0x39}, {0xff}}}, // chocolate_unlimited
             {0x004368c9, {0x39}, {0xff}},                                 // tree_food_unlimited
 
-            {0x004a1764, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x004156b4, {0x81}, {0x84}},                                 // planting_anywhere
             {0x00443797, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x004334d8, {0x8d}, {0x84}},                                 // planting_anywhere_iz
             {{0x0042ac2f, {0x80}, {0x8f}}, {0x004a411e, {0x33}, {0x85}}}, // fast_belt
             {0x00417c9b, {0x39}, {0x89}},                                 // lock_shovel
+
+            {0x00410e12, {0x800f}, {0x840f}},             // hack_put_rake
+            {0x00411068, {0x60eb}, {0x0975}},             // restore_lawn_mower_1
+            {0x004110e3 + 3, {0x01}, {0x00}},             // restore_lawn_mower_2
+            {0x0046a117 + 2, {0x0072a8dc}, {0x0072ad30}}, // restore_lawn_mower_3
 
             {0x00553c3b, {0x46, 0x40, 0x00}, {0x46, 0x40, 0xfc}}, // plant_immune_bite
             {0x004243df, {0xeb}, {0x74}},                         // plant_immune_blast
@@ -1478,8 +1717,12 @@ PvZ::PvZ()
             {0x0049c733, {0x00181819 + 0x28}, {0x00181819}},      // disable_save_userdata
             {0x004374da, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
+            0x004605d0, // call_update_main_ui
+            0x004603d0, // call_reload_main_ui
+
+            0x00411880, // call_level_complete
+
             0x004366a0, // call_wisdom_tree
-            0x0046dcf0, // call_set_music
 
             0x00412370, // call_put_plant
             0x00479720, // call_put_plant_imitater
@@ -1488,18 +1731,27 @@ PvZ::PvZ()
             0x00413430, // call_put_zomboss
             0x0042dda0, // call_put_grave
             0x0040e290, // call_put_ladder
+            0x00410df0, // call_put_rake
+            0x00410f51, // call_put_rake_row
+            0x00410ebc, // call_put_rake_col
+
+            0x0046ade0, // call_start_lawn_mower
+            0x0046ad50, // call_delete_lawn_mower
+            0x00411040, // call_restore_lawn_mower
 
             0x0047a580, // call_delete_plant
-            0x0046ad50, // call_delete_lawn_mower
             0x0045b160, // call_delete_grid_item
 
-            0x00411880, // call_level_complete
-
             0x004711b0, // call_wakeup_plant
+
+            0x0040f220, // call_set_background
+            0x00531c40, // call_delete_particle_system
 
             0x0040e690, // call_generate_spawn_list
             0x00413630, // call_clear_spawn_preview
             0x00445470, // call_update_spawn_preview
+
+            0x0046dcf0, // call_set_music
         };
 
     this->data_1_1_0_1056_zh_2012_06 =
@@ -1529,6 +1781,7 @@ PvZ::PvZ()
             0x100 + 0x18, // lawn_mower
             0x30,         //   lawn_mower_dead
             0x104 + 0x18, // lawn_mower_count_max
+            0x110 + 0x18, // lawn_mower_count
 
             0x11c + 0x18, // grid_item
             0x08,         //   grid_item_type
@@ -1541,6 +1794,9 @@ PvZ::PvZ()
             0x30,         //   cursor_grab
 
             0x144 + 0x18, // slot
+            0x24,         //   slot_count
+            0x4c,         //   slot_seed_cd_past
+            0x50,         //   slot_seed_cd_total
             0x5c,         //   slot_seed_type
             0x60,         //   slot_seed_type_im
 
@@ -1551,6 +1807,7 @@ PvZ::PvZ()
 
             0x164 + 0x18,  // game_paused
             0x168 + 0x18,  // block_type
+            0x5d8 + 0x18,  // row_type
             0x624 + 0x18,  // ice_trail_cd
             0x6b4 + 0x18,  // spawn_list
             0x54d4 + 0x18, // spawn_type
@@ -1559,20 +1816,26 @@ PvZ::PvZ()
             0x5560 + 0x18, // sun
             0x5568 + 0x18, // game_clock
             0x55f8 + 0x18, // debug_mode
+            0x5620 + 0x18, // particle_systems_addr
 
             0x7f8 + 0x120 + 4, // game_mode
             0x7fc + 0x120 + 4, // game_ui
 
             0x814 + 0x120 + 4, // free_planting
 
+            0x820 + 0x120 + 4, // anim
+            0x00,              //   unnamed
+            0x00,              //     particle_system
+            0x00,              //       particle_system_type
+            0x1c,              //       particle_system_dead
+            0x04,              //     particle_system_count_max
+
             0x82c + 0x120 + 4, // user_data
             0x24 + 0x28,       //   level
             0x28 + 0x28,       //   money
+            0x2c + 0x28,       //   playthrough
             0xf4 + 0x28,       //   tree_height
-            0x1f8 + 0x28,      //   fertilizer
-            0x1fc + 0x28,      //   bug_spray
-            0x228 + 0x28,      //   chocolate
-            0x230 + 0x28,      //   tree_food
+            0x1c0 + 0x28,      //   twiddydinky
 
             0x83c + 0x120 + 4, // background_music
 
@@ -1586,12 +1849,16 @@ PvZ::PvZ()
             {{0x00534995, {0x39}, {0xff}}, {0x00534a17, {0x39}, {0xff}}}, // chocolate_unlimited
             {0x0043885d, {0x39}, {0xff}},                                 // tree_food_unlimited
 
-            {0x0049ce02, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x0041bd2e, {0x81}, {0x84}},                                 // planting_anywhere
             {0x00444790, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x00435579, {0x8d}, {0x84}},                                 // planting_anywhere_iz
             {{0x0042e58f, {0x80}, {0x8f}}, {0x0049f6fe, {0x33}, {0x85}}}, // fast_belt
             {0x0041e36e, {0x39}, {0x89}},                                 // lock_shovel
+
+            {0x00417731, {0x800f}, {0x840f}},             // hack_put_rake
+            {0x004179d8, {0x60eb}, {0x0975}},             // restore_lawn_mower_1
+            {0x00417a54 + 3, {0x01}, {0x00}},             // restore_lawn_mower_2
+            {0x00465f60 + 2, {0x00727894}, {0x00727a78}}, // restore_lawn_mower_3
 
             {0x0054ba6b, {0x46, 0x40, 0x00}, {0x46, 0x40, 0xfc}}, // plant_immune_bite
             {0x0042883f, {0xeb}, {0x74}},                         // plant_immune_blast
@@ -1643,8 +1910,12 @@ PvZ::PvZ()
             {0x00497ed3, {0x001879c9 + 0x28}, {0x001879c9}},      // disable_save_userdata
             {0x0043935a, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
+            0x0045c6a0, // call_update_main_ui
+            0x0045c4a0, // call_reload_main_ui
+
+            0x00418140, // call_level_complete
+
             0x004385d0, // call_wisdom_tree
-            0x00469a10, // call_set_music
 
             0x00418d70, // call_put_plant
             0x00475050, // call_put_plant_imitater
@@ -1653,18 +1924,27 @@ PvZ::PvZ()
             0x00419a60, // call_put_zomboss
             0x00431900, // call_put_grave
             0x00414d10, // call_put_ladder
+            0x00417710, // call_put_rake
+            0x0041786a, // call_put_rake_row
+            0x004177d3, // call_put_rake_col
+
+            0x00466cf0, // call_start_lawn_mower
+            0x00466c60, // call_delete_lawn_mower
+            0x004179b0, // call_restore_lawn_mower
 
             0x00475e90, // call_delete_plant
-            0x00466c60, // call_delete_lawn_mower
             0x00458620, // call_delete_grid_item
 
-            0x00418140, // call_level_complete
-
             0x0046cb90, // call_wakeup_plant
+
+            0x00415e90, // call_set_background
+            0x0052b620, // call_delete_particle_system
 
             0x004150c0, // call_generate_spawn_list
             0x00419c50, // call_clear_spawn_preview
             0x00445d20, // call_update_spawn_preview
+
+            0x00469a10, // call_set_music
         };
 
     this->data_1_1_0_1056_zh_2012_07 =
@@ -1694,6 +1974,7 @@ PvZ::PvZ()
             0x100 + 0x18, // lawn_mower
             0x30,         //   lawn_mower_dead
             0x104 + 0x18, // lawn_mower_count_max
+            0x110 + 0x18, // lawn_mower_count
 
             0x11c + 0x18, // grid_item
             0x08,         //   grid_item_type
@@ -1706,6 +1987,9 @@ PvZ::PvZ()
             0x30,         //   cursor_grab
 
             0x144 + 0x18, // slot
+            0x24,         //   slot_count
+            0x4c,         //   slot_seed_cd_past
+            0x50,         //   slot_seed_cd_total
             0x5c,         //   slot_seed_type
             0x60,         //   slot_seed_type_im
 
@@ -1716,6 +2000,7 @@ PvZ::PvZ()
 
             0x164 + 0x18,  // game_paused
             0x168 + 0x18,  // block_type
+            0x5d8 + 0x18,  // row_type
             0x624 + 0x18,  // ice_trail_cd
             0x6b4 + 0x18,  // spawn_list
             0x54d4 + 0x18, // spawn_type
@@ -1724,20 +2009,26 @@ PvZ::PvZ()
             0x5560 + 0x18, // sun
             0x5568 + 0x18, // game_clock
             0x55f8 + 0x18, // debug_mode
+            0x5620 + 0x18, // particle_systems_addr
 
             0x7f8 + 0x120 + 4, // game_mode
             0x7fc + 0x120 + 4, // game_ui
 
             0x814 + 0x120 + 4, // free_planting
 
+            0x820 + 0x120 + 4, // anim
+            0x00,              //   unnamed
+            0x00,              //     particle_system
+            0x00,              //       particle_system_type
+            0x1c,              //       particle_system_dead
+            0x04,              //     particle_system_count_max
+
             0x82c + 0x120 + 4, // user_data
             0x24 + 0x28,       //   level
             0x28 + 0x28,       //   money
+            0x2c + 0x28,       //   playthrough
             0xf4 + 0x28,       //   tree_height
-            0x1f8 + 0x28,      //   fertilizer
-            0x1fc + 0x28,      //   bug_spray
-            0x228 + 0x28,      //   chocolate
-            0x230 + 0x28,      //   tree_food
+            0x1c0 + 0x28,      //   twiddydinky
 
             0x83c + 0x120 + 4, // background_music
 
@@ -1751,12 +2042,16 @@ PvZ::PvZ()
             {{0x00535565, {0x39}, {0xff}}, {0x005355e7, {0x39}, {0xff}}}, // chocolate_unlimited
             {0x004394cd, {0x39}, {0xff}},                                 // tree_food_unlimited
 
-            {0x0049da12, {0x70}, {0x7e}},                                 // clear_cooldown
             {0x0041c9ae, {0x81}, {0x84}},                                 // planting_anywhere
             {0x004453b0, {0xeb}, {0x74}},                                 // planting_anywhere_preview
             {0x004361e9, {0x8d}, {0x84}},                                 // planting_anywhere_iz
             {{0x0042f1ff, {0x80}, {0x8f}}, {0x004a030e, {0x33}, {0x85}}}, // fast_belt
             {0x0041efee, {0x39}, {0x89}},                                 // lock_shovel
+
+            {0x00418381, {0x800f}, {0x840f}},             // hack_put_rake
+            {0x00418628, {0x60eb}, {0x0975}},             // restore_lawn_mower_1
+            {0x004186a4 + 3, {0x01}, {0x00}},             // restore_lawn_mower_2
+            {0x00466d60 + 2, {0x00728aac}, {0x00728c90}}, // restore_lawn_mower_3
 
             {0x0054c67b, {0x46, 0x40, 0x00}, {0x46, 0x40, 0xfc}}, // plant_immune_bite
             {0x0042949f, {0xeb}, {0x74}},                         // plant_immune_blast
@@ -1808,8 +2103,12 @@ PvZ::PvZ()
             {0x00498b63, {0x00184b09 + 0x28}, {0x00184b09}},      // disable_save_userdata
             {0x00439fca, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
 
+            0x0045d540, // call_update_main_ui
+            0x0045d300, // call_reload_main_ui
+
+            0x00418d90, // call_level_complete
+
             0x00439240, // call_wisdom_tree
-            0x0046a810, // call_set_music
 
             0x004199c0, // call_put_plant
             0x00475ea0, // call_put_plant_imitater
@@ -1818,18 +2117,27 @@ PvZ::PvZ()
             0x0041a6b0, // call_put_zomboss
             0x00432570, // call_put_grave
             0x00415960, // call_put_ladder
+            0x00418360, // call_put_rake
+            0x004184ba, // call_put_rake_row
+            0x00418423, // call_put_rake_col
+
+            0x00467af0, // call_start_lawn_mower
+            0x00467a60, // call_delete_lawn_mower
+            0x00418600, // call_restore_lawn_mower
 
             0x00476ce0, // call_delete_plant
-            0x00467a60, // call_delete_lawn_mower
             0x00459480, // call_delete_grid_item
 
-            0x00418d90, // call_level_complete
-
             0x0046d9e0, // call_wakeup_plant
+
+            0x00416ae0, // call_set_background
+            0x0052c250, // call_delete_particle_system
 
             0x00415d10, // call_generate_spawn_list
             0x0041a8a0, // call_clear_spawn_preview
             0x00446940, // call_update_spawn_preview
+
+            0x0046a810, // call_set_music
         };
 
     this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_NOT_FOUND, data_1_0_0_1051_en));
@@ -1894,16 +2202,16 @@ bool PvZ::FindPvZ()
         else
             found = OpenByWindow(L"MainWindow", nullptr);
 
-        // 分支完整
+        // 注意分支完整
         if (found)
         {
-            if (this->name != L"Plants vs. Zombies" || this->of_name != L"PlantsVsZombies.exe")
+            if (IsValid()) // 没权限拿不到进程句柄
             {
-                this->find_result = PVZ_NOT_FOUND;
-            }
-            else
-            {
-                if (IsValid())
+                if (this->name != L"Plants vs. Zombies" || this->of_name != L"PlantsVsZombies.exe")
+                {
+                    this->find_result = PVZ_NOT_FOUND;
+                }
+                else
                 {
                     if (this->version == L"1.0.0.1051" //
                         && ReadMemory<unsigned int>({0x004140c5}) == 0x0019b337)
@@ -1952,10 +2260,10 @@ bool PvZ::FindPvZ()
                     else
                         this->find_result = PVZ_UNSUPPORTED;
                 }
-                else
-                {
-                    this->find_result = PVZ_OPEN_ERROR;
-                }
+            }
+            else
+            {
+                this->find_result = PVZ_OPEN_ERROR;
             }
         }
         else
@@ -1963,10 +2271,12 @@ bool PvZ::FindPvZ()
             this->find_result = PVZ_NOT_FOUND;
         }
 
-        if (this->find_result == PVZ_NOT_FOUND)
-            continue; // 没找到就继续找
+        // 没有找到窗口/打开进程失败就继续找
+        if (this->find_result == PVZ_NOT_FOUND || this->find_result == PVZ_OPEN_ERROR)
+            continue;
+        // 找到了支持/不支持的版本则终止循环
         else
-            break; // 找到了支持的版本/不支持的版本/打开失败则终止循环
+            break;
     }
 
     bool supported = this->find_result != PVZ_NOT_FOUND     //
@@ -2059,6 +2369,95 @@ int PvZ::GetScene()
     return scene;
 }
 
+void PvZ::SetScene(int scene)
+{
+    if (scene < 0 || scene > 5)
+        return;
+
+    if (!GameOn())
+        return;
+    int ui = GameUI();
+    if (ui != 2 && ui != 3)
+        return;
+
+    asm_init();
+    asm_mov_exx_dword_ptr(Reg::ESI, data().pvz_base);
+    asm_mov_exx_dword_ptr_exx_add(Reg::ESI, data().main_object);
+    asm_add_list({0xc7, 0x86});  // mov [esi+0000554C],scene
+    asm_add_dword(data().scene); //
+    asm_add_dword(scene);        //
+    asm_call(data().call_set_background);
+    asm_ret();
+    asm_code_inject();
+
+    // 1.lawn 2.bare 3.pool
+    // 0.none 1.land 2.water
+    switch (scene)
+    {
+    case 0:
+    case 1:
+    case 4:
+    case 5:
+        WriteMemory<int, 6 * 9>({1, 1, 1, 1, 1, 2,
+                                 1, 1, 1, 1, 1, 2,
+                                 1, 1, 1, 1, 1, 2,
+                                 1, 1, 1, 1, 1, 2,
+                                 1, 1, 1, 1, 1, 2,
+                                 1, 1, 1, 1, 1, 2,
+                                 1, 1, 1, 1, 1, 2,
+                                 1, 1, 1, 1, 1, 2,
+                                 1, 1, 1, 1, 1, 2},
+                                {data().pvz_base, data().main_object, data().block_type});
+        WriteMemory<int, 6>({1, 1, 1, 1, 1, 0},
+                            {data().pvz_base, data().main_object, data().row_type});
+        break;
+    case 2:
+    case 3:
+    default:
+        WriteMemory<int, 6 * 9>({1, 1, 3, 3, 1, 1,
+                                 1, 1, 3, 3, 1, 1,
+                                 1, 1, 3, 3, 1, 1,
+                                 1, 1, 3, 3, 1, 1,
+                                 1, 1, 3, 3, 1, 1,
+                                 1, 1, 3, 3, 1, 1,
+                                 1, 1, 3, 3, 1, 1,
+                                 1, 1, 3, 3, 1, 1,
+                                 1, 1, 3, 3, 1, 1},
+                                {data().pvz_base, data().main_object, data().block_type});
+        WriteMemory<int, 6>({1, 1, 2, 2, 1, 1},
+                            {data().pvz_base, data().main_object, data().row_type});
+        break;
+    }
+
+    // 泳池和雾夜仍然保留水波光
+    if (scene == 2 || scene == 3)
+        return;
+
+    unsigned int particle_system_struct_size = 0x2c;
+
+    asm_init();
+    auto particle_system_offset = ReadMemory<uintptr_t>({data().pvz_base, data().anim, data().unnamed, data().particle_system});
+    auto particle_system_count_max = ReadMemory<uintptr_t>({data().pvz_base, data().anim, data().unnamed, data().particle_system_count_max});
+    for (size_t i = 0; i < particle_system_count_max; i++)
+    {
+        auto particle_system_type = ReadMemory<int>({particle_system_offset + data().particle_system_type + particle_system_struct_size * i});
+        auto particle_system_dead = ReadMemory<bool>({particle_system_offset + data().particle_system_dead + particle_system_struct_size * i});
+        if (!particle_system_dead && particle_system_type == 34)
+        {
+            uintptr_t addr = particle_system_offset + particle_system_struct_size * i;
+            asm_push(addr);
+            asm_call(data().call_delete_particle_system);
+        }
+    }
+    asm_mov_exx_dword_ptr(Reg::EAX, data().pvz_base);
+    asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().main_object);
+    asm_add_list({0xc7, 0x80});                  // mov [eax+00005620],00000000
+    asm_add_dword(data().particle_systems_addr); //
+    asm_add_dword(0);                            //
+    asm_ret();
+    asm_code_inject();
+}
+
 int PvZ::GetRowCount()
 {
     int scene = GetScene();
@@ -2066,6 +2465,225 @@ int PvZ::GetRowCount()
 }
 
 // 以下是修改功能
+
+void PvZ::UnlockTrophy()
+{
+    if (!GameOn())
+        return;
+
+    auto userdata = ReadMemory<uintptr_t>({data().pvz_base, data().user_data});
+    if (userdata == 0) // 还没建立用户
+        return;
+
+    auto playthrough = userdata + data().playthrough;
+
+    // Adventure
+    int adventure_playthrough = ReadMemory<int>({playthrough});
+    if (adventure_playthrough < 2)
+        WriteMemory<int>(2, {playthrough});
+    playthrough += 1 * sizeof(int);
+
+    // Survival
+    // Survival Hard
+    WriteMemory<int, 5 + 5>({5, 5, 5, 5, 5, 10, 10, 10, 10, 10}, {playthrough});
+    playthrough += (5 + 5) * sizeof(int);
+
+    // Survival Endless
+    playthrough += 5 * sizeof(int);
+
+    // Mini-games
+    WriteMemory<int, 20>({1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {playthrough});
+    playthrough += 20 * sizeof(int);
+
+    // Hidden Mini-games
+    // Squirrel
+    // Wisdom Tree (Height)
+    playthrough += (13 + 1 + 1) * sizeof(int);
+
+    // Vasebreaker
+    WriteMemory<int, 9>({1, 1, 1, 1, 1, 1, 1, 1, 1}, {playthrough});
+    playthrough += 9 * sizeof(int);
+
+    // Vasebreaker Endless
+    playthrough += 1 * sizeof(int);
+
+    // I, Zombie
+    WriteMemory<int, 9>({1, 1, 1, 1, 1, 1, 1, 1, 1}, {playthrough});
+    playthrough += 9 * sizeof(int);
+
+    // I, Zombie Endless
+    playthrough += 1 * sizeof(int);
+
+    // Upsell
+    // Intro
+    playthrough += (1 + 1) * sizeof(int);
+
+    auto twiddydinky = userdata + data().twiddydinky;
+    assert(twiddydinky == playthrough + 28 * 4);
+
+    // Gatling Pea
+    // Twin Sunflower
+    // Gloom-shroom
+    // Cattail
+    // Winter Melon
+    // Gold Magnet
+    // Spikerock
+    // Cob Cannon
+    WriteMemory<int, 8>({1, 1, 1, 1, 1, 1, 1, 1}, {twiddydinky});
+    twiddydinky += 8 * sizeof(int);
+
+    // Imitater
+    WriteMemory<int>(1, {twiddydinky});
+    twiddydinky += 1 * sizeof(int);
+
+    // unknown
+    // Marigold Sprout x3
+    // Golden Watering Can
+    // Fertilizer
+    // Bug Spray
+    // Phonograph
+    // Gardening Glove
+    // Mushroom Garden
+    // Wheel Barrow
+    // Snail
+    twiddydinky += (1 + 3 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1) * sizeof(int);
+
+    // 6+4 seed slots
+    WriteMemory<int>(4, {twiddydinky});
+    twiddydinky += 1 * sizeof(int);
+
+    // Pool Cleaner
+    WriteMemory<int>(1, {twiddydinky});
+    twiddydinky += 1 * sizeof(int);
+
+    // Roof Cleaner
+    WriteMemory<int>(1, {twiddydinky});
+    twiddydinky += 1 * sizeof(int);
+
+    // Garden Rake
+    // Aquarium Garden
+    // Chocolate
+    twiddydinky += (1 + 1 + 1) * sizeof(int);
+
+    // Tree of Wisdom
+    WriteMemory<int>(1, {twiddydinky});
+    twiddydinky += 1 * sizeof(int);
+
+    // Tree Food
+    twiddydinky += 1 * sizeof(int);
+
+    // Wall-nut First Aid
+    WriteMemory<int>(1, {twiddydinky});
+    twiddydinky += 1 * sizeof(int);
+
+    // 刷新主界面
+    if (adventure_playthrough == 0 && GameUI() == 1)
+    {
+        // // TODO
+        // if (isGOTY())
+        // {
+        //     int frame_time = GetFrameDuration();
+        //     SetFrameDuration(1);
+        //     for (size_t i = 0; i < 150; i++)
+        //     {
+        //         PostMessage(this->hwnd, WM_KEYDOWN, VK_UP, 0);
+        //         PostMessage(this->hwnd, WM_KEYUP, VK_UP, 0);
+        //         Sleep(3);
+        //     }
+        //     SetFrameDuration(frame_time);
+        // }
+        asm_init();
+        asm_mov_exx_dword_ptr(Reg::ESI, data().pvz_base);
+        asm_call(data().call_update_main_ui);
+        asm_mov_exx_dword_ptr(Reg::ECX, data().pvz_base);
+        asm_call(data().call_reload_main_ui);
+        asm_ret();
+        asm_code_inject();
+    }
+}
+
+void PvZ::DirectWin()
+{
+    if (!GameOn())
+        return;
+    if (GameUI() != 3)
+        return;
+
+    int frame_time = GetFrameDuration();
+
+    int mode = GameMode();
+    bool light_cob = 11 <= mode && mode <= 15;
+
+    if (light_cob)
+    {
+        int game_clock = ReadMemory<int>({data().pvz_base, data().main_object, data().game_clock});
+        int frame_to_wait = 75 - ((game_clock + 500) % 75);
+        if (ReadMemory<bool>({data().pvz_base, data().main_object, data().game_paused}))
+        {
+            if (frame_to_wait != 0)
+            {
+                // 解除暂停
+                PostMessage(hwnd, WM_KEYDOWN, VK_SPACE, 0);
+                PostMessage(hwnd, WM_KEYUP, VK_SPACE, 0);
+                Sleep(frame_to_wait * frame_time);
+                // 暂停
+                PostMessage(hwnd, WM_KEYDOWN, VK_SPACE, 0);
+                PostMessage(hwnd, WM_KEYUP, VK_SPACE, 0);
+            }
+        }
+        else
+        {
+            Sleep(frame_to_wait * frame_time);
+            // 暂停
+            PostMessage(hwnd, WM_KEYDOWN, VK_SPACE, 0);
+            PostMessage(hwnd, WM_KEYUP, VK_SPACE, 0);
+        }
+        Sleep(frame_time);
+    }
+
+    if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
+    {
+        asm_init();
+        asm_mov_exx_dword_ptr(Reg::EAX, data().pvz_base);
+        asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().main_object);
+        asm_push_exx(Reg::EAX);
+        asm_call(data().call_level_complete);
+        asm_ret();
+        asm_code_inject();
+    }
+    else
+    {
+        asm_init();
+        asm_mov_exx_dword_ptr(Reg::ECX, data().pvz_base);
+        asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().main_object);
+        asm_call(data().call_level_complete);
+        asm_ret();
+        asm_code_inject();
+    }
+
+    if (light_cob)
+    {
+        Sleep(frame_time);
+        // 解除暂停
+        PostMessage(hwnd, WM_KEYDOWN, VK_SPACE, 0);
+        PostMessage(hwnd, WM_KEYUP, VK_SPACE, 0);
+    }
+
+    // #ifdef _DEBUG
+    //     Sleep(frame_time * (500 + 10));
+    //     std::cout << ReadMemory<int>({data().pvz_base, data().main_object, data().game_clock}) % 75 << std::endl;
+    // #endif
+
+    // unsigned int slot_seed_struct_size = 0x50;
+    // std::vector<int> seed_types = {40, 41, 42, 43, 44, 45, 46, 47, 8, 48};
+    // std::vector<int> seed_types_im = {-1, -1, -1, -1, -1, -1, -1, -1, -1, 8};
+    // auto slots_offset = ReadMemory<uintptr_t>({data().pvz_base, data().main_object, data().slot});
+    // for (size_t i = 0; i < 10; i++)
+    // {
+    //     WriteMemory<int>(seed_types[i], {slots_offset + data().slot_seed_type + i * slot_seed_struct_size});
+    //     WriteMemory<int>(seed_types_im[i], {slots_offset + data().slot_seed_type_im + i * slot_seed_struct_size});
+    // }
+}
 
 void PvZ::SetSun(int sun)
 {
@@ -2083,7 +2701,8 @@ void PvZ::SetMoney(int money)
     if (!GameOn())
         return;
 
-    WriteMemory<int>(money, {data().pvz_base, data().user_data, data().money});
+    if (ReadMemory<uintptr_t>({data().pvz_base, data().user_data}) != 0)
+        WriteMemory<int>(money, {data().pvz_base, data().user_data, data().money});
 }
 
 void PvZ::AutoCollect(bool on)
@@ -2108,8 +2727,8 @@ void PvZ::FertilizerUnlimited(bool on)
         return;
 
     enable_hack(data().fertilizer_unlimited, on);
-    if (on)
-        WriteMemory<int>(1020, {data().pvz_base, data().user_data, data().fertilizer});
+    if (on && ReadMemory<uintptr_t>({data().pvz_base, data().user_data}) != 0)
+        WriteMemory<int>(1000 + 20, {data().pvz_base, data().user_data, data().twiddydinky + 14 * 4});
 }
 
 void PvZ::BugSprayUnlimited(bool on)
@@ -2118,8 +2737,8 @@ void PvZ::BugSprayUnlimited(bool on)
         return;
 
     enable_hack(data().bug_spray_unlimited, on);
-    if (on)
-        WriteMemory<int>(1020, {data().pvz_base, data().user_data, data().bug_spray});
+    if (on && ReadMemory<uintptr_t>({data().pvz_base, data().user_data}) != 0)
+        WriteMemory<int>(1000 + 20, {data().pvz_base, data().user_data, data().twiddydinky + 15 * 4});
 }
 
 void PvZ::ChocolateUnlimited(bool on)
@@ -2128,8 +2747,8 @@ void PvZ::ChocolateUnlimited(bool on)
         return;
 
     enable_hack(data().chocolate_unlimited, on);
-    if (on)
-        WriteMemory<int>(1020, {data().pvz_base, data().user_data, data().chocolate});
+    if (on && ReadMemory<uintptr_t>({data().pvz_base, data().user_data}) != 0)
+        WriteMemory<int>(1000 + 20, {data().pvz_base, data().user_data, data().twiddydinky + 26 * 4});
 }
 
 void PvZ::TreeFoodUnlimited(bool on)
@@ -2138,8 +2757,8 @@ void PvZ::TreeFoodUnlimited(bool on)
         return;
 
     enable_hack(data().tree_food_unlimited, on);
-    if (on)
-        WriteMemory<int>(1020, {data().pvz_base, data().user_data, data().tree_food});
+    if (on && ReadMemory<uintptr_t>({data().pvz_base, data().user_data}) != 0)
+        WriteMemory<int>(1000 + 20, {data().pvz_base, data().user_data, data().twiddydinky + 28 * 4});
 }
 
 void PvZ::SetTreeHeight(int height)
@@ -2196,7 +2815,8 @@ void PvZ::SetTreeHeight(int height)
     }
     else
     {
-        WriteMemory<int>(height, {data().pvz_base, data().user_data, data().tree_height});
+        if (ReadMemory<uintptr_t>({data().pvz_base, data().user_data}) != 0)
+            WriteMemory<int>(height, {data().pvz_base, data().user_data, data().tree_height});
     }
 }
 
@@ -2206,7 +2826,19 @@ void PvZ::FreePlanting(bool on)
         return;
 
     WriteMemory<int>(static_cast<int>(on), {data().pvz_base, data().free_planting});
-    enable_hack(data().clear_cooldown, on);
+
+    if (GameUI() != 3)
+        return;
+
+    unsigned int slot_seed_struct_size = 0x50;
+
+    auto slot_offset = ReadMemory<uintptr_t>({data().pvz_base, data().main_object, data().slot});
+    auto slot_count = ReadMemory<uint32_t>({slot_offset + data().slot_count});
+    for (size_t i = 0; i < slot_count; i++)
+    {
+        int slot_seed_cd_total = ReadMemory<int>({slot_offset + data().slot_seed_cd_total + slot_seed_struct_size * i});
+        WriteMemory<int>(slot_seed_cd_total, {slot_offset + data().slot_seed_cd_past + slot_seed_struct_size * i});
+    }
 }
 
 void PvZ::PlantingAnywhere(bool on)
@@ -2238,7 +2870,7 @@ void PvZ::LockShovel(bool on)
     if (ui != 2 && ui != 3)
         return;
 
-    auto cursor_offset = ReadMemory<int>({data().pvz_base, data().main_object, data().cursor});
+    auto cursor_offset = ReadMemory<uintptr_t>({data().pvz_base, data().main_object, data().cursor});
     if (on)
     {
         WriteMemory<int>(6, {cursor_offset + data().cursor_grab});
@@ -2250,30 +2882,7 @@ void PvZ::LockShovel(bool on)
     }
 }
 
-int PvZ::GetSlotSeed(int index)
-{
-    int seed_type = 0;
-    int seed_type_im = 0;
-
-    if (!GameOn())
-        return -1;
-    int ui = GameUI();
-    if (ui != 2 && ui != 3)
-        return -1;
-
-    unsigned int slot_seed_struct_size = 0x50;
-
-    int slot_offset = ReadMemory<int>({data().pvz_base, data().main_object, data().slot});
-    seed_type = ReadMemory<int>({slot_offset + data().slot_seed_type + index * slot_seed_struct_size});
-    seed_type_im = ReadMemory<int>({slot_offset + data().slot_seed_type_im + index * slot_seed_struct_size});
-
-    if (seed_type == 48) // 模仿者
-        return seed_type_im + 48;
-    else
-        return seed_type;
-}
-
-void PvZ::SetSlotSeed(int index, int type, bool imitater = false)
+void PvZ::MixMode(int mode, int level)
 {
     if (!GameOn())
         return;
@@ -2281,33 +2890,12 @@ void PvZ::SetSlotSeed(int index, int type, bool imitater = false)
     if (ui != 2 && ui != 3)
         return;
 
-    unsigned int slot_seed_struct_size = 0x50;
-
-    int slot_offset = ReadMemory<int>({data().pvz_base, data().main_object, data().slot});
-    if (imitater)
+    if (mode == 0) // 冒险模式
     {
-        WriteMemory<int>(48, {slot_offset + data().slot_seed_type + index * slot_seed_struct_size});
-        WriteMemory<int>(type, {slot_offset + data().slot_seed_type_im + index * slot_seed_struct_size});
+        WriteMemory<int>(level, {data().pvz_base, data().user_data, data().level});
+        WriteMemory<int>(level, {data().pvz_base, data().main_object, data().adventure_level});
     }
-    else
-    {
-        WriteMemory<int>(type, {slot_offset + data().slot_seed_type + index * slot_seed_struct_size});
-        WriteMemory<int>(-1, {slot_offset + data().slot_seed_type_im + index * slot_seed_struct_size});
-    }
-}
-
-void PvZ::SetMusic(int id)
-{
-    if (!GameOn())
-        return;
-
-    asm_init();
-    asm_mov_exx(Reg::EDI, id);
-    asm_mov_exx_dword_ptr(Reg::EAX, data().pvz_base);
-    asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().background_music);
-    asm_call(data().call_set_music);
-    asm_ret();
-    asm_code_inject();
+    WriteMemory<int>(mode, {data().pvz_base, data().game_mode});
 }
 
 void PvZ::JumpLevel(int level)
@@ -2321,7 +2909,7 @@ void PvZ::JumpLevel(int level)
     int mode = GameMode();
     if (mode == 60 || mode == 70 || (mode >= 11 && mode <= 15)) // 仅限无尽模式
     {
-        int indirect_offset = ReadMemory<int>({data().pvz_base, data().main_object, data().indirect_base});
+        auto indirect_offset = ReadMemory<uintptr_t>({data().pvz_base, data().main_object, data().indirect_base});
         WriteMemory<int>(level, {indirect_offset + data().endless_rounds});
     }
 }
@@ -2570,7 +3158,7 @@ void PvZ::AutoLadder(bool imitater_pumpkin_only = true)
 
     bool has_ladder[6][9] = {{false}}; // 已有梯子的位置
 
-    ClearGridItems(3); // 清空所有梯子
+    ClearGridItems({3}); // 清空所有梯子
 
     // auto grid_item_count_max = ReadMemory<uint32_t>({data().pvz_base, data().main_object, data().grid_item_count_max});
     // auto grid_item_offset = ReadMemory<uintptr_t>({data().pvz_base, data().main_object, data().grid_item});
@@ -2628,6 +3216,157 @@ void PvZ::AutoLadder(bool imitater_pumpkin_only = true)
     asm_code_inject();
 }
 
+void PvZ::asm_put_rake(int row, int col)
+{
+    WriteMemory<int>(row, {data().call_put_rake_row + 1});
+    WriteMemory<int>(col, {data().call_put_rake_col + 4});
+
+    asm_init();
+    if (isGOTY())
+    {
+        if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
+        {
+            asm_mov_exx_dword_ptr(Reg::ECX, data().pvz_base);
+            asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().main_object);
+            asm_push_exx(Reg::ECX);
+        }
+        else
+        {
+            asm_mov_exx_dword_ptr(Reg::EAX, data().pvz_base);
+            asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().main_object);
+        }
+    }
+    else
+    {
+        asm_mov_exx_dword_ptr(Reg::EDX, data().pvz_base);
+        asm_mov_exx_dword_ptr_exx_add(Reg::EDX, data().main_object);
+        asm_push_exx(Reg::EDX);
+    }
+    asm_call(data().call_put_rake);
+    asm_ret();
+    asm_code_inject();
+}
+
+void PvZ::PutRake(int row, int col)
+{
+    if (!GameOn())
+        return;
+    int ui = GameUI();
+    if (ui != 2 && ui != 3)
+        return;
+
+    std::array<uint8_t, 8> reset_code_rake_col = {0};
+    std::array<uint8_t, 7> reset_code_rake_row = {0};
+    std::array<uint8_t, 6> reset_code_rake_row_goty = {0};
+
+    reset_code_rake_col = ReadMemory<uint8_t, 8>({data().call_put_rake_col});
+    if (!isGOTY())
+        reset_code_rake_row = ReadMemory<uint8_t, 7>({data().call_put_rake_row});
+    else
+        reset_code_rake_row_goty = ReadMemory<uint8_t, 6>({data().call_put_rake_row});
+
+    if (!isGOTY())
+        WriteMemory<uint8_t, 7>({0xba, 0x00, 0x00, 0x00, 0x00, 0x90, 0x90}, {data().call_put_rake_row});
+    else
+        WriteMemory<uint8_t, 6>({0xbf, 0x00, 0x00, 0x00, 0x00, 0x90}, {data().call_put_rake_row});
+
+    enable_hack(data().hack_put_rake, true);
+
+    int row_count = GetRowCount();
+    int col_count = 9;
+    if (row == -1 && col == -1)
+        for (int r = 0; r < row_count; r++)
+            for (int c = 0; c < col_count; c++)
+                asm_put_rake(r, c);
+    else if (row != -1 && col == -1)
+        for (int c = 0; c < col_count; c++)
+            asm_put_rake(row, c);
+    else if (row == -1 && col != -1)
+        for (int r = 0; r < row_count; r++)
+            asm_put_rake(r, col);
+    else
+        asm_put_rake(row, col);
+
+    enable_hack(data().hack_put_rake, false);
+
+    WriteMemory<uint8_t, 8>(reset_code_rake_col, {data().call_put_rake_col});
+    if (!isGOTY())
+        WriteMemory<uint8_t, 7>(reset_code_rake_row, {data().call_put_rake_row});
+    else
+        WriteMemory<uint8_t, 6>(reset_code_rake_row_goty, {data().call_put_rake_row});
+}
+
+// 0.启动 1.删除 2.恢复
+void PvZ::SetLawnMowers(int option)
+{
+    // #ifdef _DEBUG
+    //     HACK<uint32_t, 1> test_hack = data().restore_lawn_mower_3;
+    //     assert(ReadMemory<uint32_t>({test_hack.mem_addr}) == test_hack.reset_value[0]);
+    //     assert(ReadMemory<float>({test_hack.hack_value[0]}) == -21.00f);
+    //     assert(ReadMemory<float>({test_hack.reset_value[0]}) == -160.00f);
+    // #endif
+
+    if (option != 0 && option != 1 && option != 2)
+        return;
+
+    if (!GameOn())
+        return;
+    int ui = GameUI();
+    if (ui != 2 && ui != 3)
+        return;
+
+    unsigned int lawn_mower_struct_size = 0x48;
+
+    auto lawn_mower_count_max = ReadMemory<uint32_t>({data().pvz_base, data().main_object, data().lawn_mower_count_max});
+    auto lawn_mower_offset = ReadMemory<uintptr_t>({data().pvz_base, data().main_object, data().lawn_mower});
+
+    if (option == 2)
+    {
+        enable_hack(data().restore_lawn_mower_1, true);
+        enable_hack(data().restore_lawn_mower_2, true);
+        enable_hack(data().restore_lawn_mower_3, true);
+    }
+
+    asm_init();
+    for (size_t i = 0; i < lawn_mower_count_max; i++)
+    {
+        auto lawn_mower_dead = ReadMemory<bool>({lawn_mower_offset + data().lawn_mower_dead + lawn_mower_struct_size * i});
+        if (!lawn_mower_dead)
+        {
+            uint32_t addr = lawn_mower_offset + lawn_mower_struct_size * i;
+            if (option == 0)
+            {
+                if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
+                    asm_mov_exx(Reg::EBX, addr);
+                else
+                    asm_mov_exx(Reg::ESI, addr);
+                asm_call(data().call_start_lawn_mower);
+            }
+            else
+            {
+                asm_mov_exx(Reg::EAX, addr);
+                asm_call(data().call_delete_lawn_mower);
+            }
+        }
+    }
+    if (option == 2)
+    {
+        asm_mov_exx_dword_ptr(Reg::EAX, data().pvz_base);
+        asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().main_object);
+        asm_push_exx(Reg::EAX);
+        asm_call(data().call_restore_lawn_mower);
+    }
+    asm_ret();
+    asm_code_inject();
+
+    if (option == 2)
+    {
+        enable_hack(data().restore_lawn_mower_1, false);
+        enable_hack(data().restore_lawn_mower_2, false);
+        enable_hack(data().restore_lawn_mower_3, false);
+    }
+}
+
 void PvZ::ClearAllPlants()
 {
     if (!GameOn())
@@ -2676,34 +3415,6 @@ void PvZ::KillAllZombies()
     }
 }
 
-void PvZ::ClearAllLawnMowers()
-{
-    if (!GameOn())
-        return;
-    int ui = GameUI();
-    if (ui != 2 && ui != 3)
-        return;
-
-    unsigned int lawn_mower_struct_size = 0x48;
-
-    auto lawn_mower_count_max = ReadMemory<uint32_t>({data().pvz_base, data().main_object, data().lawn_mower_count_max});
-    auto lawn_mower_offset = ReadMemory<uintptr_t>({data().pvz_base, data().main_object, data().lawn_mower});
-
-    asm_init();
-    for (size_t i = 0; i < lawn_mower_count_max; i++)
-    {
-        auto lawn_mower_dead = ReadMemory<bool>({lawn_mower_offset + data().lawn_mower_dead + lawn_mower_struct_size * i});
-        if (!lawn_mower_dead)
-        {
-            uint32_t addr = lawn_mower_offset + lawn_mower_struct_size * i;
-            asm_mov_exx(Reg::EAX, addr);
-            asm_call(data().call_delete_lawn_mower);
-        }
-    }
-    asm_ret();
-    asm_code_inject();
-}
-
 // 1 墓碑
 // 2 弹坑
 // 3 梯子
@@ -2712,35 +3423,6 @@ void PvZ::ClearAllLawnMowers()
 // 10 蜗牛
 // 11 钉耙
 // 12 脑子
-void PvZ::ClearGridItems(int type)
-{
-    if (!GameOn())
-        return;
-    int ui = GameUI();
-    if (ui != 2 && ui != 3)
-        return;
-
-    unsigned int grid_item_struct_size = 0xec;
-
-    auto grid_item_count_max = ReadMemory<uint32_t>({data().pvz_base, data().main_object, data().grid_item_count_max});
-    auto grid_item_offset = ReadMemory<uintptr_t>({data().pvz_base, data().main_object, data().grid_item});
-
-    asm_init();
-    for (size_t i = 0; i < grid_item_count_max; i++)
-    {
-        auto grid_item_dead = ReadMemory<bool>({grid_item_offset + data().grid_item_dead + grid_item_struct_size * i});
-        auto grid_item_type = ReadMemory<int>({grid_item_offset + data().grid_item_type + grid_item_struct_size * i});
-        if (!grid_item_dead && grid_item_type == type)
-        {
-            int addr = grid_item_offset + grid_item_struct_size * i;
-            asm_mov_exx(Reg::ESI, addr);
-            asm_call(data().call_delete_grid_item);
-        }
-    }
-    asm_ret();
-    asm_code_inject();
-}
-
 void PvZ::ClearGridItems(std::vector<int> types)
 {
     if (!GameOn())
@@ -2768,86 +3450,6 @@ void PvZ::ClearGridItems(std::vector<int> types)
     }
     asm_ret();
     asm_code_inject();
-}
-
-void PvZ::DirectWin(bool light_cob)
-{
-    if (!GameOn())
-        return;
-    if (GameUI() != 3)
-        return;
-
-    int frame_time = GetFrameDuration();
-
-    if (light_cob)
-    {
-        int game_clock = ReadMemory<int>({data().pvz_base, data().main_object, data().game_clock});
-        int frame_to_wait = 75 - ((game_clock + 500) % 75);
-        if (ReadMemory<bool>({data().pvz_base, data().main_object, data().game_paused}))
-        {
-            if (frame_to_wait != 0)
-            {
-                // 解除暂停
-                PostMessage(hwnd, WM_KEYDOWN, VK_SPACE, 0);
-                PostMessage(hwnd, WM_KEYUP, VK_SPACE, 0);
-                Sleep(frame_to_wait * frame_time);
-                // 暂停
-                PostMessage(hwnd, WM_KEYDOWN, VK_SPACE, 0);
-                PostMessage(hwnd, WM_KEYUP, VK_SPACE, 0);
-            }
-        }
-        else
-        {
-            Sleep(frame_to_wait * frame_time);
-            // 暂停
-            PostMessage(hwnd, WM_KEYDOWN, VK_SPACE, 0);
-            PostMessage(hwnd, WM_KEYUP, VK_SPACE, 0);
-        }
-        Sleep(frame_time);
-    }
-
-    if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
-    {
-        asm_init();
-        asm_mov_exx_dword_ptr(Reg::EAX, data().pvz_base);
-        asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().main_object);
-        asm_push_exx(Reg::EAX);
-        asm_call(data().call_level_complete);
-        asm_ret();
-        asm_code_inject();
-    }
-    else
-    {
-        asm_init();
-        asm_mov_exx_dword_ptr(Reg::ECX, data().pvz_base);
-        asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().main_object);
-        asm_call(data().call_level_complete);
-        asm_ret();
-        asm_code_inject();
-    }
-
-    if (light_cob)
-    {
-        Sleep(frame_time);
-        // 解除暂停
-        PostMessage(hwnd, WM_KEYDOWN, VK_SPACE, 0);
-        PostMessage(hwnd, WM_KEYUP, VK_SPACE, 0);
-    }
-
-    // #ifdef _DEBUG
-    //     Sleep(frame_time * (500 + 10));
-    //     std::cout << ReadMemory<int>({data().pvz_base, data().main_object, data().game_clock}) % 75 << std::endl;
-    // #endif
-
-    // unsigned int slot_seed_struct_size = 0x50;
-    // std::vector<int> seed_types = {40, 41, 42, 43, 44, 45, 46, 47, 8, 48};
-    // std::vector<int> seed_types_im = {-1, -1, -1, -1, -1, -1, -1, -1, -1, 8};
-    // int slots_offset = ReadMemory<int>({data().pvz_base, data().main_object, data().slot});
-    // for (size_t i = 0; i < 10; i++)
-    // {
-    //     WriteMemory<int>(seed_types[i], {slots_offset + data().slot_seed_type + i * slot_seed_struct_size});
-    //     WriteMemory<int>(seed_types_im[i], {slots_offset + data().slot_seed_type_im + i * slot_seed_struct_size});
-    // }
 }
 
 void PvZ::PlantInvincible(bool on)
@@ -3011,6 +3613,52 @@ void PvZ::ZombieNotExplode(bool on)
     enable_hack(data().zombie_not_explode, on);
 }
 
+int PvZ::GetSlotSeed(int index)
+{
+    int seed_type = 0;
+    int seed_type_im = 0;
+
+    if (!GameOn())
+        return -1;
+    int ui = GameUI();
+    if (ui != 2 && ui != 3)
+        return -1;
+
+    unsigned int slot_seed_struct_size = 0x50;
+
+    auto slot_offset = ReadMemory<uintptr_t>({data().pvz_base, data().main_object, data().slot});
+    seed_type = ReadMemory<int>({slot_offset + data().slot_seed_type + index * slot_seed_struct_size});
+    seed_type_im = ReadMemory<int>({slot_offset + data().slot_seed_type_im + index * slot_seed_struct_size});
+
+    if (seed_type == 48) // 模仿者
+        return seed_type_im + 48;
+    else
+        return seed_type;
+}
+
+void PvZ::SetSlotSeed(int index, int type, bool imitater = false)
+{
+    if (!GameOn())
+        return;
+    int ui = GameUI();
+    if (ui != 2 && ui != 3)
+        return;
+
+    unsigned int slot_seed_struct_size = 0x50;
+
+    auto slot_offset = ReadMemory<uintptr_t>({data().pvz_base, data().main_object, data().slot});
+    if (imitater)
+    {
+        WriteMemory<int>(48, {slot_offset + data().slot_seed_type + index * slot_seed_struct_size});
+        WriteMemory<int>(type, {slot_offset + data().slot_seed_type_im + index * slot_seed_struct_size});
+    }
+    else
+    {
+        WriteMemory<int>(type, {slot_offset + data().slot_seed_type + index * slot_seed_struct_size});
+        WriteMemory<int>(-1, {slot_offset + data().slot_seed_type_im + index * slot_seed_struct_size});
+    }
+}
+
 void PvZ::LilyPadOnPool(int from_col, int to_col)
 {
     if (!GameOn())
@@ -3087,6 +3735,51 @@ void PvZ::FlowerPotOnRoof(int from_col, int to_col)
                 asm_put_plant(r, c, 33, false, false); // 33 花盆
     asm_ret();
     asm_code_inject();
+}
+
+void PvZ::Screenshot()
+{
+    if (!GameOn())
+        return;
+
+    RECT rcClient = {0, 0, 800, 600};
+    // if (GetClientRect(this->hwnd, &rcClient) == 0)
+    //     return;
+    int cx = rcClient.right - rcClient.left;
+    int cy = rcClient.bottom - rcClient.top;
+    // if (cx == 0 || cy == 0)
+    //     return;
+
+    HDC hdcWindow = nullptr;
+    HDC hdcMemDC = nullptr;
+    HBITMAP hbmScreen = nullptr;
+
+    hdcWindow = GetDC(this->hwnd);
+    if (!hdcWindow)
+        goto done;
+    hdcMemDC = CreateCompatibleDC(hdcWindow);
+    if (!hdcMemDC)
+        goto done;
+    hbmScreen = CreateCompatibleBitmap(hdcWindow, cx, cy);
+    if (!hbmScreen)
+        goto done;
+
+    SelectObject(hdcMemDC, hbmScreen);
+    if (BitBlt(hdcMemDC, 0, 0, cx, cy, hdcWindow, 0, 0, SRCCOPY) == 0)
+        goto done;
+
+    // 保存到剪贴板
+    if (OpenClipboard(nullptr) != 0)
+    {
+        EmptyClipboard();
+        SetClipboardData(CF_BITMAP, hbmScreen);
+        CloseClipboard();
+    }
+
+done:
+    DeleteObject(hbmScreen);
+    DeleteObject(hdcMemDC);
+    ReleaseDC(this->hwnd, hdcWindow);
 }
 
 std::string PvZ::GetLineup()
@@ -3328,27 +4021,35 @@ void PvZ::SetLineup(std::string lineup)
     if (ui != 2 && ui != 3)
         return;
 
-#ifdef _DEBUG
-    // 修改场地会造成许多问题, 只应当在测试中使用
-    WriteMemory<int>(scene, {data().pvz_base, data().main_object, data().scene});
-#endif
-
-    if (static_cast<int>(scene) != GetScene())
+    int mode = GameMode();
+    bool is_el = mode >= 11 && mode <= 15;
+    bool is_iz = mode >= 61 && mode <= 70;
+    if (!is_el && !is_iz)
         return;
 
-    int mode = GameMode();
-    bool is_iz = mode >= 61 && mode <= 70;
-
-    ClearGridItems(std::vector<int>{1, 3, 11});
+    ClearGridItems({1, 3, 11});
     ClearAllPlants();
+    auto has_lawn_mower = ReadMemory<uint32_t>({data().pvz_base, data().main_object, data().lawn_mower_count}) > 0;
+    if (has_lawn_mower)
+        SetLawnMowers(1);
 
-    asm_init();
+    if (static_cast<int>(scene) != GetScene())
+        SetScene(static_cast<int>(scene));
+    int music_id = scene + 1;
+    if (music_id == 6)
+        music_id = 2;
+    SetMusic(music_id);
+    if (has_lawn_mower)
+        SetLawnMowers(2);
+
     if (rake_row != 0)
     {
-        // int r = rake_row - 1;
-        // int c = 8 - 1;
-        // asm_put_rake(r, c); // TODO 放钉耙函数
+        int r = rake_row - 1;
+        int c = 8 - 1;
+        PutRake(r, c);
     }
+
+    asm_init();
     // 睡莲 花盆
     for (size_t r = 0; r < 6; r++)
     {
@@ -3539,8 +4240,8 @@ void PvZ::InternalSpawn(std::array<bool, 33> zombies)
 
     WriteMemory(zombies, {data().pvz_base, data().main_object, data().spawn_type});
 
-    std::array<int, 1000> zombies_list;
-    std::fill(zombies_list.begin(), zombies_list.end(), -1);
+    std::array<int, 2000> zombies_list;
+    zombies_list.fill(-1);
     WriteMemory(zombies_list, {data().pvz_base, data().main_object, data().spawn_list});
 
     generate_spawn_list();
@@ -3557,12 +4258,53 @@ void PvZ::CustomizeSpawn(std::array<bool, 33> zombies, bool limit_giga, bool sim
         return;
 
     std::array<bool, 20> giga_waves;
-    std::fill(giga_waves.begin(), giga_waves.end(), true);
+    giga_waves.fill(true);
     if (limit_giga)
         for (size_t w = 11; w <= 19; w++)
             giga_waves[w - 1] = false;
 
-    std::vector<double> weights = {4000, 0, 4000, 2000, 3000, 1000, 3500, 2000, 1000, 0, 0, 2000, 2000, 2000, 1500, 1000, 2000, 1000, 1000, 1, 1000, 1000, 1500, 1500, 0, 0, 4000, 3000, 1000, 2000, 2000, 2000, 6000};
+    std::vector<double> weights = {
+        4000, // 普僵
+        0,    // 旗帜
+        4000, // 路障
+        2000, // 撑杆
+        3000, // 铁桶
+        1000, // 读报
+        3500, // 铁门
+        2000, // 橄榄
+        1000, // 舞王
+        0,    // 伴舞
+        0,    // 鸭子
+        2000, // 潜水
+        2000, // 冰车
+        2000, // 雪橇
+        1500, // 海豚
+        1000, // 小丑
+        2000, // 气球
+        1000, // 矿工
+        1000, // 跳跳
+        1,    // 雪人
+        1000, // 蹦极
+        1000, // 扶梯
+        1500, // 投篮
+        1500, // 白眼
+        0,    // 小鬼
+        0,    // 僵博
+        4000, // 豌豆
+        3000, // 坚果
+        1000, // 辣椒
+        2000, // 机枪
+        2000, // 窝瓜
+        2000, // 高墙
+        6000  // 红眼
+    };
+
+#ifdef _DEBUG
+    if (this->version == L"1.0.0.1051")
+        for (size_t i = 0; i < 33; i++)
+            assert(ReadMemory<int>({0x0069da94 + i * 0x1c}) == static_cast<int>(weights[i]));
+#endif
+
     weights[0] = 400;
     weights[2] = 1000;
     std::vector<double> weights_flag = weights;
@@ -3575,7 +4317,7 @@ void PvZ::CustomizeSpawn(std::array<bool, 33> zombies, bool limit_giga, bool sim
 
     // 僵尸列表
     std::array<int, 1000> zombies_list;
-    std::fill(zombies_list.begin(), zombies_list.end(), -1);
+    zombies_list.fill(-1);
 
     bool has_flag = zombies[1];
     bool has_yeti = zombies[19];
@@ -3647,20 +4389,18 @@ void PvZ::CustomizeSpawn(std::array<bool, 33> zombies, bool limit_giga, bool sim
         update_spawn_preview();
 }
 
-void PvZ::MixMode(int mode, int level = 0)
+void PvZ::SetMusic(int id)
 {
     if (!GameOn())
         return;
-    int ui = GameUI();
-    if (ui != 2 && ui != 3)
-        return;
 
-    if (mode == 0) // 冒险模式
-    {
-        WriteMemory<int>(level, {data().pvz_base, data().user_data, data().level});
-        WriteMemory<int>(level, {data().pvz_base, data().main_object, data().adventure_level});
-    }
-    WriteMemory<int>(mode, {data().pvz_base, data().game_mode});
+    asm_init();
+    asm_mov_exx(Reg::EDI, id);
+    asm_mov_exx_dword_ptr(Reg::EAX, data().pvz_base);
+    asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().background_music);
+    asm_call(data().call_set_music);
+    asm_ret();
+    asm_code_inject();
 }
 
 void PvZ::NoFog(bool on)

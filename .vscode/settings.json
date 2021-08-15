@@ -63,6 +63,9 @@
         "xlocmes": "cpp",
         "random": "cpp",
         "chrono": "cpp",
-        "ratio": "cpp"
+        "ratio": "cpp",
+        "filesystem": "cpp",
+        "codecvt": "cpp",
+        "string_view": "cpp"
     }
 }

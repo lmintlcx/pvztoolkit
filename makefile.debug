@@ -3,8 +3,11 @@ OUTDIR = .\out
 TARGET = pvztoolkitd
 
 CXX = cl
-CXXFLAGS_BARE = -c -nologo -Zc:wchar_t /MP /utf-8 /Zc:__cplusplus /std:c++17 /Od /MTd /W3 /EHsc /Zi /FS
-DEFINES = -DUNICODE -DWIN32 -D_USING_V110_SDK71_ -D_ATL_XP_TARGETING -DPSAPI_VERSION=1 -D_WIN32_WINNT=0x0501 -D_REGEX_MAX_STACK_COUNT=0
+CXXFLAGS_BARE = -c -nologo -Zc:wchar_t /MP /utf-8 /Zc:__cplusplus /std:c++17 \
+                /Od /MTd /W3 /EHsc /Zi /FS
+DEFINES = -DUNICODE -D_UNICODE -DWIN32 \
+          -D_USING_V110_SDK71_ -D_ATL_XP_TARGETING -DPSAPI_VERSION=1 -D_WIN32_WINNT=0x0501 \
+          -D_REGEX_MAX_STACK_COUNT=0 -D_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
 INCPATH = -I.
 INCS = .\src\pak.h .\src\process.h .\src\code.h .\src\pvz.h .\src\window.h
 CXXFLAGS = /Fo"$(OUTDIR)\\" /Fd"$(OUTDIR)\$(TARGET).pdb" $(CXXFLAGS_BARE) $(DEFINES) $(INCPATH)
@@ -13,10 +16,10 @@ RC = rc
 RC_FLAGS = /n $(DEFINES)
 
 LINKER = link
-LIBS_FLTK = fltkd.lib fltk_formsd.lib fltk_gld.lib fltk_imagesd.lib fltk_jpegd.lib fltk_pngd.lib fltk_zd.lib
+LIBS_FLTK = fltkd.lib fltk_zd.lib
 LIBS_ZLIB = zlib.lib
-LIBS_WIN32 = winmm.lib comctl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib \
-ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wsock32.lib opengl32.lib version.lib psapi.lib shlwapi.lib crypt32.lib
+LIBS_WIN32 = user32.lib shell32.lib advapi32.lib comctl32.lib comdlg32.lib ole32.lib \
+             psapi.lib version.lib wsock32.lib crypt32.lib gdi32.lib gdiplus.lib
 LIBS = /LIBPATH:$(OUTDIR) $(LIBS_FLTK) $(LIBS_ZLIB) $(LIBS_WIN32)
 OBJS = $(OUTDIR)\main.obj \
        $(OUTDIR)\pak.obj \
@@ -25,7 +28,8 @@ OBJS = $(OUTDIR)\main.obj \
        $(OUTDIR)\pvz.obj \
        $(OUTDIR)\window.obj
 RES = $(OUTDIR)\version.res
-LFLAGS = /NOLOGO /DYNAMICBASE /NXCOMPAT /INCREMENTAL:NO /SUBSYSTEM:CONSOLE,5.01 $(LIBS) $(OBJS) $(RES) /DEBUG /STACK:0x00400000
+LFLAGS = /NOLOGO /DYNAMICBASE /NXCOMPAT /INCREMENTAL:NO /SUBSYSTEM:CONSOLE,5.01 \
+         $(LIBS) $(OBJS) $(RES) /DEBUG /STACK:0x00400000
 
 
 all:$(OUTDIR) $(OUTDIR)\$(TARGET).exe
