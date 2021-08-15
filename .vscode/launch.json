@@ -10,7 +10,7 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/out",
             "environment": [],
-            "externalConsole": true,
+            "console": "integratedTerminal",
             "preLaunchTask": "Build"
         }
     ]
