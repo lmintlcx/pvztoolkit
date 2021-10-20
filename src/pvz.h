@@ -21,20 +21,27 @@ namespace Pt
 {
 
 #define PVZ_NOT_FOUND 0
-#define PVZ_OPEN_ERROR 1
-#define PVZ_UNSUPPORTED 2
+#define PVZ_OPEN_ERROR -1
+#define PVZ_UNSUPPORTED 1
+
+#define PVZ_BETA_0_1_1_1014_EN 901
+#define PVZ_BETA_0_9_9_1029_EN 902
 
 #define PVZ_1_0_0_1051_EN 1001
 #define PVZ_1_2_0_1065_EN 1002
+
 #define PVZ_1_0_4_7924_ES 1003
 #define PVZ_1_0_7_3556_ES 1004
-#define PVZ_1_2_0_1073_EN 1005
-#define PVZ_1_2_0_1096_EN 1006
-#define PVZ_1_2_0_1093_DE_ES_FR_IT 1007
-#define PVZ_1_1_0_1056_ZH 1008
-#define PVZ_1_1_0_1056_JA 1009
-#define PVZ_1_1_0_1056_ZH_2012_06 1010
-#define PVZ_1_1_0_1056_ZH_2012_07 1011
+#define PVZ_1_0_7_3467_RU 1005
+
+#define PVZ_1_2_0_1073_EN 2001
+#define PVZ_1_2_0_1096_EN 2002
+#define PVZ_1_2_0_1093_DE_ES_FR_IT 2003
+
+#define PVZ_1_1_0_1056_ZH 2004
+#define PVZ_1_1_0_1056_JA 2005
+#define PVZ_1_1_0_1056_ZH_2012_06 2006
+#define PVZ_1_1_0_1056_ZH_2012_07 2007
 
 typedef void (*cb_func)(void *, int);
 
@@ -53,6 +60,7 @@ struct HACK
 // 用来保存不同版本的内存基址数据
 struct PVZ_DATA
 {
+    uintptr_t exe_path;
     uintptr_t pvz_base;
 
     uintptr_t ms_per_frame;
@@ -131,6 +139,7 @@ struct PVZ_DATA
     uintptr_t level;
     uintptr_t money;
     uintptr_t playthrough;
+    uintptr_t mini_games;
     uintptr_t tree_height;
     uintptr_t twiddydinky;
 
@@ -139,7 +148,7 @@ struct PVZ_DATA
     HACK<uint8_t, 1> safe_thread;
 
     HACK<uint8_t, 1> auto_collect;
-    HACK<uint8_t, 2> zombie_no_falling;
+    HACK<uint8_t, 1> zombie_no_falling;
 
     HACK<uint8_t, 1> fertilizer_unlimited;
     HACK<uint8_t, 1> bug_spray_unlimited;
@@ -153,7 +162,6 @@ struct PVZ_DATA
     HACK<uint8_t, 1> lock_shovel;
 
     HACK<uint16_t, 1> hack_put_rake;
-    HACK<uint16_t, 1> restore_lawn_mower_1;
     HACK<uint8_t, 1> restore_lawn_mower_2;
     HACK<uint32_t, 1> restore_lawn_mower_3;
 
@@ -173,7 +181,7 @@ struct PVZ_DATA
     HACK<uint8_t, 1> _plant_immune_spikeweed;
 
     HACK<uint32_t, 1> zombie_immune_damage;
-    HACK<uint8_t, 1> zombie_immune_type1;
+    HACK<uint8_t, 2> zombie_immune_type1;
     HACK<uint32_t, 1> zombie_immune_type2;
     HACK<uint8_t, 1> zombie_immune_ashes;
     HACK<uint8_t, 1> zombie_immune_cherry;
@@ -185,7 +193,7 @@ struct PVZ_DATA
     HACK<uint8_t, 1> zombie_immune_lawnmower;
 
     HACK<uint32_t, 1> _zombie_immune_damage;
-    HACK<uint8_t, 1> _zombie_immune_type1;
+    HACK<uint8_t, 2> _zombie_immune_type1;
     HACK<uint32_t, 1> _zombie_immune_type2;
     HACK<uint8_t, 1> _zombie_immune_ashes;
 
@@ -234,6 +242,7 @@ struct PVZ_DATA
 
     uintptr_t call_wakeup_plant;
 
+    uintptr_t call_reset_scene;
     uintptr_t call_set_background;
     uintptr_t call_delete_particle_system;
 
@@ -263,6 +272,12 @@ class PvZ : public Process, public Code
     // 每次修改前都要检查
     bool GameOn();
 
+    // 游戏路径
+    std::string GamePath();
+
+    // 是否为测试版
+    bool isBETA();
+
     // 是否为年度版
     bool isGOTY();
 
@@ -274,7 +289,7 @@ class PvZ : public Process, public Code
 
     // 游戏场地
     int GetScene();
-    void SetScene(int);
+    void SetScene(int, bool);
 
     // 场地行数
     int GetRowCount();
@@ -300,10 +315,13 @@ class PvZ : public Process, public Code
     void *window;
 
     // 不同版本的内存基址数据
+    PVZ_DATA data_beta_0_1_1_1014_en;
+    PVZ_DATA data_beta_0_9_9_1029_en;
     PVZ_DATA data_1_0_0_1051_en;
     PVZ_DATA data_1_2_0_1065_en;
     PVZ_DATA data_1_0_4_7924_es;
     PVZ_DATA data_1_0_7_3556_es;
+    PVZ_DATA data_1_0_7_3467_ru;
     PVZ_DATA data_1_2_0_1073_en;
     PVZ_DATA data_1_2_0_1096_en;
     PVZ_DATA data_1_2_0_1093_de_es_fr_it;

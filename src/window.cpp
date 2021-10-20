@@ -340,345 +340,345 @@ const char *modes_zh[] =
 
 const char *lineup_names[] =
     {
-        "[DE].双核无炮",
-        "[DE].神之无炮",
-        "[DE].长矛无炮",
-        "[DE].群曾无炮",
-        "[DE].后置三炮",
-        "[DE].镂空四炮",
-        "[DE].屑四炮",
-        "[DE].后置四炮",
-        "[DE].奥赛罗五炮",
-        "[DE].柱子五炮",
-        "[DE].双核底线五炮",
-        "[DE].底线五炮",
-        "[DE].无保护六炮",
-        "[DE].雪花六炮",
-        "[DE].后置六炮",
-        "[DE].冰矿工六炮",
-        "[DE].双冰六炮",
-        "[DE].花园六炮",
-        "[DE].云中仙七炮",
-        "[DE].樱桃七炮",
-        "[DE].C2f八炮",
-        "[DE].神之八炮",
-        "[DE].超前置八炮",
-        "[DE].简化八炮",
-        "[DE].瞬杀八炮",
-        "[DE].前置八炮",
-        "[DE].雪花十炮",
-        "[DE].全场超前置十炮",
-        "[DE].沙漏十一炮",
-        "[DE].神之十一炮",
-        "[DE].守钉耙十一炮",
-        "[DE].守城十二炮",
-        "[DE].撞南墙十二炮",
-        "[DE].挂机十二炮",
-        "[DE].中开十四炮",
-        "[DE].雪花十四炮",
-        "[DE].守全场十四炮",
-        "[DE].连拦十四炮",
-        "[DE].十四炮",
-        "[DE].十五炮",
-        "[DE].空炸十六炮",
-        "[DE].十六炮",
-        "[DE].十七炮",
-        "[DE].十八炮",
-        "[DE].十九炮",
-        "[NE].无神无炮",
-        "[NE].十一格无炮",
-        "[NE].超后退无炮",
-        "[NE].小无炮",
-        "[NE].小楼梯无炮",
-        "[NE].双七列曾神之无炮",
-        "[NE].群曾无炮",
-        "[NE].减速无炮",
-        "[NE].冰雨无炮",
-        "[NE].压制无炮",
-        "[NE].双六列曾神之无炮",
-        "[NE].双七列曾神之一炮",
-        "[NE].变奏一炮",
-        "[NE].小二炮",
-        "[NE].双七列曾神之二炮",
-        "[NE].点赞三炮",
-        "[NE].瞬杀三炮",
-        "[NE].土豆四炮",
-        "[NE].前置四炮",
-        "[NE].小梦四炮",
-        "[NE].后置四炮",
-        "[NE].神之四炮",
-        "[NE].倾斜四炮",
-        "[NE].智商五炮",
-        "[NE].压碑五炮",
-        "[NE].神之五炮",
-        "[NE].鬼位五炮",
-        "[NE].底线五炮",
-        "[NE].神之六炮",
-        "[NE].镂空六炮",
-        "[NE].快六炮",
-        "[NE].全梯六炮",
-        "[NE].雪花七炮",
-        "[NE].瞬杀七炮",
-        "[NE].美学八炮",
-        "[NE].简化八炮",
-        "[NE].生死劫",
-        "[NE].前置八炮",
-        "[NE].放羊九炮",
-        "[NE].请君入瓮",
-        "[NE].核代十炮",
-        "[NE].九龙阁十一炮",
-        "[NE].十二炮",
-        "[NE].舞夜惊魂",
-        "[NE].守钉耙十三炮",
-        "[NE].丑十四炮",
-        "[NE].十五炮",
-        "[NE].十八炮",
-        "[NE].十九炮",
-        "[PE].最简无炮",
-        "[PE].伪无伤无炮",
-        "[PE].自然控丑无炮",
-        "[PE].火焰无炮",
-        "[PE].后退无炮",
-        "[PE].超前置无炮",
-        "[PE].王子无炮",
-        "[PE].机械钟无炮",
-        "[PE].神之无炮",
-        "[PE].石英钟无炮",
-        "[PE].靠天无炮",
-        "[PE].压制一炮",
-        "[PE].小二炮",
-        "[PE].火焰二炮",
-        "[PE].核武二炮",
-        "[PE].分裂二炮",
-        "[PE].方正二炮",
-        "[PE].经典二炮",
-        "[PE].冲关三炮",
-        "[PE].太极四炮",
-        "[PE].全金属四炮",
-        "[PE].方块四炮",
-        "[PE].青四炮",
-        "[PE].水路无植物四炮",
-        "[PE].方四炮",
-        "[PE].葬花吟",
-        "[PE].神之四炮",
-        "[PE].双核底线四炮",
-        "[PE].经典四炮",
-        "[PE].心四炮",
-        "[PE].火焰四炮",
-        "[PE].底线四炮",
-        "[PE].传统四炮",
-        "[PE].半场无植物五炮",
-        "[PE].散炸五炮",
-        "[PE].心五炮",
-        "[PE].陆路无植物六炮",
-        "[PE].水路无植物六炮",
-        "[PE].禅房花木深",
-        "[PE].青苔六炮",
-        "[PE].神之六炮",
-        "[PE].玉米六炮",
-        "[PE].空炸六炮",
-        "[PE].超后置六炮",
-        "[PE].方六炮",
-        "[PE].蝶韵",
-        "[PE].一勺汤圆",
-        "[PE].间隔无植物七炮",
-        "[PE].玉兔茕茕",
-        "[PE].无保护八炮",
-        "[PE].树八炮",
-        "[PE].全对称树八炮",
-        "[PE].矩形八炮",
-        "[PE].无套神之八炮",
-        "[PE].灯台八炮",
-        "[PE].神之八炮",
-        "[PE].阴阳八炮",
-        "[PE].浮萍八炮",
-        "[PE].后置八炮",
-        "[PE].饲养海豚",
-        "[PE].玉米八炮",
-        "[PE].经典八炮",
-        "[PE].花海八炮",
-        "[PE].C2八炮",
-        "[PE].冰心灯八炮",
-        "[PE].分离八炮",
-        "[PE].全对称八炮",
-        "[PE].3C八炮",
-        "[PE].⑨炮",
-        "[PE].方块九炮",
-        "[PE].C6i九炮",
-        "[PE].心九炮",
-        "[PE].轮炸九炮",
-        "[PE].②炮",
-        "[PE].六芒星十炮",
-        "[PE].方块十炮",
-        "[PE].六边形十炮",
-        "[PE].斜方十炮",
-        "[PE].简化十炮",
-        "[PE].后置十炮",
-        "[PE].经典十炮",
-        "[PE].六线囚尸",
-        "[PE].斜十炮",
-        "[PE].魔方十炮",
-        "[PE].戴夫的小汉堡",
-        "[PE].鸡尾酒",
-        "[PE].一勺汤圆十二炮",
-        "[PE].玉壶春十二炮",
-        "[PE].半场十二炮",
-        "[PE].简化十二炮",
-        "[PE].经典十二炮",
-        "[PE].火焰十二炮",
-        "[PE].冰雨十二炮·改",
-        "[PE].神柱十二炮",
-        "[PE].神之十二炮",
-        "[PE].水路无植物十二炮",
-        "[PE].纯白悬空十二炮",
-        "[PE].后花园十二炮",
-        "[PE].玉米十二炮",
-        "[PE].两路暴狂",
-        "[PE].九列十二炮",
-        "[PE].梯曾十二炮",
-        "[PE].君海十二炮",
-        "[PE].箜篌引",
-        "[PE].梅花十三",
-        "[PE].最后之作",
-        "[PE].冰心灯",
-        "[PE].太极十四炮",
-        "[PE].真·四炮",
-        "[PE].神棍十四炮",
-        "[PE].神之十四炮",
-        "[PE].穿越十四炮",
-        "[PE].钻石十五炮",
-        "[PE].神之十五炮",
-        "[PE].真·二炮",
-        "[PE].炮环十二花",
-        "[PE].冰箱灯",
-        "[PE].对称十六炮",
-        "[PE].神之十六炮",
-        "[PE].裸奔十六炮",
-        "[PE].双冰十六炮",
-        "[PE].超前置十六炮",
-        "[PE].火焰十六炮",
-        "[PE].经典十六炮",
-        "[PE].冰魄十八炮",
-        "[PE].真·十八炮",
-        "[PE].纯十八炮",
-        "[PE].尾炸十八炮",
-        "[PE].经典十八炮",
-        "[PE].日花二十炮",
-        "[PE].纯二十炮",
-        "[PE].空炸二十炮",
-        "[PE].钉耙二十炮",
-        "[PE].新二十炮",
-        "[PE].无冰瓜二十炮",
-        "[PE].绝望之路",
-        "[PE].二十一炮",
-        "[PE].新二十二炮",
-        "[PE].二十二炮",
-        "[PE].无冰瓜二十二炮",
-        "[PE].九列二十二炮",
-        "[PE].二十四炮",
-        "[PE].垫材二十四炮",
-        "[FE].无神无炮",
-        "[FE].两仪无炮",
-        "[FE].十二格无炮",
-        "[FE].太极无炮",
-        "[FE].水路无植物无炮",
-        "[FE].十二格玩具",
-        "[FE].间隔无炮",
-        "[FE].方块无炮",
-        "[FE].热核无炮",
-        "[FE].半边无炮",
-        "[FE].茶壶无炮",
-        "[FE].神之无炮",
-        "[FE].心无炮",
-        "[FE].火焰无炮",
-        "[FE].智能无炮",
-        "[FE].后退无炮",
-        "[FE].塔曾无炮",
-        "[FE].顶满七列曾无炮",
-        "[FE].无冰瓜一炮",
-        "[FE].火焰二炮",
-        "[FE].大雾二炮",
-        "[FE].压制二炮",
-        "[FE].最简四炮",
-        "[FE].鬼位四炮",
-        "[FE].落月四炮",
-        "[FE].帆船四炮",
-        "[FE].神之四炮",
-        "[FE].磁铁四炮",
-        "[FE].雾四炮",
-        "[FE].三角板六炮",
-        "[FE].玲珑六炮",
-        "[FE].烈焰八炮",
-        "[FE].无保护八炮",
-        "[FE].神之八炮",
-        "[FE].经典八炮",
-        "[FE].七夕灯",
-        "[FE].斜方十炮",
-        "[FE].河洛十炮",
-        "[FE].纯十二炮",
-        "[FE].水路无植物十二炮",
-        "[FE].神之十二炮",
-        "[FE].曲径通幽处",
-        "[FE].某十四炮",
-        "[FE].礼物盒十四炮",
-        "[FE].弦十四炮",
-        "[FE].奇门九劫",
-        "[FE].半场十四炮",
-        "[FE].灯笼十六炮",
-        "[FE].花环十六炮",
-        "[FE].中压制十八炮",
-        "[FE].无冰瓜十八炮",
-        "[FE].十九炮",
-        "[FE].二十二炮",
-        "[FE].二十四炮",
-        "[RE].无神无炮",
-        "[RE].群曾无炮",
-        "[RE].水晶杯四炮",
-        "[RE].#四炮",
-        "[RE].波纹五炮",
-        "[RE].小六炮",
-        "[RE].分隔六炮",
-        "[RE].方三角六炮",
-        "[RE].*道六炮",
-        "[RE].神之七炮",
-        "[RE].方块八炮",
-        "[RE].斜方八炮",
-        "[RE].理发八炮",
-        "[RE].沙漏八炮",
-        "[RE].#八炮",
-        "[RE].螺旋十炮",
-        "[RE].镂铭灯",
-        "[RE].天台十炮",
-        "[RE].十一炮",
-        "[RE].花灯十二炮",
-        "[RE].椭盘十二炮",
-        "[RE].螺旋十二炮",
-        "[RE].鸟居十二炮",
-        "[RE].天台十二炮",
-        "[RE].椭盘十四炮",
-        "[RE].十六炮",
-        "[RE].十七炮",
-        "[RE].十八炮",
-        "[ME].无神无炮",
-        "[ME].核聚变无炮",
-        "[ME].群曾无炮",
-        "[ME].长矛无炮",
-        "[ME].双核一炮",
-        "[ME].神之五炮",
-        "[ME].神之六炮",
-        "[ME].底置六炮",
-        "[ME].无蘑菇七炮",
-        "[ME].对称八炮",
-        "[ME].奇怪的八炮",
-        "[ME].田八炮",
-        "[ME].轮回之瞳",
-        "[ME].分隔九炮",
-        "[ME].无保护十炮",
-        "[ME].月夜十炮",
-        "[ME].瓮中捉鳖",
-        "[ME].十三炮",
-        "[ME].十八炮",
-        "[ME].十九炮",
+        "[DE] 双核无炮",
+        "[DE] 神之无炮",
+        "[DE] 长矛无炮",
+        "[DE] 群曾无炮",
+        "[DE] 后置三炮",
+        "[DE] 镂空四炮",
+        "[DE] 屑四炮",
+        "[DE] 后置四炮",
+        "[DE] 奥赛罗五炮",
+        "[DE] 柱子五炮",
+        "[DE] 双核底线五炮",
+        "[DE] 底线五炮",
+        "[DE] 无保护六炮",
+        "[DE] 雪花六炮",
+        "[DE] 后置六炮",
+        "[DE] 冰矿工六炮",
+        "[DE] 双冰六炮",
+        "[DE] 花园六炮",
+        "[DE] 云中仙七炮",
+        "[DE] 樱桃七炮",
+        "[DE] C2f八炮",
+        "[DE] 神之八炮",
+        "[DE] 超前置八炮",
+        "[DE] 简化八炮",
+        "[DE] 瞬杀八炮",
+        "[DE] 前置八炮",
+        "[DE] 雪花十炮",
+        "[DE] 全场超前置十炮",
+        "[DE] 沙漏十一炮",
+        "[DE] 神之十一炮",
+        "[DE] 守钉耙十一炮",
+        "[DE] 守城十二炮",
+        "[DE] 撞南墙十二炮",
+        "[DE] 挂机十二炮",
+        "[DE] 中开十四炮",
+        "[DE] 雪花十四炮",
+        "[DE] 守全场十四炮",
+        "[DE] 连拦十四炮",
+        "[DE] 十四炮",
+        "[DE] 十五炮",
+        "[DE] 空炸十六炮",
+        "[DE] 十六炮",
+        "[DE] 十七炮",
+        "[DE] 十八炮",
+        "[DE] 十九炮",
+        "[NE] 无神无炮",
+        "[NE] 十一格无炮",
+        "[NE] 超后退无炮",
+        "[NE] 小无炮",
+        "[NE] 小楼梯无炮",
+        "[NE] 双七列曾神之无炮",
+        "[NE] 群曾无炮",
+        "[NE] 减速无炮",
+        "[NE] 冰雨无炮",
+        "[NE] 压制无炮",
+        "[NE] 双六列曾神之无炮",
+        "[NE] 双七列曾神之一炮",
+        "[NE] 变奏一炮",
+        "[NE] 小二炮",
+        "[NE] 双七列曾神之二炮",
+        "[NE] 点赞三炮",
+        "[NE] 瞬杀三炮",
+        "[NE] 土豆四炮",
+        "[NE] 前置四炮",
+        "[NE] 小梦四炮",
+        "[NE] 后置四炮",
+        "[NE] 神之四炮",
+        "[NE] 倾斜四炮",
+        "[NE] 智商五炮",
+        "[NE] 压碑五炮",
+        "[NE] 神之五炮",
+        "[NE] 鬼位五炮",
+        "[NE] 底线五炮",
+        "[NE] 神之六炮",
+        "[NE] 镂空六炮",
+        "[NE] 快六炮",
+        "[NE] 全梯六炮",
+        "[NE] 雪花七炮",
+        "[NE] 瞬杀七炮",
+        "[NE] 美学八炮",
+        "[NE] 简化八炮",
+        "[NE] 生死劫",
+        "[NE] 前置八炮",
+        "[NE] 放羊九炮",
+        "[NE] 请君入瓮",
+        "[NE] 核代十炮",
+        "[NE] 九龙阁十一炮",
+        "[NE] 十二炮",
+        "[NE] 舞夜惊魂",
+        "[NE] 守钉耙十三炮",
+        "[NE] 丑十四炮",
+        "[NE] 十五炮",
+        "[NE] 十八炮",
+        "[NE] 十九炮",
+        "[PE] 最简无炮",
+        "[PE] 伪无伤无炮",
+        "[PE] 自然控丑无炮",
+        "[PE] 火焰无炮",
+        "[PE] 后退无炮",
+        "[PE] 超前置无炮",
+        "[PE] 王子无炮",
+        "[PE] 机械钟无炮",
+        "[PE] 神之无炮",
+        "[PE] 石英钟无炮",
+        "[PE] 靠天无炮",
+        "[PE] 压制一炮",
+        "[PE] 小二炮",
+        "[PE] 火焰二炮",
+        "[PE] 核武二炮",
+        "[PE] 分裂二炮",
+        "[PE] 方正二炮",
+        "[PE] 经典二炮",
+        "[PE] 冲关三炮",
+        "[PE] 太极四炮",
+        "[PE] 全金属四炮",
+        "[PE] 方块四炮",
+        "[PE] 青四炮",
+        "[PE] 水路无植物四炮",
+        "[PE] 方四炮",
+        "[PE] 葬花吟",
+        "[PE] 神之四炮",
+        "[PE] 双核底线四炮",
+        "[PE] 经典四炮",
+        "[PE] 心四炮",
+        "[PE] 火焰四炮",
+        "[PE] 底线四炮",
+        "[PE] 传统四炮",
+        "[PE] 半场无植物五炮",
+        "[PE] 散炸五炮",
+        "[PE] 心五炮",
+        "[PE] 陆路无植物六炮",
+        "[PE] 水路无植物六炮",
+        "[PE] 禅房花木深",
+        "[PE] 青苔六炮",
+        "[PE] 神之六炮",
+        "[PE] 玉米六炮",
+        "[PE] 空炸六炮",
+        "[PE] 超后置六炮",
+        "[PE] 方六炮",
+        "[PE] 蝶韵",
+        "[PE] 一勺汤圆",
+        "[PE] 间隔无植物七炮",
+        "[PE] 玉兔茕茕",
+        "[PE] 无保护八炮",
+        "[PE] 树八炮",
+        "[PE] 全对称树八炮",
+        "[PE] 矩形八炮",
+        "[PE] 无套神之八炮",
+        "[PE] 灯台八炮",
+        "[PE] 神之八炮",
+        "[PE] 阴阳八炮",
+        "[PE] 浮萍八炮",
+        "[PE] 后置八炮",
+        "[PE] 饲养海豚",
+        "[PE] 玉米八炮",
+        "[PE] 经典八炮",
+        "[PE] 花海八炮",
+        "[PE] C2八炮",
+        "[PE] 冰心灯八炮",
+        "[PE] 分离八炮",
+        "[PE] 全对称八炮",
+        "[PE] 3C八炮",
+        "[PE] ⑨炮",
+        "[PE] 方块九炮",
+        "[PE] C6i九炮",
+        "[PE] 心九炮",
+        "[PE] 轮炸九炮",
+        "[PE] ②炮",
+        "[PE] 六芒星十炮",
+        "[PE] 方块十炮",
+        "[PE] 六边形十炮",
+        "[PE] 斜方十炮",
+        "[PE] 简化十炮",
+        "[PE] 后置十炮",
+        "[PE] 经典十炮",
+        "[PE] 六线囚尸",
+        "[PE] 斜十炮",
+        "[PE] 魔方十炮",
+        "[PE] 戴夫的小汉堡",
+        "[PE] 鸡尾酒",
+        "[PE] 一勺汤圆十二炮",
+        "[PE] 玉壶春十二炮",
+        "[PE] 半场十二炮",
+        "[PE] 简化十二炮",
+        "[PE] 经典十二炮",
+        "[PE] 火焰十二炮",
+        "[PE] 冰雨十二炮·改",
+        "[PE] 神柱十二炮",
+        "[PE] 神之十二炮",
+        "[PE] 水路无植物十二炮",
+        "[PE] 纯白悬空十二炮",
+        "[PE] 后花园十二炮",
+        "[PE] 玉米十二炮",
+        "[PE] 两路暴狂",
+        "[PE] 九列十二炮",
+        "[PE] 梯曾十二炮",
+        "[PE] 君海十二炮",
+        "[PE] 箜篌引",
+        "[PE] 梅花十三",
+        "[PE] 最后之作",
+        "[PE] 冰心灯",
+        "[PE] 太极十四炮",
+        "[PE] 真·四炮",
+        "[PE] 神棍十四炮",
+        "[PE] 神之十四炮",
+        "[PE] 穿越十四炮",
+        "[PE] 钻石十五炮",
+        "[PE] 神之十五炮",
+        "[PE] 真·二炮",
+        "[PE] 炮环十二花",
+        "[PE] 冰箱灯",
+        "[PE] 对称十六炮",
+        "[PE] 神之十六炮",
+        "[PE] 裸奔十六炮",
+        "[PE] 双冰十六炮",
+        "[PE] 超前置十六炮",
+        "[PE] 火焰十六炮",
+        "[PE] 经典十六炮",
+        "[PE] 冰魄十八炮",
+        "[PE] 真·十八炮",
+        "[PE] 纯十八炮",
+        "[PE] 尾炸十八炮",
+        "[PE] 经典十八炮",
+        "[PE] 日花二十炮",
+        "[PE] 纯二十炮",
+        "[PE] 空炸二十炮",
+        "[PE] 钉耙二十炮",
+        "[PE] 新二十炮",
+        "[PE] 无冰瓜二十炮",
+        "[PE] 绝望之路",
+        "[PE] 二十一炮",
+        "[PE] 新二十二炮",
+        "[PE] 二十二炮",
+        "[PE] 无冰瓜二十二炮",
+        "[PE] 九列二十二炮",
+        "[PE] 二十四炮",
+        "[PE] 垫材二十四炮",
+        "[FE] 无神无炮",
+        "[FE] 两仪无炮",
+        "[FE] 十二格无炮",
+        "[FE] 太极无炮",
+        "[FE] 水路无植物无炮",
+        "[FE] 十二格玩具",
+        "[FE] 间隔无炮",
+        "[FE] 方块无炮",
+        "[FE] 热核无炮",
+        "[FE] 半边无炮",
+        "[FE] 茶壶无炮",
+        "[FE] 神之无炮",
+        "[FE] 心无炮",
+        "[FE] 火焰无炮",
+        "[FE] 智能无炮",
+        "[FE] 后退无炮",
+        "[FE] 塔曾无炮",
+        "[FE] 顶满七列曾无炮",
+        "[FE] 无冰瓜一炮",
+        "[FE] 火焰二炮",
+        "[FE] 大雾二炮",
+        "[FE] 压制二炮",
+        "[FE] 最简四炮",
+        "[FE] 鬼位四炮",
+        "[FE] 落月四炮",
+        "[FE] 帆船四炮",
+        "[FE] 神之四炮",
+        "[FE] 磁铁四炮",
+        "[FE] 雾四炮",
+        "[FE] 三角板六炮",
+        "[FE] 玲珑六炮",
+        "[FE] 烈焰八炮",
+        "[FE] 无保护八炮",
+        "[FE] 神之八炮",
+        "[FE] 经典八炮",
+        "[FE] 七夕灯",
+        "[FE] 斜方十炮",
+        "[FE] 河洛十炮",
+        "[FE] 纯十二炮",
+        "[FE] 水路无植物十二炮",
+        "[FE] 神之十二炮",
+        "[FE] 曲径通幽处",
+        "[FE] 某十四炮",
+        "[FE] 礼物盒十四炮",
+        "[FE] 弦十四炮",
+        "[FE] 奇门九劫",
+        "[FE] 半场十四炮",
+        "[FE] 灯笼十六炮",
+        "[FE] 花环十六炮",
+        "[FE] 中压制十八炮",
+        "[FE] 无冰瓜十八炮",
+        "[FE] 十九炮",
+        "[FE] 二十二炮",
+        "[FE] 二十四炮",
+        "[RE] 无神无炮",
+        "[RE] 群曾无炮",
+        "[RE] 水晶杯四炮",
+        "[RE] #四炮",
+        "[RE] 波纹五炮",
+        "[RE] 小六炮",
+        "[RE] 分隔六炮",
+        "[RE] 方三角六炮",
+        "[RE] *道六炮",
+        "[RE] 神之七炮",
+        "[RE] 方块八炮",
+        "[RE] 斜方八炮",
+        "[RE] 理发八炮",
+        "[RE] 沙漏八炮",
+        "[RE] #八炮",
+        "[RE] 螺旋十炮",
+        "[RE] 镂铭灯",
+        "[RE] 天台十炮",
+        "[RE] 十一炮",
+        "[RE] 花灯十二炮",
+        "[RE] 椭盘十二炮",
+        "[RE] 螺旋十二炮",
+        "[RE] 鸟居十二炮",
+        "[RE] 天台十二炮",
+        "[RE] 椭盘十四炮",
+        "[RE] 十六炮",
+        "[RE] 十七炮",
+        "[RE] 十八炮",
+        "[ME] 无神无炮",
+        "[ME] 核聚变无炮",
+        "[ME] 群曾无炮",
+        "[ME] 长矛无炮",
+        "[ME] 双核一炮",
+        "[ME] 神之五炮",
+        "[ME] 神之六炮",
+        "[ME] 底置六炮",
+        "[ME] 无蘑菇七炮",
+        "[ME] 对称八炮",
+        "[ME] 奇怪的八炮",
+        "[ME] 田八炮",
+        "[ME] 轮回之瞳",
+        "[ME] 分隔九炮",
+        "[ME] 无保护十炮",
+        "[ME] 月夜十炮",
+        "[ME] 瓮中捉鳖",
+        "[ME] 十三炮",
+        "[ME] 十八炮",
+        "[ME] 十九炮",
 };
 
 const char *lineup_strings[] =
@@ -1312,12 +1312,12 @@ Window::Window(int width, int height, const char *title)
                 choice_seed = new Fl_Choice_(c(2) - 10, r(1), iw + 10 + 40, ih, "");
                 button_seed = new Fl_Button(c(3) + 40, r(1), iw - 40 + 20, ih, "换卡片");
                 check_seed_imitater = new Fl_Check_Button(c(4) + 20, r(1), iw - 20, ih, "模仿者");
-                check_lineup_mode = new Fl_Check_Button(c(1), r(2), iw + 15, ih, "快捷布阵模式");
-                button_auto_ladder = new Fl_Button(c(2) + 15, r(2), iw - 15, ih, "智能搭梯");
+                check_lineup_mode = new Fl_Check_Button(c(1), r(2), iw + 12, ih, "快捷布阵模式");
+                button_auto_ladder = new Fl_Button(c(2) + 12, r(2), iw - 12, ih, "智能搭梯");
                 button_put_lily_pad = new Fl_Menu_Button(c(3), r(2), iw, ih, "水路睡莲");
                 button_put_flower_pot = new Fl_Menu_Button(c(4), r(2), iw, ih, "屋顶花盆");
-                button_capture = new Fl_Button(c(1), r(3), iw + 15, ih, "窗口截图");
-                choice_scene = new Fl_Choice_(c(2) + 15, r(3), iw - 15, ih, "");
+                button_reset = new Fl_Button(c(1), r(3), iw + 12, ih, "重置场地");
+                choice_scene = new Fl_Choice_(c(2) + 12, r(3), iw - 12, ih, "");
                 choice_lineup_name[0] = new Fl_Choice_(c(3), r(3), iw * 2 + 10, ih, "");
                 choice_lineup_name[1] = new Fl_Choice_(c(3), r(3), iw * 2 + 10, ih, "");
                 choice_lineup_name[2] = new Fl_Choice_(c(3), r(3), iw * 2 + 10, ih, "");
@@ -1326,10 +1326,11 @@ Window::Window(int width, int height, const char *title)
                 choice_lineup_name[5] = new Fl_Choice_(c(3), r(3), iw * 2 + 10, ih, "");
                 buffer_lineup_string = new Fl_Text_Buffer();
                 editor_lineup_string = new Fl_Text_Editor(c(1), r(4), iw * 4 + 10 * 3, ih * 2 + 10 + 2, "");
-                button_get_lineup = new Fl_Button(c(1), r(6), iw - 10, ih, "获取代码");
-                button_copy_lineup = new Fl_Button(c(2) - 10, r(6), iw - 10, ih, "复制导出");
-                button_paste_lineup = new Fl_Button(c(3) + 10 + 10, r(6), iw - 10, ih, "粘贴导入");
-                button_set_lineup = new Fl_Button(c(4) + 10, r(6), iw - 10, ih, "布置阵型");
+                button_get_lineup = new Fl_Button(c(1), r(6), iw - 15, ih, "获取代码");
+                button_copy_lineup = new Fl_Button(c(2) - 15, r(6), iw - 15, ih, "复制导出");
+                button_paste_lineup = new Fl_Button(c(3) + 15 + 15, r(6), iw - 15, ih, "粘贴导入");
+                button_set_lineup = new Fl_Button(c(4) + 15, r(6), iw - 15, ih, "布置阵型");
+                button_capture = new Fl_Button(c(3) - 15 - 15, r(6), 15 * 4 - m, ih, "截图");
             }
             group_lineup->end();
 
@@ -1355,8 +1356,8 @@ Window::Window(int width, int height, const char *title)
 
             group_others = new Fl_Group(m, m + th, w - m * 2, h - m * 2 - th, "杂项");
             {
-                choice_music = new Fl_Choice_(c(1), r(1), iw + 75, ih, "");
-                button_music = new Fl_Button(c(2) + 75, r(1), iw, ih, "背景音乐");
+                choice_music = new Fl_Choice_(c(1), r(1), iw + m + iw - 15, ih, "");
+                button_music = new Fl_Button(c(3) - 15, r(1), iw, ih, "背景音乐");
                 button_userdata = new Fl_Button(c(4) - 15, r(1), iw + 15, ih, "存档文件夹");
                 check_no_fog = new Fl_Check_Button(c(1), r(2), iw - 15, ih, "清除浓雾");
                 check_see_vase = new Fl_Check_Button(c(2) - 15, r(2), iw - 15, ih, "罐子透视");
@@ -1532,12 +1533,12 @@ Window::Window(int width, int height, const char *title)
         button_put_flower_pot->add(label.c_str(), 0, cb_put_flower_pot, this);
     }
 
-    choice_scene->add("白天");
-    choice_scene->add("黑夜");
-    choice_scene->add("泳池");
-    choice_scene->add("雾夜");
-    choice_scene->add("屋顶");
-    choice_scene->add("月夜");
+    choice_scene->add("[0] 白天");
+    choice_scene->add("[1] 黑夜");
+    choice_scene->add("[2] 泳池");
+    choice_scene->add("[3] 雾夜");
+    choice_scene->add("[4] 屋顶");
+    choice_scene->add("[5] 月夜");
 
     choice_scene->value(2); // 泳池
 
@@ -1576,9 +1577,9 @@ Window::Window(int width, int height, const char *title)
         }
     }
 
-    char *default_lineup[] = {"[DE].双冰六炮", "[NE].快六炮",
-                              "[PE].经典八炮", "[FE].经典八炮",
-                              "[RE].天台十炮", "[ME].月夜十炮"};
+    char *default_lineup[] = {"[DE] 双冰六炮", "[NE] 快六炮",
+                              "[PE] 经典八炮", "[FE] 经典八炮",
+                              "[RE] 天台十炮", "[ME] 月夜十炮"};
     for (size_t scene = 0; scene < 6; scene++)
     {
         unsigned int index = 0;
@@ -1630,18 +1631,18 @@ Window::Window(int width, int height, const char *title)
     button_spawn_mode->type(Fl_Menu_Button::POPUP3);
     button_spawn_mode->value(1); // 默认极限刷怪
 
-    choice_music->add("Grasswalk");
-    choice_music->add("Moongrains");
-    choice_music->add("Watery Graves");
-    choice_music->add("Rigor Mormist");
-    choice_music->add("Graze the Roof");
-    choice_music->add("Choose Your Seeds");
-    choice_music->add("Crazy Dave");
-    choice_music->add("Zen Garden");
-    choice_music->add("Cerebrawl");
-    choice_music->add("Loonboon");
-    choice_music->add("Ultimate Battle");
-    choice_music->add("Brainiac Maniac");
+    choice_music->add("[1] Grasswalk");
+    choice_music->add("[2] Moongrains");
+    choice_music->add("[3] Watery Graves");
+    choice_music->add("[4] Rigor Mormist");
+    choice_music->add("[5] Graze the Roof");
+    choice_music->add("[6] Choose Your Seeds");
+    choice_music->add("[7] Crazy Dave");
+    choice_music->add("[8] Zen Garden");
+    choice_music->add("[9] Cerebrawl");
+    choice_music->add("[10] Loonboon");
+    choice_music->add("[11] Ultimate Battle");
+    choice_music->add("[12] Brainiac Maniac");
 
     choice_music->value(4); // Graze the Roof
 
@@ -1737,7 +1738,7 @@ Window::Window(int width, int height, const char *title)
 
     check_lineup_mode->callback(cb_lineup_mode, this);
     button_auto_ladder->callback(cb_auto_ladder, this);
-    button_capture->callback(cb_capture, this);
+    button_reset->callback(cb_reset_scene, this);
     choice_scene->callback(cb_switch_lineup_scene, this); // cb_tooltips
     choice_lineup_name[0]->callback(cb_show_lineup_string, this);
     choice_lineup_name[1]->callback(cb_show_lineup_string, this);
@@ -1749,6 +1750,7 @@ Window::Window(int width, int height, const char *title)
     button_paste_lineup->callback(cb_paste_lineup, this);
     button_get_lineup->callback(cb_get_lineup, this);
     button_set_lineup->callback(cb_set_lineup, this);
+    button_capture->callback(cb_capture, this);
 
     check_zombie[0]->callback(cb_spawn_mutex_0, this);
     check_zombie[3]->callback(cb_spawn_mutex_3, this);
@@ -1924,7 +1926,8 @@ Window::Window(int width, int height, const char *title)
         button_lawn_mower->replace(0, " ➡️  启动 ");
         button_lawn_mower->replace(1, " 🆑  删除 ");
         button_lawn_mower->replace(2, " 🔄  恢复 ");
-        button_capture->copy_label("📷 窗口截图");
+        button_reset->copy_label("⏳ 重置场地");
+        button_capture->copy_label("📷");
         button_spawn_extra->replace(0, " ❌ 清空已选 ");
         button_spawn_extra->replace(1, " ❎ 取消限制 ");
         button_show_details->copy_label("📈 查看详情");
@@ -1952,6 +1955,9 @@ Window::Window(int width, int height, const char *title)
     // this->show(); // 在 main() 里带参调用
 
     ReadSettings(); // 读取设置
+
+    // 窗口居中显示
+    this->position((Fl::w() - this->w()) / 2, (Fl::h() - this->h()) / 2);
 }
 
 Window::~Window()
@@ -1964,24 +1970,28 @@ Window::~Window()
 
 void Window::ReadSettings()
 {
-    // bool first_open = true;
+    bool first_open = true;
 
     HKEY hKey;
     DWORD r = RegOpenKeyExW(HKEY_CURRENT_USER, L"Software\\Cube Studio\\PvZ Toolkit\\v1", //
                             0, KEY_QUERY_VALUE, &hKey);
     if (r == ERROR_SUCCESS)
     {
-        // first_open = false;
+        first_open = false;
 
         LSTATUS status;
         DWORD dwType;
         DWORD dwSize;
 
-        wchar_t lang[15];    // 界面语言
-        DWORD scale;         // 缩放倍率
-        int scheme;          // 界面样式
-        wchar_t zombies[20]; // 已选出怪
-        int mode;            // 出怪模式
+        wchar_t lang[15];    // 语言
+        DWORD scale;         // 缩放
+        int scheme;          // 样式
+        wchar_t zombies[20]; // 出怪
+        int mode;            // 模式
+        int sun;             // 阳光
+        int money;           // 金币
+        int level;           // 轮数
+        unsigned int page;   // 页面
 
         dwType = REG_SZ;
         dwSize = sizeof(lang);
@@ -1989,22 +1999,6 @@ void Window::ReadSettings()
         if (status == ERROR_SUCCESS)
         {
             if (std::wstring(lang) == L"English")
-            {
-                check_tooltips->value(1);
-                check_tooltips->do_callback();
-            }
-        }
-        else
-        {
-            // 0804  2052  zh-CN  Chinese (Simplified) - China
-            // 0404  1028  zh-TW  Chinese (Traditional) - Taiwan
-            // 0C04  3076  zh-HK  Chinese - Hong Kong SAR
-            // 1404  5124  zh-MO  Chinese - Macao SAR
-            // 1004  4100  zh-SG  Chinese - Singapore
-            LANGID li = GetUserDefaultLangID();
-            // std::cout << "LangID: " << li << std::endl;
-            // 非中文区域显示英语提示框
-            if (li != 2052 && li != 1028 && li != 3076 && li != 5124 && li != 4100)
             {
                 check_tooltips->value(1);
                 check_tooltips->do_callback();
@@ -2018,7 +2012,7 @@ void Window::ReadSettings()
         {
             float factor = *(float *)(&scale);
             // std::cout << "ScaleFactor: " << factor << std::endl;
-            if (factor != 1.0f) // TODO
+            if (factor != 1.0f) // TODO: Do what?
                 Fl::screen_scale(this->screen_num(), factor);
         }
 
@@ -2056,29 +2050,142 @@ void Window::ReadSettings()
             }
         }
 
+        dwType = REG_DWORD;
+        dwSize = sizeof(sun);
+        status = RegQueryValueExW(hKey, L"ValueSun", 0, &dwType, (LPBYTE)&sun, &dwSize);
+        if (status == ERROR_SUCCESS)
+        {
+            if (0 <= sun && sun <= 9990)
+                input_sun->value(sun);
+        }
+
+        dwType = REG_DWORD;
+        dwSize = sizeof(money);
+        status = RegQueryValueExW(hKey, L"ValueMoney", 0, &dwType, (LPBYTE)&money, &dwSize);
+        if (status == ERROR_SUCCESS)
+        {
+            if (0 <= money && money <= 99999)
+                input_money->value(money);
+        }
+
+        dwType = REG_DWORD;
+        dwSize = sizeof(level);
+        status = RegQueryValueExW(hKey, L"ValueLevel", 0, &dwType, (LPBYTE)&level, &dwSize);
+        if (status == ERROR_SUCCESS)
+        {
+            if (0 <= level && level <= 53687091)
+                input_level->value(level);
+        }
+
+        dwType = REG_DWORD;
+        dwSize = sizeof(page);
+        status = RegQueryValueExW(hKey, L"CurrentPage", 0, &dwType, (LPBYTE)&page, &dwSize);
+        if (status == ERROR_SUCCESS)
+        {
+            std::vector<Fl_Widget *> vp = {
+                group_resource,
+                group_battle,
+                group_lineup,
+                group_spawn,
+                group_others,
+            };
+            if (0 <= page && page < vp.size())
+            {
+                tabs->value(vp[page]);
+            }
+        }
+
         RegCloseKey(hKey);
+    }
+
+    if (first_open)
+    {
+        // 0804  2052  zh-CN  Chinese (Simplified) - China
+        // 0404  1028  zh-TW  Chinese (Traditional) - Taiwan
+        // 0C04  3076  zh-HK  Chinese - Hong Kong SAR
+        // 1404  5124  zh-MO  Chinese - Macao SAR
+        // 1004  4100  zh-SG  Chinese - Singapore
+        LANGID li = GetUserDefaultLangID();
+        // std::cout << "LangID: " << li << std::endl;
+        // 非中文区域显示英语提示框
+        if (li != 2052 && li != 1028 && li != 3076 && li != 5124 && li != 4100)
+        {
+            check_tooltips->value(1);
+            check_tooltips->do_callback();
+        }
+
+        int dpi = 96;
+        HDC dc = GetDC(nullptr);
+        if (dc != nullptr)
+        {
+            // int virtual_width = GetDeviceCaps(dc, HORZRES);
+            // int physical_width = GetDeviceCaps(dc, DESKTOPHORZRES);
+            // dpi = 96 * physical_width / virtual_width;
+            int dpi_x = GetDeviceCaps(dc, LOGPIXELSX);
+            int dpi_y = GetDeviceCaps(dc, LOGPIXELSY);
+            dpi = (dpi_x + dpi_y) / 2;
+            ReleaseDC(nullptr, dc);
+        }
+        if (dpi > 96)
+        {
+            Fl::screen_scale(this->screen_num(), dpi / 96.0f);
+            std::wstring text = std::wstring()                                 //
+                                + L"软件界面已跟随系统缩放比例： "             //
+                                + std::to_wstring(dpi * 100 / 96) + L"%。\n\n" //
+                                + L"单独按 Esc 键可恢复默认的窗口大小，\n"     //
+                                + L"同时按 Ctrl 和 + / - 键可放大缩小窗口。";  //
+            MessageBoxW(GetActiveWindow(), text.c_str(), L"界面缩放", MB_OK);
+        }
+
+        // 第一次打开时显示文档
+        int ret = MessageBoxW(GetActiveWindow(),             //
+                              L"这是首次运行 PvZ Toolkit.\n" //
+                              L"要先阅读在线教程文档吗?",    //
+                              L"提问",                       //
+                              MB_OKCANCEL | MB_ICONINFORMATION);
+        if (ret == IDOK)
+            cb_document();
     }
 }
 
 void Window::WriteSettings()
 {
-    // 界面语言
+    // 语言
     wchar_t langChinese[] = L"简体中文";
     wchar_t langEnglish[] = L"English";
 
-    // 缩放倍率
+    // 缩放
     float scale = Fl::screen_scale(this->screen_num());
 
-    // 界面样式
+    // 样式
     int scheme = choice_scheme->value();
 
-    // 已选出怪
+    // 出怪
     wchar_t zombies[20] = {0};
     for (size_t i = 0; i < 20; i++)
         zombies[i] = (this->check_zombie[i]->value() == 1 ? L'1' : L'0');
 
-    // 出怪模式
+    // 模式
     int mode = button_spawn_mode->value();
+
+    // 阳光
+    int sun = static_cast<int>(input_sun->value());
+
+    // 金币
+    int money = static_cast<int>(input_money->value());
+
+    // 轮数
+    int level = static_cast<int>(input_level->value());
+
+    // 页面
+    std::map<Fl_Widget *, unsigned int> mp = {
+        {group_resource, 0},
+        {group_battle, 1},
+        {group_lineup, 2},
+        {group_spawn, 3},
+        {group_others, 4},
+    };
+    unsigned int page = mp[tabs->value()];
 
     HKEY hKey;
     DWORD ret;
@@ -2097,6 +2204,10 @@ void Window::WriteSettings()
         RegSetValueExW(hKey, L"Scheme", 0, REG_DWORD, (LPBYTE)&scheme, sizeof(scheme));
         RegSetValueExW(hKey, L"SpawnTypes", 0, REG_SZ, (LPBYTE)&zombies, sizeof(zombies));
         RegSetValueExW(hKey, L"SpawnMode", 0, REG_DWORD, (LPBYTE)&mode, sizeof(mode));
+        RegSetValueExW(hKey, L"ValueSun", 0, REG_DWORD, (LPBYTE)&sun, sizeof(sun));
+        RegSetValueExW(hKey, L"ValueMoney", 0, REG_DWORD, (LPBYTE)&money, sizeof(money));
+        RegSetValueExW(hKey, L"ValueLevel", 0, REG_DWORD, (LPBYTE)&level, sizeof(level));
+        RegSetValueExW(hKey, L"CurrentPage", 0, REG_DWORD, (LPBYTE)&page, sizeof(page));
         RegCloseKey(hKey);
     }
 }
@@ -2310,42 +2421,54 @@ void Window::cb_find_result(int result)
 
     switch (result)
     {
+    case PVZ_BETA_0_1_1_1014_EN:
+        game_status->label("0.1.1.1014 英语测试版");
+        game_status->tooltip(on ? "0.1.1.1014 Beta (en)" : nullptr);
+        break;
+    case PVZ_BETA_0_9_9_1029_EN:
+        game_status->label("0.9.9.1029 英语测试版");
+        game_status->tooltip(on ? "0.9.9.1029 Beta (en)" : nullptr);
+        break;
     case PVZ_1_0_0_1051_EN:
-        game_status->label("1.0.0.1051 英文原始版");
-        game_status->tooltip(on ? "1.0.0.1051 Original (en)" : nullptr);
+        game_status->label("1.0.0.1051 英语原始版");
+        game_status->tooltip(on ? "1.0.0.1051 (en)" : nullptr);
         break;
     case PVZ_1_2_0_1065_EN:
-        game_status->label("1.2.0.1065 英文修复版");
-        game_status->tooltip(on ? "1.2.0.1065 Original (en)" : nullptr);
+        game_status->label("1.2.0.1065 英语修复版");
+        game_status->tooltip(on ? "1.2.0.1065 (en)" : nullptr);
         break;
     case PVZ_1_0_4_7924_ES:
         game_status->label("1.0.4.7924 西班牙语版");
-        game_status->tooltip(on ? "1.0.4.7924 Original (es)" : nullptr);
+        game_status->tooltip(on ? "1.0.4.7924 (es)" : nullptr);
         break;
     case PVZ_1_0_7_3556_ES:
         game_status->label("1.0.7.3556 西班牙语版");
-        game_status->tooltip(on ? "1.0.7.3556 Original (es)" : nullptr);
+        game_status->tooltip(on ? "1.0.7.3556 (es)" : nullptr);
+        break;
+    case PVZ_1_0_7_3467_RU:
+        game_status->label("1.0.7.3467 俄罗斯语版");
+        game_status->tooltip(on ? "1.0.7.3467 (ru)" : nullptr);
         break;
     case PVZ_1_2_0_1073_EN:
-        game_status->label("1.2.0.1073 英文年度版");
-        game_status->tooltip(on ? "1.2.0.1073 GOTY (en)" : nullptr);
+        game_status->label("1.2.0.1073 英语年度版");
+        game_status->tooltip(on ? "1.2.0.1073 GOTY Origin (en)" : nullptr);
         break;
     case PVZ_1_2_0_1096_EN:
-        game_status->label("1.2.0.1096 Steam 英文年度版");
+        game_status->label("1.2.0.1096 英语年度版");
         game_status->tooltip(on ? "1.2.0.1096 GOTY Steam (en)" : nullptr);
         break;
     case PVZ_1_2_0_1093_DE_ES_FR_IT:
         game_status->label("1.2.0.1093 多国语言年度版");
-        game_status->tooltip(on ? "1.2.0.1093 GOTY (de/es/fr/it)" : nullptr);
+        game_status->tooltip(on ? "1.2.0.1093 GOTY Origin (de/es/fr/it)" : nullptr);
         break;
     case PVZ_1_1_0_1056_ZH:
         game_status->label("1.1.0.1056 粘度汗化版");
-        game_status->tooltip(on ? "1.1.0.1056 GOTY (zh)" : nullptr);
+        game_status->tooltip(on ? "1.1.0.1056 GOTY 2010 (zh)" : nullptr);
         {
-            int ret = MessageBoxW(GetActiveWindow(),                                  //
-                                  L"这个版本的游戏存在严重的问题, 随时可能会崩溃.\n"  //
-                                  L"建议更换使用其他能正常运行的版本, 现在去下载吗?", //
-                                  L"温馨提示",                                        //
+            int ret = MessageBoxW(GetActiveWindow(),                                   //
+                                  L"这个版本的游戏存在着严重的问题, 随时可能会崩溃.\n" //
+                                  L"建议更换使用其他能正常运行的版本, 现在去下载吗?",  //
+                                  L"温馨提示",                                         //
                                   MB_OKCANCEL | MB_ICONWARNING);
             if (ret == IDOK)
                 ShellExecuteW(nullptr, L"open", L"https://pvz.lmintlcx.com/download/", //
@@ -2353,16 +2476,16 @@ void Window::cb_find_result(int result)
         }
         break;
     case PVZ_1_1_0_1056_JA:
-        game_status->label("1.1.0.1056 日文年度版");
+        game_status->label("1.1.0.1056 日语年度版");
         game_status->tooltip(on ? "1.1.0.1056 GOTY (ja)" : nullptr);
         break;
     case PVZ_1_1_0_1056_ZH_2012_06:
-        game_status->label("1.1.0.1056 年度汉化加强版");
-        game_status->tooltip(on ? "1.1.0.1056 GOTY 2012.06 (zh)" : nullptr);
+        game_status->label("1.1.0.1056 年度加强版");
+        game_status->tooltip(on ? "1.1.0.1056 GOTY 2012 (zh)" : nullptr);
         break;
     case PVZ_1_1_0_1056_ZH_2012_07:
-        game_status->label("1.1.0.1056 年度汉化加强版");
-        game_status->tooltip(on ? "1.1.0.1056 GOTY 2012.07 (zh)" : nullptr);
+        game_status->label("1.1.0.1056 年度加强版");
+        game_status->tooltip(on ? "1.1.0.1056 GOTY 2012 (zh)" : nullptr);
         break;
     case PVZ_UNSUPPORTED:
         game_status->label("不支持的游戏版本");
@@ -2409,6 +2532,20 @@ void Window::cb_find_result(int result)
 
     game_status->redraw();
     game_status_tip->redraw();
+
+    // 某些版本只实现了部分功能
+    if (result == PVZ_BETA_0_1_1_1014_EN)
+    {
+        check_tree_food->deactivate();
+        input_wisdom_tree->deactivate();
+        button_wisdom_tree->deactivate();
+    }
+    else
+    {
+        check_tree_food->activate();
+        input_wisdom_tree->activate();
+        button_wisdom_tree->activate();
+    }
 }
 
 void Window::keep_selected_feature()
@@ -3034,14 +3171,14 @@ void Window::cb_put_flower_pot()
     pvz->FlowerPotOnRoof(from_col, to_col);
 }
 
-void Window::cb_capture(Fl_Widget *, void *w)
+void Window::cb_reset_scene(Fl_Widget *, void *w)
 {
-    ((Window *)w)->cb_capture();
+    ((Window *)w)->cb_reset_scene();
 }
 
-void Window::cb_capture()
+void Window::cb_reset_scene()
 {
-    pvz->Screenshot();
+    pvz->SetScene(choice_scene->value(), true);
 }
 
 void Window::cb_switch_lineup_scene(Fl_Widget *, void *w)
@@ -3176,6 +3313,16 @@ void Window::cb_set_lineup()
     }
 
     pvz->SetLineup(str);
+}
+
+void Window::cb_capture(Fl_Widget *, void *w)
+{
+    ((Window *)w)->cb_capture();
+}
+
+void Window::cb_capture()
+{
+    pvz->Screenshot();
 }
 
 void Window::cb_spawn_mutex_0(Fl_Widget *, void *w)
@@ -3470,7 +3617,19 @@ void Window::cb_userdata(Fl_Widget *, void *w)
 
 void Window::cb_userdata()
 {
-    std::vector<std::wstring> paths; // 所有可能的路径
+    auto open = [](std::string p)
+    {
+        DWORD fa = GetFileAttributesA(p.c_str());
+        if ((fa != INVALID_FILE_ATTRIBUTES) && (fa & FILE_ATTRIBUTE_DIRECTORY))
+            ShellExecuteA(nullptr, "open", p.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+    };
+
+    auto wopen = [](std::wstring p)
+    {
+        DWORD fa = GetFileAttributesW(p.c_str());
+        if ((fa != INVALID_FILE_ATTRIBUTES) && (fa & FILE_ATTRIBUTE_DIRECTORY))
+            ShellExecuteW(nullptr, L"open", p.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+    };
 
     DWORD dwVersion = 0;
     DWORD dwMajorVersion = 0;
@@ -3483,33 +3642,36 @@ void Window::cb_userdata()
         dwBuild = (DWORD)(HIWORD(dwVersion));
     printf("Windows version: %d.%d (%d).\n", dwMajorVersion, dwMinorVersion, dwBuild);
 
-    // 2000/XP 系统下才会使用 `安装目录/userdata` 做存档位置
-    // 需要找到游戏才能定位到游戏安装目录
-    if (dwMajorVersion < 6 && !pvz->path.empty())
+    if (dwMajorVersion < 6)
     {
-        std::wstring exe_path = pvz->path;
-        std::wstring path = exe_path.substr(0, exe_path.find_last_of(L"\\") + 1) + L"userdata";
-        paths.push_back(path);
+        // 2000/XP 系统下才会使用 `安装目录/userdata` 做存档位置
+        // 需要找到游戏才能定位到游戏安装目录
+        std::string exe_path = pvz->GamePath();
+        std::string path = exe_path.substr(0, exe_path.find_last_of("\\") + 1) + "userdata";
+        open(path);
     }
 
-    // 最常见
-    paths.push_back(std::wstring(L"C:\\ProgramData\\PopCap Games\\PlantsVsZombies\\userdata"));
+    TCHAR szPath[MAX_PATH];
+    if (SUCCEEDED(SHGetFolderPathW(nullptr, CSIDL_COMMON_APPDATA, nullptr, 0, szPath)))
+    {
+        wopen(std::wstring(szPath) + L"\\PopCap Games\\BloomAndDoom\\userdata");
+        wopen(std::wstring(szPath) + L"\\PopCap Games\\PlantsVsZombies\\userdata");
+        wopen(std::wstring(szPath) + L"\\Steam\\PlantsVsZombies\\userdata");
+        wopen(std::wstring(szPath) + L"\\Zoo\\PlantsVsZombies\\userdata");
+        wopen(std::wstring(szPath) + L"\\Reflexive\\PlantsVsZombies\\userdata");
+    }
 
-    // Steam 版本未打开云存档时会使用该目录
-    paths.push_back(std::wstring(L"C:\\ProgramData\\Steam\\PlantsVsZombies\\userdata"));
-
-    // 检查有没有安装 Steam
-    std::wstring path = L"C:\\Program Files (x86)\\Steam\\userdata";
+    std::wstring path;
     HKEY hKey;
-    DWORD ret = RegOpenKeyExW(HKEY_LOCAL_MACHINE, L"SOFTWARE\\WOW6432Node\\Valve\\Steam", //
+    DWORD ret = RegOpenKeyExW(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Valve\\Steam", //
                               0, KEY_QUERY_VALUE, &hKey);
-    if (ret == ERROR_SUCCESS)
+    if (ret == ERROR_SUCCESS) // 检查有没有安装 Steam
     {
         DWORD dwType = REG_SZ;
         TCHAR szSteamPath[MAX_PATH];
-        DWORD dwSize;
-        DWORD ret = RegQueryValueExW(hKey, L"InstallPath", 0, &dwType, (LPBYTE)&szSteamPath, &dwSize);
-        if (ret == ERROR_SUCCESS)
+        DWORD dwSize = MAX_PATH;
+        DWORD status = RegQueryValueExW(hKey, L"InstallPath", 0, &dwType, (LPBYTE)&szSteamPath, &dwSize);
+        if (status == ERROR_SUCCESS)
             path = std::wstring(szSteamPath) + L"\\userdata"; // 通过注册表找到的安装位置 + userdata
         RegCloseKey(hKey);
     }
@@ -3529,30 +3691,10 @@ void Window::cb_userdata()
                 if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
                 {
                     path = path + L"\\" + name + L"\\3590\\remote";
-                    paths.push_back(path);
+                    wopen(path);
                 }
             } while (FindNextFileW(hf, &ffd) != 0);
             FindClose(hf);
-        }
-    }
-
-#ifdef _DEBUG
-    std::wcout << std::endl
-               << L"可能的存档文件夹: " << std::endl;
-    for (size_t i = 0; i < paths.size(); i++)
-        std::wcout << paths[i] << std::endl;
-    std::wcout << std::endl;
-#endif
-
-    for (size_t i = 0; i < paths.size(); i++)
-    {
-        DWORD fa = GetFileAttributesW(paths[i].c_str());
-        if ((fa != INVALID_FILE_ATTRIBUTES) && (fa & FILE_ATTRIBUTE_DIRECTORY))
-        {
-#ifdef _DEBUG
-            std::wcout << L"文件夹存在, 正在打开: " << paths[i] << std::endl;
-#endif
-            ShellExecuteW(nullptr, L"open", paths[i].c_str(), nullptr, nullptr, SW_SHOWNORMAL);
         }
     }
 }
@@ -4088,7 +4230,7 @@ void Window::cb_tooltips()
     button_auto_ladder->tooltip(on ? "Smart Laddering" : nullptr);
     button_put_lily_pad->tooltip(on ? "Lily Pad On Pool" : nullptr);
     button_put_flower_pot->tooltip(on ? "Flower Pot On Roof" : nullptr);
-    button_capture->tooltip(on ? "Capture Window" : nullptr);
+    button_reset->tooltip(on ? "Reset Scene" : nullptr);
     choice_scene->tooltip(on ? vstr_scenes[choice_scene->value()].c_str() : nullptr);
     for (size_t i = 0; i < 6; i++)
         choice_lineup_name[i]->tooltip(on ? "(Lineup Name)" : nullptr);
@@ -4097,6 +4239,7 @@ void Window::cb_tooltips()
     button_paste_lineup->tooltip(on ? "Paste To Import" : nullptr);
     button_set_lineup->tooltip(on ? "Apply Current Build" : nullptr);
     editor_lineup_string->tooltip(on ? "(Lineup Code)" : "(阵型代码)");
+    button_capture->tooltip(on ? "Screenshot" : nullptr);
 
     for (size_t i = 0; i < 20; i++)
     {
@@ -4180,12 +4323,9 @@ void Window::cb_tooltips()
     else if (dpi <= 120)
         title = on ? "Plants vs. Zombies Toolkit"
                    : "植物大战僵尸全版本辅助工具";
-    else if (dpi <= 144)
-        title = on ? "PvZ Toolkit " VERSION_NAME
-                   : "植物大战僵尸辅助工具";
     else
         title = on ? "PvZ Toolkit"
-                   : "植僵工具箱";
+                   : "植物大战僵尸辅助";
     this->copy_label(title.c_str());
 }
 
@@ -4196,31 +4336,50 @@ void Window::cb_about(Fl_Widget *, void *w)
 
 void Window::cb_about()
 {
-    bool on = check_tooltips->value() == 1;
+    std::string version_full = VERSION_NAME_FULL;
 
-    std::wstring title = std::wstring() + (on ? L"About" : L"关于") + L" " + L"PvZ Toolkit";
+    // "Sep  1 2021"
+    //  0123456789A
+    std::string date = std::string(__DATE__);
+    std::string time = std::string(__TIME__);
+    if (date[4] == ' ')
+        date[4] = '0';
+    char s_month[4] = {date[0], date[1], date[2], 0};
+    const char month_names[] = "JanFebMarAprMayJunJulAugSepOctNovDec";
+    int month = (strstr(month_names, s_month) - month_names) / 3 + 1;
+    std::string build_date = std::string()                                     //
+                             + date[7] + date[8] + date[9] + date[10]          //
+                             + "/"                                             //
+                             + (month < 10 ? "0" : "") + std::to_string(month) //
+                             + "/"                                             //
+                             + date[4] + date[5];                              //
+    std::string build_date_time = build_date + " " + time;
 
-    std::wstring version = utf8_decode(VERSION_NAME_FULL) + L" " + L"(" + utf8_decode(BUILD_DATE) + L")";
-    std::wstring text = std::wstring()                                                                   //
-                        + L"植物大战僵尸辅助工具\n"                                                      //
-                        + L"Plants vs. Zombies Toolkit\n"                                                //
-                        + L"\n"                                                                          //
-                        + (on ? L"Version: " : L"版本号: ") + version + L"\n"                            //
-                        + (on ? L"Dependencies: " : L"依赖库: ") + L"FLTK 1.4.x + zlib 1.2.11.x" + L"\n" //
-                        + (on ? L"Copyright: " : L"版权所有: ") + L"© 2020-2021 lmintlcx" + L"\n"        //
-                        + (on ? L"Credit: " : L"鸣谢: ") + L"a418569882 63enjoy kmtohoem" + L"\n";       //
+    std::wstring text = std::wstring()                                                //
+                        + L"植物大战僵尸辅助工具" + L"\n"                             //
+                        + L"Plants vs. Zombies Toolkit" + L"\n"                       //
+                        + L"\n"                                                       //
+                        + L"主页: " + L"\t" + L"https://pvz.lmintlcx.com/" + L"\n"    //
+                        + L"\n"                                                       //
+                        + L"版本号: " + L"\t" + utf8_decode(version_full) + L"\n"     //
+                        + L"日期: " + L"\t" + utf8_decode(build_date_time) + L"\n"    //
+                        + L"版权所有: " + L"\t" + L"© 2020~2021 lmintlcx" + L"\n"     //
+                        + L"依赖库: " + L"\t" + L"FLTK 1.4.* + zlib 1.2.11.*" + L"\n" //
+                        + L"\n"                                                       //
+                        + L"鸣谢名单: " + L"\n"                                       //
+                        + L"a418569882 kmtohoem 63enjoy 273.15K" + L"\n";             //
 
-    SYSTEMTIME time;
-    GetLocalTime(&time);
-    if (time.wYear > 2009 && time.wMonth == 5 && time.wDay == 5)
+    SYSTEMTIME time_now;
+    GetLocalTime(&time_now);
+    if (time_now.wYear > 2009 && time_now.wMonth == 5 && time_now.wDay == 5)
     {
-        std::wstring date_now = std::to_wstring(time.wYear) + L".05.05";
+        std::wstring date_now = std::to_wstring(time_now.wYear) + L".05.05";
         std::wstring date_birth = L"2009.05.05";
         text += std::wstring() + L"\n";
-        text += std::wstring() + L"🎂 Happy Birthday! (" + date_birth + L"~" + date_now + L")";
+        text += std::wstring() + L"🎂 Plants vs. Zombies (" + date_birth + L"~" + date_now + L")";
     }
 
-    MessageBoxW(GetActiveWindow(), text.c_str(), title.c_str(), MB_OK | MB_ICONINFORMATION);
+    MessageBoxW(GetActiveWindow(), text.c_str(), L"关于 PvZ Toolkit", MB_OK | MB_ICONINFORMATION);
 }
 
 void Window::cb_on_hide_details(Fl_Widget *, void *w)
