@@ -12,14 +12,15 @@
 #include <algorithm>
 
 #include <Windows.h>
-#include <winternl.h>
-#include <shlwapi.h>
 
 namespace Pt
 {
 
-typedef NTSTATUS(NTAPI *NtQueryInformationProcess) //
-    (HANDLE, PROCESSINFOCLASS, PVOID, ULONG, PULONG);
+// 输出内存读写数据
+#define _PTK_MEMORY_OUTPUT
+
+// 省略地址列表括号
+// #define _PTK_RM_OMIT_PARENTHESES
 
 class Process
 {
@@ -37,6 +38,10 @@ class Process
     template <typename T>
     T ReadMemory(std::initializer_list<uintptr_t>);
 
+    // 读内存字符串
+    template <>
+    std::string ReadMemory(std::initializer_list<uintptr_t>);
+
     // 写内存
     template <typename T>
     void WriteMemory(T, std::initializer_list<uintptr_t>);
@@ -49,28 +54,29 @@ class Process
     template <typename T, size_t size>
     void WriteMemory(std::array<T, size>, std::initializer_list<uintptr_t>);
 
-    // template <typename T, typename... Args>
-    // T ReadMemory(Args...);
-    // template <typename T, typename... Args>
-    // void WriteMemory(T, Args...);
+#ifdef _PTK_RM_OMIT_PARENTHESES
+    template <typename T, typename... Args>
+    T ReadMemory(Args...);
 
-    // template <typename T, size_t size, typename... Args>
-    // std::array<T, size> ReadMemory(Args...);
-    // template <typename T, size_t size, typename... Args>
-    // void WriteMemory(std::array<T, size>, Args...);
+    template <typename... Args>
+    std::string ReadMemory(Args...);
+
+    template <typename T, typename... Args>
+    void WriteMemory(T, Args...);
+
+    template <typename T, size_t size, typename... Args>
+    std::array<T, size> ReadMemory(Args...);
+
+    template <typename T, size_t size, typename... Args>
+    void WriteMemory(std::array<T, size>, Args...);
+#endif
 
   protected:
     HWND hwnd;     // 窗口句柄
     DWORD pid;     // 进程标识
     HANDLE handle; // 进程句柄
 
-  public:
-    std::wstring path;    // 文件路径
-    std::wstring name;    // 产品名称
-    std::wstring version; // 产品版本
-    std::wstring of_name; // 原始文件名
-
-#ifdef _DEBUG
+#if (defined _DEBUG) && (defined _PTK_MEMORY_OUTPUT)
   private:
     std::string int_to_hex_string(unsigned int num)
     {
@@ -98,31 +104,73 @@ T Process::ReadMemory(std::initializer_list<uintptr_t> addr)
 {
     T result = T();
 
-    if (IsValid())
+    if (!IsValid())
+        return result;
+
+    uintptr_t offset = 0;
+    for (auto it = addr.begin(); it != addr.end(); it++)
     {
-        uintptr_t offset = 0;
-        for (auto it = addr.begin(); it != addr.end(); it++)
+        if (it != addr.end() - 1)
         {
-            if (it != addr.end() - 1)
+            unsigned long read_size = 0;
+            int ret = ReadProcessMemory(this->handle, (const void *)(offset + *it), &offset, sizeof(offset), &read_size);
+            if (ret == 0 || sizeof(offset) != read_size)
+                return T();
+        }
+        else
+        {
+            unsigned long read_size = 0;
+            int ret = ReadProcessMemory(this->handle, (const void *)(offset + *it), &result, sizeof(result), &read_size);
+            if (ret == 0 || sizeof(result) != read_size)
+                return T();
+        }
+    }
+
+#if (defined _DEBUG) && (defined _PTK_MEMORY_OUTPUT)
+    std::cout << addr_list_to_string(addr) << " --> " << std::dec << result << " / " << std::hex << result << std::endl;
+#endif
+
+    return result;
+}
+
+template <>
+std::string Process::ReadMemory(std::initializer_list<uintptr_t> addr)
+{
+    std::string result = std::string();
+
+    if (!IsValid())
+        return result;
+
+    uintptr_t offset = 0;
+    for (auto it = addr.begin(); it != addr.end(); it++)
+    {
+        if (it != addr.end() - 1)
+        {
+            unsigned long read_size = 0;
+            int ret = ReadProcessMemory(this->handle, (const void *)(offset + *it), &offset, sizeof(offset), &read_size);
+            if (ret == 0 || sizeof(offset) != read_size)
+                return std::string();
+        }
+        else
+        {
+            unsigned long read_size = 0;
+            int ret = 0;
+            char ch = 0;
+
+        read_letter:
+            ret = ReadProcessMemory(this->handle, (const void *)(offset + *it), &ch, sizeof(ch), &read_size);
+            while (read_size == sizeof(ch) && ret != 0 && ch != 0)
             {
-                unsigned long read_size = 0;
-                int ret = ReadProcessMemory(this->handle, (const void *)(offset + *it), &offset, sizeof(offset), &read_size);
-                if (ret == 0 || sizeof(offset) != read_size)
-                    return T();
-            }
-            else
-            {
-                unsigned long read_size = 0;
-                int ret = ReadProcessMemory(this->handle, (const void *)(offset + *it), &result, sizeof(result), &read_size);
-                if (ret == 0 || sizeof(result) != read_size)
-                    return T();
+                result += ch;
+                offset += sizeof(ch);
+                goto read_letter;
             }
         }
-
-#ifdef _DEBUG
-        std::cout << addr_list_to_string(addr) << " --> " << std::dec << result << " / " << std::hex << result << std::endl;
-#endif
     }
+
+#if (defined _DEBUG) && (defined _PTK_MEMORY_OUTPUT)
+    std::cout << addr_list_to_string(addr) << " --> " << result << std::endl;
+#endif
 
     return result;
 }
@@ -130,33 +178,33 @@ T Process::ReadMemory(std::initializer_list<uintptr_t> addr)
 template <typename T>
 void Process::WriteMemory(T value, std::initializer_list<uintptr_t> addr)
 {
-    if (IsValid())
-    {
-        uintptr_t offset = 0;
-        for (auto it = addr.begin(); it != addr.end(); it++)
-        {
-            if (it != addr.end() - 1)
-            {
-                unsigned long read_size = 0;
-                int ret = ReadProcessMemory(this->handle, (const void *)(offset + *it), &offset, sizeof(offset), &read_size);
-                if (ret == 0 || sizeof(offset) != read_size)
-                    return;
-            }
-            else
-            {
-                unsigned long write_size = 0;
-                int ret = WriteProcessMemory(this->handle, (void *)(offset + *it), &value, sizeof(value), &write_size);
-                if (ret == 0 || sizeof(value) != write_size)
-                    return;
-            }
-        }
+    if (!IsValid())
+        return;
 
-#ifdef _DEBUG
-        std::cout << addr_list_to_string(addr) << " <-- " << std::dec << value << " / " << std::hex << value << std::endl;
-        // if (ReadMemory<T>(addr) != value)
-        //     std::wcout << L"写内存出错!" << std::endl;
-#endif
+    uintptr_t offset = 0;
+    for (auto it = addr.begin(); it != addr.end(); it++)
+    {
+        if (it != addr.end() - 1)
+        {
+            unsigned long read_size = 0;
+            int ret = ReadProcessMemory(this->handle, (const void *)(offset + *it), &offset, sizeof(offset), &read_size);
+            if (ret == 0 || sizeof(offset) != read_size)
+                return;
+        }
+        else
+        {
+            unsigned long write_size = 0;
+            int ret = WriteProcessMemory(this->handle, (void *)(offset + *it), &value, sizeof(value), &write_size);
+            if (ret == 0 || sizeof(value) != write_size)
+                return;
+        }
     }
+
+#if (defined _DEBUG) && (defined _PTK_MEMORY_OUTPUT)
+    std::cout << addr_list_to_string(addr) << " <-- " << std::dec << value << " / " << std::hex << value << std::endl;
+    // if (ReadMemory<T>(addr) != value)
+    //     std::wcout << L"写内存出错!" << std::endl;
+#endif
 }
 
 template <typename T, size_t size>
@@ -164,37 +212,37 @@ std::array<T, size> Process::ReadMemory(std::initializer_list<uintptr_t> addr)
 {
     std::array<T, size> result = {T()};
 
-    if (IsValid())
-    {
-        T buff[size] = {0};
-        uintptr_t offset = 0;
-        for (auto it = addr.begin(); it != addr.end(); it++)
-        {
-            if (it != addr.end() - 1)
-            {
-                unsigned long read_size = 0;
-                int ret = ReadProcessMemory(this->handle, (const void *)(offset + *it), &offset, sizeof(offset), &read_size);
-                if (ret == 0 || sizeof(offset) != read_size)
-                    return std::array<T, size>{T()};
-            }
-            else
-            {
-                unsigned long read_size = 0;
-                int ret = ReadProcessMemory(this->handle, (const void *)(offset + *it), &buff, sizeof(buff), &read_size);
-                if (ret == 0 || sizeof(buff) != read_size)
-                    return std::array<T, size>{T()};
-            }
-        }
-        for (size_t i = 0; i < size; i++)
-            result[i] = buff[i];
+    if (!IsValid())
+        return result;
 
-#ifdef _DEBUG
-        std::cout << addr_list_to_string(addr) << " --> ";
-        for (size_t i = 0; i < size; i++)
-            std::cout << std::hex << int(result[i]) << " ";
-        std::cout << std::endl;
-#endif
+    T buff[size] = {0};
+    uintptr_t offset = 0;
+    for (auto it = addr.begin(); it != addr.end(); it++)
+    {
+        if (it != addr.end() - 1)
+        {
+            unsigned long read_size = 0;
+            int ret = ReadProcessMemory(this->handle, (const void *)(offset + *it), &offset, sizeof(offset), &read_size);
+            if (ret == 0 || sizeof(offset) != read_size)
+                return std::array<T, size>{T()};
+        }
+        else
+        {
+            unsigned long read_size = 0;
+            int ret = ReadProcessMemory(this->handle, (const void *)(offset + *it), &buff, sizeof(buff), &read_size);
+            if (ret == 0 || sizeof(buff) != read_size)
+                return std::array<T, size>{T()};
+        }
     }
+    for (size_t i = 0; i < size; i++)
+        result[i] = buff[i];
+
+#if (defined _DEBUG) && (defined _PTK_MEMORY_OUTPUT)
+    std::cout << addr_list_to_string(addr) << " --> ";
+    for (size_t i = 0; i < size; i++)
+        std::cout << std::hex << int(result[i]) << " ";
+    std::cout << std::endl;
+#endif
 
     return result;
 }
@@ -202,63 +250,71 @@ std::array<T, size> Process::ReadMemory(std::initializer_list<uintptr_t> addr)
 template <typename T, size_t size>
 void Process::WriteMemory(std::array<T, size> value, std::initializer_list<uintptr_t> addr)
 {
-    if (IsValid())
-    {
-        T buff[size] = {0};
-        for (size_t i = 0; i < size; i++)
-            buff[i] = value[i];
-        uintptr_t offset = 0;
-        for (auto it = addr.begin(); it != addr.end(); it++)
-        {
-            if (it != addr.end() - 1)
-            {
-                unsigned long read_size = 0;
-                int ret = ReadProcessMemory(this->handle, (const void *)(offset + *it), &offset, sizeof(offset), &read_size);
-                if (ret == 0 || sizeof(offset) != read_size)
-                    return;
-            }
-            else
-            {
-                unsigned long write_size = 0;
-                int ret = WriteProcessMemory(this->handle, (void *)(offset + *it), &buff, sizeof(buff), &write_size);
-                if (ret == 0 || sizeof(buff) != write_size)
-                    return;
-            }
-        }
+    if (!IsValid())
+        return;
 
-#ifdef _DEBUG
-        std::cout << addr_list_to_string(addr) << " <-- ";
-        for (size_t i = 0; i < size; i++)
-            std::cout << std::hex << int(value[i]) << " ";
-        std::cout << std::endl;
-        // if (ReadMemory<T, size>(addr) != value)
-        //     std::wcout << L"写内存出错!" << std::endl;
-#endif
+    T buff[size] = {0};
+    for (size_t i = 0; i < size; i++)
+        buff[i] = value[i];
+    uintptr_t offset = 0;
+    for (auto it = addr.begin(); it != addr.end(); it++)
+    {
+        if (it != addr.end() - 1)
+        {
+            unsigned long read_size = 0;
+            int ret = ReadProcessMemory(this->handle, (const void *)(offset + *it), &offset, sizeof(offset), &read_size);
+            if (ret == 0 || sizeof(offset) != read_size)
+                return;
+        }
+        else
+        {
+            unsigned long write_size = 0;
+            int ret = WriteProcessMemory(this->handle, (void *)(offset + *it), &buff, sizeof(buff), &write_size);
+            if (ret == 0 || sizeof(buff) != write_size)
+                return;
+        }
     }
+
+#if (defined _DEBUG) && (defined _PTK_MEMORY_OUTPUT)
+    std::cout << addr_list_to_string(addr) << " <-- ";
+    for (size_t i = 0; i < size; i++)
+        std::cout << std::hex << int(value[i]) << " ";
+    std::cout << std::endl;
+    // if (ReadMemory<T, size>(addr) != value)
+    //     std::wcout << L"写内存出错!" << std::endl;
+#endif
 }
 
-// template <typename T, typename... Args>
-// T Process::ReadMemory(Args... address)
-// {
-//     return ReadMemory<T>({static_cast<uintptr_t>(address)...});
-// }
+#ifdef _PTK_RM_OMIT_PARENTHESES
+template <typename T, typename... Args>
+T Process::ReadMemory(Args... address)
+{
+    return ReadMemory<T>({static_cast<uintptr_t>(address)...});
+}
 
-// template <typename T, typename... Args>
-// void Process::WriteMemory(T value, Args... address)
-// {
-//     WriteMemory<T>(value, {static_cast<uintptr_t>(address)...});
-// }
+template <typename... Args>
+std::string Process::ReadMemory(Args... address)
+{
+    return ReadMemory<std::string>({static_cast<uintptr_t>(address)...});
+}
 
-// template <typename T, size_t size, typename... Args>
-// std::array<T, size> Process::ReadMemory(Args... address)
-// {
-//     return ReadMemory<T, size>({static_cast<uintptr_t>(address)...});
-// }
+template <typename T, typename... Args>
+void Process::WriteMemory(T value, Args... address)
+{
+    WriteMemory<T>(value, {static_cast<uintptr_t>(address)...});
+}
 
-// template <typename T, size_t size, typename... Args>
-// void Process::WriteMemory(std::array<T, size> value, Args... address)
-// {
-//     WriteMemory<T, size>(value, {static_cast<uintptr_t>(address)...});
-// }
+template <typename T, size_t size, typename... Args>
+std::array<T, size> Process::ReadMemory(Args... address)
+{
+    return ReadMemory<T, size>({static_cast<uintptr_t>(address)...});
+}
+
+template <typename T, size_t size, typename... Args>
+void Process::WriteMemory(std::array<T, size> value, Args... address)
+{
+    WriteMemory<T, size>(value, {static_cast<uintptr_t>(address)...});
+}
+#endif
 
 } // namespace Pt

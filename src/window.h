@@ -28,6 +28,7 @@
 #include <ShlObj.h>
 #include <ShellAPI.h>
 #include <wincrypt.h>
+#include <Shlwapi.h>
 
 #include <bitset>
 #include <regex>
@@ -140,7 +141,7 @@ class Window : public Fl_Double_Window
     unsigned int flower_pot_col_upper[7] = {3, 4, 5, 6, 7, 8, 9};
     Fl_Menu_Button *button_put_lily_pad;
     Fl_Menu_Button *button_put_flower_pot;
-    Fl_Button *button_capture;
+    Fl_Button *button_reset;
     Fl_Choice_ *choice_scene;
     unsigned int lineup_count[6] = {0};
     Fl_Choice_ *choice_lineup_name[6];
@@ -150,6 +151,7 @@ class Window : public Fl_Double_Window
     Fl_Button *button_copy_lineup;
     Fl_Button *button_paste_lineup;
     Fl_Button *button_set_lineup;
+    Fl_Button *button_capture;
 
     Fl_Group *group_spawn;
     int spawn_type[20];
@@ -348,8 +350,8 @@ class Window : public Fl_Double_Window
     static void cb_put_flower_pot(Fl_Widget *, void *);
     inline void cb_put_flower_pot();
 
-    static void cb_capture(Fl_Widget *, void *);
-    inline void cb_capture();
+    static void cb_reset_scene(Fl_Widget *, void *);
+    inline void cb_reset_scene();
 
     static void cb_switch_lineup_scene(Fl_Widget *, void *);
     inline void cb_switch_lineup_scene();
@@ -368,6 +370,9 @@ class Window : public Fl_Double_Window
 
     static void cb_set_lineup(Fl_Widget *, void *);
     inline void cb_set_lineup();
+
+    static void cb_capture(Fl_Widget *, void *);
+    inline void cb_capture();
 
     static void cb_spawn_mutex_0(Fl_Widget *, void *);
     inline void cb_spawn_mutex_0();

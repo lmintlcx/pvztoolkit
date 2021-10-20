@@ -13,7 +13,7 @@ PvZ Toolkit 是一个适用于植物大战僵尸一代电脑版的辅助工具.
 
 [PvZ Toolkit 官方网站](https://pvz.lmintlcx.com/toolkit/)
 
-最近更新: 1.10.0 (2021-08-15)
+最近更新: 1.12.0 (2021-10-20)
 
 ## 运行平台
 
@@ -34,17 +34,23 @@ PvZ Toolkit 能在所有主流 Windows 系统上正常运行.
 
 PvZ Toolkit 支持 [PC 平台上所有已知的游戏版本](https://pvz.lmintlcx.com/download/).
 
-- 英文原始版 1.0.0.1051 (en)
-- 英文修复版 1.2.0.1065 (en)
+- 英语测试版 0.1.1.1014 (en)
+- 英语测试版 0.9.9.1029 (en)
+- 英语原始版 1.0.0.1051 (en)
+- 英语修复版 1.2.0.1065 (en)
 - 西班牙语版 1.0.4.7924 (es)
 - 西班牙语版 1.0.7.3556 (es)
-- 英文年度版 1.2.0.1073 GOTY (en)
-- Steam 英文年度版 1.2.0.1096 GOTY (en)
-- Origin 多国语言年度版 1.2.0.1093 GOTY (de, es, fr, it)
-- 粘度汗化版 1.1.0.1056 GOTY (zh)
-- 日文年度版 1.1.0.1056 GOTY (ja)
-- 年度汉化加强版 1.1.0.1056 GOTY 2012.06 (zh)
-- 年度汉化加强版 1.1.0.1056 GOTY 2012.07 (zh)
+- 俄罗斯语版 1.0.7.3467 (ru)
+- Origin 英语年度版 1.2.0.1073 GOTY (en)
+- Origin 德语年度版 1.2.0.1093 GOTY (de)
+- Origin 西班牙语年度版 1.2.0.1093 GOTY (es)
+- Origin 法语年度版 1.2.0.1093 GOTY (fr)
+- Origin 意大利语年度版 1.2.0.1093 GOTY (it)
+- Steam 英语年度版 1.2.0.1096 GOTY (en)
+- Zoo 日语年度版 1.1.0.1056 GOTY (ja)
+- 人人网 2010 粘度汗化版 1.1.0.1056 GOTY (zh)
+- 人人网 2012 年度加强版 1.1.0.1056 GOTY (zh)
+- 人人网 2012 年度加强版 1.1.0.1056 GOTY (zh)
 
 > 如果你发现有不能使用的其他**官方版本**, 可以联系作者要求添加支持.
 
@@ -60,7 +66,7 @@ PvZ Toolkit 使用 Visual Studio 编译, 依赖于 FLTK 界面库和 zlib 压缩
 
 [点击查看 CHANGELOG.md](https://github.com/lmintlcx/pvztoolkit/blob/master/CHANGELOG.md)
 
-> 1.10 将会是 PvZ Toolkit 的最后一个版本, 目前暂时没有 2.0 版本的开发计划.
+> 目前暂时没有 2.0 大版本的开发计划.
 
 ## 开发路线
 
@@ -87,4 +93,4 @@ PvZ Toolkit 的代码采用 GPL-3.0 协议发布, 如若使用需要以相同的
 
 ## 鸣谢名单
 
-PvZ Toolkit 基于 [zhumxiang/PVZ_Helper](https://github.com/zhumxiang/PVZ_Helper) 开发, 得到了 [63enjoy](https://github.com/63enjoy) 和 [Lazuplis-Mei](https://github.com/Lazuplis-Mei) 的帮助.
+PvZ Toolkit 基于 [zhumxiang/PVZ_Helper](https://github.com/zhumxiang/PVZ_Helper) 开发, 得到了 [Lazuplis-Mei](https://github.com/Lazuplis-Mei) / [63enjoy](https://github.com/63enjoy) / [infdust](https://github.com/infdust) 等人的帮助.

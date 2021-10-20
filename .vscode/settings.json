@@ -66,6 +66,20 @@
         "ratio": "cpp",
         "filesystem": "cpp",
         "codecvt": "cpp",
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "variant": "cpp",
+        "atomic": "cpp",
+        "cctype": "cpp",
+        "charconv": "cpp",
+        "clocale": "cpp",
+        "forward_list": "cpp",
+        "optional": "cpp",
+        "bit": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "format": "cpp",
+        "fstream": "cpp",
+        "numeric": "cpp",
+        "valarray": "cpp"
     }
 }

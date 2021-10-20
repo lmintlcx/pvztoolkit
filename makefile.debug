@@ -19,7 +19,7 @@ LINKER = link
 LIBS_FLTK = fltkd.lib fltk_zd.lib
 LIBS_ZLIB = zlib.lib
 LIBS_WIN32 = user32.lib shell32.lib advapi32.lib comctl32.lib comdlg32.lib ole32.lib \
-             psapi.lib version.lib wsock32.lib crypt32.lib gdi32.lib gdiplus.lib
+             psapi.lib version.lib wsock32.lib crypt32.lib gdi32.lib gdiplus.lib wintrust.lib
 LIBS = /LIBPATH:$(OUTDIR) $(LIBS_FLTK) $(LIBS_ZLIB) $(LIBS_WIN32)
 OBJS = $(OUTDIR)\main.obj \
        $(OUTDIR)\pak.obj \
