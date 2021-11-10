@@ -1,10 +1,5 @@
 
-#include <iostream>
-#include <cassert>
-
 #include "code.h"
-
-#include <Windows.h>
 
 namespace Pt
 {

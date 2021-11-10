@@ -13,7 +13,7 @@ PvZ Toolkit 是一个适用于植物大战僵尸一代电脑版的辅助工具.
 
 [PvZ Toolkit 官方网站](https://pvz.lmintlcx.com/toolkit/)
 
-最近更新: 1.12.0 (2021-10-20)
+最近更新: 1.14.0 (2021-11-10)
 
 ## 运行平台
 

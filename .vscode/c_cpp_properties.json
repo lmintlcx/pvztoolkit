@@ -8,6 +8,7 @@
                 "C:/Program Files (x86)/Windows Kits/10/Include/10.0.10240.0/ucrt",
                 "${workspaceFolder}/fltk/include",
                 "${workspaceFolder}/zlib/include",
+                "${workspaceFolder}/json",
                 "${workspaceFolder}/src"
             ],
             "defines": [

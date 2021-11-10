@@ -1,10 +1,5 @@
 
-#include <iostream>
-
 #include "process.h"
-
-#include <psapi.h>
-#include <winver.h>
 
 namespace Pt
 {

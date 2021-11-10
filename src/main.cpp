@@ -1,14 +1,11 @@
 
-#include <cassert>
-#include <codecvt>
-
-#include "window.h"
-
-#include <Windows.h>
-#include <ShellAPI.h>
+#include "toolkit.h"
 
 #include <WinTrust.h>
 #include <SoftPub.h>
+
+static_assert(_MSC_VER >= 1916);
+static_assert(sizeof(void *) == 4);
 
 bool VerifySignature(LPCWSTR);
 
@@ -22,21 +19,17 @@ void window_callback(Fl_Widget *w, void *)
         return;
     }
 
-    if (((Pt::Window *)w)->window_spawn->shown() == 1)
-        ((Pt::Window *)w)->window_spawn->hide();
-    ((Pt::Window *)w)->hide();
+    ((Pt::Toolkit *)w)->close_all_sub_window();
+    ((Pt::Toolkit *)w)->hide();
 }
 
 void callback_pvz_check(void *w)
 {
     // 定期检查游戏进程状态
-    bool on = ((Pt::Window *)w)->pvz->GameOn();
+    bool on = ((Pt::Toolkit *)w)->pvz->GameOn();
     double t = on ? 0.4 : 0.2;
     Fl::repeat_timeout(t, callback_pvz_check, w);
 }
-
-static_assert(_MSC_VER >= 1916);
-static_assert(sizeof(void *) == 4);
 
 /// main ///
 
@@ -86,13 +79,13 @@ int main(int argc, char **argv)
     Fl::lock();
 
     // 主窗口
-    Pt::Window window(0, 0, "");
-    window.callback(window_callback);
-    window.show(argc, argv);
-    window.pvz->FindPvZ();
+    Pt::Toolkit pvztoolkit(0, 0, "");
+    pvztoolkit.callback(window_callback);
+    pvztoolkit.show(argc, argv);
+    pvztoolkit.pvz->FindPvZ();
 
 #ifndef _DEBUG // 避免调试的时候频繁输出
-    Fl::add_timeout(0.01, callback_pvz_check, &window);
+    Fl::add_timeout(0.01, callback_pvz_check, &pvztoolkit);
 #endif
 
     int ret = Fl::run();

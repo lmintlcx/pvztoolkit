@@ -1,9 +1,4 @@
 
-#include <string>
-#include <vector>
-#include <iostream>
-#include <cassert>
-
 #include "pak.h"
 
 namespace Pt
