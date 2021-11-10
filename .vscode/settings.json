@@ -80,6 +80,7 @@
         "format": "cpp",
         "fstream": "cpp",
         "numeric": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "cassert": "cpp"
     }
 }

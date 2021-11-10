@@ -10,7 +10,7 @@ set LIB=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Lib;%LIB%
 
 cd /d D:\repo\pvztoolkit
 
-set INCLUDE=.\fltk\include;.\zlib\include;%INCLUDE%
+set INCLUDE=.\fltk\include;.\zlib\include;.\json;%INCLUDE%
 set LIB=.\fltk\lib;.\zlib\lib;%LIB%
 
 set PATH=.\jom;%PATH%

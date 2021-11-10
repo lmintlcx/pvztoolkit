@@ -3,13 +3,10 @@
 
 #include <iostream>
 #include <sstream>
-#include <iomanip>
 #include <string>
-#include <functional>
 #include <initializer_list>
 #include <array>
 #include <cassert>
-#include <algorithm>
 
 #include <Windows.h>
 

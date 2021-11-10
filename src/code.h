@@ -1,7 +1,11 @@
 
 #pragma once
 
+#include <iostream>
+#include <cassert>
 #include <initializer_list>
+
+#include <Windows.h>
 
 namespace Pt
 {
