@@ -6,7 +6,337 @@
 namespace Pt
 {
 
-#include "strings.hpp"
+const char *plants[] =
+    {
+        "Peashooter",
+        "Sunflower",
+        "Cherry Bomb",
+        "Wall-nut",
+        "Potato Mine",
+        "Snow Pea",
+        "Chomper",
+        "Repeater",
+        "Puff-shroom",
+        "Sun-shroom",
+        "Fume-shroom",
+        "Grave Buster",
+        "Hypno-shroom",
+        "Scaredy-shroom",
+        "Ice-shroom",
+        "Doom-shroom",
+        "Lily Pad",
+        "Squash",
+        "Threepeater",
+        "Tangle Kelp",
+        "Jalapeno",
+        "Spikeweed",
+        "Torchwood",
+        "Tall-nut",
+        "Sea-shroom",
+        "Plantern",
+        "Cactus",
+        "Blover",
+        "Split Pea",
+        "Starfruit",
+        "Pumpkin",
+        "Magnet-shroom",
+        "Cabbage-pult",
+        "Flower Pot",
+        "Kernel-pult",
+        "Coffee Bean",
+        "Garlic",
+        "Umbrella Leaf",
+        "Marigold",
+        "Melon-pult",
+        "Gatling Pea",
+        "Twin Sunflower",
+        "Gloom-shroom",
+        "Cattail",
+        "Winter Melon",
+        "Gold Magnet",
+        "Spikerock",
+        "Cob Cannon",
+};
+
+const char *zombies[] =
+    {
+        "Zombie",
+        "Flag Zombie",
+        "Conehead Zombie",
+        "Pole Vaulting Zombie",
+        "Buckethead Zombie",
+        "Newspaper Zombie",
+        "Screen Door Zombie",
+        "Football Zombie",
+        "Dancing Zombie",
+        "Backup Dancer",
+        "Ducky Tube Zombie",
+        "Snorkel Zombie",
+        "Zomboni",
+        "Zombie Bobsled Team",
+        "Dolphin Rider Zombie",
+        "Jack-in-the-Box Zombie",
+        "Balloon Zombie",
+        "Digger Zombie",
+        "Pogo Zombie",
+        "Zombie Yeti",
+        "Bungee Zombie",
+        "Ladder Zombie",
+        "Catapult Zombie",
+        "Gargantuar",
+        "Imp",
+        "Dr. Zomboss",
+        "Peashooter Zombie",
+        "Wall-nut Zombie",
+        "Jalapeno Zombie",
+        "Gatling Pea Zombie",
+        "Squash Zombie",
+        "Tall-nut Zombie",
+        "GigaGargantuar",
+};
+
+const char *modes[] =
+    {
+        "Adventure",
+        "Survival: Day",
+        "Survival: Night",
+        "Survival: Pool",
+        "Survival: Fog",
+        "Survival: Roof",
+        "Survival: Day (Hard)",
+        "Survival: Night (Hard)",
+        "Survival: Pool (Hard)",
+        "Survival: Fog (Hard)",
+        "Survival: Roof (Hard)",
+        "Survival: Day (Endless)",
+        "Survival: Night (Endless)",
+        "Survival: Endless",
+        "Survival: Fog (Endless)",
+        "Survival: Roof (Endless)",
+        "ZomBotany",
+        "Wall-nut Bowling",
+        "Slot Machine",
+        "It's Raining Seeds",
+        "Beghouled",
+        "Invisi-ghoul",
+        "Seeing Stars",
+        "Zombiquarium",
+        "Beghouled Twist",
+        "Big Trouble Little Zombie",
+        "Portal Combat",
+        "Column Like You See'Em",
+        "Bobseld Bonanza",
+        "Zombie Nimble Zombie Quick",
+        "Whack a Zombie",
+        "Last Stand",
+        "ZomBotany 2",
+        "Wall-nut Bowling 2",
+        "Pogo Party",
+        "Dr. Zomboss's Revenge",
+        "Art Challenge Wall-nut",
+        "Sunny Day",
+        "Unsodded",
+        "Big Time",
+        "Art Challenge Sunflower",
+        "Air Raid",
+        "Ice Level",
+        "Zen Garden",
+        "High Gravity",
+        "Grave Danger",
+        "Can You Dig It?",
+        "Dark Stormy Night",
+        "Bungee Blitz",
+        "Squirrel",
+        "Tree of Wisdom",
+        "Vasebreaker",
+        "To the Left",
+        "Third Vase",
+        "Chain Reaction",
+        "M is for Metal",
+        "Scary Potter",
+        "Hokey Pokey",
+        "Another Chain Reaction",
+        "Ace of Vase",
+        "Vasebreaker Endless",
+        "I, Zombie",
+        "I, Zombie Too",
+        "Can You Dig It?",
+        "Totally Nuts",
+        "Dead Zeppelin",
+        "Me Smash!",
+        "ZomBoogie",
+        "Three Hit Wonder",
+        "All your brainz r belong to us",
+        "I, Zombie Endless",
+        "Upsell",
+        "Intro",
+};
+
+const char *plants_zh[] =
+    {
+        "豌豆射手",
+        "向日葵",
+        "樱桃炸弹",
+        "坚果",
+        "土豆雷",
+        "寒冰射手",
+        "大嘴花",
+        "双发射手",
+        "小喷菇",
+        "阳光菇",
+        "大喷菇",
+        "墓碑吞噬者",
+        "魅惑菇",
+        "胆小菇",
+        "寒冰菇",
+        "毁灭菇",
+        "睡莲",
+        "倭瓜",
+        "三线射手",
+        "缠绕海草",
+        "火爆辣椒",
+        "地刺",
+        "火炬树桩",
+        "高坚果",
+        "海蘑菇",
+        "路灯花",
+        "仙人掌",
+        "三叶草",
+        "裂荚射手",
+        "杨桃",
+        "南瓜头",
+        "磁力菇",
+        "卷心菜投手",
+        "花盆",
+        "玉米投手",
+        "咖啡豆",
+        "大蒜",
+        "叶子保护伞",
+        "金盏花",
+        "西瓜投手",
+        "机枪射手",
+        "双子向日葵",
+        "忧郁蘑菇",
+        "香蒲",
+        "冰瓜",
+        "吸金磁",
+        "地刺王",
+        "玉米加农炮",
+};
+
+const char *zombies_zh[] =
+    {
+        "普僵",
+        "旗帜",
+        "路障",
+        "撑杆",
+        "铁桶",
+        "读报",
+        "铁门",
+        "橄榄",
+        "舞王",
+        "伴舞",
+        "鸭子",
+        "潜水",
+        "冰车",
+        "雪橇",
+        "海豚",
+        "小丑",
+        "气球",
+        "矿工",
+        "跳跳",
+        "雪人",
+        "蹦极",
+        "扶梯",
+        "投篮",
+        "白眼",
+        "小鬼",
+        "僵王",
+        "豌豆",
+        "坚果",
+        "辣椒",
+        "机枪",
+        "倭瓜",
+        "高墙",
+        "红眼",
+};
+
+const char *modes_zh[] =
+    {
+        "冒险模式",
+        "生存模式: 白天",
+        "生存模式: 黑夜",
+        "生存模式: 泳池",
+        "生存模式: 雾夜",
+        "生存模式: 屋顶",
+        "生存模式: 白天 (困难)",
+        "生存模式: 黑夜 (困难)",
+        "生存模式: 泳池 (困难)",
+        "生存模式: 雾夜 (困难)",
+        "生存模式: 屋顶 (困难)",
+        "生存模式: 白天 (无尽)",
+        "生存模式: 黑夜 (无尽)",
+        "生存模式: 无尽",
+        "生存模式: 雾夜 (无尽)",
+        "生存模式: 屋顶 (无尽)",
+        "植物僵尸",
+        "坚果保龄球",
+        "老虎机",
+        "雨中种植物",
+        "宝石迷阵",
+        "隐形食脑者",
+        "看星星",
+        "僵尸水族馆",
+        "宝石迷阵转转看",
+        "小僵尸大麻烦",
+        "保护传送门",
+        "你看, 他们像柱子一样",
+        "雪橇区",
+        "僵尸快跑",
+        "锤僵尸",
+        "谁笑到最后",
+        "植物僵尸 2",
+        "坚果保龄球 2",
+        "跳跳舞会",
+        "僵王博士的复仇",
+        "坚果艺术",
+        "晴天",
+        "无草皮之地",
+        "重要时间",
+        "太阳花艺术",
+        "空袭",
+        "冰冻关卡",
+        "禅境花园",
+        "超乎寻常的压力",
+        "坟墓模式",
+        "你能把它挖出来吗?",
+        "暴风雨之夜",
+        "蹦极闪电战",
+        "松鼠",
+        "智慧树",
+        "破罐者",
+        "一路向左",
+        "第三个罐子",
+        "连锁反应",
+        "M 的意思是金属",
+        "胆怯的制陶工",
+        "变戏法",
+        "另一个连锁反应",
+        "罐子王牌",
+        "无尽的试炼",
+        "我是僵尸",
+        "我也是僵尸",
+        "你能把它挖出来吗?",
+        "完全傻了",
+        "死亡飞艇",
+        "我烂了!",
+        "僵尸摇摆",
+        "三连击",
+        "你所有大脑都是属于我的",
+        "我是僵尸无尽版",
+        "促销",
+        "介绍",
+};
 
 Fl_Choice_::Fl_Choice_(int x, int y, int w, int h, const char *l)
     : Fl_Choice(x, y, w, h, l)
@@ -325,7 +655,8 @@ Window::Window(int width, int height, const char *title)
                 check_unlock_sun_limit = new Fl_Round_Button(c(1) + 8, r(1), iw - 76, ih, "");
                 input_sun = new Fl_Value_Input(c(1) + 40, r(1), iw - 10, ih, "");
                 button_sun = new Fl_Button(c(2) + 40 - 10, r(1), iw - 45, ih, "阳光");
-                input_money = new Fl_Value_Input(c(1) + 40, r(2), iw - 10, ih, "10x  ");
+                box_money = new Fl_Box(c(1) + 8, r(2), iw - 76, ih, "$");
+                input_money = new Fl_Value_Input(c(1) + 40, r(2), iw - 10, ih, "");
                 button_money = new Fl_Button(c(2) + 40 - 10, r(2), iw - 45, ih, "金币");
                 check_auto_collected = new Fl_Check_Button(c(3), r(3), iw - 15, ih, "自动收集");
                 check_not_drop_loot = new Fl_Check_Button(c(4), r(3), iw, ih, "不掉战利品");
@@ -333,8 +664,9 @@ Window::Window(int width, int height, const char *title)
                 check_bug_spray = new Fl_Check_Button(c(4), r(1), iw, ih, "杀虫剂无限");
                 check_tree_food = new Fl_Check_Button(c(3), r(2), iw - 15, ih, "树肥无限");
                 check_chocolate = new Fl_Check_Button(c(4), r(2), iw, ih, "巧克力无限");
-                input_wisdom_tree = new Fl_Value_Input(c(1) + 40, r(3), iw - 10, ih, "↑    ");
-                button_wisdom_tree = new Fl_Button(c(2) + 40 - 10, r(3), iw - 45, ih, "树高");
+                box_wisdom_tree = new Fl_Box(c(1) + 8, r(3), iw - 76, ih, "↑");
+                input_wisdom_tree = new Fl_Value_Input(c(1) + 40, r(3), iw - 10, ih, "");
+                button_wisdom_tree = new Fl_Button(c(2) + 40 - 10, r(3), iw - 45, ih, "英尺");
                 check_free_planting = new Fl_Check_Button(c(1), r(4), iw - 15, ih, "免费用卡");
                 check_placed_anywhere = new Fl_Check_Button(c(2), r(4), iw - 15, ih, "随意放置");
                 check_fast_belt = new Fl_Check_Button(c(3), r(4), iw - 15, ih, "无缝传送");
@@ -391,6 +723,7 @@ Window::Window(int width, int height, const char *title)
                 button_put_flower_pot = new Fl_Menu_Button(c(4), r(2), iw, ih, "屋顶花盆");
                 button_reset = new Fl_Button(c(1), r(3), iw + 12, ih, "重置场地");
                 choice_scene = new Fl_Choice_(c(2) + 12, r(3), iw - 12, ih, "");
+                button_load_lineup = new Fl_Button(c(3), r(3), iw * 2 + 10, ih, "加载阵型列表文件 \"***.yml\"");
                 choice_lineup_name[0] = new Fl_Choice_(c(3), r(3), iw * 2 + 10, ih, "");
                 choice_lineup_name[1] = new Fl_Choice_(c(3), r(3), iw * 2 + 10, ih, "");
                 choice_lineup_name[2] = new Fl_Choice_(c(3), r(3), iw * 2 + 10, ih, "");
@@ -423,7 +756,7 @@ Window::Window(int width, int height, const char *title)
                 check_giga_limit = new Fl_Check_Button(c(3) - 55 + 40, r(6), iw - 40, ih, "变速");
                 button_set_spawn = new Fl_Button(c(4) - 55, r(6), iw + 55 - 5, ih, "极限出怪 (均匀填充)");
                 button_spawn_extra = new Fl_Menu_Button(m, m + th, w - m * 2, h - m * 2 - th - 42, nullptr);
-                button_spawn_mode = new Fl_Menu_Button(c(4) - 55, r(6), iw + 55 - 5, ih, "选择刷怪模式:");
+                button_spawn_mode = new Fl_Menu_Button(c(4) - 55, r(6), iw + 55 - 5, ih, " 选择刷怪模式 :   ");
             }
             group_spawn->end();
 
@@ -605,19 +938,7 @@ Window::Window(int width, int height, const char *title)
 
     choice_scene->value(2); // 泳池
 
-    choice_lineup_name[0]->hide();
-    choice_lineup_name[1]->hide();
-    // choice_lineup_name[2]->hide();
-    choice_lineup_name[3]->hide();
-    choice_lineup_name[4]->hide();
-    choice_lineup_name[5]->hide();
-
-#ifdef _DEBUG
-    assert(sizeof(lineup_names) == sizeof(lineup_strings));
-    assert(sizeof(uintptr_t) == 4);
-#endif
-    uint32_t lineup_count_total = sizeof(lineup_names) / 4;
-
+    lineups.clear();
     lineup_count[0] = 0;
     lineup_count[1] = 0;
     lineup_count[2] = 0;
@@ -625,50 +946,16 @@ Window::Window(int width, int height, const char *title)
     lineup_count[4] = 0;
     lineup_count[5] = 0;
 
-    for (size_t i = 0; i < lineup_count_total; i++)
-    {
-        std::string name = std::string(lineup_names[i]);
-        char *scene_str[] = {"[DE]", "[NE]", "[PE]", "[FE]", "[RE]", "[ME]"};
-        for (size_t scene = 0; scene < 6; scene++)
-        {
-            if (name.find(scene_str[scene]) != std::string::npos)
-            {
-                choice_lineup_name[scene]->add(lineup_names[i]);
-                lineup_count[scene]++;
-                break;
-            }
-        }
-    }
-
-    char *default_lineup[] = {"[DE] 双冰六炮", "[NE] 快六炮",
-                              "[PE] 经典八炮", "[FE] 经典八炮",
-                              "[RE] 天台十炮", "[ME] 月夜十炮"};
-    for (size_t scene = 0; scene < 6; scene++)
-    {
-        unsigned int index = 0;
-        for (size_t i = 0; i < scene; i++)
-            index += lineup_count[i];
-
-        for (size_t i = 0; i < lineup_count[scene]; i++)
-        {
-            if (strcmp(lineup_names[index + i], default_lineup[scene]) == 0)
-            {
-                choice_lineup_name[scene]->value(i);
-                break;
-            }
-        }
-    }
+    choice_lineup_name[0]->hide();
+    choice_lineup_name[1]->hide();
+    choice_lineup_name[2]->hide();
+    choice_lineup_name[3]->hide();
+    choice_lineup_name[4]->hide();
+    choice_lineup_name[5]->hide();
 
     editor_lineup_string->buffer(buffer_lineup_string);
     editor_lineup_string->wrap_mode(Fl_Text_Editor::WRAP_AT_BOUNDS, 0);
     editor_lineup_string->deactivate(); // 不可编辑
-
-#ifdef _DEBUG
-    size_t lineup_length_total = 0;
-    for (size_t i = 0; i < lineup_count_total; i++)
-        lineup_length_total += std::string(lineup_strings[i]).size();
-    std::cout << "lineup string length avg: " << (lineup_length_total / lineup_count_total) << std::endl;
-#endif
 
     // 出怪名称
     for (size_t i = 0; i < 20; i++)
@@ -688,9 +975,9 @@ Window::Window(int width, int height, const char *title)
     button_spawn_extra->type(Fl_Menu_Button::POPUP3);
     button_spawn_extra->value(0);
 
-    button_spawn_mode->add("自然出怪 (游戏生成)", 0, cb_switch_spawn_mode, this);
-    button_spawn_mode->add("极限出怪 (均匀填充)", 0, cb_switch_spawn_mode, this);
-    button_spawn_mode->add("模拟出怪 (加权随机)", 0, cb_switch_spawn_mode, this);
+    button_spawn_mode->add(" 自然出怪 (游戏生成) ", 0, cb_switch_spawn_mode, this);
+    button_spawn_mode->add(" 极限出怪 (均匀填充) ", 0, cb_switch_spawn_mode, this);
+    button_spawn_mode->add(" 模拟出怪 (加权随机) ", 0, cb_switch_spawn_mode, this);
     button_spawn_mode->type(Fl_Menu_Button::POPUP3);
     button_spawn_mode->value(1); // 默认极限刷怪
 
@@ -755,6 +1042,7 @@ Window::Window(int width, int height, const char *title)
     choice_slot->callback(cb_tooltips, this);
     choice_seed->callback(cb_tooltips, this);
 
+    button_load_lineup->callback(cb_load_lineup, this);
     choice_scene->callback(cb_switch_lineup_scene, this); // cb_tooltips
     choice_lineup_name[0]->callback(cb_show_lineup_string, this);
     choice_lineup_name[1]->callback(cb_show_lineup_string, this);
@@ -817,12 +1105,12 @@ Window::Window(int width, int height, const char *title)
         if (!yahei)
         {
             // XP 系统肯定没法正常访问植僵工具箱的，只给出方法让用户自己操作
-            MessageBoxW(nullptr, L"系统缺少 Microsoft YaHei 字体, 建议安装并启用 ClearType 以得到最佳的界面体验."
+            MessageBoxW(nullptr, L"建议安装 Microsoft YaHei 字体, 并且启用 ClearType 来获得最佳的界面观感."
                                  L"\n\n"
                                  L"可以在搜索引擎中检索 \"微软雅黑 XP\" 等关键词来查找字体下载和安装方法."
                                  L"\n"
                                  L"控制面板 → 显示 → 外观 → 效果 → 使用下列方式使屏幕字体的边缘平滑: 清晰.",
-                        L"缺少界面字体", MB_OK);
+                        L"系统缺少界面字体", MB_OK);
         }
     }
 
@@ -909,12 +1197,12 @@ Window::Window(int width, int height, const char *title)
     Fl_Tooltip::margin_height(5);
     Fl_Tooltip::wrap_width(400);
 
-    emoji = dwBuild >= 9200;
+    emoji = dwBuild >= 9600;
 
     if (emoji)
     {
-        input_money->copy_label("💰   ");
-        input_wisdom_tree->copy_label("🌳   ");
+        box_money->copy_label("💰");
+        box_wisdom_tree->copy_label("🌳");
         button_unlock->copy_label("🏆 通关存档");
         button_lawn_mower->replace(0, " ➡️  启动 ");
         button_lawn_mower->replace(1, " 🆑  删除 ");
@@ -931,6 +1219,9 @@ Window::Window(int width, int height, const char *title)
 
     // 默认运行的回调函数
 
+    // 自动导入阵型列表
+    import_lineup_list(true);
+
     // 获取阵型的字符串
     choice_scene->do_callback();
 
@@ -943,6 +1234,9 @@ Window::Window(int width, int height, const char *title)
 
     // 窗口居中显示
     this->position((Fl::w() - this->w()) / 2, (Fl::h() - this->h()) / 2);
+
+    // 默认焦点控件
+    button_sun->take_focus();
 }
 
 Window::~Window()
@@ -1118,6 +1412,24 @@ void Window::ReadSettings()
                                 + L"同时按 Ctrl 和 + / - 键可放大缩小窗口。";  //
             MessageBoxW(GetActiveWindow(), text.c_str(), L"界面缩放", MB_OK);
         }
+
+        DWORD dwVersion = GetVersion();
+        DWORD dwBuild = (DWORD)(HIWORD(dwVersion));
+        if (dwBuild >= 2600)         // XP
+            choice_scheme->value(1); //       plastic
+        if (dwBuild >= 6000)         // Vista
+            choice_scheme->value(3); //       gleam
+        if (dwBuild >= 7600)         // 7
+            choice_scheme->value(3); //       gleam
+        if (dwBuild >= 9200)         // 8
+            choice_scheme->value(0); //       base
+        if (dwBuild >= 9600)         // 8.1
+            choice_scheme->value(0); //       base
+        if (dwBuild >= 10240)        // 10
+            choice_scheme->value(0); //       base
+        if (dwBuild >= 22000)        // 11
+            choice_scheme->value(2); //       gtk+
+        choice_scheme->do_callback();
 
         // 第一次打开时显示文档
         int ret = MessageBoxW(GetActiveWindow(),               //
@@ -1439,6 +1751,171 @@ void Window::cb_mode()
     cb_tooltips();
 }
 
+void Window::cb_load_lineup(Fl_Widget *, void *w)
+{
+    ((Window *)w)->cb_load_lineup();
+}
+
+void Window::cb_load_lineup()
+{
+    import_lineup_list(false);
+}
+
+void Window::import_lineup_list(bool automatic)
+{
+    if (automatic)
+    {
+        wchar_t find_path[MAX_PATH] = {0};
+        GetCurrentDirectoryW(MAX_PATH, find_path);
+        wcscat_s(find_path, L"\\*");
+        WIN32_FIND_DATA ffd;
+        HANDLE hf;
+        hf = FindFirstFileW(find_path, &ffd);
+        if (hf != INVALID_HANDLE_VALUE)
+        {
+            do
+            {
+                std::wstring name = ffd.cFileName;
+                if (name == L"." || name == L"..")
+                    continue;
+                std::wstring ext = name.substr(name.find_last_of(L".") + 1);
+                if (ext == L"yml")
+                {
+                    import_lineup_list_file(name.c_str());
+                    // std::wcout << L"导入阵型列表: " << name << std::endl;
+                }
+            } while (FindNextFileW(hf, &ffd) != 0);
+            FindClose(hf);
+        }
+    }
+    else
+    {
+        TCHAR szFileName[MAX_PATH];
+        OPENFILENAME ofn;
+        ZeroMemory(&ofn, sizeof(ofn));
+        ofn.lStructSize = sizeof(ofn);
+        ofn.hwndOwner = nullptr;
+        ofn.lpstrFilter = L"YAML(*.yml)\0*.yml\0";
+        ofn.nFilterIndex = 1;
+        ofn.lpstrFile = szFileName;
+        ofn.lpstrFile[0] = '\0';
+        ofn.nMaxFile = sizeof(szFileName);
+        ofn.lpstrFileTitle = nullptr;
+        ofn.nMaxFileTitle = 0;
+        ofn.lpstrInitialDir = nullptr;
+        ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+        if (GetOpenFileNameW(&ofn) == TRUE)
+        {
+#ifdef _DEBUG
+            std::wcout << L"打开文件: " << std::wstring(szFileName) << std::endl;
+#endif
+            import_lineup_list_file(szFileName);
+        }
+    }
+
+    if (this->lineups.empty())
+        return;
+
+    // 排序
+    auto LessThan = [&](const Lineup &l1, const Lineup &l2)
+    { return l1.weight < l2.weight; };
+    std::sort(this->lineups.begin(), this->lineups.end(), LessThan);
+
+    // 插入
+    for (size_t i = 0; i < this->lineups.size(); i++)
+    {
+        uint32_t scene = static_cast<uint32_t>(this->lineups[i].scene);
+        std::string name = this->lineups[i].lineup_name;
+
+        while (choice_lineup_name[scene]->find_index(name.c_str()) != -1)
+            name += " "; // 相同名字的在后面补空格
+
+        choice_lineup_name[scene]->add(name.c_str());
+        lineup_count[scene]++;
+    }
+
+    for (size_t i = 0; i < 6; i++)
+        if (choice_lineup_name[i]->size() > 0)
+            choice_lineup_name[i]->value(0);
+
+    button_load_lineup->hide();
+    cb_switch_lineup_scene();
+}
+
+void Window::import_lineup_list_file(std::wstring file)
+{
+    std::ifstream ifs(file.c_str());
+    if (!ifs)
+        return;
+
+    std::vector<std::tuple<int, std::string>> err_lst;
+
+    int line = 0;
+    std::string str;
+    while (std::getline(ifs, str))
+    {
+        line++;
+        if (line == 1) // 第一行
+        {
+            if (str != "#! pvztoolkit")
+                break;
+        }
+        else
+        {
+            if (str[0] == '#' || str.empty()) // 注释或者空行
+            {
+                continue;
+            }
+            else
+            {
+                std::regex re("\".*\": [a-zA-Z0-9+/=]{1,}");
+                if (std::regex_match(str, re))
+                {
+                    size_t p = str.find_last_of(": ");
+                    std::string name = str.substr(0 + 1, p - 3);
+                    std::string code = str.substr(p + 1);
+                    Lineup lineup(name, code);
+                    if (lineup.OK())
+                    {
+                        this->lineups.push_back(lineup);
+                    }
+                    else
+                    {
+                        std::tuple err = {line, str};
+                        err_lst.push_back(err);
+                    }
+                }
+                else
+                {
+                    std::tuple err = {line, str};
+                    err_lst.push_back(err);
+                }
+            }
+        }
+    }
+
+    if (err_lst.size() > 0)
+    {
+        std::wstring title = file + L" " + L"阵型列表格式错误";
+        std::wstring text;
+        for (size_t i = 0; i < err_lst.size(); i++)
+        {
+            if (i > 11)
+            {
+                text += std::wstring() + L"\n" + L"(还有更多的没有显示...)";
+                break;
+            }
+            auto [l, s] = err_lst[i];
+            if (s.length() > 49)
+                s = s.substr(0, 48) + " ...";
+            text += std::wstring()                           //
+                    + L"第 " + std::to_wstring(l) + L" 行: " //
+                    + utf8_decode(s) + L"\n";                //
+        }
+        MessageBoxW(GetActiveWindow(), text.c_str(), title.c_str(), MB_OK);
+    }
+}
+
 void Window::cb_switch_lineup_scene(Fl_Widget *, void *w)
 {
     ((Window *)w)->cb_switch_lineup_scene();
@@ -1446,6 +1923,9 @@ void Window::cb_switch_lineup_scene(Fl_Widget *, void *w)
 
 void Window::cb_switch_lineup_scene()
 {
+    if (this->lineups.empty())
+        return;
+
     for (size_t i = 0; i < 6; i++)
     {
         if (i == choice_scene->value())
@@ -1465,14 +1945,22 @@ void Window::cb_show_lineup_string(Fl_Widget *, void *w)
 
 void Window::cb_show_lineup_string()
 {
+    if (lineup_count[choice_scene->value()] == 0)
+    {
+        buffer_lineup_string->text("");
+        return;
+    }
+
     int index = 0;
     for (int i = 0; i < choice_scene->value(); i++)
         index += lineup_count[i];
     index += choice_lineup_name[choice_scene->value()]->value();
+
 #ifdef _DEBUG
-    std::cout << index << " " << lineup_names[index] << std::endl;
+    std::cout << index << " " << this->lineups[index].lineup_name << std::endl;
 #endif
-    buffer_lineup_string->text(lineup_strings[index]);
+
+    buffer_lineup_string->text(this->lineups[index].lineup_code.c_str());
 }
 
 void Window::cb_copy_lineup(Fl_Widget *, void *w)
@@ -1825,16 +2313,16 @@ void Window::cb_tooltips()
     static std::vector<std::string> vstr_slots;
     if (vstr_slots.size() == 0)
     {
-        vstr_slots.push_back("1st Slot");
-        vstr_slots.push_back("2nd Slot");
-        vstr_slots.push_back("3rd Slot");
-        vstr_slots.push_back("4th Slot");
-        vstr_slots.push_back("5th Slot");
-        vstr_slots.push_back("6th Slot");
-        vstr_slots.push_back("7th Slot");
-        vstr_slots.push_back("8th Slot");
-        vstr_slots.push_back("9th Slot");
-        vstr_slots.push_back("10th Slot");
+        vstr_slots.push_back("1st Seed");
+        vstr_slots.push_back("2nd Seed");
+        vstr_slots.push_back("3rd Seed");
+        vstr_slots.push_back("4th Seed");
+        vstr_slots.push_back("5th Seed");
+        vstr_slots.push_back("6th Seed");
+        vstr_slots.push_back("7th Seed");
+        vstr_slots.push_back("8th Seed");
+        vstr_slots.push_back("9th Seed");
+        vstr_slots.push_back("10th Seed");
     }
 
     static std::vector<std::string> vstr_scenes;
@@ -1872,7 +2360,7 @@ void Window::cb_tooltips()
     check_tree_food->copy_tooltip(on ? "Unlimited Tree Food" : nullptr);
     check_chocolate->copy_tooltip(on ? "Unlimited Chocolate" : nullptr);
     input_wisdom_tree->copy_tooltip("0 ~ 1000");
-    button_wisdom_tree->copy_tooltip(on ? "Wisdom Tree" : nullptr);
+    button_wisdom_tree->copy_tooltip(on ? "Feet Tall" : nullptr);
     check_free_planting->copy_tooltip(on ? "Free Planting" : nullptr);
     check_placed_anywhere->copy_tooltip(on ? "Placed Anywhere" : nullptr);
     check_fast_belt->copy_tooltip(on ? "Seamless Conveyor Belt" : nullptr);
@@ -1882,7 +2370,7 @@ void Window::cb_tooltips()
     button_mix->copy_tooltip(on ? "Modify Mode" : nullptr);
     input_level->copy_tooltip("0 ~ 10000000");
     button_level->copy_tooltip(on ? "Endless Rounds" : nullptr);
-    button_unlock->copy_tooltip(on ? "Unlock Gold Trophy" : "解锁金向奖杯");
+    button_unlock->copy_tooltip(on ? "Get Gold Sunflower Trophy" : "解锁黄金向日葵奖杯");
     button_direct_win->copy_tooltip(on ? "Level Complete" : nullptr);
 
     choice_row->copy_tooltip(on ? vstr_rows[choice_row->value()].c_str() : nullptr);
@@ -1909,29 +2397,30 @@ void Window::cb_tooltips()
     check_lock_butter->copy_tooltip(on ? "Always Butter" : nullptr);
     check_no_crater->copy_tooltip(on ? "No Crater" : nullptr);
     check_no_ice_trail->copy_tooltip(on ? "No Ice Trail" : nullptr);
-    check_zombie_not_explode->copy_tooltip(on ? "Never Explode" : nullptr);
+    check_zombie_not_explode->copy_tooltip(on ? "Zombies Never Explode" : nullptr);
 
     choice_slot->copy_tooltip(on ? vstr_slots[choice_slot->value()].c_str() : nullptr);
     if (choice_seed->value() == -1)
         choice_seed->copy_tooltip(nullptr);
     else
         choice_seed->copy_tooltip(on ? vstr_plants[choice_seed->value()].c_str() : nullptr);
-    button_seed->copy_tooltip(on ? "Change Seed" : nullptr);
+    button_seed->copy_tooltip(on ? "Replace Seed" : nullptr);
     check_seed_imitater->copy_tooltip(on ? "Imitater" : nullptr);
-    check_lineup_mode->copy_tooltip(on ? "Quick Lineup Mode" : nullptr);
+    check_lineup_mode->copy_tooltip(on ? "Lineup Mode Shortcut" : nullptr);
     button_auto_ladder->copy_tooltip(on ? "Smart Laddering" : nullptr);
     button_put_lily_pad->copy_tooltip(on ? "Lily Pad On Pool" : nullptr);
     button_put_flower_pot->copy_tooltip(on ? "Flower Pot On Roof" : nullptr);
     button_reset->copy_tooltip(on ? "Reset Scene" : nullptr);
     choice_scene->copy_tooltip(on ? vstr_scenes[choice_scene->value()].c_str() : nullptr);
+    button_load_lineup->copy_tooltip(on ? "Load Lineup List File \"***.yml\"" : nullptr);
     for (size_t i = 0; i < 6; i++)
         choice_lineup_name[i]->copy_tooltip(on ? "(Lineup Name)" : nullptr);
     button_get_lineup->copy_tooltip(on ? "Get Lineup Code" : nullptr);
-    button_copy_lineup->copy_tooltip(on ? "Copy To Export" : nullptr);
-    button_paste_lineup->copy_tooltip(on ? "Paste To Import" : nullptr);
+    button_copy_lineup->copy_tooltip(on ? "Copy / Export" : nullptr);
+    button_paste_lineup->copy_tooltip(on ? "Paste / Import" : nullptr);
     button_set_lineup->copy_tooltip(on ? "Apply Current Build" : nullptr);
     editor_lineup_string->copy_tooltip(on ? "(Lineup Code)" : "(阵型代码)");
-    button_capture->copy_tooltip(on ? "Screenshot" : "截图");
+    button_capture->copy_tooltip(on ? "Screenshot To Clipboard" : "截图到剪贴板");
 
     for (size_t i = 0; i < 20; i++)
     {
@@ -1971,7 +2460,7 @@ void Window::cb_tooltips()
 
     box_mask_resource->copy_tooltip(on ? "Resources" : nullptr);
     box_mask_battle->copy_tooltip(on ? "Battlefield" : nullptr);
-    box_mask_lineup->copy_tooltip(on ? "Lineup" : nullptr);
+    box_mask_lineup->copy_tooltip(on ? "Setups" : nullptr);
     box_mask_spawn->copy_tooltip(on ? "Spawning" : nullptr);
     box_mask_others->copy_tooltip(on ? "Others" : nullptr);
 

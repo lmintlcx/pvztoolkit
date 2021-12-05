@@ -1,8 +1,23 @@
 
-#include "toolkit.h"
+#include <FL/Fl_Window.H>
+#include <FL/Fl_Box.H>
+#include <FL/Fl_Image.H>
+#include <FL/Fl_JPEG_Image.H>
+#include <FL/Fl_PNG_Image.H>
+#include <FL/Fl_BMP_Image.H>
 
+#include <Windows.h>
 #include <WinTrust.h>
 #include <SoftPub.h>
+
+#include <cassert>
+#include <random>
+#include <ctime>
+
+#include "toolkit.h"
+#include "version.h"
+
+#define IDI_ICON 1001
 
 static_assert(_MSC_VER >= 1916);
 static_assert(sizeof(void *) == 4);
@@ -29,15 +44,15 @@ void callback_pvz_check(void *w)
     bool on = ((Pt::Toolkit *)w)->pvz->GameOn();
     double t = on ? 0.4 : 0.2;
     Fl::repeat_timeout(t, callback_pvz_check, w);
+
+    if (IsDebuggerPresent())
+        exit(-42);
 }
 
 /// main ///
 
 int main(int argc, char **argv)
 {
-    // 初始化随机数种子
-    std::srand(static_cast<unsigned int>(std::time(nullptr)));
-
 #ifdef _DEBUG
     // 调试输出中文
     // 我也不知道为什么加这些就有用
@@ -47,8 +62,61 @@ int main(int argc, char **argv)
     std::wcout.imbue(loc);
 #endif
 
-    // 测试版在 2022-12-31 之后失效
-    if (TEST_VERSION && (std::time(nullptr) > std::time_t(1672502399)))
+    // 初始化随机数种子
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+
+    // 第一次调用时启用线程锁机制
+    Fl::lock();
+
+#ifdef _DEBUG
+    Pt::Lineup lineup;
+    lineup.json_to_yaml();
+#endif
+
+    // 启动画面
+
+    Fl_Window splash(400 + 2, 225 + 2, "");
+    splash.begin();
+    Fl_Box box(1, 1, 400, 225, nullptr);
+    splash.end();
+
+    extern HINSTANCE fl_display;
+    splash.icon((const void *)LoadIcon(fl_display, MAKEINTRESOURCE(IDI_ICON)));
+
+    splash.color(FL_GRAY);
+    splash.border(false);
+    splash.set_non_modal();
+
+    Fl_JPEG_Image img_jpeg("splash.jpg");
+    Fl_PNG_Image img_png("splash.png");
+    Fl_BMP_Image img_bmp("splash.bmp");
+
+    bool show_splash = true;
+    if (img_jpeg.fail() == 0)
+        box.image(img_jpeg);
+    else if (img_png.fail() == 0)
+        box.image(img_png);
+    else if (img_bmp.fail() == 0)
+        box.image(img_bmp);
+    else
+        show_splash = false;
+
+    if (show_splash)
+    {
+        int w = box.image()->w();
+        int h = box.image()->h();
+        box.size(w, h);
+        splash.size(w + 2, h + 2);
+        splash.position((Fl::w() - splash.w()) / 2, (Fl::h() - splash.h()) / 2);
+        splash.show();
+        splash.wait_for_expose();
+        splash.color(FL_GREEN); // 显示后再变色
+    }
+
+    clock_t start = clock();
+
+    // 测试版在 2023-12-31 23:59:59 之后失效
+    if (!RELEASE_VERSION && (std::time(nullptr) > std::time_t(1704038399)))
     {
         if (MessageBoxW(nullptr, L"这是很久以前的测试版哦，现在去下载新的正式版吗？", //
                         L"测试版过期提示", MB_OKCANCEL) == IDOK)
@@ -57,34 +125,54 @@ int main(int argc, char **argv)
         return -1;
     }
 
-#ifndef _DEBUG
-    wchar_t exePath[MAX_PATH] = {0};
-    GetModuleFileNameW(NULL, exePath, MAX_PATH);
-    if (!VerifySignature(exePath))
+    // 防篡改检测
+    if (SIGNATURE_CHECK)
     {
-        if (MessageBoxW(nullptr, L"本程序可能已经感染病毒，请在官方渠道重新下载！", //
-                        L"PvZ Toolkit 防篡改检测", MB_OKCANCEL) == IDOK)
-            ShellExecuteW(nullptr, L"open", L"https://pvz.lmintlcx.com/toolkit/", //
-                          nullptr, nullptr, SW_SHOWNORMAL);
-        return -2;
+        wchar_t exePath[MAX_PATH] = {0};
+        GetModuleFileNameW(NULL, exePath, MAX_PATH);
+        if (!VerifySignature(exePath))
+        {
+            if (MessageBoxW(nullptr, L"本程序可能已经感染病毒，请在官方渠道重新下载！", //
+                            L"PvZ Toolkit 防篡改检测", MB_OKCANCEL) == IDOK)
+                ShellExecuteW(nullptr, L"open", L"https://pvz.lmintlcx.com/toolkit/", //
+                              nullptr, nullptr, SW_SHOWNORMAL);
+            return -2;
+        }
     }
-#endif
 
     // 只运行单个实例
     HANDLE m = CreateMutexW(nullptr, true, L"PvZ Toolkit");
     if (GetLastError() == ERROR_ALREADY_EXISTS)
         return -3;
 
-    // 第一次调用时启用线程锁机制
-    Fl::lock();
-
     // 主窗口
     Pt::Toolkit pvztoolkit(0, 0, "");
     pvztoolkit.callback(window_callback);
-    pvztoolkit.show(argc, argv);
-    pvztoolkit.pvz->FindPvZ();
 
-#ifndef _DEBUG // 避免调试的时候频繁输出
+#ifdef _DEBUG
+    std::wcout << L"启动用时(毫秒): " << (clock() - start) << std::endl;
+    // pvztoolkit.input_sun->value(clock() - start);
+#endif
+
+    // 隐藏启动画面
+    if (show_splash)
+    {
+        double dt = 0.017; // 最短显示时间
+        while ((clock() - start) / (double)CLOCKS_PER_SEC < dt)
+            Fl::check();
+        splash.hide();
+        Fl::check();
+    }
+
+    // 显示主窗口
+    pvztoolkit.show(argc, argv);
+    pvztoolkit.wait_for_expose();
+    pvztoolkit.pvz->FindPvZ();
+    SetForegroundWindow(fl_xid(&pvztoolkit));
+
+#ifdef _DEBUG
+    // 避免调试的时候频繁输出
+#else
     Fl::add_timeout(0.01, callback_pvz_check, &pvztoolkit);
 #endif
 
@@ -126,8 +214,9 @@ bool VerifySignature(LPCWSTR pwszSourceFile)
     LONG lStatus = WinVerifyTrust(NULL, &WVTPolicyGUID, &WinTrustData);
     // wprintf_s(L"WinVerifyTrust lStatus is: 0x%x.\n", lStatus);
 
-    // isGoodSignature = (lStatus == ERROR_SUCCESS || lStatus == CERT_E_CHAINING || lStatus == TRUST_E_COUNTER_SIGNER);
-    isGoodSignature = (lStatus != TRUST_E_NOSIGNATURE && lStatus != TRUST_E_BAD_DIGEST);
+    bool sig_good = (lStatus == ERROR_SUCCESS || lStatus == CERT_E_CHAINING || lStatus == TRUST_E_COUNTER_SIGNER);
+    bool sig_not_bad = (lStatus != TRUST_E_NOSIGNATURE && lStatus != TRUST_E_BAD_DIGEST);
+    isGoodSignature = sig_not_bad; // TODO
 
     WinTrustData.dwStateAction = WTD_STATEACTION_CLOSE;
     lStatus = WinVerifyTrust(NULL, &WVTPolicyGUID, &WinTrustData);
@@ -162,7 +251,7 @@ bool VerifySignature(LPCWSTR pwszSourceFile)
         for (DWORD i = 0; i < size; i++)
             snRead[i] = pCertContext->pCertInfo->SerialNumber.pbData[size - (i + 1)];
         snRead[size] = 0;
-        char snCheck[] = "\x67\x4e\x6f\xa6\xf6\xc0\x13\x97\x47\xa4\xa9\x54\x3e\xfd\x7f\x30";
+        char snCheck[] = "\x21\x13\x67\x0f\x3b\x6c\x60\xaf\x42\x50\x7f\x07\xd3\x97\xbc\xd6";
         isGoodSignature = strcmp(snRead, snCheck) == 0;
     }
     else
