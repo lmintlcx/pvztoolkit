@@ -28,6 +28,7 @@
 #include <cassert>
 #include <filesystem>
 #include <regex>
+#include <algorithm>
 
 #include "pvz.h"
 #include "lineup.h"
@@ -96,6 +97,7 @@ class Window : public Fl_Double_Window
     Fl_Round_Button *check_unlock_sun_limit;
     Fl_Value_Input *input_sun;
     Fl_Button *button_sun;
+    Fl_Box *box_money;
     Fl_Value_Input *input_money;
     Fl_Button *button_money;
     Fl_Check_Button *check_auto_collected;
@@ -104,6 +106,7 @@ class Window : public Fl_Double_Window
     Fl_Check_Button *check_bug_spray;
     Fl_Check_Button *check_tree_food;
     Fl_Check_Button *check_chocolate;
+    Fl_Box *box_wisdom_tree;
     Fl_Value_Input *input_wisdom_tree;
     Fl_Button *button_wisdom_tree;
     Fl_Check_Button *check_free_planting;
@@ -160,7 +163,9 @@ class Window : public Fl_Double_Window
     Fl_Menu_Button *button_put_flower_pot;
     Fl_Button *button_reset;
     Fl_Choice_ *choice_scene;
+    std::vector<Lineup> lineups;
     unsigned int lineup_count[6] = {0};
+    Fl_Button *button_load_lineup;
     Fl_Choice_ *choice_lineup_name[6];
     Fl_Text_Buffer *buffer_lineup_string;
     Fl_Text_Editor *editor_lineup_string;
@@ -232,6 +237,12 @@ class Window : public Fl_Double_Window
 
     static void cb_mode(Fl_Widget *, void *);
     inline void cb_mode();
+
+    static void cb_load_lineup(Fl_Widget *, void *);
+    inline void cb_load_lineup();
+
+    inline void import_lineup_list(bool);
+    inline void import_lineup_list_file(std::wstring);
 
     static void cb_switch_lineup_scene(Fl_Widget *, void *);
     inline void cb_switch_lineup_scene();

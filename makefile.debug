@@ -23,7 +23,7 @@ RC = rc
 RC_FLAGS = /n $(DEFINES)
 
 LINKER = link
-LIBS_FLTK = fltkd.lib fltk_zd.lib
+LIBS_FLTK = fltkd.lib fltk_zd.lib fltk_imagesd.lib fltk_jpegd.lib fltk_pngd.lib
 LIBS_ZLIB = zlib.lib
 LIBS_WIN32 = user32.lib shell32.lib advapi32.lib comctl32.lib comdlg32.lib ole32.lib \
              psapi.lib version.lib wsock32.lib crypt32.lib gdi32.lib gdiplus.lib wintrust.lib

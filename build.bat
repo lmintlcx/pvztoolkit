@@ -10,8 +10,10 @@ set LIB=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Lib;%LIB%
 
 cd /d D:\repo\pvztoolkit
 
-set INCLUDE=.\fltk\include;.\zlib\include;.\json;%INCLUDE%
+set INCLUDE=.\fltk\include;.\zlib\include;%INCLUDE%
 set LIB=.\fltk\lib;.\zlib\lib;%LIB%
+
+set INCLUDE=.\json;%INCLUDE%
 
 set PATH=.\jom;%PATH%
 set MAKE_TOOL=jom
@@ -19,24 +21,46 @@ set MAKE_TOOL=jom
 %MAKE_TOOL% -f makefile.debug clean
 %MAKE_TOOL% -f makefile.debug
 
+mt.exe -nologo ^
+-manifest ".\pvztoolkit.exe.manifest" ^
+-outputresource:".\out\pvztoolkitd.exe;#1"
+
 signtool.exe sign /v ^
-/f "D:\notes\cert\pvztoolkit.pfx" ^
+/fd sha1 ^
+/f "D:\notes\cert\lmintlcx_r4.pfx" ^
 /p "Rm9yIFppb24h" ^
 .\out\pvztoolkitd.exe
 
-
-
 goto :end
+
+set MAKE_TOOL=nmake
 
 %MAKE_TOOL% -f makefile.release clean
 %MAKE_TOOL% -f makefile.release
+
+mt.exe -nologo ^
+-manifest ".\pvztoolkit.exe.manifest" ^
+-outputresource:".\out\pvztoolkit.exe;#1"
+
 .\upx\upx.exe --lzma --ultra-brute .\out\pvztoolkit.exe
 
+set PATH=C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x86\;%PATH%
+
 signtool.exe sign /v ^
-/f "D:\notes\cert\pvztoolkit.pfx" ^
+/fd sha1 ^
+/f "D:\notes\cert\lmintlcx_r4.pfx" ^
 /p "Rm9yIFppb24h" ^
 /t "http://timestamp.digicert.com" ^
 .\out\pvztoolkit.exe
+
+signtool.exe sign /v ^
+/as /fd sha256 ^
+/f "D:\notes\cert\lmintlcx_r4.pfx" ^
+/p "Rm9yIFppb24h" ^
+/tr "http://timestamp.digicert.com" ^
+.\out\pvztoolkit.exe
+
+goto :end
 
 file="PvZ_Toolkit_v1.xx.x.exe"
 rm $file.hash
@@ -54,3 +78,7 @@ gpg --armor --detach-sign $file
 gpg --verify $file.asc $file
 
 :end
+
+copy bin\splash.png .\out
+copy bin\lineup.yml .\out
+copy bin\build.yml .\out

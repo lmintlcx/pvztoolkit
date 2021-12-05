@@ -2,7 +2,9 @@
 #pragma once
 
 #include "zlib.h"
+#ifdef _DEBUG
 #include "json.hpp"
+#endif
 
 #include <iostream>
 #include <regex>
@@ -23,18 +25,23 @@ class Lineup
   public:
     Lineup();
     Lineup(std::string);
+    Lineup(std::string, std::string);
     ~Lineup();
 
-    const bool may_sleep[48] = {false, false, false, false, false, false, false, false, //
-                                true, true, true, false, true, true, true, true,        //
-                                false, false, false, false, false, false, false, false, //
-                                true, false, false, false, false, false, false, true,   //
-                                false, false, false, false, false, false, false, false, //
-                                false, false, true, false, false, false, false, false}; //
+    bool may_sleep[48] = {false, false, false, false, false, false, false, false, //
+                          true, true, true, false, true, true, true, true,        //
+                          false, false, false, false, false, false, false, false, //
+                          true, false, false, false, false, false, false, true,   //
+                          false, false, false, false, false, false, false, false, //
+                          false, false, true, false, false, false, false, false}; //
 
     void Init(const std::string &); // 阵型字符串/代码 -> 数据
     bool OK();                      //
     std::string Generate();         // 填充数据 -> 阵型代码
+
+    std::string lineup_name;   // 阵型名称
+    std::string lineup_string; // 阵型字符串
+    std::string lineup_code;   // 阵型代码
 
     uint16_t plant[GRID];
     uint16_t plant_im[GRID];
@@ -50,8 +57,10 @@ class Lineup
     uint8_t rake_row;
     uint8_t scene;
 
+    long long weight; // 用于排序的权重
+
 #ifdef _DEBUG
-    void json_to_cpp_array();
+    void json_to_yaml();
 #endif
 
   private:
@@ -59,9 +68,6 @@ class Lineup
 
     bool ok;
     uint16_t items[GRID]; // 压缩的
-
-    std::string lineup_string; // 阵型字符串
-    std::string lineup_code;   // 阵型代码
 
     std::vector<std::string> split(const std::string &, char);
     long hex2dec(const std::string &);

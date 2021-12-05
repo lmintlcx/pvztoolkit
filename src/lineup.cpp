@@ -11,8 +11,15 @@ Lineup::Lineup()
 
 Lineup::Lineup(std::string string)
 {
-    // reset_data();
+    reset_data();
     Init(string);
+}
+
+Lineup::Lineup(std::string name, std::string string)
+{
+    reset_data();
+    Init(string);
+    this->lineup_name = name;
 }
 
 Lineup::~Lineup()
@@ -39,14 +46,15 @@ void Lineup::reset_data()
     this->rake_row = 0;
     this->scene = 2;
 
+    this->weight = 0;
+
+    this->lineup_name.clear();
     this->lineup_string.clear();
     this->lineup_code.clear();
 }
 
 void Lineup::Init(const std::string &string)
 {
-    reset_data();
-
     std::regex regex_string("[0-5](,[a-fA-F0-9]{1,2} [1-6] [1-9] [0-2] [0-4]( [a-zA-Z0-9]{1,}){0,}){0,}");
     std::regex regex_code("[a-zA-Z0-9+/=]{18,164}");
 
@@ -69,6 +77,27 @@ void Lineup::Init(const std::string &string)
             decompress_data();
         }
     }
+
+    this->weight += this->scene * 10000000000000000;
+    for (int i = 0; i < GRID; i++)
+    {
+        if (plant[i] == 48)
+            this->weight += 100000000000000; // 春哥
+        if (plant[i] == 43)
+            this->weight += 1000000000000; // 曾哥
+        if (plant[i] == 42)
+            this->weight += 10000000000; // 双子
+        if (plant[i] == 45)
+            this->weight += 100000000; // 冰瓜
+        if (pumpkin[i] == 1)
+            this->weight += 1000000; // 南瓜
+        if (base[i] == 1)
+            this->weight += 10000; // 睡莲
+        if (base[i] == 2)
+            this->weight += 100; // 花盆
+        if (ladder[i] == 1)
+            this->weight += 1; // 梯子
+    }
 }
 
 bool Lineup::OK()
@@ -85,7 +114,7 @@ std::string Lineup::Generate()
 }
 
 #ifdef _DEBUG
-void Lineup::json_to_cpp_array()
+void Lineup::json_to_yaml()
 {
     std::ifstream in;
     in.open("lineup_string.json");
@@ -97,46 +126,46 @@ void Lineup::json_to_cpp_array()
         std::cout << "version: " << json["version"] << std::endl;
         std::cout << "author: " << json["author"] << std::endl;
         std::cout << "counts: " << json["counts"] << std::endl;
-        std::ofstream out("lineup.hpp");
+        std::string v = std::to_string(static_cast<int>(json["version"]));
+        v.insert(6, ".");
+        v.insert(4, ".");
+        std::ofstream out("lineup.yml");
+        out << "#! pvztoolkit"
+            << "\n";
+        out << "\n";
+        out << "# "
+            << "版本"
+            << ": "
+            << v
+            << " "
+            << "("
+            << "数量"
+            << ": "
+            << json["counts"]
+            << ")"
+            << "\n";
+        out << "# https://pvz.lmintlcx.com/lineup/"
+            << "\n";
+        out << "\n";
         if (out.is_open())
         {
-            out << "\n";
-            out << "const char *lineup_names[] ="
-                << "\n";
-            out << "    {"
-                << "\n";
-            for (const auto &l : json["lineup"].items())
+            for (const auto &lineup : json["lineup"].items())
             {
-                std::string name = l.value()["name"];
+                std::string name = lineup.value()["name"];
                 assert(name[4] == '.');
                 name[4] = ' ';
-                out << "        "
-                    << "\""
+                reset_data();
+                Init(lineup.value()["string"]);
+                Generate();
+                assert(this->ok == true);
+                std::string code = this->lineup_code;
+                out << "\""
                     << name
                     << "\""
-                    << ","
+                    << ": "
+                    << code
                     << "\n";
             }
-            out << "};"
-                << "\n";
-            out << "\n";
-            out << "const char *lineup_strings[] ="
-                << "\n";
-            out << "    {"
-                << "\n";
-            for (const auto &l : json["lineup"].items())
-            {
-                Init(l.value()["string"]);
-                Generate();
-                out << "        "
-                    << "\""
-                    << this->lineup_code
-                    << "\""
-                    << ","
-                    << "\n";
-            }
-            out << "};"
-                << "\n";
             out.close();
         }
     }

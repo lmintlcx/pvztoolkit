@@ -326,11 +326,6 @@ void Toolkit::cb_wisdom_tree(Fl_Widget *, void *w)
 
 void Toolkit::cb_wisdom_tree()
 {
-    if (input_wisdom_tree->value() >= 50.0)
-        button_wisdom_tree->copy_label("高树");
-    else
-        button_wisdom_tree->copy_label("树高");
-
     pvz->SetTreeHeight(static_cast<int>(input_wisdom_tree->value()));
 }
 
@@ -440,6 +435,8 @@ void Toolkit::cb_direct_win_thread()
     button_direct_win->activate();
     Fl::unlock();
     Fl::awake();
+
+    button_direct_win->take_focus();
 }
 
 void Toolkit::cb_put_plant(Fl_Widget *, void *w)
@@ -1152,6 +1149,8 @@ void Toolkit::cb_unpack_thread()
     button_pack->activate();
     Fl::unlock();
     Fl::awake();
+
+    button_unpack->take_focus();
 }
 
 void Toolkit::cb_pack(Fl_Widget *, void *w)
@@ -1237,6 +1236,8 @@ void Toolkit::cb_pack_thread()
     button_pack->activate();
     Fl::unlock();
     Fl::awake();
+
+    button_pack->take_focus();
 }
 
 void Toolkit::cb_debug_mode(Fl_Widget *, void *w)
