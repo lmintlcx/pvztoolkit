@@ -129,12 +129,12 @@ void Toolkit::cb_tooltips()
 
     if (window_spawn->shown() == 1)
     {
-        button_show_details->copy_label(emoji ? "📉 隐藏详情" : "隐藏详情");
+        button_show_details->copy_label(EMOJI("📉", "隐藏详情"));
         button_show_details->copy_tooltip(on ? "Hide Details" : nullptr);
     }
     else
     {
-        button_show_details->copy_label(emoji ? "📈 查看详情" : "查看详情");
+        button_show_details->copy_label(EMOJI("📈", "查看详情"));
         button_show_details->copy_tooltip(on ? "Show Details" : nullptr);
     }
 
@@ -412,6 +412,9 @@ void Toolkit::cb_direct_win(Fl_Widget *, void *w)
 
 void Toolkit::cb_direct_win()
 {
+    if (!pvz->GameOn())
+        return;
+
     HANDLE hThread = CreateThread(nullptr, 0, cb_direct_win_thread, this, 0, nullptr);
     CloseHandle(hThread);
 }

@@ -259,7 +259,7 @@ class PvZ : public Process, public Code, public Data
 };
 
 template <typename T, size_t size>
-void PvZ::enable_hack(HACK<T, size> hack, bool on = true)
+void PvZ::enable_hack(HACK<T, size> hack, bool on)
 {
     if (hack.mem_addr == 0x00000000 || hack.mem_addr == 0xffffffff)
         return;
@@ -271,7 +271,7 @@ void PvZ::enable_hack(HACK<T, size> hack, bool on = true)
 }
 
 template <typename T, size_t size>
-void PvZ::enable_hack(std::vector<HACK<T, size>> hacks, bool on = true)
+void PvZ::enable_hack(std::vector<HACK<T, size>> hacks, bool on)
 {
     for (size_t i = 0; i < hacks.size(); i++)
     {

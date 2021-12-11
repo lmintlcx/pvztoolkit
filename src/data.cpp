@@ -2597,7 +2597,7 @@ Data::Data()
 
             0x0046cb90, // call_set_plant_sleeping
 
-            0x00437b20, // call_puzzle_next_stage_clear
+            0x004350f0, // call_puzzle_next_stage_clear
             0x00415e90, // call_pick_background
             0x0052b620, // call_delete_particle_system
 
@@ -2797,7 +2797,7 @@ Data::Data()
 
             0x0046d9e0, // call_set_plant_sleeping
 
-            0x00438790, // call_puzzle_next_stage_clear
+            0x00435d60, // call_puzzle_next_stage_clear
             0x00416ae0, // call_pick_background
             0x0052c250, // call_delete_particle_system
 

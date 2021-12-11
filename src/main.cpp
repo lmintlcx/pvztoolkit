@@ -214,8 +214,8 @@ bool VerifySignature(LPCWSTR pwszSourceFile)
     LONG lStatus = WinVerifyTrust(NULL, &WVTPolicyGUID, &WinTrustData);
     // wprintf_s(L"WinVerifyTrust lStatus is: 0x%x.\n", lStatus);
 
-    bool sig_good = (lStatus == ERROR_SUCCESS || lStatus == CERT_E_CHAINING || lStatus == TRUST_E_COUNTER_SIGNER);
-    bool sig_not_bad = (lStatus != TRUST_E_NOSIGNATURE && lStatus != TRUST_E_BAD_DIGEST);
+    [[maybe_unused]] bool sig_good = (lStatus == ERROR_SUCCESS || lStatus == CERT_E_CHAINING || lStatus == TRUST_E_COUNTER_SIGNER);
+    [[maybe_unused]] bool sig_not_bad = (lStatus != TRUST_E_NOSIGNATURE && lStatus != TRUST_E_BAD_DIGEST);
     isGoodSignature = sig_not_bad; // TODO
 
     WinTrustData.dwStateAction = WTD_STATEACTION_CLOSE;
