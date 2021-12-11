@@ -8,7 +8,8 @@ set PATH=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin;%PATH%
 set INCLUDE=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include;%INCLUDE%
 set LIB=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Lib;%LIB%
 
-cd /d D:\repo\pvztoolkit
+REM cd /d D:\repo\pvztoolkit
+cd /d %~dp0
 
 set INCLUDE=.\fltk\include;.\zlib\include;%INCLUDE%
 set LIB=.\fltk\lib;.\zlib\lib;%LIB%

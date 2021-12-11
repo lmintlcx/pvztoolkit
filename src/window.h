@@ -82,6 +82,8 @@ class SpawnWindow : public Fl_Double_Window
     bool on = false;
 };
 
+#define EMOJI(e, s) ((std::string(this->emoji ? (e) : "▢") + ((s)[0] == 0 ? "" : " ") + (s)).c_str())
+
 class Window : public Fl_Double_Window
 {
   public:

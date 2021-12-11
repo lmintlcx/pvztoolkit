@@ -9,6 +9,7 @@ Code::Code()
     unsigned int page = 256; // 1MB
     code = new unsigned char[4096 * page];
     length = 0;
+    calls_pos.clear();
 }
 
 Code::~Code()
@@ -19,6 +20,7 @@ Code::~Code()
 void Code::asm_init()
 {
     length = 0;
+    calls_pos.clear();
 }
 
 void Code::asm_add_byte(unsigned char value)
@@ -45,72 +47,66 @@ void Code::asm_add_list(std::initializer_list<unsigned char> value)
         asm_add_byte(*it);
 }
 
-void Code::asm_push(int value)
+void Code::asm_push_byte(unsigned char value)
 {
-    asm_add_byte((unsigned char)(0x68));
+    asm_add_byte(0x6a);
+    asm_add_byte(value);
+}
+
+void Code::asm_push_dword(unsigned int value)
+{
+    asm_add_byte(0x68);
     asm_add_dword(value);
 }
 
-void Code::asm_mov_exx(Reg reg, int value)
+void Code::asm_mov_exx(Reg reg, unsigned int value)
 {
-    unsigned char mov_exx[] = {0xb8, 0xbb, 0xb9, 0xba, 0xbe, 0xbf, 0xbd, 0xbc};
-    asm_add_byte(mov_exx[static_cast<unsigned int>(reg)]);
+    asm_add_byte(0xb8 + static_cast<unsigned int>(reg));
     asm_add_dword(value);
 }
 
-void Code::asm_add_exx(Reg reg, int value)
+void Code::asm_mov_exx_dword_ptr(Reg reg, unsigned int value)
 {
-    unsigned char add_exx[] = {0x05, 0xc3, 0xc1, 0xc2, 0xc6, 0xc7, 0xc5, 0xc4};
-    if (reg != Reg::EAX)
-        asm_add_byte((unsigned char)(0x81));
-    asm_add_byte(add_exx[static_cast<unsigned int>(reg)]);
+    asm_add_byte(0x8b);
+    asm_add_byte(0x05 + static_cast<unsigned int>(reg) * 8);
     asm_add_dword(value);
 }
 
-void Code::asm_mov_exx_dword_ptr(Reg reg, int value)
+void Code::asm_mov_exx_dword_ptr_exx_add(Reg reg, unsigned int value)
 {
-    unsigned char mov_exx_dword_ptr[] = {0xa1, 0x1d, 0x0d, 0x15, 0x35, 0x3d, 0x2d, 0x25};
-    asm_add_byte((unsigned char)(0x3e));
-    if (reg != Reg::EAX)
-        asm_add_byte((unsigned char)(0x8b));
-    asm_add_byte(mov_exx_dword_ptr[static_cast<unsigned int>(reg)]);
-    asm_add_dword(value);
-}
-
-void Code::asm_mov_exx_dword_ptr_exx_add(Reg reg, int value)
-{
-    unsigned char mov_exx_dword_ptr_exx_add[] = {0x80, 0x9b, 0x89, 0x92, 0xb6, 0xbf, 0xad, 0xa4};
-    asm_add_byte((unsigned char)(0x8b));
-    asm_add_byte(mov_exx_dword_ptr_exx_add[static_cast<unsigned int>(reg)]);
+    asm_add_byte(0x8b);
+    asm_add_byte(0x80 + static_cast<unsigned int>(reg) * (8 + 1));
     if (reg == Reg::ESP)
-        asm_add_byte((unsigned char)(0x24));
+        asm_add_byte(0x24);
     asm_add_dword(value);
 }
 
 void Code::asm_push_exx(Reg reg)
 {
-    unsigned char push_exx[] = {0x50, 0x53, 0x51, 0x52, 0x56, 0x57, 0x55, 0x54};
-    asm_add_byte(push_exx[static_cast<unsigned int>(reg)]);
+    asm_add_byte(0x50 + static_cast<unsigned int>(reg));
 }
 
 void Code::asm_pop_exx(Reg reg)
 {
-    unsigned char pop_exx[] = {0x58, 0x5b, 0x59, 0x5a, 0x5e, 0x5f, 0x5d, 0x5c};
-    asm_add_byte(pop_exx[static_cast<unsigned int>(reg)]);
+    asm_add_byte(0x58 + static_cast<unsigned int>(reg));
 }
 
-void Code::asm_call(int addr)
+void Code::asm_mov_exx_exx(Reg reg_to, Reg reg_from)
 {
-    asm_add_byte((unsigned char)(0xe8));
-    asm_add_dword((unsigned int)(0x00000002));
-    asm_add_word((unsigned short)(0x06eb));
-    asm_push(addr);
-    asm_ret();
+    asm_add_byte(0x8b);
+    asm_add_byte(0xc0 + static_cast<unsigned int>(reg_to) * 8 + static_cast<unsigned int>(reg_from));
+}
+
+void Code::asm_call(unsigned int addr)
+{
+    asm_add_byte(0xe8);
+    calls_pos.push_back(length);
+    asm_add_dword(addr);
 }
 
 void Code::asm_ret()
 {
-    asm_add_byte((unsigned char)(0xc3));
+    asm_add_byte(0xc3);
 }
 
 void Code::asm_code_inject(HANDLE handle)
@@ -119,6 +115,13 @@ void Code::asm_code_inject(HANDLE handle)
                                  MEM_COMMIT, PAGE_EXECUTE_READWRITE);
     if (addr == nullptr)
         return;
+
+    for (size_t i = 0; i < this->calls_pos.size(); i++)
+    {
+        unsigned int pos = this->calls_pos[i];
+        int &call_addr = (int &)(this->code[pos]);
+        call_addr = call_addr - ((int)addr + pos + 4);
+    }
 
     DWORD write_size = 0;
     BOOL ret = WriteProcessMemory(handle, addr, this->code, this->length, &write_size);
@@ -146,7 +149,7 @@ void Code::asm_code_inject(HANDLE handle)
     assert(this->length < 4096 * 16);
     std::wcout << L"注入汇编码: ";
     for (size_t i = 0; i < this->length; i++)
-        std::cout << std::hex << int(code[i]) << " ";
+        std::cout << std::hex << int(this->code[i]) << " ";
     std::cout << std::endl;
 #endif
 }

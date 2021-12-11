@@ -15,7 +15,7 @@ PvZ Toolkit 官方网站: [https://pvz.lmintlcx.com/toolkit/](https://pvz.lmintl
 
 ## 更新日志
 
-最新版本: 1.16.0 (2021-12-05)
+最新版本: 1.17.0 (2021-12-11)
 
 [点击查看 CHANGELOG.md](https://github.com/lmintlcx/pvztoolkit/blob/master/CHANGELOG.md)
 

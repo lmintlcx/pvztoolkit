@@ -217,11 +217,16 @@ void PvZ::SetScene(int scene, bool reset)
     if (ui != 2 && ui != 3)
         return;
 
+    auto has_lawn_mower = //
+        ReadMemory<uint32_t>({data().lawn, data().board, data().lawn_mower_count}) > 0;
+
+    int music_id = scene + 1;
+    if (music_id == 6)
+        music_id = 2;
+
     if (GetScene() == scene)
         goto reset_scene;
 
-    auto has_lawn_mower = //
-        ReadMemory<uint32_t>({data().lawn, data().board, data().lawn_mower_count}) > 0;
     if (has_lawn_mower)
         SetLawnMowers(1);
 
@@ -247,7 +252,7 @@ void PvZ::SetScene(int scene, bool reset)
     asm_add_dword(data().scene); //
     asm_add_dword(scene);        //
     if (isBETA())
-        asm_add_list(0x8b, 0xce); // mov ecx,esi
+        asm_mov_exx_exx(Reg::ECX, Reg::ESI);
     asm_call(data().call_pick_background);
     asm_ret();
     asm_code_inject();
@@ -321,7 +326,7 @@ void PvZ::SetScene(int scene, bool reset)
                 if (isBETA())
                     asm_mov_exx(Reg::ECX, addr);
                 else
-                    asm_push(addr);
+                    asm_push_dword(addr);
                 asm_call(data().call_delete_particle_system);
             }
         }
@@ -334,9 +339,6 @@ void PvZ::SetScene(int scene, bool reset)
         asm_code_inject();
     }
 
-    int music_id = scene + 1;
-    if (music_id == 6)
-        music_id = 2;
     SetMusic(music_id);
 
 reset_scene:
@@ -348,13 +350,10 @@ reset_scene:
         asm_mov_exx_dword_ptr_exx_add(Reg::EDI, data().challenge);
         asm_add_list({0xff, 0x8f}); // dec [edi+0000006c]
         asm_add_dword(data().endless_rounds);
-        if (this->find_result == PVZ_1_1_0_1056_ZH            //
-            || this->find_result == PVZ_1_1_0_1056_JA         //
-            || this->find_result == PVZ_1_1_0_1056_ZH_2012_06 //
-            || this->find_result == PVZ_1_1_0_1056_ZH_2012_07)
+        if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
             asm_push_exx(Reg::EDI);
         if (isBETA())
-            asm_add_list(0x8b, 0xcf); // mov ecx,edi
+            asm_mov_exx_exx(Reg::ECX, Reg::EDI);
         asm_call(data().call_puzzle_next_stage_clear);
         asm_ret();
         asm_code_inject();
@@ -513,11 +512,11 @@ void PvZ::UnlockTrophy()
     {
         // TODO 只能在主界面
         asm_init();
-        asm_push(1); // 显示 Loading
+        asm_push_byte(1); // 显示 Loading
         asm_mov_exx_dword_ptr(Reg::ECX, data().lawn);
         asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().game_selector);
         if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
-            asm_add_list(0x8b, 0xf1); // mov esi,ecx
+            asm_mov_exx_exx(Reg::ESI, Reg::ECX);
         asm_call(data().call_sync_profile);
         asm_ret();
         asm_code_inject();
@@ -872,25 +871,25 @@ void PvZ::asm_put_plant(int row, int col, int type, bool imitater, bool iz_style
 {
     if (imitater)
     {
-        asm_push(type);
-        asm_push(48);
+        asm_push_dword(type);
+        asm_push_dword(48);
     }
     else
     {
-        asm_push(-1);
-        asm_push(type);
+        asm_push_dword(-1);
+        asm_push_dword(type);
     }
     if (isBETA())
     {
-        asm_push(row);
-        asm_push(col);
+        asm_push_dword(row);
+        asm_push_dword(col);
         asm_mov_exx_dword_ptr(Reg::ECX, data().lawn);
         asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().board);
     }
     else
     {
         asm_mov_exx(Reg::EAX, row);
-        asm_push(col);
+        asm_push_dword(col);
         asm_mov_exx_dword_ptr(Reg::EBP, data().lawn);
         asm_mov_exx_dword_ptr_exx_add(Reg::EBP, data().board);
         asm_push_exx(Reg::EBP);
@@ -910,25 +909,25 @@ void PvZ::asm_put_plant(int row, int col, int type, bool imitater, bool iz_style
         asm_add_list(0x69, 0xdb, 0x4c, 0x01, 0x00, 0x00); // imul ebx,ebx,plant_struct_size
         asm_add_list(0x01, 0xd9);                         // add ecx,ebx
         asm_push_exx(Reg::ECX);
-        asm_add_list(0x8b, 0xf0); // mov esi,eax
+        asm_mov_exx_exx(Reg::ESI, Reg::EAX);
         if (isBETA())
-            asm_add_list(0x8b, 0xc8); // mov ecx,eax
+            asm_mov_exx_exx(Reg::ECX, Reg::EAX);
         asm_call(data().call_put_plant_imitater);
         asm_pop_exx(Reg::ECX);
-        asm_add_list(0x8b, 0xc1); // mov eax,ecx
+        asm_mov_exx_exx(Reg::EAX, Reg::ECX);
     }
 
     if (iz_style)
     {
-        asm_add_list(0x8b, 0xf0); // mov esi,eax
+        asm_mov_exx_exx(Reg::ESI, Reg::EAX);
         asm_push_exx(Reg::EAX);
         asm_mov_exx_dword_ptr(Reg::EAX, data().lawn);
         asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().board);
         asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().challenge);
         if (isBETA())
-            asm_add_list(0x8b, 0xc8); // mov ecx,eax
+            asm_mov_exx_exx(Reg::ECX, Reg::EAX);
         asm_call(data().call_put_plant_iz_style);
-        asm_add_list(0x8b, 0xc6); // mov eax,esi
+        asm_mov_exx_exx(Reg::EAX, Reg::ESI);
     }
 }
 
@@ -966,7 +965,7 @@ void PvZ::asm_put_zombie(int row, int col, int type)
 {
     if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
     {
-        asm_push(type); // 0x6a byte(type)
+        asm_push_dword(type); // 0x6a byte(type)
         asm_mov_exx_dword_ptr(Reg::ECX, data().lawn);
         asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().board);
         asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().challenge);
@@ -977,9 +976,9 @@ void PvZ::asm_put_zombie(int row, int col, int type)
     }
     else if (isBETA())
     {
-        asm_push(row);
-        asm_push(col);
-        asm_push(type);
+        asm_push_dword(row);
+        asm_push_dword(col);
+        asm_push_dword(type);
         asm_mov_exx_dword_ptr(Reg::ECX, data().lawn);
         asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().board);
         asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().challenge);
@@ -987,8 +986,8 @@ void PvZ::asm_put_zombie(int row, int col, int type)
     }
     else
     {
-        asm_push(col);
-        asm_push(type);
+        asm_push_dword(col);
+        asm_push_dword(type);
         asm_mov_exx(Reg::EAX, row);
         asm_mov_exx_dword_ptr(Reg::ECX, data().lawn);
         asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().board);
@@ -1012,16 +1011,16 @@ void PvZ::PutZombie(int row, int col, int type)
         {
             asm_mov_exx_dword_ptr(Reg::ECX, data().lawn);
             asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().board);
-            asm_push(0);
-            asm_push(0);
-            asm_push(25);
+            asm_push_dword(0);
+            asm_push_dword(0);
+            asm_push_dword(25);
         }
         else
         {
             asm_mov_exx_dword_ptr(Reg::EAX, data().lawn);
             asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().board);
-            asm_push(0);
-            asm_push(25);
+            asm_push_dword(0);
+            asm_push_dword(25);
         }
         asm_call(data().call_put_zombie_in_row);
         asm_ret();
@@ -1064,8 +1063,8 @@ void PvZ::asm_put_grave(int row, int col)
         asm_mov_exx_dword_ptr(Reg::ECX, data().lawn);
         asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().board);
         asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().challenge);
-        asm_push(row);
-        asm_push(col);
+        asm_push_dword(row);
+        asm_push_dword(col);
         asm_call(data().call_put_grave);
     }
     else
@@ -1111,8 +1110,8 @@ void PvZ::asm_put_ladder(int row, int col)
 {
     if (isBETA())
     {
-        asm_push(row);
-        asm_push(col);
+        asm_push_dword(row);
+        asm_push_dword(col);
         asm_mov_exx_dword_ptr(Reg::ECX, data().lawn);
         asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().board);
         asm_call(data().call_put_ladder);
@@ -1120,7 +1119,7 @@ void PvZ::asm_put_ladder(int row, int col)
     else
     {
         asm_mov_exx(Reg::EDI, row);
-        asm_push(col);
+        asm_push_dword(col);
         asm_mov_exx_dword_ptr(Reg::EAX, data().lawn);
         asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().board);
         asm_call(data().call_put_ladder);
@@ -1351,7 +1350,7 @@ void PvZ::SetLawnMowers(int option)
         asm_mov_exx_dword_ptr(Reg::EAX, data().lawn);
         asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().board);
         if (isBETA())
-            asm_add_list(0x8b, 0xc8); // mov ecx,eax
+            asm_mov_exx_exx(Reg::ECX, Reg::EAX);
         else
             asm_push_exx(Reg::EAX);
         asm_call(data().call_restore_lawn_mower);
@@ -1390,7 +1389,7 @@ void PvZ::ClearAllPlants()
             if (isBETA())
                 asm_mov_exx(Reg::ECX, addr);
             else
-                asm_push(addr);
+                asm_push_dword(addr);
             asm_call(data().call_delete_plant);
         }
     }
@@ -1609,7 +1608,7 @@ void PvZ::MushroomsAwake(bool on)
                     asm_mov_exx(Reg::ECX, addr);
                 else
                     asm_mov_exx(Reg::EAX, addr);
-                asm_push(0);
+                asm_push_byte(0);
                 asm_call(data().call_set_plant_sleeping);
             }
         }
@@ -1995,10 +1994,10 @@ void PvZ::SetLineup(Lineup lineup)
             {
                 asm_push_exx(Reg::EAX);
                 if (isGOTY())
-                    asm_add_list(0x8b, 0xf8); // mov edi,eax
+                    asm_mov_exx_exx(Reg::EDI, Reg::EAX);
                 else if (isBETA())
-                    asm_add_list(0x8b, 0xc8); // mov ecx,eax
-                asm_push(0);
+                    asm_mov_exx_exx(Reg::ECX, Reg::EAX);
+                asm_push_byte(0);
                 asm_call(data().call_set_plant_sleeping);
                 asm_pop_exx(Reg::EAX);
             }
@@ -2092,13 +2091,13 @@ void PvZ::update_spawn_preview()
     asm_mov_exx_dword_ptr(Reg::EBX, data().lawn);
     asm_mov_exx_dword_ptr_exx_add(Reg::EBX, data().board);
     if (isBETA())
-        asm_add_list({0x8b, 0xcb}); // mov ecx,ebx
+        asm_mov_exx_exx(Reg::ECX, Reg::EBX);
     asm_call(data().call_remove_cutscene_zombies);
     asm_mov_exx_dword_ptr(Reg::EAX, data().lawn);
     asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().board);
     asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().cut_scene);
     if (isBETA())
-        asm_add_list({0x8b, 0xc8}); // mov ecx,eax
+        asm_mov_exx_exx(Reg::ECX, Reg::EAX);
     else
         asm_push_exx(Reg::EAX);
     asm_call(data().call_place_street_zombies);
@@ -2321,7 +2320,7 @@ void PvZ::SetMusic(int id)
     asm_init();
     if (isBETA())
     {
-        asm_push(id);
+        asm_push_dword(id);
         asm_mov_exx_dword_ptr(Reg::ECX, data().lawn);
         asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().music);
     }

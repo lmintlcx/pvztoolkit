@@ -653,10 +653,10 @@ Window::Window(int width, int height, const char *title)
             group_resource = new Fl_Group(m, m + th, w - m * 2, h - m * 2 - th, "资源");
             {
                 check_unlock_sun_limit = new Fl_Round_Button(c(1) + 8, r(1), iw - 76, ih, "");
-                input_sun = new Fl_Value_Input(c(1) + 40, r(1), iw - 10, ih, "");
+                input_sun = new Fl_Value_Input(c(1) + 45, r(1), iw - 15, ih, "");
                 button_sun = new Fl_Button(c(2) + 40 - 10, r(1), iw - 45, ih, "阳光");
-                box_money = new Fl_Box(c(1) + 8, r(2), iw - 76, ih, "$");
-                input_money = new Fl_Value_Input(c(1) + 40, r(2), iw - 10, ih, "");
+                box_money = new Fl_Box(c(1) + 8, r(2), iw - 76, ih, "钱包");
+                input_money = new Fl_Value_Input(c(1) + 45, r(2), iw - 15, ih, "");
                 button_money = new Fl_Button(c(2) + 40 - 10, r(2), iw - 45, ih, "金币");
                 check_auto_collected = new Fl_Check_Button(c(3), r(3), iw - 15, ih, "自动收集");
                 check_not_drop_loot = new Fl_Check_Button(c(4), r(3), iw, ih, "不掉战利品");
@@ -664,8 +664,8 @@ Window::Window(int width, int height, const char *title)
                 check_bug_spray = new Fl_Check_Button(c(4), r(1), iw, ih, "杀虫剂无限");
                 check_tree_food = new Fl_Check_Button(c(3), r(2), iw - 15, ih, "树肥无限");
                 check_chocolate = new Fl_Check_Button(c(4), r(2), iw, ih, "巧克力无限");
-                box_wisdom_tree = new Fl_Box(c(1) + 8, r(3), iw - 76, ih, "↑");
-                input_wisdom_tree = new Fl_Value_Input(c(1) + 40, r(3), iw - 10, ih, "");
+                box_wisdom_tree = new Fl_Box(c(1) + 8, r(3), iw - 76, ih, "树高");
+                input_wisdom_tree = new Fl_Value_Input(c(1) + 45, r(3), iw - 15, ih, "");
                 button_wisdom_tree = new Fl_Button(c(2) + 40 - 10, r(3), iw - 45, ih, "英尺");
                 check_free_planting = new Fl_Check_Button(c(1), r(4), iw - 15, ih, "免费用卡");
                 check_placed_anywhere = new Fl_Check_Button(c(2), r(4), iw - 15, ih, "随意放置");
@@ -723,7 +723,7 @@ Window::Window(int width, int height, const char *title)
                 button_put_flower_pot = new Fl_Menu_Button(c(4), r(2), iw, ih, "屋顶花盆");
                 button_reset = new Fl_Button(c(1), r(3), iw + 12, ih, "重置场地");
                 choice_scene = new Fl_Choice_(c(2) + 12, r(3), iw - 12, ih, "");
-                button_load_lineup = new Fl_Button(c(3), r(3), iw * 2 + 10, ih, "加载阵型列表文件 \"***.yml\"");
+                button_load_lineup = new Fl_Button(c(3), r(3), iw * 2 + 10, ih, "加载阵型列表文件 (***.yml)");
                 choice_lineup_name[0] = new Fl_Choice_(c(3), r(3), iw * 2 + 10, ih, "");
                 choice_lineup_name[1] = new Fl_Choice_(c(3), r(3), iw * 2 + 10, ih, "");
                 choice_lineup_name[2] = new Fl_Choice_(c(3), r(3), iw * 2 + 10, ih, "");
@@ -756,7 +756,7 @@ Window::Window(int width, int height, const char *title)
                 check_giga_limit = new Fl_Check_Button(c(3) - 55 + 40, r(6), iw - 40, ih, "变速");
                 button_set_spawn = new Fl_Button(c(4) - 55, r(6), iw + 55 - 5, ih, "极限出怪 (均匀填充)");
                 button_spawn_extra = new Fl_Menu_Button(m, m + th, w - m * 2, h - m * 2 - th - 42, nullptr);
-                button_spawn_mode = new Fl_Menu_Button(c(4) - 55, r(6), iw + 55 - 5, ih, " 选择刷怪模式 :   ");
+                button_spawn_mode = new Fl_Menu_Button(c(4) - 55, r(6), iw + 55 - 5, ih, "选择刷怪模式：");
             }
             group_spawn->end();
 
@@ -876,9 +876,9 @@ Window::Window(int width, int height, const char *title)
     }
     choice_zombie->value(0);
 
-    button_lawn_mower->add("   启动 ");
-    button_lawn_mower->add("   删除 ");
-    button_lawn_mower->add("   恢复 ");
+    button_lawn_mower->add("[启动]");
+    button_lawn_mower->add("[删除]");
+    button_lawn_mower->add("[恢复]");
 
     choice_item->add("植物");
     choice_item->add("僵尸");
@@ -970,14 +970,14 @@ Window::Window(int width, int height, const char *title)
     choice_giga_weight->deactivate();
     check_giga_limit->activate();
 
-    button_spawn_extra->add(" 清空已选 ", 0, cb_clear_checked_zombies, this);
-    button_spawn_extra->add(" 取消限制 ", 0, cb_disable_limit_species, this);
+    button_spawn_extra->add("[清空已选]", 0, cb_clear_checked_zombies, this);
+    button_spawn_extra->add("[取消限制]", 0, cb_disable_limit_species, this);
     button_spawn_extra->type(Fl_Menu_Button::POPUP3);
     button_spawn_extra->value(0);
 
-    button_spawn_mode->add(" 自然出怪 (游戏生成) ", 0, cb_switch_spawn_mode, this);
-    button_spawn_mode->add(" 极限出怪 (均匀填充) ", 0, cb_switch_spawn_mode, this);
-    button_spawn_mode->add(" 模拟出怪 (加权随机) ", 0, cb_switch_spawn_mode, this);
+    button_spawn_mode->add("自然出怪 (游戏生成)", 0, cb_switch_spawn_mode, this);
+    button_spawn_mode->add("极限出怪 (均匀填充)", 0, cb_switch_spawn_mode, this);
+    button_spawn_mode->add("模拟出怪 (加权随机)", 0, cb_switch_spawn_mode, this);
     button_spawn_mode->type(Fl_Menu_Button::POPUP3);
     button_spawn_mode->value(1); // 默认极限刷怪
 
@@ -1197,25 +1197,31 @@ Window::Window(int width, int height, const char *title)
     Fl_Tooltip::margin_height(5);
     Fl_Tooltip::wrap_width(400);
 
-    emoji = dwBuild >= 9600;
+    emoji = dwBuild >= 9200;
 
     if (emoji)
     {
         box_money->copy_label("💰");
         box_wisdom_tree->copy_label("🌳");
-        button_unlock->copy_label("🏆 通关存档");
-        button_lawn_mower->replace(0, " ➡️  启动 ");
-        button_lawn_mower->replace(1, " 🆑  删除 ");
-        button_lawn_mower->replace(2, " 🔄  恢复 ");
-        button_reset->copy_label("⏳ 重置场地");
         button_capture->copy_label("📷");
-        button_spawn_extra->replace(0, " ❌ 清空已选 ");
-        button_spawn_extra->replace(1, " ❎ 取消限制 ");
-        button_show_details->copy_label("📈 查看详情");
-        button_music->copy_label("🎵 背景音乐");
-        button_userdata->copy_label("💾 存档文件夹");
-        button_document->copy_label("🌏 文档");
     }
+
+    button_unlock->copy_label(EMOJI("🏆", "通关存档"));
+
+    button_lawn_mower->replace(0, EMOJI("➡️", "[启动]"));
+    button_lawn_mower->replace(1, EMOJI("🆑", "[删除]"));
+    button_lawn_mower->replace(2, EMOJI("🔄", "[恢复]"));
+
+    button_reset->copy_label(EMOJI("⏳", "重置场地"));
+
+    button_spawn_extra->replace(0, EMOJI("❌", "[清空已选]"));
+    button_spawn_extra->replace(1, EMOJI("❎", "[取消限制]"));
+
+    button_show_details->copy_label(EMOJI("📈", "查看详情"));
+
+    button_music->copy_label(EMOJI("🎵", "背景音乐"));
+    button_userdata->copy_label(EMOJI("💾", "存档文件夹"));
+    button_document->copy_label(EMOJI("🌏", "文档"));
 
     // 默认运行的回调函数
 
@@ -1349,7 +1355,7 @@ void Window::ReadSettings()
         status = RegQueryValueExW(hKey, L"ValueLevel", 0, &dwType, (LPBYTE)&level, &dwSize);
         if (status == ERROR_SUCCESS)
         {
-            if (0 <= level && level <= 53687091)
+            if (0 <= level && level <= 10000000)
                 input_level->value(level);
         }
 
@@ -1651,27 +1657,35 @@ void Window::cb_find_result_tooltip()
         break;
     }
 
+    DWORD dwVersion = 0;
+    DWORD dwBuild = 0;
+    dwVersion = GetVersion();
+    if (dwVersion < 0x80000000)
+        dwBuild = (DWORD)(HIWORD(dwVersion));
+
+    bool emoji_info = dwBuild >= 9600;
+
     if (result == PVZ_NOT_FOUND)
     {
-        game_status_tip->copy_label(emoji ? "🛈" : "i");
+        game_status_tip->copy_label(emoji_info ? "🛈" : "i");
         game_status_tip->copy_tooltip(on ? "Run Plants vs. Zombies first."
                                          : "先打开运行植物大战僵尸游戏。");
     }
     else if (result == PVZ_OPEN_ERROR)
     {
-        game_status_tip->copy_label(emoji ? "🛈" : "i");
+        game_status_tip->copy_label(emoji_info ? "🛈" : "i");
         game_status_tip->copy_tooltip(on ? "Try run Pt as administrator."
                                          : "建议用管理员权限运行修改器。");
     }
     else if (result == PVZ_UNSUPPORTED)
     {
-        game_status_tip->copy_label(emoji ? "🛈" : "i");
+        game_status_tip->copy_label(emoji_info ? "🛈" : "i");
         game_status_tip->copy_tooltip(on ? "Contact author to add support."
                                          : "联系作者给这个版本添加支持。");
     }
     else if (result == PVZ_BETA_0_1_1_1014_EN || result == PVZ_BETA_0_9_9_1029_EN)
     {
-        game_status_tip->copy_label(emoji ? "🛈" : "i");
+        game_status_tip->copy_label(emoji_info ? "🛈" : "i");
         game_status_tip->copy_tooltip(on ? "Partial support for beta version."
                                          : "对测试版本仅提供有限功能支持。");
     }
@@ -2087,12 +2101,12 @@ void Window::cb_disable_limit_species()
     if (limit_species)
     {
         limit_species = false;
-        button_spawn_extra->replace(1, emoji ? " ✅ 启用限制 " : " 启用限制 ");
+        button_spawn_extra->replace(1, EMOJI("✅", "[启用限制]"));
     }
     else
     {
         limit_species = true;
-        button_spawn_extra->replace(1, emoji ? " ❎ 取消限制 " : " 取消限制 ");
+        button_spawn_extra->replace(1, EMOJI("❎", "[取消限制]"));
     }
 
     button_spawn_extra->value(0);
@@ -2412,7 +2426,7 @@ void Window::cb_tooltips()
     button_put_flower_pot->copy_tooltip(on ? "Flower Pot On Roof" : nullptr);
     button_reset->copy_tooltip(on ? "Reset Scene" : nullptr);
     choice_scene->copy_tooltip(on ? vstr_scenes[choice_scene->value()].c_str() : nullptr);
-    button_load_lineup->copy_tooltip(on ? "Load Lineup List File \"***.yml\"" : nullptr);
+    button_load_lineup->copy_tooltip(on ? "Load Lineup List File (***.yml)" : nullptr);
     for (size_t i = 0; i < 6; i++)
         choice_lineup_name[i]->copy_tooltip(on ? "(Lineup Name)" : nullptr);
     button_get_lineup->copy_tooltip(on ? "Get Lineup Code" : nullptr);

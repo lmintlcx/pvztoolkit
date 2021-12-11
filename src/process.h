@@ -37,7 +37,7 @@ class Process
 
     // 读内存字符串
     template <>
-    std::string ReadMemory(std::initializer_list<uintptr_t>);
+    std::string ReadMemory<std::string>(std::initializer_list<uintptr_t>);
 
     // 写内存
     template <typename T>
@@ -131,7 +131,7 @@ T Process::ReadMemory(std::initializer_list<uintptr_t> addr)
 }
 
 template <>
-std::string Process::ReadMemory(std::initializer_list<uintptr_t> addr)
+inline std::string Process::ReadMemory<std::string>(std::initializer_list<uintptr_t> addr)
 {
     std::string result = std::string();
 
