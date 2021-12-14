@@ -22,14 +22,14 @@ namespace Pt
 #define PVZ_1_0_7_3556_ES 1004
 #define PVZ_1_0_7_3467_RU 1005
 
-#define PVZ_1_2_0_1073_EN 2001
-#define PVZ_1_2_0_1096_EN 2002
-#define PVZ_1_2_0_1093_DE_ES_FR_IT 2003
+#define PVZ_GOTY_1_2_0_1073_EN 2001
+#define PVZ_GOTY_1_2_0_1096_EN 2002
+#define PVZ_GOTY_1_2_0_1093_DE_ES_FR_IT 2003
 
-#define PVZ_1_1_0_1056_ZH 2004
-#define PVZ_1_1_0_1056_JA 2005
-#define PVZ_1_1_0_1056_ZH_2012_06 2006
-#define PVZ_1_1_0_1056_ZH_2012_07 2007
+#define PVZ_GOTY_1_1_0_1056_ZH 2004
+#define PVZ_GOTY_1_1_0_1056_JA 2005
+#define PVZ_GOTY_1_1_0_1056_ZH_2012_06 2006
+#define PVZ_GOTY_1_1_0_1056_ZH_2012_07 2007
 
 // 单独的一个 hack
 // 包括 类型, 数目, 地址, 修改值, 原始值
@@ -271,13 +271,13 @@ class Data
     PVZ_DATA data_1_0_4_7924_es;
     PVZ_DATA data_1_0_7_3556_es;
     PVZ_DATA data_1_0_7_3467_ru;
-    PVZ_DATA data_1_2_0_1073_en;
-    PVZ_DATA data_1_2_0_1096_en;
-    PVZ_DATA data_1_2_0_1093_de_es_fr_it;
-    PVZ_DATA data_1_1_0_1056_zh;
-    PVZ_DATA data_1_1_0_1056_ja;
-    PVZ_DATA data_1_1_0_1056_zh_2012_06;
-    PVZ_DATA data_1_1_0_1056_zh_2012_07;
+    PVZ_DATA data_goty_1_2_0_1073_en;
+    PVZ_DATA data_goty_1_2_0_1096_en;
+    PVZ_DATA data_goty_1_2_0_1093_de_es_fr_it;
+    PVZ_DATA data_goty_1_1_0_1056_zh;
+    PVZ_DATA data_goty_1_1_0_1056_ja;
+    PVZ_DATA data_goty_1_1_0_1056_zh_2012_06;
+    PVZ_DATA data_goty_1_1_0_1056_zh_2012_07;
 
     // 将版本和对应数据联系起来的键值对
     std::map<int, PVZ_DATA> ver_map;

@@ -16,9 +16,6 @@ namespace Pt
 // 输出内存读写数据
 #define _PTK_MEMORY_OUTPUT
 
-// 省略地址列表括号
-// #define _PTK_RM_OMIT_PARENTHESES
-
 class Process
 {
   public:
@@ -50,23 +47,6 @@ class Process
     // 写内存数组
     template <typename T, size_t size>
     void WriteMemory(std::array<T, size>, std::initializer_list<uintptr_t>);
-
-#ifdef _PTK_RM_OMIT_PARENTHESES
-    template <typename T, typename... Args>
-    T ReadMemory(Args...);
-
-    template <typename... Args>
-    std::string ReadMemory(Args...);
-
-    template <typename T, typename... Args>
-    void WriteMemory(T, Args...);
-
-    template <typename T, size_t size, typename... Args>
-    std::array<T, size> ReadMemory(Args...);
-
-    template <typename T, size_t size, typename... Args>
-    void WriteMemory(std::array<T, size>, Args...);
-#endif
 
   protected:
     HWND hwnd;     // 窗口句柄
@@ -281,37 +261,5 @@ void Process::WriteMemory(std::array<T, size> value, std::initializer_list<uintp
     //     std::wcout << L"写内存出错!" << std::endl;
 #endif
 }
-
-#ifdef _PTK_RM_OMIT_PARENTHESES
-template <typename T, typename... Args>
-T Process::ReadMemory(Args... address)
-{
-    return ReadMemory<T>({static_cast<uintptr_t>(address)...});
-}
-
-template <typename... Args>
-std::string Process::ReadMemory(Args... address)
-{
-    return ReadMemory<std::string>({static_cast<uintptr_t>(address)...});
-}
-
-template <typename T, typename... Args>
-void Process::WriteMemory(T value, Args... address)
-{
-    WriteMemory<T>(value, {static_cast<uintptr_t>(address)...});
-}
-
-template <typename T, size_t size, typename... Args>
-std::array<T, size> Process::ReadMemory(Args... address)
-{
-    return ReadMemory<T, size>({static_cast<uintptr_t>(address)...});
-}
-
-template <typename T, size_t size, typename... Args>
-void Process::WriteMemory(std::array<T, size> value, Args... address)
-{
-    WriteMemory<T, size>(value, {static_cast<uintptr_t>(address)...});
-}
-#endif
 
 } // namespace Pt

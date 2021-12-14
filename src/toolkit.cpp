@@ -416,7 +416,18 @@ void Toolkit::cb_direct_win()
         return;
 
     HANDLE hThread = CreateThread(nullptr, 0, cb_direct_win_thread, this, 0, nullptr);
+
+    DWORD dwExitCode = STILL_ACTIVE;
+    while (GetExitCodeThread(hThread, &dwExitCode) != 0 //
+           && dwExitCode == STILL_ACTIVE)
+    {
+        Fl::check();
+        Sleep(1);
+    }
+
     CloseHandle(hThread);
+
+    button_direct_win->take_focus();
 }
 
 DWORD Toolkit::cb_direct_win_thread(void *w)
@@ -438,8 +449,6 @@ void Toolkit::cb_direct_win_thread()
     button_direct_win->activate();
     Fl::unlock();
     Fl::awake();
-
-    button_direct_win->take_focus();
 }
 
 void Toolkit::cb_put_plant(Fl_Widget *, void *w)
@@ -1070,7 +1079,33 @@ void Toolkit::cb_unpack(Fl_Widget *, void *w)
 void Toolkit::cb_unpack()
 {
     HANDLE hThread = CreateThread(nullptr, 0, cb_unpack_thread, this, 0, nullptr);
+
+    DWORD dwExitCode = STILL_ACTIVE;
+    while (GetExitCodeThread(hThread, &dwExitCode) != 0 //
+           && dwExitCode == STILL_ACTIVE)
+    {
+        Fl::check();
+        Sleep(1);
+    }
+
     CloseHandle(hThread);
+
+    button_unpack->take_focus();
+
+    if (this->unpack_result == 0xFFFFFFFF)
+    {
+        return;
+    }
+    else if (this->unpack_result == UNPACK_SUCCESS)
+    {
+        fl_message_title("解包完成");
+        fl_message(this->unpack_text.c_str());
+    }
+    else
+    {
+        fl_message_title("解包出错");
+        fl_alert(this->unpack_text.c_str());
+    }
 }
 
 DWORD Toolkit::cb_unpack_thread(void *w)
@@ -1081,8 +1116,11 @@ DWORD Toolkit::cb_unpack_thread(void *w)
 
 void Toolkit::cb_unpack_thread()
 {
-    std::wstring src_file = utf8_decode(std::string(input_file->value()));
-    std::wstring dst_dir = utf8_decode(std::string(input_dir->value()));
+    this->unpack_result = 0xFFFFFFFF;
+    this->unpack_text = "";
+
+    std::string src_file = std::string(input_file->value());
+    std::string dst_dir = std::string(input_dir->value());
     if (src_file.empty() || dst_dir.empty())
         return;
 
@@ -1097,51 +1135,6 @@ void Toolkit::cb_unpack_thread()
     Fl::awake();
 
     int ret = pak->Unpack(src_file, dst_dir);
-#ifdef _DEBUG
-    std::wcout << L"解包返回值 " << ret << std::endl;
-#endif
-
-    switch (ret)
-    {
-    case UNPACK_SRC_NOT_EXIST:
-        MessageBoxW(GetActiveWindow(), L"打开源文件失败！\nUNPACK_SRC_NOT_EXIST", //
-                    L"解包出错", MB_OK | MB_ICONERROR);
-        break;
-    case UNPACK_SRC_SIZE_ERROR:
-        MessageBoxW(GetActiveWindow(), L"获取源文件大小失败！\nUNPACK_SRC_SIZE_ERROR", //
-                    L"解包出错", MB_OK | MB_ICONERROR);
-        break;
-    case UNPACK_SRC_LOAD_ERROR:
-        MessageBoxW(GetActiveWindow(), L"读取源文件内容失败！\nUNPACK_SRC_LOAD_ERROR", //
-                    L"解包出错", MB_OK | MB_ICONERROR);
-        break;
-    case UNPACK_SRC_HEADER_ERROR:
-        MessageBoxW(GetActiveWindow(), L"文件头格式不正确！\nUNPACK_SRC_HEADER_ERROR", //
-                    L"解包出错", MB_OK | MB_ICONERROR);
-        break;
-    case UNPACK_SRC_DATA_ERROR:
-        MessageBoxW(GetActiveWindow(), L"文件数据已经损坏！\nUNPACK_SRC_DATA_ERROR", //
-                    L"解包出错", MB_OK | MB_ICONERROR);
-        break;
-    case UNPACK_PATH_CREATE_ERROR:
-        MessageBoxW(GetActiveWindow(), L"解包路径创建失败！\nUNPACK_PATH_CREATE_ERROR", //
-                    L"解包出错", MB_OK | MB_ICONERROR);
-        break;
-    case UNPACK_FILE_CREATE_ERROR:
-        MessageBoxW(GetActiveWindow(), L"解包文件创建失败！\nUNPACK_FILE_CREATE_ERROR", //
-                    L"解包出错", MB_OK | MB_ICONERROR);
-        break;
-    case UNPACK_FILE_WRITE_ERROR:
-        MessageBoxW(GetActiveWindow(), L"解包文件写入失败！\nUNPACK_FILE_WRITE_ERROR", //
-                    L"解包出错", MB_OK | MB_ICONERROR);
-        break;
-    case UNPACK_SUCCESS:
-        MessageBoxW(GetActiveWindow(), std::wstring(L"文件夹位于: \n" + dst_dir).c_str(), //
-                    L"解包完成", MB_OK | MB_ICONINFORMATION);
-        break;
-    default:
-        break;
-    }
 
     Fl::lock();
     button_file->activate();
@@ -1153,7 +1146,29 @@ void Toolkit::cb_unpack_thread()
     Fl::unlock();
     Fl::awake();
 
-    button_unpack->take_focus();
+    this->unpack_result = ret;
+
+    std::vector<std::tuple<int, std::string>> msg = {
+        {UNPACK_SRC_NOT_EXIST, "打开源文件失败！"},           //
+        {UNPACK_SRC_SIZE_ERROR, "获取源文件大小失败！"},      //
+        {UNPACK_SRC_LOAD_ERROR, "读取源文件内容失败！"},      //
+        {UNPACK_SRC_HEADER_ERROR, "文件头格式不正确！"},      //
+        {UNPACK_SRC_DATA_ERROR, "文件数据已经损坏！"},        //
+        {UNPACK_PATH_CREATE_ERROR, "解包路径创建失败！"},     //
+        {UNPACK_FILE_CREATE_ERROR, "解包文件创建失败！"},     //
+        {UNPACK_FILE_WRITE_ERROR, "解包文件写入失败！"},      //
+        {UNPACK_SUCCESS, "解包后的文件夹位于：\n" + dst_dir}, //
+    };
+
+    for (size_t i = 0; i < msg.size(); i++)
+    {
+        auto [result, text] = msg[i];
+        if (ret == result)
+        {
+            this->unpack_text = text;
+            break;
+        }
+    }
 }
 
 void Toolkit::cb_pack(Fl_Widget *, void *w)
@@ -1164,7 +1179,33 @@ void Toolkit::cb_pack(Fl_Widget *, void *w)
 void Toolkit::cb_pack()
 {
     HANDLE hThread = CreateThread(nullptr, 0, cb_pack_thread, this, 0, nullptr);
+
+    DWORD dwExitCode = STILL_ACTIVE;
+    while (GetExitCodeThread(hThread, &dwExitCode) != 0 //
+           && dwExitCode == STILL_ACTIVE)
+    {
+        Fl::check();
+        Sleep(1);
+    }
+
     CloseHandle(hThread);
+
+    button_pack->take_focus();
+
+    if (this->pack_result == 0xFFFFFFFF)
+    {
+        return;
+    }
+    else if (this->pack_result == PACK_SUCCESS)
+    {
+        fl_message_title("打包完成");
+        fl_message(this->pack_text.c_str());
+    }
+    else
+    {
+        fl_message_title("打包出错");
+        fl_alert(this->pack_text.c_str());
+    }
 }
 
 DWORD Toolkit::cb_pack_thread(void *w)
@@ -1175,11 +1216,14 @@ DWORD Toolkit::cb_pack_thread(void *w)
 
 void Toolkit::cb_pack_thread()
 {
-    std::wstring src_dir = utf8_decode(std::string(input_dir->value()));
+    this->pack_result = 0xFFFFFFFF;
+    this->pack_text = "";
+
+    std::string src_dir = std::string(input_dir->value());
     if (src_dir.empty())
         return;
-    std::wstring dst_file = src_dir.substr(0, src_dir.find_last_of(L"\\")) + L"\\" //
-                            + L"main_" + std::to_wstring(std::time(nullptr)) + L".pak";
+    std::string dst_file = src_dir.substr(0, src_dir.find_last_of("\\")) + "\\" //
+                           + "main_" + std::to_string(std::time(nullptr)) + ".pak";
 
     Fl::lock();
     button_file->deactivate();
@@ -1192,43 +1236,6 @@ void Toolkit::cb_pack_thread()
     Fl::awake();
 
     int ret = pak->Pack(src_dir, dst_file);
-#ifdef _DEBUG
-    std::wcout << L"打包返回值 " << ret << std::endl;
-#endif
-
-    switch (ret)
-    {
-    case PACK_SRC_NOT_EXIST:
-        MessageBoxW(GetActiveWindow(), L"打开源文件夹失败！\nPACK_SRC_NOT_EXIST", //
-                    L"打包出错", MB_OK | MB_ICONERROR);
-        break;
-    case PACK_SRC_EMPTY_ERROR:
-        MessageBoxW(GetActiveWindow(), L"源文件夹为空！\nPACK_SRC_EMPTY_ERROR", //
-                    L"打包出错", MB_OK | MB_ICONERROR);
-        break;
-    case PACK_PATH_CREATE_ERROR:
-        MessageBoxW(GetActiveWindow(), L"打包路径创建失败！\nPACK_PATH_CREATE_ERROR", //
-                    L"打包出错", MB_OK | MB_ICONERROR);
-        break;
-    case PACK_FILE_CREATE_ERROR:
-        MessageBoxW(GetActiveWindow(), L"打包文件创建失败！\nPACK_FILE_CREATE_ERROR", //
-                    L"打包出错", MB_OK | MB_ICONERROR);
-        break;
-    case PACK_FILE_WRITE_ERROR:
-        MessageBoxW(GetActiveWindow(), L"打包文件写入失败！\nPACK_FILE_WRITE_ERROR", //
-                    L"打包出错", MB_OK | MB_ICONERROR);
-        break;
-    case PACK_SRC_READ_ERROR:
-        MessageBoxW(GetActiveWindow(), L"打包源文件读取失败！\nPACK_SRC_READ_ERROR", //
-                    L"打包出错", MB_OK | MB_ICONERROR);
-        break;
-    case PACK_SUCCESS:
-        MessageBoxW(GetActiveWindow(), std::wstring(L"文件位于: \n" + dst_file).c_str(), //
-                    L"打包完成", MB_OK | MB_ICONINFORMATION);
-        break;
-    default:
-        break;
-    }
 
     Fl::lock();
     button_file->activate();
@@ -1240,7 +1247,27 @@ void Toolkit::cb_pack_thread()
     Fl::unlock();
     Fl::awake();
 
-    button_pack->take_focus();
+    this->pack_result = ret;
+
+    std::vector<std::tuple<int, std::string>> msg = {
+        {PACK_SRC_NOT_EXIST, "打开源文件夹失败！"},        //
+        {PACK_SRC_EMPTY_ERROR, "源文件夹为空！"},          //
+        {PACK_PATH_CREATE_ERROR, "打包路径创建失败！"},    //
+        {PACK_FILE_CREATE_ERROR, "打包文件创建失败！"},    //
+        {PACK_FILE_WRITE_ERROR, "打包文件写入失败！"},     //
+        {PACK_SRC_READ_ERROR, "打包源文件读取失败！"},     //
+        {PACK_SUCCESS, "打包后的文件位于：\n" + dst_file}, //
+    };
+
+    for (size_t i = 0; i < msg.size(); i++)
+    {
+        auto [result, text] = msg[i];
+        if (ret == result)
+        {
+            this->pack_text = text;
+            break;
+        }
+    }
 }
 
 void Toolkit::cb_debug_mode(Fl_Widget *, void *w)

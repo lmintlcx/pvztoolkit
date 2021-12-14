@@ -5,6 +5,8 @@
 #include <FL/Fl_JPEG_Image.H>
 #include <FL/Fl_PNG_Image.H>
 #include <FL/Fl_BMP_Image.H>
+#include <FL/Fl_Tooltip.H>
+#include <FL/fl_ask.H>
 
 #include <Windows.h>
 #include <WinTrust.h>
@@ -51,16 +53,36 @@ void callback_pvz_check(void *w)
 
 /// main ///
 
+Fl_Font ui_font = FL_FREE_FONT + 1; // 主界面
+Fl_Font ls_font = FL_FREE_FONT + 2; // 阵型代码
+Fl_Font tt_font = FL_FREE_FONT + 3; // 提示信息
+
 int main(int argc, char **argv)
 {
 #ifdef _DEBUG
-    // 调试输出中文
-    // 我也不知道为什么加这些就有用
-    // It just works!
-    system("chcp 65001");
-    std::locale loc(std::locale(), new std::codecvt_utf8<wchar_t>);
-    std::wcout.imbue(loc);
+    system("chcp 65001"); // 调试输出中文
 #endif
+
+    // 界面字体
+    Fl::set_font(ui_font, "Microsoft YaHei");
+    Fl::set_font(ls_font, "Courier New");
+    Fl::set_font(tt_font, "Segoe UI");
+
+    // 设置对话框属性
+    fl_message_font(ui_font, 13);
+    fl_message_hotspot(1);
+
+    // 设置工具提示的样式
+    Fl_Tooltip::delay(0.1f);
+    Fl_Tooltip::hoverdelay(10.0f + 0.1f);
+    Fl_Tooltip::hidedelay(10.0f);
+    Fl_Tooltip::color(FL_WHITE);
+    Fl_Tooltip::textcolor(FL_BLACK);
+    Fl_Tooltip::font(tt_font);
+    Fl_Tooltip::size(12);
+    Fl_Tooltip::margin_width(5);
+    Fl_Tooltip::margin_height(5);
+    Fl_Tooltip::wrap_width(400);
 
     // 初始化随机数种子
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
@@ -118,8 +140,9 @@ int main(int argc, char **argv)
     // 测试版在 2023-12-31 23:59:59 之后失效
     if (!RELEASE_VERSION && (std::time(nullptr) > std::time_t(1704038399)))
     {
-        if (MessageBoxW(nullptr, L"这是很久以前的测试版哦，现在去下载新的正式版吗？", //
-                        L"测试版过期提示", MB_OKCANCEL) == IDOK)
+        fl_message_title("测试版过期提示");
+        if (fl_choice("这是很久以前的测试版哦，现在去下载新的正式版吗？", //
+                      "No", "Yes", 0) == 1)
             ShellExecuteW(nullptr, L"open", L"https://pvz.lmintlcx.com/toolkit/", //
                           nullptr, nullptr, SW_SHOWNORMAL);
         return -1;
@@ -132,8 +155,9 @@ int main(int argc, char **argv)
         GetModuleFileNameW(NULL, exePath, MAX_PATH);
         if (!VerifySignature(exePath))
         {
-            if (MessageBoxW(nullptr, L"本程序可能已经感染病毒，请在官方渠道重新下载！", //
-                            L"PvZ Toolkit 防篡改检测", MB_OKCANCEL) == IDOK)
+            fl_message_title("PvZ Toolkit 防篡改检测");
+            if (fl_choice("本程序可能已经感染病毒，请在官方渠道重新下载！", //
+                          "No", "Yes", 0) == 1)
                 ShellExecuteW(nullptr, L"open", L"https://pvz.lmintlcx.com/toolkit/", //
                               nullptr, nullptr, SW_SHOWNORMAL);
             return -2;

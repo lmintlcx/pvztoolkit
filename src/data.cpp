@@ -1408,7 +1408,7 @@ Data::Data()
             0x0045f050, // call_play_music
         };
 
-    this->data_1_2_0_1073_en =
+    this->data_goty_1_2_0_1073_en =
         {
             0x726090, // path
             0x729670, // lawn
@@ -1608,7 +1608,7 @@ Data::Data()
             0x0045efa0, // call_play_music
         };
 
-    this->data_1_2_0_1096_en =
+    this->data_goty_1_2_0_1096_en =
         {
             0x72e670, // path
             0x731c50, // lawn
@@ -1808,7 +1808,7 @@ Data::Data()
             0x004618f0, // call_play_music
         };
 
-    this->data_1_2_0_1093_de_es_fr_it =
+    this->data_goty_1_2_0_1093_de_es_fr_it =
         {
             0x73a208, // path
             0x73d7e8, // lawn
@@ -2008,7 +2008,7 @@ Data::Data()
             0x00462980, // call_play_music
         };
 
-    this->data_1_1_0_1056_zh =
+    this->data_goty_1_1_0_1056_zh =
         {
             0x775a90, // path
             0x7794f8, // lawn
@@ -2208,7 +2208,7 @@ Data::Data()
             0x0047f240, // call_play_music
         };
 
-    this->data_1_1_0_1056_ja =
+    this->data_goty_1_1_0_1056_ja =
         {
             0x7541f8, // path
             0x7578f8, // lawn
@@ -2408,7 +2408,7 @@ Data::Data()
             0x0046dcf0, // call_play_music
         };
 
-    this->data_1_1_0_1056_zh_2012_06 =
+    this->data_goty_1_1_0_1056_zh_2012_06 =
         {
             0x7525b0, // path
             0x755e0c, // lawn
@@ -2608,7 +2608,7 @@ Data::Data()
             0x00469a10, // call_play_music
         };
 
-    this->data_1_1_0_1056_zh_2012_07 =
+    this->data_goty_1_1_0_1056_zh_2012_07 =
         {
             0x7545b0, // path
             0x757e0c, // lawn
@@ -2822,14 +2822,14 @@ Data::Data()
     this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_0_7_3556_ES, data_1_0_7_3556_es));
     this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_0_7_3467_RU, data_1_0_7_3467_ru));
 
-    this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_2_0_1073_EN, data_1_2_0_1073_en));
-    this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_2_0_1096_EN, data_1_2_0_1096_en));
-    this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_2_0_1093_DE_ES_FR_IT, data_1_2_0_1093_de_es_fr_it));
+    this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_GOTY_1_2_0_1073_EN, data_goty_1_2_0_1073_en));
+    this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_GOTY_1_2_0_1096_EN, data_goty_1_2_0_1096_en));
+    this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_GOTY_1_2_0_1093_DE_ES_FR_IT, data_goty_1_2_0_1093_de_es_fr_it));
 
-    this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_1_0_1056_ZH, data_1_1_0_1056_zh));
-    this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_1_0_1056_JA, data_1_1_0_1056_ja));
-    this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_1_0_1056_ZH_2012_06, data_1_1_0_1056_zh_2012_06));
-    this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_1_0_1056_ZH_2012_07, data_1_1_0_1056_zh_2012_07));
+    this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_GOTY_1_1_0_1056_ZH, data_goty_1_1_0_1056_zh));
+    this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_GOTY_1_1_0_1056_JA, data_goty_1_1_0_1056_ja));
+    this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_GOTY_1_1_0_1056_ZH_2012_06, data_goty_1_1_0_1056_zh_2012_06));
+    this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_GOTY_1_1_0_1056_ZH_2012_07, data_goty_1_1_0_1056_zh_2012_07));
 }
 
 Data::~Data()
@@ -2844,13 +2844,13 @@ bool Data::isBETA()
 
 bool Data::isGOTY()
 {
-    return (this->find_result == PVZ_1_2_0_1073_EN              //
-            || this->find_result == PVZ_1_2_0_1096_EN           //
-            || this->find_result == PVZ_1_2_0_1093_DE_ES_FR_IT  //
-            || this->find_result == PVZ_1_1_0_1056_ZH           //
-            || this->find_result == PVZ_1_1_0_1056_JA           //
-            || this->find_result == PVZ_1_1_0_1056_ZH_2012_06   //
-            || this->find_result == PVZ_1_1_0_1056_ZH_2012_07); //
+    return (this->find_result == PVZ_GOTY_1_2_0_1073_EN              //
+            || this->find_result == PVZ_GOTY_1_2_0_1096_EN           //
+            || this->find_result == PVZ_GOTY_1_2_0_1093_DE_ES_FR_IT  //
+            || this->find_result == PVZ_GOTY_1_1_0_1056_ZH           //
+            || this->find_result == PVZ_GOTY_1_1_0_1056_JA           //
+            || this->find_result == PVZ_GOTY_1_1_0_1056_ZH_2012_06   //
+            || this->find_result == PVZ_GOTY_1_1_0_1056_ZH_2012_07); //
 }
 
 PVZ_DATA Data::data()

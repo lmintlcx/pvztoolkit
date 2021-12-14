@@ -15,7 +15,7 @@
 #include <FL/Fl_Text_Editor.H>
 #include <FL/Fl_Choice.H>
 #include <FL/Fl_Table.H>
-#include <FL/Fl_Tooltip.H>
+#include <FL/fl_ask.H>
 
 #include <Windows.h>
 #include <ShlObj.h>
@@ -47,6 +47,15 @@ class Fl_Choice_ : public Fl_Choice
 
   public:
     bool scrollable = false;
+};
+
+// 实现 Fl_Input 拖入路径之前清空
+class Fl_Input_ : public Fl_Input
+{
+  public:
+    Fl_Input_(int, int, int, int, const char *);
+    ~Fl_Input_();
+    int handle(int);
 };
 
 // 显示出怪详情的表格
@@ -197,10 +206,10 @@ class Window : public Fl_Double_Window
     Fl_Check_Button *check_background;
     Fl_Check_Button *check_readonly;
     Fl_Button *button_file;
-    Fl_Input *input_file;
+    Fl_Input_ *input_file;
     Fl_Button *button_unpack;
     Fl_Button *button_dir;
-    Fl_Input *input_dir;
+    Fl_Input_ *input_dir;
     Fl_Button *button_pack;
     Fl_Choice_ *choice_debug;
     Fl_Button *button_debug;
