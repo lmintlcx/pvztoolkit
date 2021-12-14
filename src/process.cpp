@@ -41,9 +41,11 @@ bool Process::OpenByWindow(const wchar_t *class_name, const wchar_t *window_name
     }
 
 #ifdef _DEBUG
-    // 在 #define _WIN32_WINNT 0x0501 的情况下
-    // std::cout << "PROCESS_ALL_ACCESS: " << std::hex << PROCESS_ALL_ACCESS << std::endl;
+#if (_WIN32_WINNT >= _WIN32_WINNT_VISTA)
+    assert(PROCESS_ALL_ACCESS == 0x001FFFFF);
+#else
     assert(PROCESS_ALL_ACCESS == 0x001F0FFF);
+#endif
 #endif
 
 #ifdef _DEBUG

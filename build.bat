@@ -22,6 +22,8 @@ set MAKE_TOOL=jom
 %MAKE_TOOL% -f makefile.debug clean
 %MAKE_TOOL% -f makefile.debug
 
+if not exist .\out\pvztoolkitd.exe goto :end
+
 mt.exe -nologo ^
 -manifest ".\pvztoolkit.exe.manifest" ^
 -outputresource:".\out\pvztoolkitd.exe;#1"
@@ -38,6 +40,8 @@ set MAKE_TOOL=nmake
 
 %MAKE_TOOL% -f makefile.release clean
 %MAKE_TOOL% -f makefile.release
+
+if not exist .\out\pvztoolkit.exe goto :end
 
 mt.exe -nologo ^
 -manifest ".\pvztoolkit.exe.manifest" ^

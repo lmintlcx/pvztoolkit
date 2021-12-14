@@ -15,34 +15,34 @@ PvZ Toolkit 官方网站: [https://pvz.lmintlcx.com/toolkit/](https://pvz.lmintl
 
 ## 更新日志
 
-最新版本: 1.17.0 (2021-12-11)
+最新版本: 1.17.1 (2021-12-14)
 
 [点击查看 CHANGELOG.md](https://github.com/lmintlcx/pvztoolkit/blob/master/CHANGELOG.md)
 
 ## 运行平台
 
-PvZ Toolkit 能在所有主流 Windows 系统上正常运行.
+PvZ Toolkit 兼容微软 Windows 系统的所有主流版本.
 
-| 操作系统        | 版本号          | 架构        |
-| --------------- | --------------- | ----------- |
-| Windows XP \*   | SP3             | x86         |
-| Windows Vista   | RTM / SP1 / SP2 | x86 / WoW64 |
-| Windows 7       | RTM / SP1       | x86 / WoW64 |
-| Windows 8       | RTM             | x86 / WoW64 |
-| **Windows 8.1** | RTM             | x86 / WoW64 |
-| **Windows 10**  | 1507 / ...      | x86 / WoW64 |
-| **Windows 11**  | 21H2 / ...      | WoW64       |
+| 操作系统       | 版本号          | 架构        |
+| -------------- | --------------- | ----------- |
+| Windows XP \*  | SP3             | x86         |
+| Windows Vista  | RTM / SP1 / SP2 | x86 / WoW64 |
+| **Windows 7**  | RTM / SP1       | x86 / WoW64 |
+| Windows 8      | RTM             | x86 / WoW64 |
+| Windows 8.1    | RTM             | x86 / WoW64 |
+| **Windows 10** | 1507 / ...      | x86 / WoW64 |
+| Windows 11     | 21H2 / ...      | WoW64       |
 
 > 对于 Windows XP 系统, 建议安装微软雅黑字体并且启用 ClearType 来提升界面观感.
 
-> 在 Windows 8.1 以及更高版本的系统上, 部分按钮文字内容会使用 Emoji 表情符号点缀.
+> 在 Windows 8 以及更高版本的系统上, 部分按钮文字内容会使用 Emoji 表情符号点缀.
 
 ## 游戏版本
 
 PvZ Toolkit 支持 [PC 平台上所有已知的游戏版本](https://pvz.lmintlcx.com/download/).
 
-- 英语测试版 0.1.1.1014 (en)
-- 英语测试版 0.9.9.1029 (en)
+- 英语测试版 0.1.1.1014 (en) \*
+- 英语测试版 0.9.9.1029 (en) \*
 - 英语原始版 1.0.0.1051 (en)
 - 英语修复版 1.2.0.1065 (en)
 - 西班牙语版 1.0.4.7924 (es)
@@ -59,15 +59,17 @@ PvZ Toolkit 支持 [PC 平台上所有已知的游戏版本](https://pvz.lmintlc
 - 人人网 2012 年度加强版 1.1.0.1056 GOTY (zh)
 - 人人网 2012 年度加强版 1.1.0.1056 GOTY (zh)
 
-> 如果你发现有不能使用的其他**官方版本**, 可以联系作者要求添加支持.
+> 对测试版本仅提供有限功能支持, 在 0.1.1.1014 中对象的序号和名称未能完全对应.
+
+> 如果你发现有不能使用的其他 **宝开官方正式版本**, 可以联系作者要求添加支持.
 
 ## 项目构建
 
-PvZ Toolkit 使用 Visual Studio 编译, 依赖于 FLTK 界面库和 zlib 压缩库.
+PvZ Toolkit 使用 Visual Studio 开发, 依赖于 FLTK 界面库和 zlib 压缩库.
 
 > 为了支持 XP 系统最高只能使用 Visual Studio 2017 和 Windows 7.1A SDK.
 
-> 构建完整项目需要的依赖库 FLTK 1.4 和 zlib 1.2.11 已包含在代码仓库中.
+> 构建完整项目需要的依赖库 FLTK 1.4 和 zlib 1.2.11 已经包含在代码仓库中.
 
 ## 开发路线
 

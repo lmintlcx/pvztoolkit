@@ -35,6 +35,12 @@ class Toolkit : public Window
     PvZ *pvz;
     PAK *pak;
 
+    int unpack_result = 0xFFFFFFFF;
+    std::string unpack_text;
+
+    int pack_result = 0xFFFFFFFF;
+    std::string pack_text;
+
     static void cb_unlock_sun_limit(Fl_Widget *, void *);
     inline void cb_unlock_sun_limit();
 

@@ -383,6 +383,27 @@ int Fl_Choice_::handle(int event)
     }
 }
 
+Fl_Input_::Fl_Input_(int x, int y, int w, int h, const char *l)
+    : Fl_Input(x, y, w, h, l)
+{
+}
+
+Fl_Input_::~Fl_Input_()
+{
+}
+
+int Fl_Input_::handle(int event)
+{
+    switch (event)
+    {
+    case FL_DND_RELEASE:
+        this->value("");
+        return 1;
+    default:
+        return Fl_Input::handle(event);
+    }
+}
+
 SpawnTable::SpawnTable(int X, int Y, int W, int H, const char *L = 0)
     : Fl_Table(X, Y, W, H, L)
 {
@@ -451,7 +472,8 @@ void SpawnTable::draw_cell(TableContext context, int ROW = 0, int COL = 0, //
     switch (context)
     {
     case CONTEXT_STARTPAGE:
-        fl_font(FL_FREE_FONT + 1, 13);
+        extern Fl_Font ui_font;
+        fl_font(ui_font, 13);
         return;
 
     case CONTEXT_COL_HEADER:
@@ -770,10 +792,10 @@ Window::Window(int width, int height, const char *title)
                 check_background = new Fl_Check_Button(c(3) - 30, r(2), iw + 15, ih, "允许后台运行");
                 check_readonly = new Fl_Check_Button(c(4) - 15, r(2), iw + 15, ih, "禁止存档删档");
                 button_file = new Fl_Button(c(1), r(3), iw - 20, ih, "选择文件");
-                input_file = new Fl_Input(c(2) - 20, r(3), iw + 20 + m + iw + 45, ih, "");
+                input_file = new Fl_Input_(c(2) - 20, r(3), iw + 20 + m + iw + 45, ih, "");
                 button_unpack = new Fl_Button(c(4) + 45, r(3), iw - 45, ih, "解包");
                 button_dir = new Fl_Button(c(1), r(4), iw - 20, ih, "选择目录");
-                input_dir = new Fl_Input(c(2) - 20, r(4), iw + 20 + m + iw + 45, ih, "");
+                input_dir = new Fl_Input_(c(2) - 20, r(4), iw + 20 + m + iw + 45, ih, "");
                 button_pack = new Fl_Button(c(4) + 45, r(4), iw - 45, ih, "打包");
                 choice_debug = new Fl_Choice_(c(1), r(5), iw - 30, ih, "");
                 button_debug = new Fl_Button(c(2) - 30, r(5), iw - 40, ih, "调试");
@@ -1114,12 +1136,13 @@ Window::Window(int width, int height, const char *title)
         }
     }
 
-    static Fl_Font ui_font = (FL_FREE_FONT + 1); // 主界面
-    static Fl_Font ls_font = (FL_FREE_FONT + 2); // 阵型代码
-    static Fl_Font tt_font = (FL_FREE_FONT + 3); // 提示信息
-    Fl::set_font(ui_font, yahei ? "Microsoft YaHei" : "SimSun");
-    Fl::set_font(ls_font, "Courier New");
-    Fl::set_font(tt_font, "Segoe UI");
+    // 设置字体
+
+    extern Fl_Font ui_font;
+    extern Fl_Font ls_font;
+
+    if (!yahei)
+        Fl::set_font(ui_font, "SimSun");
 
     for (int i = 0; i < this->children(); i++)
         this->child(i)->labelfont(ui_font);
@@ -1185,17 +1208,7 @@ Window::Window(int width, int height, const char *title)
         }
     }
 
-    // 工具提示的样式
-    Fl_Tooltip::delay(0.1f);
-    Fl_Tooltip::hoverdelay(10.0f + 0.1f);
-    Fl_Tooltip::hidedelay(10.0f);
-    Fl_Tooltip::color(FL_WHITE);
-    Fl_Tooltip::textcolor(FL_BLACK);
-    Fl_Tooltip::font(tt_font);
-    Fl_Tooltip::size(12);
-    Fl_Tooltip::margin_width(5);
-    Fl_Tooltip::margin_height(5);
-    Fl_Tooltip::wrap_width(400);
+    // Emoji
 
     emoji = dwBuild >= 9200;
 
@@ -1390,7 +1403,12 @@ void Window::ReadSettings()
         LANGID li = GetUserDefaultLangID();
         // std::cout << "LangID: " << li << std::endl;
         // 非中文区域显示英语提示框
-        if (li != 2052 && li != 1028 && li != 3076 && li != 5124 && li != 4100)
+        bool non_chinese = li != 2052 && //
+                           li != 1028 && //
+                           li != 3076 && //
+                           li != 5124 && //
+                           li != 4100;
+        if (non_chinese)
         {
             check_tooltips->value(1);
             check_tooltips->do_callback();
@@ -1411,12 +1429,13 @@ void Window::ReadSettings()
         if (dpi > 96)
         {
             Fl::screen_scale(this->screen_num(), dpi / 96.0f);
-            std::wstring text = std::wstring()                                 //
-                                + L"软件界面已跟随系统缩放比例： "             //
-                                + std::to_wstring(dpi * 100 / 96) + L"%。\n\n" //
-                                + L"单独按 Esc 键可恢复默认的窗口大小，\n"     //
-                                + L"同时按 Ctrl 和 + / - 键可放大缩小窗口。";  //
-            MessageBoxW(GetActiveWindow(), text.c_str(), L"界面缩放", MB_OK);
+            std::string text = std::string()                                 //
+                               + "软件界面已跟随系统缩放比例："              //
+                               + std::to_string(dpi * 100 / 96) + "%%。\n\n" //
+                               + "单独按 Esc 键可恢复默认的窗口大小，\n"     //
+                               + "同时按 Ctrl 和 + / - 键可放大缩小窗口。";  //
+            fl_message_title("界面缩放");
+            fl_message(text.c_str());
         }
 
         DWORD dwVersion = GetVersion();
@@ -1438,12 +1457,11 @@ void Window::ReadSettings()
         choice_scheme->do_callback();
 
         // 第一次打开时显示文档
-        int ret = MessageBoxW(GetActiveWindow(),               //
-                              L"这是你首次运行 PvZ Toolkit.\n" //
-                              L"要先阅读一下在线教程文档吗?",  //
-                              L"提问",                         //
-                              MB_OKCANCEL | MB_ICONINFORMATION);
-        if (ret == IDOK)
+        fl_message_title("在线文档");
+        int c = fl_choice("这是你首次运行 PvZ Toolkit，要先阅读一下在线教程文档吗？\n" //
+                          "也可以在修改器界面的“杂项”页面点击“文档”按钮来访问。",      //
+                          "No", "Yes", 0);
+        if (c == 1)
             cb_document();
     }
 }
@@ -1602,43 +1620,42 @@ void Window::cb_find_result_tooltip()
         game_status->copy_label("1.0.7.3467 俄罗斯语版");
         game_status->copy_tooltip(on ? "1.0.7.3467 (ru)" : nullptr);
         break;
-    case PVZ_1_2_0_1073_EN:
+    case PVZ_GOTY_1_2_0_1073_EN:
         game_status->copy_label("1.2.0.1073 英语年度版");
         game_status->copy_tooltip(on ? "1.2.0.1073 GOTY Origin (en)" : nullptr);
         break;
-    case PVZ_1_2_0_1096_EN:
+    case PVZ_GOTY_1_2_0_1096_EN:
         game_status->copy_label("1.2.0.1096 英语年度版");
         game_status->copy_tooltip(on ? "1.2.0.1096 GOTY Steam (en)" : nullptr);
         break;
-    case PVZ_1_2_0_1093_DE_ES_FR_IT:
+    case PVZ_GOTY_1_2_0_1093_DE_ES_FR_IT:
         game_status->copy_label("1.2.0.1093 多国语言年度版");
         game_status->copy_tooltip(on ? "1.2.0.1093 GOTY Origin (de/es/fr/it)" : nullptr);
         break;
-    case PVZ_1_1_0_1056_ZH:
+    case PVZ_GOTY_1_1_0_1056_ZH:
         game_status->copy_label("1.1.0.1056 粘度汗化版");
         game_status->copy_tooltip(on ? "1.1.0.1056 GOTY 2010 (zh)" : nullptr);
         if (!this->bad_version_warned)
         {
             this->bad_version_warned = true;
-            int ret = MessageBoxW(GetActiveWindow(),                                   //
-                                  L"这个版本的游戏存在着严重的问题, 随时可能会崩溃.\n" //
-                                  L"建议更换使用其他能正常运行的版本, 现在去下载吗?",  //
-                                  L"温馨提示",                                         //
-                                  MB_OKCANCEL | MB_ICONWARNING);
-            if (ret == IDOK)
+            fl_message_title("温馨提示");
+            int c = fl_choice("这个版本的游戏存在着严重的问题，随时可能会崩溃。\n" //
+                              "建议更换使用其他能正常运行的版本，现在去下载吗？",  //
+                              "No", "Yes", 0);
+            if (c == 1)
                 ShellExecuteW(nullptr, L"open", L"https://pvz.lmintlcx.com/download/", //
                               nullptr, nullptr, SW_SHOWNORMAL);
         }
         break;
-    case PVZ_1_1_0_1056_JA:
+    case PVZ_GOTY_1_1_0_1056_JA:
         game_status->copy_label("1.1.0.1056 日语年度版");
         game_status->copy_tooltip(on ? "1.1.0.1056 GOTY (ja)" : nullptr);
         break;
-    case PVZ_1_1_0_1056_ZH_2012_06:
+    case PVZ_GOTY_1_1_0_1056_ZH_2012_06:
         game_status->copy_label("1.1.0.1056 年度加强版");
         game_status->copy_tooltip(on ? "1.1.0.1056 GOTY 2012 (zh)" : nullptr);
         break;
-    case PVZ_1_1_0_1056_ZH_2012_07:
+    case PVZ_GOTY_1_1_0_1056_ZH_2012_07:
         game_status->copy_label("1.1.0.1056 年度加强版");
         game_status->copy_tooltip(on ? "1.1.0.1056 GOTY 2012 (zh)" : nullptr);
         break;
@@ -1683,11 +1700,24 @@ void Window::cb_find_result_tooltip()
         game_status_tip->copy_tooltip(on ? "Contact author to add support."
                                          : "联系作者给这个版本添加支持。");
     }
-    else if (result == PVZ_BETA_0_1_1_1014_EN || result == PVZ_BETA_0_9_9_1029_EN)
+    else if (result == PVZ_BETA_0_1_1_1014_EN)
     {
         game_status_tip->copy_label(emoji_info ? "🛈" : "i");
         game_status_tip->copy_tooltip(on ? "Partial support for beta version."
-                                         : "对测试版本仅提供有限功能支持。");
+                                         : "对早期测试版本仅提供有限功能支持，\n"
+                                           "游戏对象的序号和名称未能完全对应。");
+    }
+    else if (result == PVZ_BETA_0_9_9_1029_EN)
+    {
+        game_status_tip->copy_label(emoji_info ? "🛈" : "i");
+        game_status_tip->copy_tooltip(on ? "Partial support for beta version."
+                                         : "对测试版本仅提供有限的功能支持。");
+    }
+    else if (result == PVZ_GOTY_1_1_0_1056_ZH)
+    {
+        game_status_tip->copy_label(emoji_info ? "🛈" : "i");
+        game_status_tip->copy_tooltip(on ? "Replace this bad game version."
+                                         : "换掉这个有严重问题的游戏版本。");
     }
     else
     {
@@ -1916,17 +1946,18 @@ void Window::import_lineup_list_file(std::wstring file)
         {
             if (i > 11)
             {
-                text += std::wstring() + L"\n" + L"(还有更多的没有显示...)";
+                text += std::wstring() + L"\n" + L"（还有更多的没有显示……）";
                 break;
             }
             auto [l, s] = err_lst[i];
             if (s.length() > 49)
                 s = s.substr(0, 48) + " ...";
-            text += std::wstring()                           //
-                    + L"第 " + std::to_wstring(l) + L" 行: " //
-                    + utf8_decode(s) + L"\n";                //
+            text += std::wstring()                            //
+                    + L"第 " + std::to_wstring(l) + L" 行： " //
+                    + utf8_decode(s) + L"\n";                 //
         }
-        MessageBoxW(GetActiveWindow(), text.c_str(), title.c_str(), MB_OK);
+        fl_message_title(utf8_encode(title).c_str());
+        fl_message(utf8_encode(text).c_str());
     }
 }
 
@@ -2162,7 +2193,7 @@ void Window::cb_open_file()
     ofn.lStructSize = sizeof(ofn);
     ofn.hwndOwner = nullptr;
     // hInstance
-    ofn.lpstrFilter = L"PAK(*.pak)\0*.pak\0";
+    ofn.lpstrFilter = L"PAK (*.pak)\0*.pak\0";
     // lpstrCustomFilter
     // nMaxCustFilter
     ofn.nFilterIndex = 1;
@@ -2544,21 +2575,22 @@ void Window::cb_about()
                              + date[4] + date[5];                              //
     std::string build_date_time = build_date + " " + time;
 
-    std::wstring text = std::wstring()                                                 //
-                        + L"植物大战僵尸辅助工具" + L"\n"                              //
-                        + L"Plants vs. Zombies Toolkit" + L"\n"                        //
-                        + L"\n"                                                        //
-                        + L"官方主页: " + L"\t" + L"https://pvz.lmintlcx.com/" + L"\n" //
-                        + L"\n"                                                        //
-                        + L"发布版本: " + L"\t" + utf8_decode(version_full) + L"\n"    //
-                        + L"编译时间: " + L"\t" + utf8_decode(build_date_time) + L"\n" //
-                        + L"版权所有: " + L"\t" + L"© 2020~2021 L.Mint. LCX" + L"\n"   //
-                        + L"\n"                                                        //
-                        + L"复刻起源: " + L"\t" + L"PVZ Helper 1.8.7" + L"\n"          //
-                        + L"依赖项目: " + L"\t" + L"FLTK 1.4 + zlib 1.2.11" + L"\n"    //
-                        + L"鸣谢名单: " + L"\t" + L"kmtohoem 63enjoy 273.15K" + L"\n"; //
+    std::string text = std::string()                                              //
+                       + "植物大战僵尸辅助工具" + "\n"                            //
+                       + "Plants vs. Zombies Toolkit" + "\n"                      //
+                       + "\n"                                                     //
+                       + "官方网站：" + "\t" + "https://pvz.lmintlcx.com/" + "\n" //
+                       + "\n"                                                     //
+                       + "发行版本：" + "\t" + version_full + "\n"                //
+                       + "编译时间：" + "\t" + build_date_time + "\n"             //
+                       + "版权所有：" + "\t" + "© 2020~2021 L.Mint. LCX" + "\n"   //
+                       + "\n"                                                     //
+                       + "复刻起源：" + "\t" + "PVZ Helper 1.8.7" + "\n"          //
+                       + "依赖项目：" + "\t" + "FLTK 1.4 + zlib 1.2.11" + "\n"    //
+                       + "鸣谢名单：" + "\t" + "kmtohoem 63enjoy 273.15K" + "\n"; //
 
-    MessageBoxW(GetActiveWindow(), text.c_str(), L"关于 PvZ Toolkit", MB_OK | MB_ICONINFORMATION);
+    fl_message_title("关于 PvZ Toolkit");
+    fl_message(text.c_str());
 }
 
 } // namespace Pt

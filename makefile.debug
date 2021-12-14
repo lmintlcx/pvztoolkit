@@ -3,10 +3,16 @@ OUTDIR = .\out
 TARGET = pvztoolkitd
 
 CXX = cl
-CXXFLAGS_BARE = -c -nologo -Zc:wchar_t /MP /utf-8 /Zc:__cplusplus /std:c++17 \
-                /Od /MTd /W3 /EHsc /Zi /FS
-DEFINES = -DUNICODE -D_UNICODE -DWIN32 \
-          -D_USING_V110_SDK71_ -D_ATL_XP_TARGETING -DPSAPI_VERSION=1 -D_WIN32_WINNT=0x0501 \
+CXXFLAGS_BARE = -c -nologo \
+                -Zc:wchar_t \
+                /MP \
+                /utf-8 \
+                /Zc:__cplusplus /std:c++17 \
+                /W3 /EHsc \
+                /Od /MTd /Zi /FS
+DEFINES = -DUNICODE -D_UNICODE \
+          -DWIN32 -D_WIN32_WINNT=0x0501 \
+          -D_USING_V110_SDK71_ -D_ATL_XP_TARGETING -DPSAPI_VERSION=1 \
           -D_REGEX_MAX_STACK_COUNT=0 -D_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
 INCPATH = -I.
 INCS = .\src\pak.h \

@@ -86,20 +86,20 @@ bool PvZ::FindPvZ()
 
                 // version detection key value
                 std::vector<std::tuple<unsigned int, int>> v = {
-                    {0x49359c21, PVZ_BETA_0_1_1_1014_EN},     //
-                    {0x499a6204, PVZ_BETA_0_9_9_1029_EN},     //
-                    {0x49ecf563, PVZ_1_0_0_1051_EN},          //
-                    {0x4a37d6af, PVZ_1_2_0_1065_EN},          //
-                    {0x4a5b7963, PVZ_1_0_4_7924_ES},          //
-                    {0x4c237519, PVZ_1_0_7_3556_ES},          //
-                    {0x4ce4c3d6, PVZ_1_0_7_3467_RU},          //
-                    {0x4c2e3453, PVZ_1_2_0_1073_EN},          //
-                    {0x4d02b058, PVZ_1_2_0_1096_EN},          //
-                    {0x4ca31baa, PVZ_1_2_0_1093_DE_ES_FR_IT}, //
-                    {0x4c563de1, PVZ_1_1_0_1056_ZH},          //
-                    {0x4cc8e5f8, PVZ_1_1_0_1056_JA},          //
-                    {0x4fcd7be2, PVZ_1_1_0_1056_ZH_2012_06},  //
-                    {0x5003d437, PVZ_1_1_0_1056_ZH_2012_07},  //
+                    {0x49359c21, PVZ_BETA_0_1_1_1014_EN},          //
+                    {0x499a6204, PVZ_BETA_0_9_9_1029_EN},          //
+                    {0x49ecf563, PVZ_1_0_0_1051_EN},               //
+                    {0x4a37d6af, PVZ_1_2_0_1065_EN},               //
+                    {0x4a5b7963, PVZ_1_0_4_7924_ES},               //
+                    {0x4c237519, PVZ_1_0_7_3556_ES},               //
+                    {0x4ce4c3d6, PVZ_1_0_7_3467_RU},               //
+                    {0x4c2e3453, PVZ_GOTY_1_2_0_1073_EN},          //
+                    {0x4d02b058, PVZ_GOTY_1_2_0_1096_EN},          //
+                    {0x4ca31baa, PVZ_GOTY_1_2_0_1093_DE_ES_FR_IT}, //
+                    {0x4c563de1, PVZ_GOTY_1_1_0_1056_ZH},          //
+                    {0x4cc8e5f8, PVZ_GOTY_1_1_0_1056_JA},          //
+                    {0x4fcd7be2, PVZ_GOTY_1_1_0_1056_ZH_2012_06},  //
+                    {0x5003d437, PVZ_GOTY_1_1_0_1056_ZH_2012_07},  //
                 };
 
                 auto time_compiled = ReadMemory<unsigned int>({nth + 0x08});
@@ -350,7 +350,8 @@ reset_scene:
         asm_mov_exx_dword_ptr_exx_add(Reg::EDI, data().challenge);
         asm_add_list({0xff, 0x8f}); // dec [edi+0000006c]
         asm_add_dword(data().endless_rounds);
-        if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
+        if (this->find_result == PVZ_GOTY_1_1_0_1056_ZH || //
+            this->find_result == PVZ_GOTY_1_1_0_1056_JA)
             asm_push_exx(Reg::EDI);
         if (isBETA())
             asm_mov_exx_exx(Reg::ECX, Reg::EDI);
@@ -493,7 +494,7 @@ void PvZ::UnlockTrophy()
     if (isGOTY())
     {
         auto achievement = userdata + 0x24;
-        if (this->find_result == PVZ_1_2_0_1096_EN)
+        if (this->find_result == PVZ_GOTY_1_2_0_1096_EN)
         {
             std::array<bool, 21> values{};
             values.fill(true);
@@ -515,7 +516,8 @@ void PvZ::UnlockTrophy()
         asm_push_byte(1); // 显示 Loading
         asm_mov_exx_dword_ptr(Reg::ECX, data().lawn);
         asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().game_selector);
-        if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
+        if (this->find_result == PVZ_GOTY_1_1_0_1056_ZH || //
+            this->find_result == PVZ_GOTY_1_1_0_1056_JA)
             asm_mov_exx_exx(Reg::ESI, Reg::ECX);
         asm_call(data().call_sync_profile);
         asm_ret();
@@ -562,7 +564,8 @@ void PvZ::DirectWin()
         Sleep(frame_time);
     }
 
-    if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
+    if (this->find_result == PVZ_GOTY_1_1_0_1056_ZH || //
+        this->find_result == PVZ_GOTY_1_1_0_1056_JA)
     {
         asm_init();
         asm_mov_exx_dword_ptr(Reg::EAX, data().lawn);
@@ -712,7 +715,8 @@ void PvZ::SetTreeHeight(int height)
 
         if (isGOTY())
         {
-            if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
+            if (this->find_result == PVZ_GOTY_1_1_0_1056_ZH || //
+                this->find_result == PVZ_GOTY_1_1_0_1056_JA)
             {
                 asm_init();
                 asm_mov_exx_dword_ptr(Reg::EBX, data().lawn);
@@ -723,7 +727,8 @@ void PvZ::SetTreeHeight(int height)
                 asm_ret();
                 asm_code_inject();
             }
-            else if (this->find_result == PVZ_1_1_0_1056_ZH_2012_06 || this->find_result == PVZ_1_1_0_1056_ZH_2012_07)
+            else if (this->find_result == PVZ_GOTY_1_1_0_1056_ZH_2012_06 || //
+                     this->find_result == PVZ_GOTY_1_1_0_1056_ZH_2012_07)
             {
                 asm_init();
                 asm_mov_exx_dword_ptr(Reg::EDI, data().lawn);
@@ -963,7 +968,8 @@ void PvZ::PutPlant(int row, int col, int type, bool imitater)
 
 void PvZ::asm_put_zombie(int row, int col, int type)
 {
-    if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
+    if (this->find_result == PVZ_GOTY_1_1_0_1056_ZH || //
+        this->find_result == PVZ_GOTY_1_1_0_1056_JA)
     {
         asm_push_dword(type); // 0x6a byte(type)
         asm_mov_exx_dword_ptr(Reg::ECX, data().lawn);
@@ -1205,7 +1211,8 @@ void PvZ::asm_put_rake(int row, int col)
     asm_init();
     if (isGOTY())
     {
-        if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
+        if (this->find_result == PVZ_GOTY_1_1_0_1056_ZH || //
+            this->find_result == PVZ_GOTY_1_1_0_1056_JA)
         {
             asm_mov_exx_dword_ptr(Reg::ECX, data().lawn);
             asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().board);
@@ -1327,7 +1334,8 @@ void PvZ::SetLawnMowers(int option)
             uint32_t addr = lawn_mower_offset + lawn_mower_struct_size * i;
             if (option == 0)
             {
-                if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
+                if (this->find_result == PVZ_GOTY_1_1_0_1056_ZH || //
+                    this->find_result == PVZ_GOTY_1_1_0_1056_JA)
                     asm_mov_exx(Reg::EBX, addr);
                 else if (isBETA())
                     asm_mov_exx(Reg::ECX, addr);
@@ -2060,7 +2068,8 @@ void PvZ::SetLineup(Lineup lineup)
 void PvZ::generate_spawn_list()
 {
     asm_init();
-    if (this->find_result == PVZ_1_1_0_1056_ZH || this->find_result == PVZ_1_1_0_1056_JA)
+    if (this->find_result == PVZ_GOTY_1_1_0_1056_ZH || //
+        this->find_result == PVZ_GOTY_1_1_0_1056_JA)
     {
         asm_mov_exx_dword_ptr(Reg::EAX, data().lawn);
         asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().board);
@@ -2367,7 +2376,7 @@ void PvZ::UserdataReadonly(bool on)
     enable_hack(data().disable_delete_userdata, on);
     enable_hack(data().disable_save_userdata, on);
 
-    if (this->find_result == PVZ_1_2_0_1096_EN)
+    if (this->find_result == PVZ_GOTY_1_2_0_1096_EN)
     {
         // Steam云同步自带不能删档的问题, 额外加上禁止存档
         enable_hack(HACK<uint8_t, 3>{0x00498440, {0xc2, 0x0c, 0x00}, {0x6a, 0xff, 0x68}}, on);
