@@ -1097,13 +1097,20 @@ Window::Window(int width, int height, const char *title)
     button_document->callback(cb_document, this);
     button_about->callback(cb_about, this);
 
+    // 设置字体
+
+    extern Fl_Font ui_font;
+    extern Fl_Font ls_font;
+
     // 根据系统换字体
 
+#pragma warning(disable : 4996)
     DWORD dwVersion = 0;
     DWORD dwBuild = 0;
     dwVersion = GetVersion();
     if (dwVersion < 0x80000000)
         dwBuild = (DWORD)(HIWORD(dwVersion));
+#pragma warning(default : 4996)
 
     if (dwBuild >= 6000)
     {
@@ -1127,19 +1134,16 @@ Window::Window(int width, int height, const char *title)
         if (!yahei)
         {
             // XP 系统肯定没法正常访问植僵工具箱的，只给出方法让用户自己操作
-            MessageBoxW(nullptr, L"建议安装 Microsoft YaHei 字体, 并且启用 ClearType 来获得最佳的界面观感."
-                                 L"\n\n"
-                                 L"可以在搜索引擎中检索 \"微软雅黑 XP\" 等关键词来查找字体下载和安装方法."
-                                 L"\n"
-                                 L"控制面板 → 显示 → 外观 → 效果 → 使用下列方式使屏幕字体的边缘平滑: 清晰.",
-                        L"系统缺少界面字体", MB_OK);
+            fl_message_title("系统缺少界面字体");
+            fl_alert("建议安装 Microsoft YaHei 字体，并且启用 ClearType 来获得最佳的界面观感。"
+                     "\n\n"
+                     "可以在搜索引擎中检索“微软雅黑”“XP”等关键词来查找字体下载和安装方法。"
+                     "\n"
+                     "控制面板 → 显示 → 外观 → 效果 → 使用下列方式使屏幕字体的边缘平滑：清晰。");
         }
     }
 
-    // 设置字体
-
-    extern Fl_Font ui_font;
-    extern Fl_Font ls_font;
+    // yahei = IsWindowsVistaOrGreater();
 
     if (!yahei)
         Fl::set_font(ui_font, "SimSun");
@@ -1210,6 +1214,7 @@ Window::Window(int width, int height, const char *title)
 
     // Emoji
 
+    // emoji = IsWindows8OrGreater();
     emoji = dwBuild >= 9200;
 
     if (emoji)
@@ -1438,8 +1443,14 @@ void Window::ReadSettings()
             fl_message(text.c_str());
         }
 
-        DWORD dwVersion = GetVersion();
-        DWORD dwBuild = (DWORD)(HIWORD(dwVersion));
+#pragma warning(disable : 4996)
+        DWORD dwVersion = 0;
+        DWORD dwBuild = 0;
+        dwVersion = GetVersion();
+        if (dwVersion < 0x80000000)
+            dwBuild = (DWORD)(HIWORD(dwVersion));
+#pragma warning(default : 4996)
+
         if (dwBuild >= 2600)         // XP
             choice_scheme->value(1); //       plastic
         if (dwBuild >= 6000)         // Vista
@@ -1674,12 +1685,15 @@ void Window::cb_find_result_tooltip()
         break;
     }
 
+#pragma warning(disable : 4996)
     DWORD dwVersion = 0;
     DWORD dwBuild = 0;
     dwVersion = GetVersion();
     if (dwVersion < 0x80000000)
         dwBuild = (DWORD)(HIWORD(dwVersion));
+#pragma warning(default : 4996)
 
+    // bool emoji_info = IsWindows8Point1OrGreater();
     bool emoji_info = dwBuild >= 9600;
 
     if (result == PVZ_NOT_FOUND)
@@ -2556,7 +2570,12 @@ void Window::cb_about(Fl_Widget *, void *w)
 
 void Window::cb_about()
 {
-    std::string version_full = VERSION_NAME_FULL;
+    std::string version_full = std::string()             //
+                               + VERSION_NAME            //
+                               + " "                     //
+                               + "("                     //
+                               + TOSTRING(VERSION_BUILD) //
+                               + ")";                    //
 
     // "Sep  1 2021"
     //  0123456789A

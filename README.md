@@ -15,7 +15,7 @@ PvZ Toolkit 官方网站: [https://pvz.lmintlcx.com/toolkit/](https://pvz.lmintl
 
 ## 更新日志
 
-最新版本: 1.17.1 (2021-12-14)
+最新版本: 1.18.0 (2021-12-16)
 
 [点击查看 CHANGELOG.md](https://github.com/lmintlcx/pvztoolkit/blob/master/CHANGELOG.md)
 
@@ -35,11 +35,11 @@ PvZ Toolkit 兼容微软 Windows 系统的所有主流版本.
 
 > 对于 Windows XP 系统, 建议安装微软雅黑字体并且启用 ClearType 来提升界面观感.
 
-> 在 Windows 8 以及更高版本的系统上, 部分按钮文字内容会使用 Emoji 表情符号点缀.
+> 在 Windows 8 以及更高版本的系统上, 部分按钮文字会使用 Emoji 表情符号点缀.
 
 ## 游戏版本
 
-PvZ Toolkit 支持 [PC 平台上所有已知的游戏版本](https://pvz.lmintlcx.com/download/).
+PvZ Toolkit 支持 PC 平台上的 [植物大战僵尸一代所有已知官方版本](https://pvz.lmintlcx.com/download/).
 
 - 英语测试版 0.1.1.1014 (en) \*
 - 英语测试版 0.9.9.1029 (en) \*
@@ -61,7 +61,7 @@ PvZ Toolkit 支持 [PC 平台上所有已知的游戏版本](https://pvz.lmintlc
 
 > 对测试版本仅提供有限功能支持, 在 0.1.1.1014 中对象的序号和名称未能完全对应.
 
-> 如果你发现有不能使用的其他 **宝开官方正式版本**, 可以联系作者要求添加支持.
+> 如果你发现有 PvZ Toolkit 不支持的其他 **官方原版**, 可以联系作者要求添加适配.
 
 ## 项目构建
 
@@ -69,7 +69,7 @@ PvZ Toolkit 使用 Visual Studio 开发, 依赖于 FLTK 界面库和 zlib 压缩
 
 > 为了支持 XP 系统最高只能使用 Visual Studio 2017 和 Windows 7.1A SDK.
 
-> 构建完整项目需要的依赖库 FLTK 1.4 和 zlib 1.2.11 已经包含在代码仓库中.
+> 构建完整项目所需的依赖库 FLTK 1.4 和 zlib 1.2.11 已经包含在代码仓库中.
 
 ## 开发路线
 

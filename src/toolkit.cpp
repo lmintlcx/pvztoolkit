@@ -963,18 +963,15 @@ void Toolkit::cb_userdata()
             ShellExecuteW(nullptr, L"open", p.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
     };
 
+#pragma warning(disable : 4996)
     DWORD dwVersion = 0;
-    DWORD dwMajorVersion = 0;
-    DWORD dwMinorVersion = 0;
     DWORD dwBuild = 0;
-    dwVersion = GetVersion(); // 不加 manifest 的情况下 win8.1 及以上系统只返回 win8
-    dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
-    dwMinorVersion = (DWORD)(HIBYTE(LOWORD(dwVersion)));
+    dwVersion = GetVersion();
     if (dwVersion < 0x80000000)
         dwBuild = (DWORD)(HIWORD(dwVersion));
-    printf("Windows version: %d.%d (%d).\n", dwMajorVersion, dwMinorVersion, dwBuild);
+#pragma warning(default : 4996)
 
-    if (dwMajorVersion < 6)
+    if (dwBuild < 6000)
     {
         // 2000/XP 系统下才会使用 `安装目录/userdata` 做存档位置
         // 需要找到游戏才能定位到游戏安装目录
