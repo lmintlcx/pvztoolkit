@@ -84,6 +84,20 @@ int main(int argc, char **argv)
     Fl_Tooltip::margin_height(5);
     Fl_Tooltip::wrap_width(400);
 
+#pragma warning(disable : 4996)
+    DWORD dwVersion = 0;
+    DWORD dwBuild = 0;
+    dwVersion = GetVersion();
+    if (dwVersion < 0x80000000)
+        dwBuild = (DWORD)(HIWORD(dwVersion));
+#pragma warning(default : 4996)
+
+    if (dwBuild < 6000)
+    {
+        fl_message_title("不支持的系统");
+        fl_alert("需要 Windows Vista 或者更高版本的操作系统！");
+    }
+
     // 初始化随机数种子
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
