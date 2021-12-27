@@ -27,7 +27,9 @@
 
         class Fl_Native_File_Chooser_FLTK_Driver   <== this API implementation is the default FLTK file chooser
                 class Fl_GTK_Native_File_Chooser_Driver  <== this API implementation runs a GTK file chooser
+                class Fl_Kdialog_Native_File_Chooser_Driver  <== this API implementation runs a KDE file chooser
                                         it is determined at run-time if the GTK dynamic libraries are available
+                                        and the KDE file chooser runs under the KDE desktop
 
         class Fl_Quartz_Native_File_Chooser_Driver  <== this API implementation runs a Mac OS X file chooser
 
@@ -185,25 +187,25 @@ protected:
   static char *strfree(char *val);
   static char *strnew(const char *val);
 public:
-  Fl_Native_File_Chooser_Driver(int val) {}
+  Fl_Native_File_Chooser_Driver(int) {}
   virtual ~Fl_Native_File_Chooser_Driver() {}
-  virtual void type(int t) {}
+  virtual void type(int) {}
   virtual int type() const  {return 0;}
-  virtual void options(int o) {}
+  virtual void options(int) {}
   virtual int options() const {return 0;}
   virtual int count() const {return 0;}
   virtual const char *filename() const  {return 0;}
-  virtual const char *filename(int i) const  {return 0;}
-  virtual void directory(const char *val)  {}
+  virtual const char *filename(int) const  {return 0;}
+  virtual void directory(const char *)  {}
   virtual const char *directory() const {return 0;}
-  virtual void title(const char *t) {}
+  virtual void title(const char *) {}
   virtual const char* title() const {return 0;}
   virtual const char *filter() const  {return 0;}
-  virtual void filter(const char *f) {}
+  virtual void filter(const char *) {}
   virtual int filters() const  {return 0;}
-  virtual void filter_value(int i)  {}
+  virtual void filter_value(int)  {}
   virtual int filter_value() const  {return 0;}
-  virtual void preset_file(const char*f)  {}
+  virtual void preset_file(const char*)  {}
   virtual const char* preset_file() const {return 0;}
   virtual const char *errmsg() const  {return 0;}
   virtual int show()  {return 1;}

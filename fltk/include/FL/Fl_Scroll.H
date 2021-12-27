@@ -39,6 +39,19 @@
   blinking during redrawing, but that can be solved by using a
   Fl_Double_Window.
 
+  The Fl_Scroll widget calculates the bounding box of all its children
+  by using their widget positions and sizes (x, y, w, h). Outside labels
+  are not considered. If you need outside labels of any widgets or free
+  space outside of this bounding box you can add a tiny invisible Fl_Box
+  at the relevant corner(s) of the Fl_Scroll widget, for instance:
+  \code
+    Fl_Scroll scroll(100, 100, 200, 200); // Fl_Scroll at (100, 100)
+    Fl_Box(100, 100, 1, 1);               // Fl_Box in top left corner
+    Fl_Input(150, 120, 60, 30, "Input:"); // left most widget with label
+    // ... more widgets ...
+    scroll.end();
+  \endcode
+
   By default you can scroll in both directions, and the scrollbars
   disappear if the data will fit in the area of the scroll.
 
@@ -89,7 +102,6 @@ class FL_EXPORT Fl_Scroll : public Fl_Group {
   int scrollbar_size_;
   static void hscrollbar_cb(Fl_Widget*, void*);
   static void scrollbar_cb(Fl_Widget*, void*);
-  void fix_scrollbar_order();
   static void draw_clip(void*,int,int,int,int);
 
 protected:      //  (STR#1895)
@@ -130,11 +142,12 @@ protected:      //  (STR#1895)
     Fl_Scrollbar_Data hscroll;  ///< horizontal scrollbar region + values
     Fl_Scrollbar_Data vscroll;  ///< vertical scrollbar region + values
   } ScrollInfo;
-  void recalc_scrollbars(ScrollInfo &si);
+  void recalc_scrollbars(ScrollInfo &si) const;
 
 protected:
 
-  void bbox(int&,int&,int&,int&);
+  void fix_scrollbar_order();
+  void bbox(int&,int&,int&,int&) const;
   void draw();
 
 public:

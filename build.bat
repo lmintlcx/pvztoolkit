@@ -11,21 +11,21 @@ set LIB=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Lib;%LIB%
 REM cd /d D:\repo\pvztoolkit
 cd /d %~dp0
 
-set INCLUDE=.\fltk\include;.\zlib\include;%INCLUDE%
-set LIB=.\fltk\lib;.\zlib\lib;%LIB%
+set INCLUDE=.\fltk\include;%INCLUDE%
+set LIB=.\fltk\lib;%LIB%
 
-set INCLUDE=.\json;%INCLUDE%
+set INCLUDE=.\zlib\include;%INCLUDE%
+set LIB=.\zlib\lib;%LIB%
 
-set PATH=.\jom;%PATH%
-set MAKE_TOOL=jom
+if exist .\out\pvztoolkitd.exe del .\out\pvztoolkitd.exe
+if exist .\out\pvztoolkit.exe nmake -f makefile.release clean
 
-%MAKE_TOOL% -f makefile.debug clean
-%MAKE_TOOL% -f makefile.debug
+nmake -f makefile.debug
 
 if not exist .\out\pvztoolkitd.exe goto :end
 
 mt.exe -nologo ^
--manifest ".\pvztoolkit.exe.manifest" ^
+-manifest ".\res\ptk.manifest" ^
 -outputresource:".\out\pvztoolkitd.exe;#1"
 
 signtool.exe sign /v ^
@@ -34,20 +34,16 @@ signtool.exe sign /v ^
 /p "Rm9yIFppb24h" ^
 .\out\pvztoolkitd.exe
 
-goto :end
+goto :end rem release
 
-set MAKE_TOOL=nmake
-
-%MAKE_TOOL% -f makefile.release clean
-%MAKE_TOOL% -f makefile.release
+nmake -f makefile.release clean
+nmake -f makefile.release
 
 if not exist .\out\pvztoolkit.exe goto :end
 
 mt.exe -nologo ^
--manifest ".\pvztoolkit.exe.manifest" ^
+-manifest ".\res\ptk.manifest" ^
 -outputresource:".\out\pvztoolkit.exe;#1"
-
-.\upx\upx.exe --lzma --ultra-brute .\out\pvztoolkit.exe
 
 set PATH=C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x86\;%PATH%
 
@@ -84,6 +80,6 @@ gpg --verify $file.asc $file
 
 :end
 
-copy bin\splash.png .\out
-copy bin\lineup.yml .\out
-copy bin\build.yml .\out
+if not exist .\out\splash.png copy bin\splash.png .\out
+if not exist .\out\lineup.yml copy bin\lineup.yml .\out
+if not exist .\out\builds.yml copy bin\builds.yml .\out

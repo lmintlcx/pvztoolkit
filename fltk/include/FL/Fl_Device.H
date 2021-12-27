@@ -38,14 +38,15 @@ class Fl_Widget;
 
  A drawing surface other than the computer's display, is typically used as follows:
  <ol><li> Create \c surface, an object from a particular Fl_Surface_Device derived class (e.g., Fl_Copy_Surface, Fl_Printer).
- <li> Call \c Fl_Surface_Device::push_current(surface); to redirect all graphics requests to \c surface which becomes the new
- current drawing surface (not necessary with class Fl_Printer because it is done by Fl_Printer::begin_job()).
+ <li> Call \c Fl_Surface_Device::push_current(surface); to redirect all graphics requests to
+ \c surface which becomes the new current drawing surface (not necessary with classes Fl_Printer / Fl_PostScript_File_Device
+ because it is done by Fl_Paged_Device::begin_page()).
  <li> At this point all of the \ref fl_drawings (e.g., fl_rect()) or the \ref fl_attributes or \ref drawing_images functions
  (e.g., fl_draw_image(), Fl_Image::draw()) operate on the new current drawing surface.
  Drawing surfaces from Fl_Widget_Surface derived classes allow additional ways
  to draw to them (e.g., Fl_Printer::print_widget(), Fl_Image_Surface::draw()).
  <li> After all drawing requests have been performed, redirect graphics requests back to their previous destination
- with \c Fl_Surface_Device::pop_current();.
+ with \c Fl_Surface_Device::pop_current(); (not necessary with classes Fl_Printer / Fl_PostScript_File_Device).
  <li> Delete \c surface.
  </ol>
  For back-compatibility, it is also possible to use the Fl_Surface_Device::set_current() member function
@@ -67,25 +68,27 @@ class FL_EXPORT Fl_Surface_Device {
   static Fl_Surface_Device *surface_; // the surface that currently receives graphics requests
   static Fl_Surface_Device *default_surface(); // create surface if none exists yet
 protected:
-  /* Some drawing surfaces (e.g., Fl_XXX_Image_Surface_Driver) re-implement this.
-   Gets called each time a surface ceases to be the current drawing surface. */
+  /** FLTK calls this each time a surface ceases to be the current drawing surface.
+   This member function is mostly of interest to developers of new Fl_Surface_Device derived classes.
+   It allows to perform surface-specific operations necessary when this surface ceases to be current.
+   Each implementation should end with a call to Fl_Surface_Device::end_current(). */
   virtual void end_current() { surface_ = 0;}
   /** Constructor that sets the graphics driver to use for the created surface. */
   Fl_Surface_Device(Fl_Graphics_Driver *graphics_driver) {pGraphicsDriver = graphics_driver; }
   /** Sets the graphics driver of this drawing surface. */
-  inline void driver(Fl_Graphics_Driver *graphics_driver) {pGraphicsDriver = graphics_driver;};
+  inline void driver(Fl_Graphics_Driver *graphics_driver) {pGraphicsDriver = graphics_driver;}
 public:
   virtual void set_current(void);
   virtual bool is_current();
   /** \brief Returns the graphics driver of this drawing surface. */
-  inline Fl_Graphics_Driver *driver() {return pGraphicsDriver; };
+  inline Fl_Graphics_Driver *driver() {return pGraphicsDriver; }
   /** The current drawing surface.
    In other words, the Fl_Surface_Device object that currently receives all graphics requests.
    \note It's possible to transiently remove the GUI scaling factor in place in the current
    drawing surface with \ref fl_override_scale(). */
   static inline Fl_Surface_Device *surface() {
     return surface_ ? surface_ : default_surface();
-  };
+  }
   /** \brief The destructor. */
   virtual ~Fl_Surface_Device();
   static void push_current(Fl_Surface_Device *new_current);

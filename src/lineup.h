@@ -2,9 +2,6 @@
 #pragma once
 
 #include "zlib.h"
-#ifdef _DEBUG
-#include "json.hpp"
-#endif
 
 #include <iostream>
 #include <regex>
@@ -58,10 +55,6 @@ class Lineup
     uint8_t scene;
 
     long long weight; // 用于排序的权重
-
-#ifdef _DEBUG
-    void json_to_yaml();
-#endif
 
   private:
     void reset_data();

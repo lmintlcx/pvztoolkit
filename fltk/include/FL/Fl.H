@@ -21,9 +21,11 @@
 #ifndef Fl_H
 #  define Fl_H
 
+#include <FL/fl_config.h> // build configuration
 #include <FL/Fl_Export.H>
-
 #include <FL/platform_types.h> // for FL_SOCKET
+#include <FL/fl_casts.H>       // experimental
+
 #ifdef FLTK_HAVE_CAIRO
 # include <FL/Fl_Cairo.H>
 #endif
@@ -59,20 +61,23 @@ extern FL_EXPORT const char* fl_local_ctrl;  ///< string pointer used in shortcu
 extern FL_EXPORT const char* fl_local_meta;  ///< string pointer used in shortcuts, you can change it to another language
 extern FL_EXPORT const char* fl_local_shift; ///< string pointer used in shortcuts, you can change it to another language
 
-/** \defgroup  callback_functions Callback function typedefs
- \brief Typedefs defined in <FL/Fl.H> for callback or handler functions passed as function parameters.
+/** \defgroup  callback_functions  Callback Function Typedefs
 
-    FLTK uses callback functions as parameters for some function calls, e.g. to
-    set up global event handlers (Fl::add_handler()), to add a timeout handler
-    (Fl::add_timeout()), and many more.
+  \brief Typedefs defined in <FL/Fl.H> for callback or handler functions passed as function parameters.
 
-    The typedefs defined in this group describe the function parameters used to set
-    up or clear the callback functions and should also be referenced to define the
-    callback function to handle such events in the user's code.
+  FLTK uses callback functions as parameters for some function calls, e.g. to
+  set up global event handlers (Fl::add_handler()), to add a timeout handler
+  (Fl::add_timeout()), and many more.
 
-    \see Fl::add_handler(), Fl::add_timeout(), Fl::repeat_timeout(),
-         Fl::remove_timeout() and others
-  @{ */
+  The typedefs defined in this group describe the function parameters used to set
+  up or clear the callback functions and should also be referenced to define the
+  callback function to handle such events in the user's code.
+
+  \see  Fl::add_handler(), Fl::add_timeout(), Fl::repeat_timeout(),
+        Fl::remove_timeout() and others
+
+  @{
+*/
 
 /** Signature of some label drawing functions passed as parameters */
 typedef void (Fl_Label_Draw_F)(const Fl_Label *label, int x, int y, int w, int h, Fl_Align align);
@@ -128,7 +133,7 @@ typedef void (*Fl_Clipboard_Notify_Handler)(int source, void *data);
   state information and global methods for the current application.
 */
 class FL_EXPORT Fl {
-  Fl() {}; // no constructor!
+  Fl() {} // no constructor!
 
 private:
 

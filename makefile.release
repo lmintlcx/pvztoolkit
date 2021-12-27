@@ -56,8 +56,8 @@ $(OUTDIR):
 $(OUTDIR)\$(TARGET).exe: $(OBJS) $(OUTDIR)\version.res
     $(LINKER) $(LFLAGS) /out:$(OUTDIR)\$(TARGET).exe
 
-$(OUTDIR)\version.res: .\src\version.rc
-    $(RC) $(RC_FLAGS) /fo $(OUTDIR)\version.res .\src\version.rc
+$(OUTDIR)\version.res: .\res\version.rc
+    $(RC) $(RC_FLAGS) /fo $(OUTDIR)\version.res .\res\version.rc
 
 $(OUTDIR)\pak.obj: .\src\pak.cpp $(INCS)
     $(CXX) $(CXXFLAGS) /Fe"$(OUTDIR)\pak.obj" .\src\pak.cpp
