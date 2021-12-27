@@ -546,10 +546,6 @@ SpawnWindow::SpawnWindow(int width, int height, const char *title)
 {
     // 参数 width height title 均被忽略
 
-    // 设置标题栏图标
-    extern HINSTANCE fl_display;
-    this->icon((const void *)LoadIcon(fl_display, MAKEINTRESOURCE(IDI_ICON)));
-
     // 设置窗口标题
     this->copy_label("出怪数量统计");
 
@@ -633,10 +629,6 @@ Window::Window(int width, int height, const char *title)
     : Fl_Double_Window(width, height, title)
 {
     // 参数 width height title 均被忽略
-
-    // 设置标题栏图标
-    extern HINSTANCE fl_display;
-    this->icon((const void *)LoadIcon(fl_display, MAKEINTRESOURCE(IDI_ICON)));
 
     // 设置窗口标题
     this->copy_label("PvZ Toolkit - 植物大战僵尸全版本辅助工具");
@@ -2527,7 +2519,14 @@ void Window::cb_tooltips()
 
     // 触发重新显示
     if (on && this->shown())
-        PostMessageW(fl_xid(this), WM_MOUSEMOVE, 0, MAKELONG(0, 0));
+    {
+        HWND me = fl_xid(this);
+        POINT point = {0, 0};
+        SendMessageW(me, WM_MOUSEMOVE, 0, MAKELONG(point.x, point.y));
+        GetCursorPos(&point);
+        ScreenToClient(me, &point);
+        SendMessageW(me, WM_MOUSEMOVE, 0, MAKELONG(point.x, point.y));
+    }
 
     // 顺便更新标题
 

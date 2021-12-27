@@ -17,7 +17,7 @@
 #include <ctime>
 
 #include "toolkit.h"
-#include "version.h"
+#include "../res/version.h"
 
 #define IDI_ICON 1001
 
@@ -63,6 +63,29 @@ int main(int argc, char **argv)
     system("chcp 65001"); // 调试输出中文
 #endif
 
+#ifdef _DEBUG
+    for (int i = 0; i < argc; i++)
+        printf("argv[%d] = %s\n", i, argv[i]);
+#endif
+
+    if (argc == 0)
+        return -0;
+
+    if (argc == 4)
+    {
+        std::string m = argv[1];
+        std::string file = argv[2];
+        std::string dir = argv[3];
+
+        Pt::PAK pak;
+        if (m == "/U")
+            return pak.Unpack(file, dir);
+        else if (m == "/P")
+            return pak.Pack(dir, file);
+        else
+            return 0xF7;
+    }
+
     // 界面字体
     Fl::set_font(ui_font, "Microsoft YaHei");
     Fl::set_font(ls_font, "Courier New");
@@ -74,8 +97,8 @@ int main(int argc, char **argv)
 
     // 设置工具提示的样式
     Fl_Tooltip::delay(0.1f);
-    Fl_Tooltip::hoverdelay(10.0f + 0.1f);
-    Fl_Tooltip::hidedelay(10.0f);
+    Fl_Tooltip::hoverdelay(0.1f);
+    Fl_Tooltip::hidedelay(5.0f);
     Fl_Tooltip::color(FL_WHITE);
     Fl_Tooltip::textcolor(FL_BLACK);
     Fl_Tooltip::font(tt_font);
@@ -83,6 +106,58 @@ int main(int argc, char **argv)
     Fl_Tooltip::margin_width(5);
     Fl_Tooltip::margin_height(5);
     Fl_Tooltip::wrap_width(400);
+
+    // 初始化随机数种子
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+
+    // 第一次调用时启用线程锁机制
+    Fl::lock();
+
+    // 启动画面
+
+    Fl_Window splash(400 + 2, 225 + 2, "");
+    splash.begin();
+    Fl_Box box(1, 1, 400, 225, nullptr);
+    splash.end();
+
+    box.labelsize(42);
+    box.labelcolor(FL_GRAY);
+    splash.color(FL_GRAY);
+    splash.border(false);
+    splash.set_non_modal();
+
+    Fl_JPEG_Image img_jpeg("splash.jpg");
+    Fl_PNG_Image img_png("splash.png");
+    Fl_BMP_Image img_bmp("splash.bmp");
+
+    if (img_jpeg.fail() == 0)
+        box.image(img_jpeg);
+    else if (img_png.fail() == 0)
+        box.image(img_png);
+    else if (img_bmp.fail() == 0)
+        box.image(img_bmp);
+    else
+        box.label("PvZ Toolkit");
+
+    if (box.image())
+    {
+        int w = box.image()->w();
+        int h = box.image()->h();
+        box.size(w, h);
+        splash.size(w + 2, h + 2);
+    }
+
+    // 第一个窗口显示前设置标题栏图标
+    extern HINSTANCE fl_display;
+    splash.icon((const void *)LoadIcon(fl_display, MAKEINTRESOURCE(IDI_ICON)));
+
+    splash.position((Fl::w() - splash.w()) / 2, (Fl::h() - splash.h()) / 2);
+    splash.show();
+    splash.wait_for_expose();
+
+    splash.color(box.image() ? FL_GREEN : FL_DARK_GREEN);
+
+    clock_t start = clock(); // 开始计时
 
 #pragma warning(disable : 4996)
     DWORD dwVersion = 0;
@@ -97,59 +172,6 @@ int main(int argc, char **argv)
         fl_message_title("不支持的系统");
         fl_alert("需要 Windows Vista 或者更高版本的操作系统！");
     }
-
-    // 初始化随机数种子
-    std::srand(static_cast<unsigned int>(std::time(nullptr)));
-
-    // 第一次调用时启用线程锁机制
-    Fl::lock();
-
-#ifdef _DEBUG
-    Pt::Lineup lineup;
-    lineup.json_to_yaml();
-#endif
-
-    // 启动画面
-
-    Fl_Window splash(400 + 2, 225 + 2, "");
-    splash.begin();
-    Fl_Box box(1, 1, 400, 225, nullptr);
-    splash.end();
-
-    extern HINSTANCE fl_display;
-    splash.icon((const void *)LoadIcon(fl_display, MAKEINTRESOURCE(IDI_ICON)));
-
-    splash.color(FL_GRAY);
-    splash.border(false);
-    splash.set_non_modal();
-
-    Fl_JPEG_Image img_jpeg("splash.jpg");
-    Fl_PNG_Image img_png("splash.png");
-    Fl_BMP_Image img_bmp("splash.bmp");
-
-    bool show_splash = true;
-    if (img_jpeg.fail() == 0)
-        box.image(img_jpeg);
-    else if (img_png.fail() == 0)
-        box.image(img_png);
-    else if (img_bmp.fail() == 0)
-        box.image(img_bmp);
-    else
-        show_splash = false;
-
-    if (show_splash)
-    {
-        int w = box.image()->w();
-        int h = box.image()->h();
-        box.size(w, h);
-        splash.size(w + 2, h + 2);
-        splash.position((Fl::w() - splash.w()) / 2, (Fl::h() - splash.h()) / 2);
-        splash.show();
-        splash.wait_for_expose();
-        splash.color(FL_GREEN); // 显示后再变色
-    }
-
-    clock_t start = clock();
 
     // 测试版在 2023-12-31 23:59:59 之后失效
     if (!RELEASE_VERSION && (std::time(nullptr) > std::time_t(1704038399)))
@@ -193,17 +215,16 @@ int main(int argc, char **argv)
 #endif
 
     // 隐藏启动画面
-    if (show_splash)
-    {
-        double dt = 0.017; // 最短显示时间
-        while ((clock() - start) / (double)CLOCKS_PER_SEC < dt)
-            Fl::check();
-        splash.hide();
+
+    double dt = 0.017; // 最短显示时间
+    while ((clock() - start) / (double)CLOCKS_PER_SEC < dt)
         Fl::check();
-    }
+    splash.hide();
+    Fl::check();
 
     // 显示主窗口
-    pvztoolkit.show(argc, argv);
+    pvztoolkit.icon((const void *)LoadIcon(fl_display, MAKEINTRESOURCE(IDI_ICON)));
+    pvztoolkit.show(1, argv);
     pvztoolkit.wait_for_expose();
     pvztoolkit.pvz->FindPvZ();
     SetForegroundWindow(fl_xid(&pvztoolkit));

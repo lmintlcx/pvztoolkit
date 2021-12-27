@@ -32,7 +32,7 @@
 
 #include "pvz.h"
 #include "lineup.h"
-#include "version.h"
+#include "../res/version.h"
 
 namespace Pt
 {

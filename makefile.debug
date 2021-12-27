@@ -30,7 +30,7 @@ RC_FLAGS = /n $(DEFINES)
 
 LINKER = link
 LIBS_FLTK = fltkd.lib fltk_zd.lib fltk_imagesd.lib fltk_jpegd.lib fltk_pngd.lib
-LIBS_ZLIB = zlib.lib
+LIBS_ZLIB = zlibd.lib
 LIBS_WIN32 = user32.lib shell32.lib advapi32.lib comctl32.lib comdlg32.lib ole32.lib \
              psapi.lib version.lib wsock32.lib crypt32.lib gdi32.lib gdiplus.lib wintrust.lib
 LIBS = /LIBPATH:$(OUTDIR) $(LIBS_FLTK) $(LIBS_ZLIB) $(LIBS_WIN32)
@@ -56,8 +56,8 @@ $(OUTDIR):
 $(OUTDIR)\$(TARGET).exe: $(OBJS) $(OUTDIR)\version.res
     $(LINKER) $(LFLAGS) /out:$(OUTDIR)\$(TARGET).exe
 
-$(OUTDIR)\version.res: .\src\version.rc
-    $(RC) $(RC_FLAGS) /fo $(OUTDIR)\version.res .\src\version.rc
+$(OUTDIR)\version.res: .\res\version.rc
+    $(RC) $(RC_FLAGS) /fo $(OUTDIR)\version.res .\res\version.rc
 
 $(OUTDIR)\pak.obj: .\src\pak.cpp $(INCS)
     $(CXX) $(CXXFLAGS) /Fe"$(OUTDIR)\pak.obj" .\src\pak.cpp

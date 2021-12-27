@@ -113,65 +113,6 @@ std::string Lineup::Generate()
     return this->lineup_code;
 }
 
-#ifdef _DEBUG
-void Lineup::json_to_yaml()
-{
-    std::ifstream in;
-    in.open("lineup_string.json");
-    if (in.is_open())
-    {
-        nlohmann::json json;
-        in >> json;
-        in.close();
-        std::cout << "version: " << json["version"] << std::endl;
-        std::cout << "author: " << json["author"] << std::endl;
-        std::cout << "counts: " << json["counts"] << std::endl;
-        std::string v = std::to_string(static_cast<int>(json["version"]));
-        v.insert(6, ".");
-        v.insert(4, ".");
-        std::ofstream out("lineup.yml");
-        out << "#! pvztoolkit"
-            << "\n";
-        out << "\n";
-        out << "# "
-            << "版本"
-            << ": "
-            << v
-            << " "
-            << "("
-            << "数量"
-            << ": "
-            << json["counts"]
-            << ")"
-            << "\n";
-        out << "# https://pvz.lmintlcx.com/lineup/"
-            << "\n";
-        out << "\n";
-        if (out.is_open())
-        {
-            for (const auto &lineup : json["lineup"].items())
-            {
-                std::string name = lineup.value()["name"];
-                assert(name[4] == '.');
-                name[4] = ' ';
-                reset_data();
-                Init(lineup.value()["string"]);
-                Generate();
-                assert(this->ok == true);
-                std::string code = this->lineup_code;
-                out << "\""
-                    << name
-                    << "\""
-                    << ": "
-                    << code
-                    << "\n";
-            }
-            out.close();
-        }
-    }
-}
-#endif
-
 std::vector<std::string> Lineup::split(const std::string &string, char seperator)
 {
     std::vector<std::string> result;
