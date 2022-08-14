@@ -2,11 +2,7 @@
 @echo off
 chcp 65001
 
-call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x86 -vcvars_ver=14.16
-
-set PATH=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin;%PATH%
-set INCLUDE=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include;%INCLUDE%
-set LIB=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Lib;%LIB%
+call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x86
 
 REM cd /d D:\repo\pvztoolkit
 cd /d %~dp0
@@ -45,8 +41,6 @@ mt.exe -nologo ^
 -manifest ".\res\ptk.manifest" ^
 -outputresource:".\out\pvztoolkit.exe;#1"
 
-set PATH=C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x86\;%PATH%
-
 signtool.exe sign /v ^
 /fd sha1 ^
 /f "D:\notes\cert\lmintlcx_r4.pfx" ^
@@ -63,7 +57,7 @@ signtool.exe sign /v ^
 
 goto :end
 
-file="PvZ_Toolkit_v1.xx.x.exe"
+file="PvZ_Toolkit_v1.20.0.exe"
 rm $file.hash
 echo $file >> $file.hash
 echo "MD5" >> $file.hash

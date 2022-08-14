@@ -15,7 +15,7 @@ PvZ Toolkit 官方网站: [https://pvz.lmintlcx.com/toolkit/](https://pvz.lmintl
 
 ## 更新日志
 
-最新版本: 1.19.0 (2021-12-27)
+最新版本: 1.20.0 (2022-08-14)
 
 [点击查看 CHANGELOG.md](https://github.com/lmintlcx/pvztoolkit/blob/master/CHANGELOG.md)
 
@@ -25,15 +25,12 @@ PvZ Toolkit 兼容微软 Windows 系统的所有主流版本.
 
 | 操作系统       | 版本号          | 架构        |
 | -------------- | --------------- | ----------- |
-| Windows XP \*  | SP3             | x86         |
 | Windows Vista  | RTM / SP1 / SP2 | x86 / WoW64 |
 | **Windows 7**  | RTM / SP1       | x86 / WoW64 |
 | Windows 8      | RTM             | x86 / WoW64 |
 | Windows 8.1    | RTM             | x86 / WoW64 |
 | **Windows 10** | 1507 / ...      | x86 / WoW64 |
 | Windows 11     | 21H2 / ...      | WoW64       |
-
-> 对于 Windows XP 系统, 建议安装微软雅黑字体并且启用 ClearType 来提升界面观感.
 
 > 在 Windows 8 以及更高版本的系统上, 部分按钮文字会使用 Emoji 表情符号点缀.
 
@@ -67,9 +64,41 @@ PvZ Toolkit 支持 PC 平台上的 [植物大战僵尸一代所有已知官方�
 
 PvZ Toolkit 使用 Visual Studio 开发, 依赖于 FLTK 界面库和 zlib 压缩库.
 
-> 为了支持 XP 系统最高只能使用 Visual Studio 2017 和 Windows 7.1A SDK.
+> 编译器为 Visual Studio 2019 16.11, 安装 "使用 C++ 的桌面开发" 工作负载.
 
-> 构建完整项目所需的依赖库 FLTK 1.4 和 zlib 1.2.11 已经包含在代码仓库中.
+> 构建完整项目所需的依赖库 FLTK 1.4 和 zlib 1.2.12 已经包含在代码仓库中.
+
+以下操作在命令提示符中进行, 成品文件 `pvztoolkit.exe` 位于 `out` 文件夹内.
+
+```bat
+REM 克隆项目
+
+git clone https://github.com/lmintlcx/pvztoolkit.git
+
+REM 切换到项目文件夹内
+
+cd pvztoolkit
+
+REM 启动 Visual Studio 2019 编译环境
+
+call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x86
+
+REM 将依赖库的路径添加到环境变量
+
+set INCLUDE=.\fltk\include;%INCLUDE%
+set LIB=.\fltk\lib;%LIB%
+
+set INCLUDE=.\zlib\include;%INCLUDE%
+set LIB=.\zlib\lib;%LIB%
+
+REM 编译项目
+
+nmake -f makefile.release
+
+REM 嵌入清单文件
+
+mt.exe -nologo -manifest ".\res\ptk.manifest" -outputresource:".\out\pvztoolkit.exe;#1"
+```
 
 ## 开发路线
 

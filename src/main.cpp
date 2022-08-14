@@ -7,10 +7,12 @@
 #include <FL/Fl_BMP_Image.H>
 #include <FL/Fl_Tooltip.H>
 #include <FL/fl_ask.H>
+#include <FL/Fl.H>
 
 #include <Windows.h>
 #include <WinTrust.h>
 #include <SoftPub.h>
+#include <VersionHelpers.h>
 
 #include <cassert>
 #include <random>
@@ -21,7 +23,7 @@
 
 #define IDI_ICON 1001
 
-static_assert(_MSC_VER >= 1916);
+static_assert(_MSC_VER >= 1929);
 static_assert(sizeof(void *) == 4);
 
 bool VerifySignature(LPCWSTR);
@@ -86,6 +88,9 @@ int main(int argc, char **argv)
             return 0xF7;
     }
 
+    // 界面背景颜色
+    Fl::background(243, 243, 243);
+
     // 界面字体
     Fl::set_font(ui_font, "Microsoft YaHei");
     Fl::set_font(ls_font, "Courier New");
@@ -94,6 +99,12 @@ int main(int argc, char **argv)
     // 设置对话框属性
     fl_message_font(ui_font, 13);
     fl_message_hotspot(1);
+
+    // fl_cancel = "取消";
+    // fl_close = "关闭";
+    // fl_no = "否";
+    // fl_ok = "好的";
+    // fl_yes = "是";
 
     // 设置工具提示的样式
     Fl_Tooltip::delay(0.1f);
@@ -159,18 +170,14 @@ int main(int argc, char **argv)
 
     clock_t start = clock(); // 开始计时
 
-#pragma warning(disable : 4996)
-    DWORD dwVersion = 0;
-    DWORD dwBuild = 0;
-    dwVersion = GetVersion();
-    if (dwVersion < 0x80000000)
-        dwBuild = (DWORD)(HIWORD(dwVersion));
-#pragma warning(default : 4996)
+    // 系统需求
 
-    if (dwBuild < 6000)
+    if (!IsWindowsVistaOrGreater())
     {
-        fl_message_title("不支持的系统");
-        fl_alert("需要 Windows Vista 或者更高版本的操作系统！");
+        fl_message_title("PvZ Toolkit");
+        fl_alert("正在使用的操作系统不受支持！\n"
+                 "需要 Windows Vista 或者更高版本才能运行。");
+        return -10;
     }
 
     // 测试版在 2023-12-31 23:59:59 之后失效
@@ -223,8 +230,8 @@ int main(int argc, char **argv)
     Fl::check();
 
     // 显示主窗口
-    pvztoolkit.icon((const void *)LoadIcon(fl_display, MAKEINTRESOURCE(IDI_ICON)));
-    pvztoolkit.show(1, argv);
+
+    pvztoolkit.show(1, argv); // argc -> 1
     pvztoolkit.wait_for_expose();
     pvztoolkit.pvz->FindPvZ();
     SetForegroundWindow(fl_xid(&pvztoolkit));

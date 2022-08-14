@@ -2162,6 +2162,20 @@ std::array<int, 1000> PvZ::GetSpawnList()
     return zl;
 }
 
+void PvZ::SetSpawnList(std::array<int, 1000> zl)
+{
+    if (!GameOn())
+        return;
+    int ui = GameUI();
+    if (ui != 2 && ui != 3)
+        return;
+
+    WriteMemory(zl, {data().lawn, data().board, data().spawn_list});
+
+    if (ui == 2)
+        update_spawn_preview();
+}
+
 void PvZ::InternalSpawn(std::array<bool, 33> zombies)
 {
     if (!GameOn())
