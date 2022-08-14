@@ -14,6 +14,8 @@ class Toolkit : public Window
     Toolkit(int, int, const char *);
     ~Toolkit();
 
+    std::filesystem::path path;
+
     static void cb_tooltips(Fl_Widget *, void *);
     inline void cb_tooltips();
 
@@ -27,6 +29,9 @@ class Toolkit : public Window
 
     static void cb_update_details(Fl_Widget *, void *);
     inline void cb_update_details();
+
+    static void cb_zombies_list(Fl_Widget *, void *);
+    inline void cb_zombies_list();
 
     static void cb_on_hide_spawn_details(Fl_Widget *, void *);
     inline void cb_on_hide_spawn_details();

@@ -40,13 +40,7 @@ bool Process::OpenByWindow(const wchar_t *class_name, const wchar_t *window_name
         }
     }
 
-#ifdef _DEBUG
-#if (_WIN32_WINNT >= _WIN32_WINNT_VISTA)
     assert(PROCESS_ALL_ACCESS == 0x001FFFFF);
-#else
-    assert(PROCESS_ALL_ACCESS == 0x001F0FFF);
-#endif
-#endif
 
 #ifdef _DEBUG
     std::wcout << L"查找窗口: " << (class_name == nullptr ? L"nullptr" : class_name)               //

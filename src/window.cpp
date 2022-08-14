@@ -557,8 +557,25 @@ SpawnWindow::SpawnWindow(int width, int height, const char *title)
 
     table_spawn = new SpawnTable(5, 5, 837, 617);
     button_update_details = new Fl_Button(5, 5, 75, 18 + 3, "···");
+    button_zombies_list = new Fl_Menu_Button(5, 5, 837, 617, nullptr);
     box_mask_spawn_types = new Fl_Box(5, 5 + 18 + 3, 75, 18 * 33, nullptr);
     this->end();
+
+    button_zombies_list->add("[刷新]");
+    button_zombies_list->add("[保存]");
+    button_zombies_list->add("[加载]");
+    button_zombies_list->type(Fl_Menu_Button::POPUP3);
+    button_zombies_list->value(0);
+
+    extern Fl_Font ui_font;
+
+    button_zombies_list->textfont(ui_font);
+
+    emoji = IsWindows8OrGreater();
+
+    button_zombies_list->replace(0, EMOJI("🔄", "[刷新]"));
+    button_zombies_list->replace(1, EMOJI("💾", "[保存]"));
+    button_zombies_list->replace(2, EMOJI("🔖", "[加载]"));
 }
 
 SpawnWindow::~SpawnWindow()
@@ -1094,52 +1111,6 @@ Window::Window(int width, int height, const char *title)
     extern Fl_Font ui_font;
     extern Fl_Font ls_font;
 
-    // 根据系统换字体
-
-#pragma warning(disable : 4996)
-    DWORD dwVersion = 0;
-    DWORD dwBuild = 0;
-    dwVersion = GetVersion();
-    if (dwVersion < 0x80000000)
-        dwBuild = (DWORD)(HIWORD(dwVersion));
-#pragma warning(default : 4996)
-
-    if (dwBuild >= 6000)
-    {
-        // Vista 及以上版本自带雅黑字体
-        yahei = true;
-    }
-    else
-    {
-        yahei = false;
-        std::string fonts_path = "C:\\Windows\\Fonts";
-        for (const auto &entry : std::filesystem::directory_iterator(fonts_path))
-        {
-            std::filesystem::path file_name = entry.path().filename();
-            if (file_name == "msyh.ttf" || file_name == "msyh.ttc")
-            {
-                // std::cout << entry.path() << std::endl;
-                yahei = true;
-                break;
-            }
-        }
-        if (!yahei)
-        {
-            // XP 系统肯定没法正常访问植僵工具箱的，只给出方法让用户自己操作
-            fl_message_title("系统缺少界面字体");
-            fl_alert("建议安装 Microsoft YaHei 字体，并且启用 ClearType 来获得最佳的界面观感。"
-                     "\n\n"
-                     "可以在搜索引擎中检索“微软雅黑”“XP”等关键词来查找字体下载和安装方法。"
-                     "\n"
-                     "控制面板 → 显示 → 外观 → 效果 → 使用下列方式使屏幕字体的边缘平滑：清晰。");
-        }
-    }
-
-    // yahei = IsWindowsVistaOrGreater();
-
-    if (!yahei)
-        Fl::set_font(ui_font, "SimSun");
-
     for (int i = 0; i < this->children(); i++)
         this->child(i)->labelfont(ui_font);
     {
@@ -1206,8 +1177,8 @@ Window::Window(int width, int height, const char *title)
 
     // Emoji
 
-    // emoji = IsWindows8OrGreater();
-    emoji = dwBuild >= 9200;
+    emoji = IsWindows8OrGreater();
+    emoji_i = IsWindows8Point1OrGreater();
 
     if (emoji)
     {
@@ -1262,6 +1233,8 @@ Window::~Window()
 
 void Window::ReadSettings()
 {
+    // 注册表配置版本 v1
+
     bool first_open = true;
 
     HKEY hKey;
@@ -1443,8 +1416,6 @@ void Window::ReadSettings()
             dwBuild = (DWORD)(HIWORD(dwVersion));
 #pragma warning(default : 4996)
 
-        if (dwBuild >= 2600)         // XP
-            choice_scheme->value(1); //       plastic
         if (dwBuild >= 6000)         // Vista
             choice_scheme->value(3); //       gleam
         if (dwBuild >= 7600)         // 7
@@ -1471,6 +1442,8 @@ void Window::ReadSettings()
 
 void Window::WriteSettings()
 {
+    // 注册表配置版本 v1
+
     // 语言
     wchar_t langChinese[] = L"简体中文";
     wchar_t langEnglish[] = L"English";
@@ -1677,51 +1650,40 @@ void Window::cb_find_result_tooltip()
         break;
     }
 
-#pragma warning(disable : 4996)
-    DWORD dwVersion = 0;
-    DWORD dwBuild = 0;
-    dwVersion = GetVersion();
-    if (dwVersion < 0x80000000)
-        dwBuild = (DWORD)(HIWORD(dwVersion));
-#pragma warning(default : 4996)
-
-    // bool emoji_info = IsWindows8Point1OrGreater();
-    bool emoji_info = dwBuild >= 9600;
-
     if (result == PVZ_NOT_FOUND)
     {
-        game_status_tip->copy_label(emoji_info ? "🛈" : "i");
+        game_status_tip->copy_label(emoji_i ? "🛈" : "i");
         game_status_tip->copy_tooltip(on ? "Run Plants vs. Zombies first."
                                          : "先打开运行植物大战僵尸游戏。");
     }
     else if (result == PVZ_OPEN_ERROR)
     {
-        game_status_tip->copy_label(emoji_info ? "🛈" : "i");
+        game_status_tip->copy_label(emoji_i ? "🛈" : "i");
         game_status_tip->copy_tooltip(on ? "Try run Pt as administrator."
                                          : "建议用管理员权限运行修改器。");
     }
     else if (result == PVZ_UNSUPPORTED)
     {
-        game_status_tip->copy_label(emoji_info ? "🛈" : "i");
+        game_status_tip->copy_label(emoji_i ? "🛈" : "i");
         game_status_tip->copy_tooltip(on ? "Contact author to add support."
                                          : "联系作者给这个版本添加支持。");
     }
     else if (result == PVZ_BETA_0_1_1_1014_EN)
     {
-        game_status_tip->copy_label(emoji_info ? "🛈" : "i");
+        game_status_tip->copy_label(emoji_i ? "🛈" : "i");
         game_status_tip->copy_tooltip(on ? "Partial support for beta version."
                                          : "对早期测试版本仅提供有限功能支持，\n"
                                            "游戏对象的序号和名称未能完全对应。");
     }
     else if (result == PVZ_BETA_0_9_9_1029_EN)
     {
-        game_status_tip->copy_label(emoji_info ? "🛈" : "i");
+        game_status_tip->copy_label(emoji_i ? "🛈" : "i");
         game_status_tip->copy_tooltip(on ? "Partial support for beta version."
                                          : "对测试版本仅提供有限的功能支持。");
     }
     else if (result == PVZ_GOTY_1_1_0_1056_ZH)
     {
-        game_status_tip->copy_label(emoji_info ? "🛈" : "i");
+        game_status_tip->copy_label(emoji_i ? "🛈" : "i");
         game_status_tip->copy_tooltip(on ? "Replace this bad game version."
                                          : "换掉这个有严重问题的游戏版本。");
     }
@@ -2601,10 +2563,10 @@ void Window::cb_about()
                        + "\n"                                                     //
                        + "发行版本：" + "\t" + version_full + "\n"                //
                        + "编译时间：" + "\t" + build_date_time + "\n"             //
-                       + "版权所有：" + "\t" + "© 2020~2021 L.Mint. LCX" + "\n"   //
+                       + "版权所有：" + "\t" + "© 2020~2022 L.Mint. LCX" + "\n"   //
                        + "\n"                                                     //
                        + "复刻起源：" + "\t" + "PVZ Helper 1.8.7" + "\n"          //
-                       + "依赖项目：" + "\t" + "FLTK 1.4 + zlib 1.2.11" + "\n"    //
+                       + "依赖项目：" + "\t" + "FLTK 1.4 + zlib 1.2.12" + "\n"    //
                        + "鸣谢名单：" + "\t" + "kmtohoem 63enjoy 273.15K" + "\n"; //
 
     fl_message_title("关于 PvZ Toolkit");

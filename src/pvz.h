@@ -226,6 +226,9 @@ class PvZ : public Process, public Code, public Data
     // 获取刷怪列表
     std::array<int, 1000> GetSpawnList();
 
+    // 修改刷怪列表
+    void SetSpawnList(std::array<int, 1000>);
+
     // 内置函数生成出怪列表
     void InternalSpawn(std::array<bool, 33>);
 

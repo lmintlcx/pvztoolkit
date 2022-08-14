@@ -7,6 +7,8 @@ namespace Pt
 Toolkit::Toolkit(int width, int height, const char *title)
     : Window(width, height, title)
 {
+    this->path = std::filesystem::current_path();
+
     // 子窗口
 
     window_spawn = new SpawnWindow(0, 0, "");
@@ -16,6 +18,8 @@ Toolkit::Toolkit(int width, int height, const char *title)
     button_show_details->callback(cb_show_details, this);
 
     window_spawn->button_update_details->callback(cb_update_details, this);
+
+    window_spawn->button_zombies_list->callback(cb_zombies_list, this);
 
     window_spawn->callback(cb_on_hide_spawn_details, this);
 
@@ -174,6 +178,67 @@ void Toolkit::cb_update_details(Fl_Widget *, void *w)
 
 void Toolkit::cb_update_details()
 {
+    // 刷新
+    window_spawn->button_zombies_list->value(0);
+    cb_zombies_list();
+}
+
+void Toolkit::cb_zombies_list(Fl_Widget *, void *w)
+{
+    ((Toolkit *)w)->cb_zombies_list();
+}
+
+void Toolkit::cb_zombies_list()
+{
+    // 加载
+    bool import_success = false;
+    if (window_spawn->button_zombies_list->value() == 2)
+    {
+        TCHAR szFileName[MAX_PATH];
+        OPENFILENAME ofn;
+        ZeroMemory(&ofn, sizeof(ofn));
+        ofn.lStructSize = sizeof(ofn);
+        ofn.hwndOwner = nullptr;
+        ofn.lpstrFilter = L"*.zbl\0*.zbl\0";
+        ofn.nFilterIndex = 1;
+        ofn.lpstrFile = szFileName;
+        ofn.lpstrFile[0] = '\0';
+        ofn.nMaxFile = sizeof(szFileName);
+        ofn.lpstrFileTitle = nullptr;
+        ofn.nMaxFileTitle = 0;
+        ofn.lpstrInitialDir = L"zombies";
+        ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+        if (GetOpenFileNameW(&ofn) == TRUE)
+        {
+#ifdef _DEBUG
+            std::wcout << L"打开文件: " << std::wstring(szFileName) << std::endl;
+#endif
+            auto size = std::filesystem::file_size(szFileName);
+            if (size == (1 + 1 + 1 + 1000 + 1) * sizeof(int))
+            {
+                std::ifstream infile;
+                infile.open(szFileName, std::ios::binary | std::ios::in);
+                if (infile)
+                {
+                    int data[1 + 1 + 1 + 1000 + 1] = {0};
+                    infile.read(reinterpret_cast<char *>(&data), sizeof(data));
+                    unsigned long crc = crc32(0L, Z_NULL, 0);
+                    crc = crc32(crc, (const unsigned char *)data, (3 + 1000) * sizeof(int));
+                    if (data[0] == 0x58434c52 && data[1] == 1 && data[2] == 1000 && data[3 + 1000] == crc)
+                    {
+                        std::array<int, 1000> zl;
+                        zl.fill(-1);
+                        for (size_t i = 0; i < 1000; i++)
+                            zl[i] = data[3 + i];
+                        pvz->SetSpawnList(zl);
+                        import_success = true;
+                    }
+                }
+                infile.close();
+            }
+        }
+    }
+
     std::array<int, 1000> zombies_list;
     zombies_list.fill(-1);
 
@@ -209,6 +274,61 @@ void Toolkit::cb_update_details()
     }
 
     window_spawn->UpdateData(zombies_list);
+
+    if (window_spawn->button_zombies_list->value() == 2 && import_success)
+    {
+        fl_message_title("加载成功");
+        fl_message("出怪列表已经导入到游戏中.");
+    }
+
+    // 保存
+    if (window_spawn->button_zombies_list->value() == 1)
+    {
+        int data[1 + 1 + 1 + 1000 + 1] = {0};
+
+        data[0] = 0x58434c52; // header
+        data[1] = 1;          // version
+        data[2] = 1000;       // length
+
+        for (size_t i = 0; i < 1000; i++)
+            data[3 + i] = zombies_list[i];
+
+        unsigned long crc = crc32(0L, Z_NULL, 0);
+        crc = crc32(crc, (const unsigned char *)data, (3 + 1000) * sizeof(int));
+        data[3 + 1000] = crc;
+
+        std::filesystem::current_path(this->path);
+        system("mkdir zombies");
+
+        SYSTEMTIME time_now;
+        GetLocalTime(&time_now);
+        std::string filename = std::string("zombies")             //
+                               + "\\"                             //
+                               + std::to_string(time_now.wYear)   //
+                               + "."                              //
+                               + std::to_string(time_now.wMonth)  //
+                               + "."                              //
+                               + std::to_string(time_now.wDay)    //
+                               + "_"                              //
+                               + std::to_string(time_now.wHour)   //
+                               + "."                              //
+                               + std::to_string(time_now.wMinute) //
+                               + "."                              //
+                               + std::to_string(time_now.wSecond) //
+                               + ".zbl";                          //
+
+        std::ofstream outfile;
+        outfile.open(filename.c_str(), std::ios::binary | std::ios::out | std::ios::trunc);
+        if (outfile)
+        {
+            outfile.write(reinterpret_cast<char *>(&data), sizeof(data));
+            fl_message_title("保存成功");
+            fl_message(std::string("当前出怪列表保存在文件: \n" + filename).c_str());
+        }
+        outfile.close();
+    }
+
+    window_spawn->button_zombies_list->value(0);
 }
 
 void Toolkit::cb_on_hide_spawn_details(Fl_Widget *, void *w)
@@ -963,15 +1083,7 @@ void Toolkit::cb_userdata()
             ShellExecuteW(nullptr, L"open", p.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
     };
 
-#pragma warning(disable : 4996)
-    DWORD dwVersion = 0;
-    DWORD dwBuild = 0;
-    dwVersion = GetVersion();
-    if (dwVersion < 0x80000000)
-        dwBuild = (DWORD)(HIWORD(dwVersion));
-#pragma warning(default : 4996)
-
-    if (dwBuild < 6000)
+    if (true)
     {
         // 2000/XP 系统下才会使用 `安装目录/userdata` 做存档位置
         // 需要找到游戏才能定位到游戏安装目录

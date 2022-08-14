@@ -19,6 +19,7 @@
 
 #include <Windows.h>
 #include <ShlObj.h>
+#include <VersionHelpers.h>
 
 #include <iostream>
 #include <map>
@@ -36,6 +37,8 @@
 
 namespace Pt
 {
+
+#define EMOJI(e, s) ((std::string(this->emoji ? (e) : "▢") + ((s)[0] == 0 ? "" : " ") + (s)).c_str())
 
 // 实现 Fl_Choice 对滚轮的响应
 class Fl_Choice_ : public Fl_Choice
@@ -84,14 +87,14 @@ class SpawnWindow : public Fl_Double_Window
   public:
     SpawnTable *table_spawn;
     Fl_Button *button_update_details;
+    Fl_Menu_Button *button_zombies_list;
     Fl_Box *box_mask_spawn_types;
+    bool emoji = false;
 
   public:
     void tooltips(bool);
     bool on = false;
 };
-
-#define EMOJI(e, s) ((std::string(this->emoji ? (e) : "▢") + ((s)[0] == 0 ? "" : " ") + (s)).c_str())
 
 class Window : public Fl_Double_Window
 {
@@ -232,8 +235,8 @@ class Window : public Fl_Double_Window
     Fl_Box *game_status_tip;
     bool bad_version_warned = false;
 
-    bool yahei = false;
     bool emoji = false;
+    bool emoji_i = false;
 
   protected:
     std::string utf8_encode(const std::wstring &);
