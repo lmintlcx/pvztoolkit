@@ -57,7 +57,7 @@ signtool.exe sign /v ^
 
 goto :end
 
-file="PvZ_Toolkit_v1.20.0.exe"
+file="PvZ_Toolkit_v1.20.1.exe"
 rm $file.hash
 echo $file >> $file.hash
 echo "MD5" >> $file.hash

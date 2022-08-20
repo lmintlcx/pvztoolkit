@@ -1569,7 +1569,7 @@ Data::Data()
             {0x005d21d9, {0x00eb}, {0x4074}},                     // background_running
             {0x005cd993, {0x70}, {0x74}},                         // disable_delete_userdata
             {0x0048cd63, {0x00140389 + 0x28}, {0x00140389}},      // disable_save_userdata
-            {0x00430c80, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
+            {0x00430c80, {0x38, 0x58, 0x64}, {0x88, 0x58, 0x64}}, // unlock_limbo_page
 
             0x0044d270, // call_sync_profile
 
@@ -1769,7 +1769,7 @@ Data::Data()
             {0x005d87c9, {0x00eb}, {0x4074}},                     // background_running
             {0x005d3fd3, {0x70}, {0x74}},                         // disable_delete_userdata
             {0x004907ea, {0x00142f42 + 0x28}, {0x00142f42}},      // disable_save_userdata
-            {0x00431ce0, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
+            {0x00431ce0, {0x38, 0x58, 0x64}, {0x88, 0x58, 0x64}}, // unlock_limbo_page
 
             0x0044eb90, // call_sync_profile
 
@@ -1969,7 +1969,7 @@ Data::Data()
             {0x005da319, {0x00eb}, {0x4074}},                     // background_running
             {0x005d5b43, {0x70}, {0x74}},                         // disable_delete_userdata
             {0x00490af3, {0x001447a9 + 0x28}, {0x001447a9}},      // disable_save_userdata
-            {0x00432cdf, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
+            {0x00432cdf, {0x38, 0x58, 0x64}, {0x88, 0x58, 0x64}}, // unlock_limbo_page
 
             0x004501d0, // call_sync_profile
 
@@ -2169,7 +2169,7 @@ Data::Data()
             {0x005cb249, {0x00eb}, {0x4074}},                     // background_running
             {0x005c6a73, {0x70}, {0x74}},                         // disable_delete_userdata
             {0x004adf93, {0x00118239 + 0x28}, {0x00118239}},      // disable_save_userdata
-            {0x0044895a, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
+            {0x0044895a, {0x38, 0x58, 0x64}, {0x88, 0x58, 0x64}}, // unlock_limbo_page
 
             0x00469630, // call_sync_profile
 
@@ -2369,7 +2369,7 @@ Data::Data()
             {0x00622fd9, {0x00eb}, {0x4074}},                     // background_running
             {0x0061e7f3, {0x70}, {0x74}},                         // disable_delete_userdata
             {0x0049c733, {0x00181819 + 0x28}, {0x00181819}},      // disable_save_userdata
-            {0x004374da, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
+            {0x004374da, {0x38, 0x58, 0x64}, {0x88, 0x58, 0x64}}, // unlock_limbo_page
 
             0x00457d60, // call_sync_profile
 
@@ -2569,7 +2569,7 @@ Data::Data()
             {0x00624919, {0x00eb}, {0x4074}},                     // background_running
             {0x00620143, {0x70}, {0x74}},                         // disable_delete_userdata
             {0x00497ed3, {0x001879c9 + 0x28}, {0x001879c9}},      // disable_save_userdata
-            {0x0043935a, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
+            {0x0043935a, {0x38, 0x58, 0x64}, {0x88, 0x58, 0x64}}, // unlock_limbo_page
 
             0x00455420, // call_sync_profile
 
@@ -2769,7 +2769,7 @@ Data::Data()
             {0x006226e9, {0x00eb}, {0x4074}},                     // background_running
             {0x0061df13, {0x70}, {0x74}},                         // disable_delete_userdata
             {0x00498b63, {0x00184b09 + 0x28}, {0x00184b09}},      // disable_save_userdata
-            {0x00439fca, {0x38, 0x59, 0x54}, {0x88, 0x59, 0x54}}, // unlock_limbo_page
+            {0x00439fca, {0x38, 0x58, 0x64}, {0x88, 0x58, 0x64}}, // unlock_limbo_page
 
             0x004560d0, // call_sync_profile
 
