@@ -1310,8 +1310,7 @@ void PvZ::SetLawnMowers(int option)
 
     if (!GameOn())
         return;
-    int ui = GameUI();
-    if (ui != 2 && ui != 3)
+    if (GameUI() != 3)
         return;
 
     unsigned int lawn_mower_struct_size = 0x48;
