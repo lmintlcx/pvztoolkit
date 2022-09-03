@@ -11,13 +11,17 @@ PvZ Toolkit 是一个适用于植物大战僵尸一代电脑版的辅助工具.
 
 > For non-Chinese users, English tooltips will be displayed with mouse hovers.
 
+### English
+
+![PvZ Toolkit](https://github.com/lmintlcx/pvztoolkit/raw/master/img/pvztoolkit_en.gif)
+
 ## 下载链接
 
 PvZ Toolkit 官方网站: [https://pvz.lmintlcx.com/toolkit/](https://pvz.lmintlcx.com/toolkit/)
 
 ## 更新日志
 
-最新版本: 1.20.2 (2022-08-27)
+最新版本: 1.20.3 (2022-09-03)
 
 [点击查看 CHANGELOG.md](https://github.com/lmintlcx/pvztoolkit/blob/master/CHANGELOG.md)
 

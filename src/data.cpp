@@ -154,6 +154,7 @@ Data::Data()
 
             {0x00452d23, {0x80}, {0x85}},                                 // reload_instantly
             {{0x004583c8, {0x80}, {0x85}}, {0x004528ff, {0x70}, {0x75}}}, // grow_up_quickly
+            {{0x00458b09, {0x70}, {0x75}}, {0x00452e9c, {0x80}, {0x85}}}, // no_cooldown
             {0x00454dc2, {0xeb}, {0x75}},                                 // mushrooms_awake
             {0x0041fe2f, {0xeb}, {0x74}},                                 // stop_spawning
             {{0x005132ee, {0x54}, {0x64}}, {0x00513259, {0x54}, {0x44}}}, // stop_zombies
@@ -354,6 +355,7 @@ Data::Data()
 
             {0x0045ceb3, {0x80}, {0x85}},                                 // reload_instantly
             {{0x00462878, {0x80}, {0x85}}, {0x0045ca6f, {0x70}, {0x75}}}, // grow_up_quickly
+            {{0x00462fde, {0x70}, {0x75}}, {0x0045d14c, {0x80}, {0x85}}}, // no_cooldown
             {0x0045f3ed, {0xeb}, {0x75}},                                 // mushrooms_awake
             {0x00421f1f, {0xeb}, {0x74}},                                 // stop_spawning
             {{0x00520c64, {0x54}, {0x64}}, {0x00520c6d, {0x54}, {0x44}}}, // stop_zombies
@@ -554,6 +556,7 @@ Data::Data()
 
             {0x0046103b, {0x80}, {0x85}},                                 // reload_instantly
             {{0x0045fe54, {0x80}, {0x85}}, {0x0045fba3, {0x70}, {0x75}}}, // grow_up_quickly
+            {{0x00461565, {0x70}, {0x75}}, {0x00461e37, {0x80}, {0x85}}}, // no_cooldown
             {0x0045de8e, {0xeb}, {0x74}},                                 // mushrooms_awake
             {0x004265dc, {0xeb}, {0x74}},                                 // stop_spawning
             {{0x0052ab2b, {0x54}, {0x64}}, {0x0052ab34, {0x54}, {0x44}}}, // stop_zombies
@@ -754,6 +757,7 @@ Data::Data()
 
             {0x004611bb, {0x80}, {0x85}},                                 // reload_instantly
             {{0x0045ffd4, {0x80}, {0x85}}, {0x0045fd23, {0x70}, {0x75}}}, // grow_up_quickly
+            {{0x004616e5, {0x70}, {0x75}}, {0x00461fb7, {0x80}, {0x85}}}, // no_cooldown
             {0x0045df8e, {0xeb}, {0x74}},                                 // mushrooms_awake
             {0x0042663c, {0xeb}, {0x74}},                                 // stop_spawning
             {{0x0052ae7b, {0x54}, {0x64}}, {0x0052ae84, {0x54}, {0x44}}}, // stop_zombies
@@ -954,6 +958,7 @@ Data::Data()
 
             {0x0046488b, {0x80}, {0x85}},                                 // reload_instantly
             {{0x004636a4, {0x80}, {0x85}}, {0x004633f3, {0x70}, {0x75}}}, // grow_up_quickly
+            {{0x00464db5, {0x70}, {0x75}}, {0x00465687, {0x80}, {0x85}}}, // no_cooldown
             {0x0046165e, {0xeb}, {0x74}},                                 // mushrooms_awake
             {0x0042826c, {0xeb}, {0x74}},                                 // stop_spawning
             {{0x0052ef9b, {0x54}, {0x64}}, {0x0052efa4, {0x54}, {0x44}}}, // stop_zombies
@@ -1154,6 +1159,7 @@ Data::Data()
 
             {0x0046493b, {0x80}, {0x85}},                                 // reload_instantly
             {{0x00463754, {0x80}, {0x85}}, {0x004634a3, {0x70}, {0x75}}}, // grow_up_quickly
+            {{0x00464e65, {0x70}, {0x75}}, {0x00465737, {0x80}, {0x85}}}, // no_cooldown
             {0x0046170e, {0xeb}, {0x74}},                                 // mushrooms_awake
             {0x004281bc, {0xeb}, {0x74}},                                 // stop_spawning
             {{0x0052f02b, {0x54}, {0x64}}, {0x0052f034, {0x54}, {0x44}}}, // stop_zombies
@@ -1354,6 +1360,7 @@ Data::Data()
 
             {0x00464b3b, {0x80}, {0x85}},                                 // reload_instantly
             {{0x00463944, {0x80}, {0x85}}, {0x00463693, {0x70}, {0x75}}}, // grow_up_quickly
+            {{0x00465065, {0x70}, {0x75}}, {0x00465938, {0x80}, {0x85}}}, // no_cooldown
             {0x00461900, {0xeb}, {0x74}},                                 // mushrooms_awake
             {0x004283ac, {0xeb}, {0x74}},                                 // stop_spawning
             {{0x0052f5ab, {0x54}, {0x64}}, {0x0052f5b4, {0x54}, {0x44}}}, // stop_zombies
@@ -1554,6 +1561,7 @@ Data::Data()
 
             {0x00464a0b, {0x80}, {0x85}},                                 // reload_instantly
             {{0x00463824, {0x80}, {0x85}}, {0x00463573, {0x70}, {0x75}}}, // grow_up_quickly
+            {{0x00464f25, {0x70}, {0x75}}, {0x00465817, {0x80}, {0x85}}}, // no_cooldown
             {0x004617c2, {0xeb}, {0x74}},                                 // mushrooms_awake
             {0x004290dc, {0xeb}, {0x74}},                                 // stop_spawning
             {{0x0053b433, {0x54}, {0x64}}, {0x0053b43c, {0x54}, {0x44}}}, // stop_zombies
@@ -1754,6 +1762,7 @@ Data::Data()
 
             {0x004673eb, {0x80}, {0x85}},                                 // reload_instantly
             {{0x00466204, {0x80}, {0x85}}, {0x00465f53, {0x70}, {0x75}}}, // grow_up_quickly
+            {{0x00467905, {0x70}, {0x75}}, {0x004681f7, {0x80}, {0x85}}}, // no_cooldown
             {0x004641a2, {0xeb}, {0x74}},                                 // mushrooms_awake
             {0x0042a12c, {0xeb}, {0x74}},                                 // stop_spawning
             {{0x0053f533, {0x54}, {0x64}}, {0x0053f53c, {0x54}, {0x44}}}, // stop_zombies
@@ -1954,6 +1963,7 @@ Data::Data()
 
             {0x0046848b, {0x80}, {0x85}},                                 // reload_instantly
             {{0x004672a4, {0x80}, {0x85}}, {0x00466ff3, {0x70}, {0x75}}}, // grow_up_quickly
+            {{0x004689a5, {0x70}, {0x75}}, {0x00469297, {0x80}, {0x85}}}, // no_cooldown
             {0x00465242, {0xeb}, {0x74}},                                 // mushrooms_awake
             {0x0042b0dc, {0xeb}, {0x74}},                                 // stop_spawning
             {{0x0053f863, {0x54}, {0x64}}, {0x0053f86c, {0x54}, {0x44}}}, // stop_zombies
@@ -2154,6 +2164,7 @@ Data::Data()
 
             {0x0048517c, {0x80}, {0x85}},                                 // reload_instantly
             {{0x00483ed3, {0x80}, {0x85}}, {0x00483bfb, {0x70}, {0x75}}}, // grow_up_quickly
+            {{0x004855f5, {0x70}, {0x75}}, {0x00485ec7, {0x80}, {0x85}}}, // no_cooldown
             {0x00481c44, {0xeb}, {0x74}},                                 // mushrooms_awake
             {0x0043f17e, {0xeb}, {0x74}},                                 // stop_spawning
             {{0x005604d7, {0x54}, {0x64}}, {0x005604e0, {0x54}, {0x44}}}, // stop_zombies
@@ -2354,6 +2365,7 @@ Data::Data()
 
             {0x00473a2c, {0x80}, {0x85}},                                 // reload_instantly
             {{0x00472783, {0x80}, {0x85}}, {0x004724ab, {0x70}, {0x75}}}, // grow_up_quickly
+            {{0x00473ea5, {0x70}, {0x75}}, {0x00474777, {0x80}, {0x85}}}, // no_cooldown
             {0x004704f4, {0xeb}, {0x74}},                                 // mushrooms_awake
             {0x0042dd5e, {0xeb}, {0x74}},                                 // stop_spawning
             {{0x0054ec57, {0x54}, {0x64}}, {0x0054ec60, {0x54}, {0x44}}}, // stop_zombies
@@ -2554,6 +2566,7 @@ Data::Data()
 
             {0x0046f40b, {0x80}, {0x85}},                                 // reload_instantly
             {{0x0046e224, {0x80}, {0x85}}, {0x0046df73, {0x70}, {0x75}}}, // grow_up_quickly
+            {{0x0046f925, {0x70}, {0x75}}, {0x00470217, {0x80}, {0x85}}}, // no_cooldown
             {0x0046c1c2, {0xeb}, {0x74}},                                 // mushrooms_awake
             {0x004318bc, {0xeb}, {0x74}},                                 // stop_spawning
             {{0x00546823, {0x54}, {0x64}}, {0x0054682c, {0x54}, {0x44}}}, // stop_zombies
@@ -2754,6 +2767,7 @@ Data::Data()
 
             {0x0047025b, {0x80}, {0x85}},                                 // reload_instantly
             {{0x0046f074, {0x80}, {0x85}}, {0x0046edc3, {0x70}, {0x75}}}, // grow_up_quickly
+            {{0x00470775, {0x70}, {0x75}}, {0x00471067, {0x80}, {0x85}}}, // no_cooldown
             {0x0046d012, {0xeb}, {0x74}},                                 // mushrooms_awake
             {0x0043252c, {0xeb}, {0x74}},                                 // stop_spawning
             {{0x00547433, {0x54}, {0x64}}, {0x0054743c, {0x54}, {0x44}}}, // stop_zombies

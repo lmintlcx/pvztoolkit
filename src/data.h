@@ -190,6 +190,7 @@ struct PVZ_DATA
 
     HACK<uint8_t, 1> reload_instantly;
     std::vector<HACK<uint8_t, 1>> grow_up_quickly;
+    std::vector<HACK<uint8_t, 1>> no_cooldown;
     HACK<uint8_t, 1> mushrooms_awake;
     HACK<uint8_t, 1> stop_spawning;
     std::vector<HACK<uint8_t, 1>> stop_zombies;
