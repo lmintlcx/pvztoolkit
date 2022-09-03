@@ -1908,7 +1908,7 @@ void Window::import_lineup_list_file(std::wstring file)
 
     if (err_lst.size() > 0)
     {
-        std::wstring title = file + L" " + L"阵型列表格式错误";
+        std::wstring title = file + L" " + L"阵型列表文件格式错误";
         std::wstring text;
         for (size_t i = 0; i < err_lst.size(); i++)
         {
@@ -2441,8 +2441,8 @@ void Window::cb_tooltips()
                         + " " + zombies[spawn_type[i]];
         check_zombie[i]->copy_tooltip(on ? z.c_str() : nullptr);
     }
-    choice_giga_weight->copy_tooltip(on ? "GigaGargantuar\'s weight in non-huge waves."
-                                        : "非旗帜波的红眼僵尸随机权重。");
+    choice_giga_weight->copy_tooltip(on ? "GigaGargantuar\'s weight in non-huge waves.\nOriginal: 1000 (non-huge waves), 6000 (huge waves)."
+                                        : "非旗帜波的红眼僵尸随机权重。\n原始值：普通波 1000，旗帜波 6000。");
     check_giga_limit->copy_tooltip(on ? "No GigaGargantuar in 11th ~ 19th waves."
                                       : "第 11 ~ 19 波不出红眼僵尸。");
     button_set_spawn->copy_tooltip(on ? "Right click to change spawning mode."

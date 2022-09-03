@@ -1581,6 +1581,7 @@ void PvZ::ReloadInstantly(bool on)
 
     enable_hack(data().reload_instantly, on);
     enable_hack(data().grow_up_quickly, on);
+    enable_hack(data().no_cooldown, on);
 }
 
 void PvZ::MushroomsAwake(bool on)
