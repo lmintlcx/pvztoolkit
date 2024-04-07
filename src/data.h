@@ -31,10 +31,10 @@ namespace Pt
 #define PVZ_GOTY_1_1_0_1056_ZH_2012_06 2006
 #define PVZ_GOTY_1_1_0_1056_ZH_2012_07 2007
 
-// 单独的一个 hack
-// 包括 类型, 数目, 地址, 修改值, 原始值
-// 一个功能的实现可能需要多个 hack
-// 地址为 0 / -1 时忽略
+// A separate hack
+// Includes type, number, address, modified value, original value
+// Implementation of a feature may require multiple hacks
+// Ignored when//address is 0/-1
 template <typename T, size_t size>
 struct HACK
 {
@@ -43,7 +43,7 @@ struct HACK
     std::array<T, size> reset_value;
 };
 
-// 用来保存不同版本的内存基址数据
+// Used to hold different versions of memory base data
 struct PVZ_DATA
 {
     uintptr_t path;
@@ -251,20 +251,20 @@ class Data
     Data();
     ~Data();
 
-    // 是否为测试版
+	// Is it a beta version
     bool isBETA();
 
-    // 是否为年度版
+    // Is it the annual version
     bool isGOTY();
 
-    // 根据版本号获取数据
+    // Get data based on version number
     PVZ_DATA data();
 
   protected:
-    // 查找结果
+    // Find Results
     int find_result;
 
-    // 不同版本的内存数据
+    // Different versions of memory data
     PVZ_DATA data_beta_0_1_1_1014_en;
     PVZ_DATA data_beta_0_9_9_1029_en;
     PVZ_DATA data_1_0_0_1051_en;
@@ -280,7 +280,7 @@ class Data
     PVZ_DATA data_goty_1_1_0_1056_zh_2012_06;
     PVZ_DATA data_goty_1_1_0_1056_zh_2012_07;
 
-    // 将版本和对应数据联系起来的键值对
+    // Key value pairs linking versions and corresponding data
     std::map<int, PVZ_DATA> ver_map;
 };
 

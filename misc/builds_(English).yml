@@ -1,0 +1,19 @@
+#! pvztoolkit
+
+# Download the list of well-known formations online:
+# https://pvz.lmintlcx.com/lineup/
+
+# Files are automatically loaded when they are in the same directory as the main program.
+# The extension is ".yml", and the format used is a subset of YAML.
+# The encoding format is UTF-8.
+# The first line must be "#!pvztoolkit".
+# Empty lines are ignored.
+# Lines beginning with a pound sign "#" are comments and will be ignored.
+# Each row represents a formation.
+# A formation consists of two parts, name and code, separated by a colon and a space ": ".
+# Formation names must be enclosed in double quotes, formation codes are not.
+# The above punctuation marks are in English.
+# The formation name can use Chinese, English and numbers, try not to use special characters.
+# Malformed lines are ignored.
+
+"[Ultimate Tactics] Five-pointed star without gun flow": LI43jH/kRlzjZrhRF3RUpjJeOFHFZEXTHtMe0tlawVVE7GI0efJc8npSWMdVLhV261Y=

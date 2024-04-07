@@ -43,12 +43,12 @@ bool Process::OpenByWindow(const wchar_t *class_name, const wchar_t *window_name
     assert(PROCESS_ALL_ACCESS == 0x001FFFFF);
 
 #ifdef _DEBUG
-    std::wcout << L"查找窗口: " << (class_name == nullptr ? L"nullptr" : class_name)               //
+    std::wcout << L"Find window: " << (class_name == nullptr ? L"nullptr" : class_name)               //
                << L" " << (window_name == nullptr ? L"nullptr" : window_name) << std::endl         //
                << L" -> " << this->hwnd << L" " << this->pid << L" " << this->handle << std::endl; //
 #endif
 
-    // 返回的是窗口有没有找到而不是进程有没有打开
+    // What is returned is whether the window was found, not whether the process was opened.
     return this->hwnd != nullptr;
 }
 
@@ -63,7 +63,7 @@ bool Process::IsValid()
 
 #ifdef _DEBUG
     if (!valid)
-        std::wcout << L"当前进程不可用." << std::endl;
+        std::wcout << L"The current process is unavailable. " << std::endl;
 #endif
 
     return valid;

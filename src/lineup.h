@@ -32,13 +32,13 @@ class Lineup
                           false, false, false, false, false, false, false, false, //
                           false, false, true, false, false, false, false, false}; //
 
-    void Init(const std::string &); // 阵型字符串/代码 -> 数据
+    void Init(const std::string &); // Formation string/code -> Data
     bool OK();                      //
-    std::string Generate();         // 填充数据 -> 阵型代码
+    std::string Generate();         // Fill in the data-> formation code
 
-    std::string lineup_name;   // 阵型名称
-    std::string lineup_string; // 阵型字符串
-    std::string lineup_code;   // 阵型代码
+    std::string lineup_name;   // Formation name
+    std::string lineup_string; // Formation string
+    std::string lineup_code;   // Formation code
 
     uint16_t plant[GRID];
     uint16_t plant_im[GRID];
@@ -54,22 +54,22 @@ class Lineup
     uint8_t rake_row;
     uint8_t scene;
 
-    long long weight; // 用于排序的权重
+    long long weight; // Weights used for sorting
 
   private:
     void reset_data();
 
     bool ok;
-    uint16_t items[GRID]; // 压缩的
+    uint16_t items[GRID]; // Compressed
 
     std::vector<std::string> split(const std::string &, char);
     long hex2dec(const std::string &);
 
-    bool lineup_string_to_data();  // 阵型字符串 -> 数据
-    bool lineup_code_to_data();    // 阵型代码 -> 数据
-    void data_to_lineup_code();    // 数据 -> 阵型代码
-    inline void compress_data();   // 压缩数组
-    inline void decompress_data(); // 解压数组
+    bool lineup_string_to_data();  // Formation string -> Data
+    bool lineup_code_to_data();    // Formation code-> Data
+    void data_to_lineup_code();    // Data-> Formation code
+    inline void compress_data();   // Compressed array
+    inline void decompress_data(); // Unzip the array
 };
 
 } // namespace Pt

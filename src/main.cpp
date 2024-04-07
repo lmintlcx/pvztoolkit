@@ -30,7 +30,7 @@ bool VerifySignature(LPCWSTR);
 
 void window_callback(Fl_Widget *w, void *)
 {
-    // 按 Esc 不退出, 而是还原默认窗口大小
+    // Press Esc to not exit, but to restore the default window size
     if (Fl::event() == FL_SHORTCUT && Fl::event_key() == FL_Escape)
     {
         if (Fl::screen_scale(((Fl_Double_Window *)w)->screen_num()) != 1.0f)
@@ -44,7 +44,7 @@ void window_callback(Fl_Widget *w, void *)
 
 void callback_pvz_check(void *w)
 {
-    // 定期检查游戏进程状态
+    // Check the status of the game process regularly
     bool on = ((Pt::Toolkit *)w)->pvz->GameOn();
     double t = on ? 0.4 : 0.2;
     Fl::repeat_timeout(t, callback_pvz_check, w);
@@ -55,14 +55,14 @@ void callback_pvz_check(void *w)
 
 /// main ///
 
-Fl_Font ui_font = FL_FREE_FONT + 1; // 主界面
-Fl_Font ls_font = FL_FREE_FONT + 2; // 阵型代码
-Fl_Font tt_font = FL_FREE_FONT + 3; // 提示信息
+Fl_Font ui_font = FL_FREE_FONT + 1; // Main interface
+Fl_Font ls_font = FL_FREE_FONT + 2; // Formation code
+Fl_Font tt_font = FL_FREE_FONT + 3; // Prompt message
 
 int main(int argc, char **argv)
 {
 #ifdef _DEBUG
-    system("chcp 65001"); // 调试输出中文
+    system("chcp 65001"); // Debug output Chinese
 #endif
 
 #ifdef _DEBUG
@@ -88,25 +88,25 @@ int main(int argc, char **argv)
             return 0xF7;
     }
 
-    // 界面背景颜色
+    // Interface background color
     Fl::background(243, 243, 243);
 
-    // 界面字体
-    Fl::set_font(ui_font, "Microsoft YaHei");
+    // Interface font
+    Fl::set_font(ui_font, "Arial");
     Fl::set_font(ls_font, "Courier New");
     Fl::set_font(tt_font, "Segoe UI");
 
-    // 设置对话框属性
+    // Set dialog box properties
     fl_message_font(ui_font, 13);
     fl_message_hotspot(1);
 
-    // fl_cancel = "取消";
-    // fl_close = "关闭";
-    // fl_no = "否";
-    // fl_ok = "好的";
-    // fl_yes = "是";
+	//fl_cancel= "Cancel";
+	//fl_close= "Close";
+	//fl_no = "No";
+	//fl_ok = "OK";
+	//fl_yes = "Yes";
 
-    // 设置工具提示的样式
+    // Set the style of the tooltip
     Fl_Tooltip::delay(0.1f);
     Fl_Tooltip::hoverdelay(0.1f);
     Fl_Tooltip::hidedelay(5.0f);
@@ -118,13 +118,13 @@ int main(int argc, char **argv)
     Fl_Tooltip::margin_height(5);
     Fl_Tooltip::wrap_width(400);
 
-    // 初始化随机数种子
+    // Initialize random number seed
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
-    // 第一次调用时启用线程锁机制
+    // Enable the thread lock mechanism on the first call
     Fl::lock();
 
-    // 启动画面
+    // Startup screen
 
     Fl_Window splash(400 + 2, 225 + 2, "");
     splash.begin();
@@ -158,7 +158,7 @@ int main(int argc, char **argv)
         splash.size(w + 2, h + 2);
     }
 
-    // 第一个窗口显示前设置标题栏图标
+    // Set the title bar icon before the first window is displayed
     extern HINSTANCE fl_display;
     splash.icon((const void *)LoadIcon(fl_display, MAKEINTRESOURCE(IDI_ICON)));
 
@@ -168,38 +168,38 @@ int main(int argc, char **argv)
 
     splash.color(box.image() ? FL_GREEN : FL_DARK_GREEN);
 
-    clock_t start = clock(); // 开始计时
+    clock_t start = clock(); // start the timer
 
-    // 系统需求
+    // System requirements
 
     if (!IsWindowsVistaOrGreater())
     {
         fl_message_title("PvZ Toolkit");
-        fl_alert("正在使用的操作系统不受支持！\n"
-                 "需要 Windows Vista 或者更高版本才能运行。");
+        fl_alert("The operating system being used is not supported! \n"
+                 "Requires Windows Vista or higher to run.");
         return -10;
     }
 
-    // 测试版在 2023-12-31 23:59:59 之后失效
+    // The beta version expires after 2023-12-31 23:59:59
     if (!RELEASE_VERSION && (std::time(nullptr) > std::time_t(1704038399)))
     {
-        fl_message_title("测试版过期提示");
-        if (fl_choice("这是很久以前的测试版哦，现在去下载新的正式版吗？", //
+        fl_message_title("Test version expiration reminder");
+        if (fl_choice("This was a beta version a long time ago. Do you want to download the new official version now?", //
                       "No", "Yes", 0) == 1)
             ShellExecuteW(nullptr, L"open", L"https://pvz.lmintlcx.com/toolkit/", //
                           nullptr, nullptr, SW_SHOWNORMAL);
         return -1;
     }
 
-    // 防篡改检测
+    // Tamper-proof detection
     if (SIGNATURE_CHECK)
     {
         wchar_t exePath[MAX_PATH] = {0};
         GetModuleFileNameW(NULL, exePath, MAX_PATH);
         if (!VerifySignature(exePath))
         {
-            fl_message_title("PvZ Toolkit 防篡改检测");
-            if (fl_choice("本程序可能已经感染病毒，请在官方渠道重新下载！", //
+            fl_message_title("PvZ Toolkit Tamper Detection");
+            if (fl_choice("This program may have been infected with a virus, please download it again from official channels!", //
                           "No", "Yes", 0) == 1)
                 ShellExecuteW(nullptr, L"open", L"https://pvz.lmintlcx.com/toolkit/", //
                               nullptr, nullptr, SW_SHOWNORMAL);
@@ -207,29 +207,29 @@ int main(int argc, char **argv)
         }
     }
 
-    // 只运行单个实例
+    // Run only a single instance
     HANDLE m = CreateMutexW(nullptr, true, L"PvZ Toolkit");
     if (GetLastError() == ERROR_ALREADY_EXISTS)
         return -3;
 
-    // 主窗口
+    // Main window
     Pt::Toolkit pvztoolkit(0, 0, "");
     pvztoolkit.callback(window_callback);
 
 #ifdef _DEBUG
-    std::wcout << L"启动用时(毫秒): " << (clock() - start) << std::endl;
+    std::wcout << L"Startup time (milliseconds): " << (clock() - start) << std::endl;
     // pvztoolkit.input_sun->value(clock() - start);
 #endif
 
-    // 隐藏启动画面
+    // Hide the startup screen
 
-    double dt = 0.017; // 最短显示时间
+    double dt = 0.017; // Minimum display time
     while ((clock() - start) / (double)CLOCKS_PER_SEC < dt)
         Fl::check();
     splash.hide();
     Fl::check();
 
-    // 显示主窗口
+    // Show main window
 
     pvztoolkit.show(1, argv); // argc -> 1
     pvztoolkit.wait_for_expose();
@@ -237,14 +237,14 @@ int main(int argc, char **argv)
     SetForegroundWindow(fl_xid(&pvztoolkit));
 
 #ifdef _DEBUG
-    // 避免调试的时候频繁输出
+    // Avoid frequent output during debugging
 #else
     Fl::add_timeout(0.01, callback_pvz_check, &pvztoolkit);
 #endif
 
     int ret = Fl::run();
 
-    // 结束主循环后再释放
+    // Release after the main cycle is over
     ReleaseMutex(m);
     CloseHandle(m);
 

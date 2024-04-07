@@ -144,10 +144,10 @@ void Code::asm_code_inject(HANDLE handle)
     VirtualFreeEx(handle, addr, 0, MEM_RELEASE);
 
 #ifdef _DEBUG
-    std::wcout << L"等待状态: " << wait_status << std::endl;
+    std::wcout << L"waiting state: " << wait_status << std::endl;
     assert(this->length > 0);
     assert(this->length < 4096 * 16);
-    std::wcout << L"注入汇编码: ";
+    std::wcout << L"Inject assembly code: ";
     for (size_t i = 0; i < this->length; i++)
         std::cout << std::hex << int(this->code[i]) << " ";
     std::cout << std::endl;

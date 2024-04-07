@@ -24,7 +24,7 @@ VS_VERSION_INFO VERSIONINFO
     BEGIN
         BLOCK "StringFileInfo"
         BEGIN
-            BLOCK "080404b0"
+            BLOCK "040904e4"
             BEGIN
                 VALUE "CompanyName", "Cube Studio"
                 VALUE "FileDescription", "PvZ Toolkit"
@@ -38,6 +38,6 @@ VS_VERSION_INFO VERSIONINFO
         END
         BLOCK "VarFileInfo"
         BEGIN
-            VALUE "Translation", 0x0804, 1200
+            VALUE "Translation", 0x0409, 1252
         END
     END

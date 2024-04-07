@@ -37,24 +37,24 @@ bool PAK::create_path(const std::wstring &path)
     if (path == L"")
         return false;
 
-    // 目录已经存在直接返回真
+    // The directory already exists and returns directly to true
     DWORD fa = GetFileAttributesW(path.c_str());
     if ((fa != INVALID_FILE_ATTRIBUTES) && (fa & FILE_ATTRIBUTE_DIRECTORY))
         return true;
 
-    // 不存在则创建, 创建成功
+    // If it does not exist, it is created, and the creation is successful
     if (CreateDirectoryW(path.c_str(), nullptr))
         return true;
 
-    // 创建失败, 上级目录不存在, 失败
+    // Creation failed, the superior directory does not exist, failed
     if (path.substr(0, path.find_last_of(L"\\")) == path)
         return false;
 
-    // 上级目录存在, 但是创建失败
+    // The superior directory exists, but the creation failed
     if (!create_path(path.substr(0, path.find_last_of(L"\\"))))
         return false;
 
-    // 上级目录创建成功, 返回创建本目录的结果
+    // The superior directory was created successfully, and the result of creating this directory is returned
     return CreateDirectoryW(path.c_str(), nullptr);
 }
 
@@ -104,17 +104,17 @@ void PAK::find_files(const std::wstring find_path,
 int PAK::Unpack(std::wstring src_file, std::wstring dst_dir)
 {
 #ifdef _DEBUG
-    std::wcout << L"解包源文件: " << src_file << std::endl;
-    std::wcout << L"解包目标文件夹: " << dst_dir << std::endl;
+	std::wcout << L"Unpack source file: " << src_file << std::endl;
+    std::wcout << L"Unpack target folder: " << dst_dir << std::endl;
 #endif
 
-    // 打开 pak 文件
+    // Open pak file
     HANDLE hfr = CreateFileW(src_file.c_str(), GENERIC_READ, FILE_SHARE_READ, //
                              nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
     if (hfr == INVALID_HANDLE_VALUE)
         return UNPACK_SRC_NOT_EXIST;
 
-    // 获取大小
+    // Get size
     DWORD size = GetFileSize(hfr, nullptr);
     if (size == INVALID_FILE_SIZE || size < 10)
     {
@@ -122,10 +122,10 @@ int PAK::Unpack(std::wstring src_file, std::wstring dst_dir)
         return UNPACK_SRC_SIZE_ERROR;
     }
 #ifdef _DEBUG
-    std::wcout << L"源文件大小: " << size << "字节" << std::endl;
+    std::wcout << L"Source file size: " << size << "bytes" << std::endl;
 #endif
 
-    // 将整个文件内容加载到内存里
+    // Load the entire file content into memory
     char *buffer = new char[size];
     DWORD read_size = 0;
     BOOL ret = ReadFile(hfr, buffer, size, &read_size, nullptr);
@@ -137,14 +137,14 @@ int PAK::Unpack(std::wstring src_file, std::wstring dst_dir)
         return UNPACK_SRC_LOAD_ERROR;
     }
 
-    // 整个文件与 0xF7 异或
+    // The entire file is XOR with 0xF7
     for (size_t i = 0; i < size; ++i)
         buffer[i] = buffer[i] ^ 0xf7;
 
-    // 文件偏移量
+    // File offset
     unsigned int offset = 0;
 
-    // 检查文件头
+    // Check file header
     unsigned long file_header_magic = (unsigned long &)buffer[offset];
     offset += sizeof(unsigned long);
     unsigned long file_header_version = (unsigned long &)buffer[offset];
@@ -155,23 +155,23 @@ int PAK::Unpack(std::wstring src_file, std::wstring dst_dir)
         return UNPACK_SRC_HEADER_ERROR;
     }
 
-    // 索引区域数据结构
-    unsigned char eof_flag;   // 结束标志
-    unsigned char name_width; // 文件名长度
-    char file_name[256];      // 文件名
-    int file_size;            // 大小
-    FILETIME file_time;       // 时间
+    // Index area data structure
+	unsigned char eof_flag; // end flag
+    unsigned char name_width; // file name length
+    char file_name[256]; // file name
+    int file_size; // size
+    FILETIME file_time; // time
 
-    unsigned int files_count = 0;        // 文件总数
-    std::vector<std::string> files_name; // pak 里保存的路径
-    std::vector<int> files_size;         // 大小
+    unsigned int files_count = 0; //Total number of files
+    std::vector<std::string> files_name; // The path saved in pak
+    std::vector<int> files_size; // size
 
-    // 遍历索引区获取文件信息
+    //Traverse the index area to obtain file information
     for (;;)
     {
         eof_flag = (unsigned char &)buffer[offset];
         offset += sizeof(unsigned char);
-        // 遇到结束标志退出循环
+        // Exit the loop when encountering the end sign
         if (eof_flag != static_cast<unsigned char>(0x00) || eof_flag == static_cast<unsigned char>(0x80))
             break;
 
@@ -186,7 +186,7 @@ int PAK::Unpack(std::wstring src_file, std::wstring dst_dir)
         file_size = (int &)buffer[offset];
         offset += sizeof(int);
 
-        file_time = (FILETIME &)buffer[offset]; // 没用
+        file_time = (FILETIME &)buffer[offset]; // Useless
         offset += sizeof(FILETIME);
 
         files_name.push_back(std::string(file_name));
@@ -209,11 +209,11 @@ int PAK::Unpack(std::wstring src_file, std::wstring dst_dir)
 #endif
     }
 #ifdef _DEBUG
-    std::wcout << L"文件总数: " << files_count << std::endl;
+    std::wcout << L"Total number of files: " << files_count << std::endl;
 #endif
 
-    // 检查文件索引区域数据的正确性
-    unsigned int _offset = offset; // 暂存
+    // Check the correctness of the data in the file index area
+    unsigned int _offset = offset; // temporary storage
     for (unsigned int i = 0; i < files_count; i++)
     {
         int output_file_size = files_size.at(i);
@@ -224,20 +224,20 @@ int PAK::Unpack(std::wstring src_file, std::wstring dst_dir)
         delete[] buffer;
         return UNPACK_SRC_DATA_ERROR;
     }
-    offset = _offset; // 还原
+    offset = _offset; // reduction
 
-    // 提取数据区所有文件
+    // Extract all files in the data area
     for (size_t i = 0; i < files_count; i++)
     {
-        // 每个文件完整路径和大小
+        // Full path and size of each file
         std::wstring output_path = dst_dir + L"\\" + utf8_decode(files_name.at(i));
         unsigned int output_size = files_size.at(i);
 
-        // 得到目录名并创建
+        // Get directory name and create
         bool path_created = create_path(output_path.substr(0, output_path.find_last_of(L"\\")));
         if (!path_created)
         {
-            // std::wcout << L"路径创建失败: " << output_path.substr(0, output_path.find_last_of(L"\\")) << std::endl;
+            // std::wcout << L"Path creation failed: " << output_path.substr(0, output_path.find_last_of(L"\\")) << std::endl;
             delete[] buffer;
             return UNPACK_PATH_CREATE_ERROR;
         }
@@ -246,7 +246,7 @@ int PAK::Unpack(std::wstring src_file, std::wstring dst_dir)
                                  nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
         if (hfw == INVALID_HANDLE_VALUE)
         {
-            // std::wcout << L"文件创建失败: " << output_path << std::endl;
+            // std::wcout << L"File creation failed: " << output_path << std::endl;
             delete[] buffer;
             return UNPACK_FILE_CREATE_ERROR;
         }
@@ -261,7 +261,7 @@ int PAK::Unpack(std::wstring src_file, std::wstring dst_dir)
 
         if (output_size != write_size)
         {
-            // std::wcout << L"文件写入失败: " << output_path << std::endl;
+            // std::wcout << L"File writing failed: " << output_path << std::endl;
             delete[] output_buff;
             delete[] buffer;
             return UNPACK_FILE_WRITE_ERROR;
@@ -283,23 +283,23 @@ int PAK::Unpack(std::string src_file, std::string dst_dir)
 int PAK::Pack(std::wstring src_dir, std::wstring dst_file)
 {
 #ifdef _DEBUG
-    std::wcout << L"打包源文件夹: " << src_dir << std::endl;
-    std::wcout << L"打包目标文件: " << dst_file << std::endl;
+    std::wcout << L"Pack source folder: " << src_dir << std::endl;
+    std::wcout << L"Pack target file: " << dst_file << std::endl;
 #endif
 
     DWORD fa = GetFileAttributesW(src_dir.c_str());
     if ((fa == INVALID_FILE_ATTRIBUTES) || !(fa & FILE_ATTRIBUTE_DIRECTORY))
         return PACK_SRC_NOT_EXIST;
 
-    unsigned int files_count = 0;         // 文件总数
-    std::vector<std::wstring> files_name; // pak 里保存的路径
-    std::vector<int> files_size;          // 大小
-    std::vector<FILETIME> files_time;     // 时间
+	unsigned int files_count = 0; //Total number of files
+    std::vector<std::wstring> files_name; // The path saved in pak
+    std::vector<int> files_size; // size
+    std::vector<FILETIME> files_time; // time
 
     find_files(src_dir, files_name, files_size, files_time);
     files_count = files_name.size();
 #ifdef _DEBUG
-    std::wcout << L"找到文件总数: " << files_count << std::endl;
+    std::wcout << L"Total number of files found: " << files_count << std::endl;
 #endif
 
     if (files_count == 0)
@@ -321,24 +321,24 @@ int PAK::Pack(std::wstring src_dir, std::wstring dst_file)
     }
 #endif
 
-    // 创建输出文件夹
+    // Create output folder
     bool path_created = create_path(dst_file.substr(0, dst_file.find_last_of(L"\\")));
     if (!path_created)
     {
-        // std::wcout << L"路径创建失败: " << dst_file.substr(0, dst_file.find_last_of(L"\\")) << std::endl;
+        // std::wcout << L"Path creation failed: " << dst_file.substr(0, dst_file.find_last_of(L"\\")) << std::endl;
         return PACK_PATH_CREATE_ERROR;
     }
 
-    // 创建输出文件
+    // Create output file
     HANDLE hfw = CreateFileW(dst_file.c_str(), GENERIC_WRITE, FILE_SHARE_READ, //
                              nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
     if (hfw == INVALID_HANDLE_VALUE)
         return PACK_FILE_CREATE_ERROR;
 
-    // 用来检验每次写入的数据大小正确性
+    // Used to check the correctness of the data size written each time
     DWORD write_size = 0;
 
-    // 写文件头
+    // Write file header
     unsigned long file_header_magic = 0xBAC04AC0;
     unsigned long file_header_version = 0x00000000;
     file_header_magic ^= 0xf7f7f7f7;
@@ -358,14 +358,14 @@ int PAK::Pack(std::wstring src_dir, std::wstring dst_file)
         return PACK_FILE_WRITE_ERROR;
     }
 
-    // 索引区域数据结构
-    unsigned char eof_flag;   // 结束标志
-    unsigned char name_width; // 文件名长度
-    char file_name[256];      // 文件名
-    int file_size;            // 大小
-    FILETIME file_time;       // 时间
+    // Index area data structure
+	unsigned char eof_flag; // end flag
+    unsigned char name_width; // file name length
+    char file_name[256]; // file name
+    int file_size; // size
+    FILETIME file_time; // time
 
-    // 写索引区
+    // Write index area
     for (size_t i = 0; i < files_count; i++)
     {
         eof_flag = (unsigned char)(0x00);
@@ -382,7 +382,7 @@ int PAK::Pack(std::wstring src_dir, std::wstring dst_file)
 
         file_time = files_time.at(i);
 
-        // 创建缓冲
+        // Create buffer
         unsigned int struct_size = sizeof(unsigned char)   //
                                    + sizeof(unsigned char) //
                                    + name_size             //
@@ -390,7 +390,7 @@ int PAK::Pack(std::wstring src_dir, std::wstring dst_file)
                                    + sizeof(FILETIME);
         char *buff = new char[struct_size];
 
-        // 拷贝到缓冲
+        // copy to buffer
 
         unsigned int index = 0;
 
@@ -412,11 +412,11 @@ int PAK::Pack(std::wstring src_dir, std::wstring dst_file)
 
         assert(index == struct_size);
 
-        // 加密
+        // encryption
         for (size_t k = 0; k < struct_size; k++)
             buff[k] = buff[k] ^ 0xf7;
 
-        // 写入缓冲
+        // write buffer
         WriteFile(hfw, buff, struct_size, &write_size, nullptr);
         if (write_size != struct_size)
         {
@@ -428,7 +428,7 @@ int PAK::Pack(std::wstring src_dir, std::wstring dst_file)
         delete[] buff;
     }
 
-    // 结束标志
+    // end sign
     eof_flag = (unsigned char)(0x80);
     eof_flag ^= 0xf7;
     WriteFile(hfw, (void *)&eof_flag, sizeof(unsigned char), &write_size, nullptr);
@@ -438,10 +438,10 @@ int PAK::Pack(std::wstring src_dir, std::wstring dst_file)
         return PACK_FILE_WRITE_ERROR;
     }
 
-    // 写数据区
+    // write data area
     for (size_t i = 0; i < files_count; i++)
     {
-        // 完整文件路径
+        // full file path
         auto file_path = src_dir + L"\\" + files_name.at(i);
 
         HANDLE hfr = CreateFileW(file_path.c_str(), GENERIC_READ, FILE_SHARE_READ, //
@@ -452,7 +452,7 @@ int PAK::Pack(std::wstring src_dir, std::wstring dst_file)
             return PACK_SRC_READ_ERROR;
         }
 
-        // 读文件到缓冲
+        // Read file into buffer
         unsigned int size = files_size.at(i);
         DWORD read_size = 0;
         char *buffer = new char[size];
@@ -466,11 +466,11 @@ int PAK::Pack(std::wstring src_dir, std::wstring dst_file)
         }
         CloseHandle(hfr);
 
-        // 加密
+        // encryption
         for (size_t i = 0; i < size; ++i)
             buffer[i] = buffer[i] ^ 0xf7;
 
-        // 写入
+        // write
         DWORD write_size = 0;
         WriteFile(hfw, buffer, size, &write_size, nullptr);
         if (write_size != size)

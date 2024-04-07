@@ -13,7 +13,7 @@
 namespace Pt
 {
 
-// 输出内存读写数据
+// Output memory read and write data
 #define _PTK_MEMORY_OUTPUT
 
 class Process
@@ -22,36 +22,36 @@ class Process
     Process();
     ~Process();
 
-    // 根据窗口类名和标题打开进程
+    // Open the process according to the window class name and title
     bool OpenByWindow(const wchar_t *, const wchar_t *);
 
-    // 进程可用性
+    // Process availability
     bool IsValid();
 
-    // 读内存
+    // Read memory
     template <typename T>
     T ReadMemory(std::initializer_list<uintptr_t>);
 
-    // 读内存字符串
+    // Read memory string
     template <>
     std::string ReadMemory<std::string>(std::initializer_list<uintptr_t>);
 
-    // 写内存
+    // Write memory
     template <typename T>
     void WriteMemory(T, std::initializer_list<uintptr_t>);
 
-    // 读内存数组
+    // Read memory array
     template <typename T, size_t size>
     std::array<T, size> ReadMemory(std::initializer_list<uintptr_t>);
 
-    // 写内存数组
+    // Write memory array
     template <typename T, size_t size>
     void WriteMemory(std::array<T, size>, std::initializer_list<uintptr_t>);
 
   protected:
-    HWND hwnd;     // 窗口句柄
-    DWORD pid;     // 进程标识
-    HANDLE handle; // 进程句柄
+    HWND hwnd;     // Window handle
+    DWORD pid;     // Process ID
+    HANDLE handle; // Process handle
 
 #if (defined _DEBUG) && (defined _PTK_MEMORY_OUTPUT)
   private:
@@ -258,7 +258,7 @@ void Process::WriteMemory(std::array<T, size> value, std::initializer_list<uintp
         std::cout << std::hex << int(value[i]) << " ";
     std::cout << std::endl;
     // if (ReadMemory<T, size>(addr) != value)
-    //     std::wcout << L"写内存出错!" << std::endl;
+    //     std::wcout << L"Error writing to memory! " << std::endl;
 #endif
 }
 

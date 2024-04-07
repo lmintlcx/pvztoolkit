@@ -1,5 +1,15 @@
 
-更新日志: (记录每一版的主要改动.)
+Update log: (records major changes in each version.)
+
+### [1.20.5] - 2024/04/07
+- Removed the Chinese build.
+- Removed upx.
+- Translated up Chinese comments in code.
+
+### [1.20.4] - 2023/10/17
+
+- An English build is now included with the source.
+- Customized the English UI.
 
 ### [1.20.3] - 2022/09/03
 

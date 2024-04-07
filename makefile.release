@@ -1,6 +1,6 @@
 
 OUTDIR = .\out
-TARGET = pvztoolkit
+TARGET = pvztoolkit_(English)
 
 CXX = cl
 CXXFLAGS_BARE = -c -nologo \

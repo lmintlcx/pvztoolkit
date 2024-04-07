@@ -1,88 +1,87 @@
+This file describes the formation string format used in PvZ Toolkit/Tools.
 
-本文件描述了 PvZ Toolkit/Tools 中所使用的阵型字符串格式.
 
+1. The formation string is in the standard Base64 encoding format, and is also compatible with the Base64URL format.
 
-1. 阵型字符串为标准的 Base64 编码格式, 同时兼容 Base64URL 格式.
+(The theoretical length of the string is about 18~164.)
 
-(字符串理论长度大约为 18~164.)
+2. The decoded binary byte stream needs to be XORed with 0x54 (84) first.
 
-2. 解码后的二进制字节流需要先与 0x54 (84) 进行异或运算.
+3. The data stream is several bytes of zlib compressed data, followed by 1 byte of RS information.
 
-3. 数据流为若干个字节的 zlib 压缩数据, 后跟 1 个字节的 RS 信息位.
+  +========================+----+
+  | ... zlib stream ... | RS |
+  +========================+----+
 
- +=====================+----+
- | ... zlib stream ... | RS |
- +=====================+----+
+(Theoretical length of compressed data is about 12~121 bytes.)
 
-(压缩数据理论长度大约为 12~121 字节.)
+4. The RS information bit is divided into two parts, which respectively represent the position of the rake and the scene map.
 
-4. RS 信息位分为两个部分, 分别表示钉耙位置和场景地图.
+  0000 0000
+     R S
 
- 0000 0000
-    R    S
+R: The position of the rake, if it does not exist, it is represented by 0, if it exists, the value is the number of the row it is in, and the top row is the first row.
 
-R: 钉耙位置, 不存在用 0 表示, 存在时取值为所在行数, 最上方为第 1 行.
+S: Scene map, the values 0 1 2 3 4 5 respectively represent day, night, swimming pool, foggy night, roof, and moonlit night.
 
-S: 场景地图, 取值 0 1 2 3 4 5 分别表示 白天 黑夜 泳池 雾夜 屋顶 月夜.
+5. The zlib version used to compress the data is 1.2.12, using the highest level of compression (Z_BEST_COMPRESSION).
 
-5. 压缩数据所用 zlib 版本为 1.2.12, 使用最高等级压缩 (Z_BEST_COMPRESSION).
+After decompression, the plant data on the field is obtained, which consists of several GRID structures with a length of two bytes.
 
-解压后得到场上植物数据, 由若干个长度为两个字节的 GRID 结构组成.
+    0 1
+  +---+---+
+  | GRID |
+  +---+---+
 
-   0   1
- +---+---+
- | GRID  |
- +---+---+
+When the scene is a swimming pool or a foggy night (S==2 || S==3), the total number of structures is 54, and the rest is 45.
 
-当场景为泳池或者雾夜 (S==2 || S==3) 的时候结构总数量为 54, 其余为 45.
+All GRIDs are arranged in writing order from left to right and top to bottom, corresponding to the actual map position.
 
-所有 GRID 按照从左到右从上到下的书写顺序排布, 对应实际地图位置.
+6. Each GRID structure represents the content of a grid on the field, which is divided into several parts.
 
-6. 每个 GRID 结构表示场上一个格子的内容, 被分为若干个部分.
+  000000 0 0 00 0 0 0 0 0 0
+       P P P B B K K C C L
+         I A I I I
 
- 000000 0 0 00 0 0 0 0 0 0
-      P P P  B B K K C C L
-        I A    I   I   I
-
-| 比特位 | 长度 | 标识 | 含义 |
+| Bits | Length | Identification | Meaning |
 | ------ | ---- | ---- | ---- |
-|  10~15 |   6  |  P   | 主要植物类型 |
-|      9 |   1  |  PI  | 主要植物是否是模仿者 |
-|      8 |   1  |  PA  | 主要植物是否睡醒 |
-|    6~7 |   2  |  B   | 是否存在底部植物或墓碑 |
-|      5 |   1  |  BI  | 底部植物是否是模仿者 |
-|      4 |   1  |  K   | 是否存在南瓜壳 |
-|      3 |   1  |  KI  | 南瓜壳是否是模仿者 |
-|      2 |   1  |  C   | 是否存在咖啡豆 |
-|      1 |   1  |  CI  | 咖啡豆是否是模仿者 |
-|      0 |   1  |  L   | 是否存在梯子 |
+| 10~15 | 6 | P | Main plant types |
+| 9 | 1 | PI | Whether the main plant is a copycat |
+| 8 | 1 | PA | Whether the main plant is awake |
+| 6~7 | 2 | B | Whether there are bottom plants or tombstones |
+| 5 | 1 | BI | Is the bottom plant a copycat |
+| 4 | 1 | K | Is there a pumpkin shell |
+| 3 | 1 | KI | Is the pumpkin shell a copycat |
+| 2 | 1 | C | Presence of coffee beans |
+| 1 | 1 | CI | Is the coffee bean a copycat |
+| 0 | 1 | L | Is there a ladder |
 
-P: 0 表示不存在植物, 值为 1~48 时表示存在代号为 0~47 的植物.
-PI: 当 P 有效时表示植物是否是模仿者, 0 普通 1 模仿者.
-PA: 当 P 有效时表示植物是否睡醒, 0 睡着 1 睡醒.
+P: 0 means that there is no plant, and a value of 1~48 means that there are plants coded 0~47.
+PI: Indicates whether the plant is an imitator or not when P is active, 0 normal 1 imitator.
+PA: When P is valid, it means whether the plant is awake or not, 0 is asleep and 1 is awake.
 
-B: 0 表示不存在底部植物, 1 睡莲 2 花盆. 3 表示存在墓碑.
-BI: 当底部有睡莲或者花盆时用来表示其是否是模仿者, 0 普通 1 模仿者.
+B: 0 means there is no bottom plant, 1 water lily 2 flowerpot. 3 means there is a tombstone.
+BI: When there is a water lily or a flower pot at the bottom, it is used to indicate whether it is an imitator, 0 normal 1 imitator.
 
-K: 0 表示不存在南瓜壳, 1 表示存在.
-KI: 当存在南瓜壳时用来表示其是否是模仿者, 0 普通 1 模仿者.
+K: 0 means no pumpkin shells present, 1 means present.
+KI: Used to indicate if a pumpkin shell is an imitator when present, 0 normal 1 imitator.
 
-C: 0 表示不存在咖啡豆, 1 表示存在.
-CI: 当存在咖啡豆时用来表示其是否是模仿者, 0 普通 1 模仿者.
+C: 0 means no coffee beans present, 1 means present.
+CI: used to indicate whether it is an imitator when coffee beans are present, 0 common 1 imitator.
 
-L: 0 表示不存在梯子, 1 表示存在.
+L: 0 means there is no ladder, 1 means there is.
 
-7. 其他细节.
+7. Other details.
 
-钉耙位置在五行场地不大于 5, 在六行场地不大于 6 且不位于水路.
+The rake position is not greater than 5 in the five-element field, not greater than 6 in the six-element field and is not located on the waterway.
 
-放置/种植推荐顺序: 钉耙 睡莲/花盆 主要植物 南瓜壳 咖啡豆 墓碑 梯子.
+Recommended order for placement/planting: Rake Water Lily/Flower Pot Main Plant Pumpkin Shell Coffee Bean Tombstone Ladder.
 
-P 不应该为 睡莲/花盆/南瓜壳/咖啡豆 以及大于 48 的数值.
+P should not be water lilies/flower pots/pumpkin shells/coffee beans and values greater than 48.
 
-PA 用于白天场景 (S==0 || S==2 || S==4) 判断蘑菇类植物是否需要唤醒操作.
+PA is used in daytime scenes (S==0 || S==2 || S==4) to determine whether mushroom plants need to wake up.
 
-8. 参考资料:
+8. References:
 
 https://tools.ietf.org/html/rfc4648
 https://www.ietf.org/rfc/rfc1950.txt
@@ -92,6 +91,6 @@ https://pvz.lmintlcx.com/tools/
 
 =========
 
-版本: 1.0.3
-作者: lmintlcx
-日期: 2022/08/11
+Version: 1.0.3
+Author: lmintlcx
+Date: 2022/08/11
