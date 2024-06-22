@@ -1,12 +1,12 @@
 
 #pragma once
 
-#include <iostream>
+#include <Windows.h>
+
 #include <cassert>
 #include <initializer_list>
+#include <iostream>
 #include <vector>
-
-#include <Windows.h>
 
 namespace Pt
 {
@@ -30,6 +30,9 @@ class Code
   public:
     Code();
     ~Code();
+
+    Code(const Code &) = delete;
+    Code &operator=(const Code &) = delete;
 
     void asm_init();
 

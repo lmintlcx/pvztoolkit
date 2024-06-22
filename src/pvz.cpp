@@ -1,5 +1,5 @@
 
-#include "pvz.h"
+#include "../inc/pvz.h"
 
 namespace Pt
 {
@@ -27,6 +27,85 @@ void PvZ::asm_code_inject()
     }
 }
 
+#ifdef _DEBUG
+
+void PvZ::check_all_hacks()
+{
+    check_hack<uint8_t, 1>(data().block_main_loop);
+
+    check_hack<uint8_t, 1>(data().unlock_sun_limit);
+    check_hack<uint8_t, 1>(data().auto_collected);
+    check_hack<uint8_t, 1>(data().not_drop_loot);
+
+    check_hack<uint8_t, 1>(data().fertilizer_unlimited);
+    check_hack<uint8_t, 1>(data().bug_spray_unlimited);
+    check_hack<uint8_t, 1>(data().chocolate_unlimited);
+    check_hack<uint8_t, 1>(data().tree_food_unlimited);
+
+    check_hack<uint8_t, 1>(data().placed_anywhere);
+    check_hack<uint8_t, 1>(data().placed_anywhere_preview);
+    check_hack<uint8_t, 1>(data().placed_anywhere_iz);
+    check_hack<uint8_t, 1>(data().fast_belt);
+    check_hack<uint8_t, 1>(data().lock_shovel);
+
+    check_hack<uint16_t, 1>(data().rake_unlimited);
+    check_hack<uint8_t, 1>(data().init_lawn_mowers);
+    check_hack<uint32_t, 1>(data().lawn_mower_initialize);
+
+    check_hack<uint8_t, 3>(data().plant_immune_eat);
+    check_hack<uint8_t, 1>(data().plant_immune_radius);
+    check_hack<uint8_t, 1>(data().plant_immune_jalapeno);
+    check_hack<uint8_t, 3>(data().plant_immune_projectile);
+    check_hack<uint8_t, 3>(data().plant_immune_lob_motion);
+    check_hack<uint8_t, 1>(data().plant_immune_square);
+    check_hack<uint8_t, 1>(data().plant_immune_row_area);
+    check_hack<uint8_t, 1>(data().plant_immune_spike_rock);
+    check_hack<uint8_t, 3>(data().plant_immune_squish);
+
+    check_hack<uint8_t, 3>(data()._plant_immune_eat);
+    check_hack<uint8_t, 3>(data()._plant_immune_projectile);
+    check_hack<uint8_t, 3>(data()._plant_immune_lob_motion);
+    check_hack<uint8_t, 1>(data()._plant_immune_row_area);
+
+    check_hack<uint32_t, 1>(data().zombie_immune_body_damage);
+    check_hack<uint8_t, 2>(data().zombie_immune_helm_damage);
+    check_hack<uint32_t, 1>(data().zombie_immune_shield_damage);
+    check_hack<uint8_t, 1>(data().zombie_immune_burn_crumble);
+    check_hack<uint8_t, 1>(data().zombie_immune_radius);
+    check_hack<uint8_t, 1>(data().zombie_immune_burn_row);
+    check_hack<uint8_t, 1>(data().zombie_immune_chomper);
+    check_hack<uint8_t, 1>(data().zombie_immune_mind_controll);
+    check_hack<uint8_t, 2>(data().zombie_immune_blow_away);
+    check_hack<uint8_t, 1>(data().zombie_immune_splash);
+    check_hack<uint8_t, 1>(data().zombie_immune_lawn_mower);
+
+    check_hack<uint32_t, 1>(data()._zombie_immune_body_damage);
+    check_hack<uint8_t, 2>(data()._zombie_immune_helm_damage);
+    check_hack<uint32_t, 1>(data()._zombie_immune_shield_damage);
+    check_hack<uint8_t, 1>(data()._zombie_immune_burn_crumble);
+
+    check_hack<uint8_t, 1>(data().reload_instantly);
+    check_hack<uint8_t, 1>(data().grow_up_quickly);
+    check_hack<uint8_t, 1>(data().mushrooms_awake);
+    check_hack<uint8_t, 1>(data().stop_spawning);
+    check_hack<uint8_t, 1>(data().stop_zombies);
+    check_hack<uint8_t, 1>(data().lock_butter);
+    check_hack<uint8_t, 1>(data().no_crater);
+    check_hack<uint8_t, 1>(data().no_ice_trail);
+    check_hack<uint8_t, 1>(data().zombie_not_explode);
+
+    check_hack<uint8_t, 1>(data().hack_street_zombies);
+
+    check_hack<uint16_t, 1>(data().no_fog);
+    check_hack<uint32_t, 1>(data().see_vase);
+    check_hack<uint16_t, 1>(data().background_running);
+    check_hack<uint8_t, 1>(data().disable_delete_userdata);
+    check_hack<uint32_t, 1>(data().disable_save_userdata);
+    check_hack<uint8_t, 3>(data().unlock_limbo_page);
+}
+
+#endif
+
 void PvZ::callback(cb_func func, void *win)
 {
     this->cb_find_result = func;
@@ -38,8 +117,10 @@ bool PvZ::FindPvZ()
     this->find_result = PVZ_NOT_FOUND;
 
     std::vector<std::wstring> pvz_titles = {
-        L"Bloom & Doom BETA 0.1.1.1014",          //
-        L"Plants vs. Zombies BETA 0.9.9.1029",    //
+#ifdef _PVZ_BETA_LEAK_SUPPORT
+        L"Bloom & Doom BETA 0.1.1.1014",       //
+        L"Plants vs. Zombies BETA 0.9.9.1029", //
+#endif
         L"Plants vs. Zombies",                    //
         L"Plants vs. Zombies 1.2.0.1073",         //
         L"Plants vs. Zombies 1.2.0.1073 RELEASE", //
@@ -48,7 +129,7 @@ bool PvZ::FindPvZ()
         L"Plantas contra Zombis 1.2.0.1093",      //
         L"Plantes contre Zombies 1.2.0.1093",     //
         L"Piante contro zombi 1.2.0.1093",        //
-    };                                            //
+    };
 
     for (size_t i = 0; i < pvz_titles.size() + 1; i++)
     {
@@ -86,8 +167,10 @@ bool PvZ::FindPvZ()
 
                 // version detection key value
                 std::vector<std::tuple<unsigned int, int>> v = {
-                    {0x49359c21, PVZ_BETA_0_1_1_1014_EN},          //
-                    {0x499a6204, PVZ_BETA_0_9_9_1029_EN},          //
+#ifdef _PVZ_BETA_LEAK_SUPPORT
+                    {0x49359c21, PVZ_BETA_0_1_1_1014_EN}, //
+                    {0x499a6204, PVZ_BETA_0_9_9_1029_EN}, //
+#endif
                     {0x49ecf563, PVZ_1_0_0_1051_EN},               //
                     {0x4a37d6af, PVZ_1_2_0_1065_EN},               //
                     {0x4a5b7963, PVZ_1_0_4_7924_ES},               //
@@ -123,10 +206,10 @@ bool PvZ::FindPvZ()
             this->find_result = PVZ_NOT_FOUND;
         }
 
-        // 没有找到窗口/打开进程失败就继续找
+        // 没有找到窗口或者打开进程失败就继续找
         if (this->find_result == PVZ_NOT_FOUND || this->find_result == PVZ_OPEN_ERROR)
             continue;
-        // 找到了支持/不支持的版本则终止循环
+        // 找到了支持或者不支持的版本则终止循环
         else
             break;
     }
@@ -146,7 +229,10 @@ bool PvZ::FindPvZ()
 
 #ifdef _DEBUG
     if (supported)
+    {
+        check_all_hacks();
         WriteMemory<bool>(true, {data().lawn, data().tod_mode});
+    }
 #endif
 
     if (cb_find_result != nullptr && this->window != nullptr)
@@ -230,6 +316,7 @@ void PvZ::SetScene(int scene, bool reset)
     if (has_lawn_mower)
         SetLawnMowers(1);
 
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (isBETA())
     {
         unsigned int scene_id[6] = {1, 2, 3, 4, 5, 7};
@@ -244,6 +331,7 @@ void PvZ::SetScene(int scene, bool reset)
             WriteMemory<uint32_t>(scene_id[scene], {0x00416e31 + 1});
         }
     }
+#endif
 
     asm_init();
     asm_mov_exx_dword_ptr(Reg::ESI, data().lawn);
@@ -251,12 +339,15 @@ void PvZ::SetScene(int scene, bool reset)
     asm_add_list({0xc7, 0x86});  // mov [esi+0000554C],scene
     asm_add_dword(data().scene); //
     asm_add_dword(scene);        //
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (isBETA())
         asm_mov_exx_exx(Reg::ECX, Reg::ESI);
+#endif
     asm_call(data().call_pick_background);
     asm_ret();
     asm_code_inject();
 
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (isBETA())
     {
         if (this->find_result == PVZ_BETA_0_1_1_1014_EN)
@@ -266,6 +357,7 @@ void PvZ::SetScene(int scene, bool reset)
             // movzx eax,byte ptr [eax+00417480]
             WriteMemory<uint8_t, 7>({0x0f, 0xb6, 0x80, 0x80, 0x74, 0x41, 0x00}, {0x00416e31});
     }
+#endif
 
     // 1.lawn 2.bare 3.pool
     // 0.none 1.land 2.water
@@ -323,9 +415,11 @@ void PvZ::SetScene(int scene, bool reset)
             if (!particle_system_dead && particle_system_type == 34)
             {
                 uintptr_t addr = particle_system_offset + particle_system_struct_size * i;
+#ifdef _PVZ_BETA_LEAK_SUPPORT
                 if (isBETA())
                     asm_mov_exx(Reg::ECX, addr);
                 else
+#endif
                     asm_push_dword(addr);
                 asm_call(data().call_delete_particle_system);
             }
@@ -353,8 +447,10 @@ reset_scene:
         if (this->find_result == PVZ_GOTY_1_1_0_1056_ZH || //
             this->find_result == PVZ_GOTY_1_1_0_1056_JA)
             asm_push_exx(Reg::EDI);
+#ifdef _PVZ_BETA_LEAK_SUPPORT
         if (isBETA())
             asm_mov_exx_exx(Reg::ECX, Reg::EDI);
+#endif
         asm_call(data().call_puzzle_next_stage_clear);
         asm_ret();
         asm_code_inject();
@@ -400,10 +496,12 @@ void PvZ::UnlockTrophy()
 
     // Mini-games
     WriteMemory<int, 20>({1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {mini_games});
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (this->find_result == PVZ_BETA_0_1_1_1014_EN)
         WriteMemory<int>(5, {mini_games + 18 * sizeof(int)});
     else if (this->find_result == PVZ_BETA_0_9_9_1029_EN)
         WriteMemory<int>(5, {mini_games + 15 * sizeof(int)});
+#endif
     mini_games += 20 * sizeof(int);
 
     // Hidden Mini-games
@@ -411,7 +509,9 @@ void PvZ::UnlockTrophy()
     mini_games += (13 + 1) * sizeof(int);
 
     // Wisdom Tree (Height)
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (this->find_result != PVZ_BETA_0_1_1_1014_EN)
+#endif
         mini_games += 1 * sizeof(int);
 
     // Vasebreaker
@@ -476,7 +576,9 @@ void PvZ::UnlockTrophy()
     // Chocolate
     twiddydinky += (1 + 1 + 1) * sizeof(int);
 
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (this->find_result != PVZ_BETA_0_1_1_1014_EN)
+#endif
     {
         // Tree of Wisdom
         WriteMemory<int>(1, {twiddydinky});
@@ -525,7 +627,7 @@ void PvZ::UnlockTrophy()
     }
 }
 
-void PvZ::DirectWin()
+void PvZ::DirectWin(bool brightest_cob_cannon)
 {
     if (!GameOn())
         return;
@@ -535,7 +637,7 @@ void PvZ::DirectWin()
     int frame_time = GetFrameDuration();
 
     int mode = GameMode();
-    bool light_cob = 11 <= mode && mode <= 15;
+    bool light_cob = brightest_cob_cannon && 1 <= mode && mode <= 15;
 
     if (light_cob)
     {
@@ -688,9 +790,11 @@ void PvZ::TreeFoodUnlimited(bool on)
     if (!GameOn())
         return;
 
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     // 早期测试版没有智慧树
     if (this->find_result == PVZ_BETA_0_1_1_1014_EN)
         return;
+#endif
 
     enable_hack(data().tree_food_unlimited, on);
     if (on && ReadMemory<uintptr_t>({data().lawn, data().user_data}) != 0)
@@ -705,9 +809,11 @@ void PvZ::SetTreeHeight(int height)
     if (ReadMemory<uintptr_t>({data().lawn, data().user_data}) == 0)
         return;
 
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     // 早期测试版没有智慧树
     if (this->find_result == PVZ_BETA_0_1_1_1014_EN)
         return;
+#endif
 
     if (GameMode() == 50) // Zen Garden
     {
@@ -751,6 +857,7 @@ void PvZ::SetTreeHeight(int height)
         }
         else
         {
+#ifdef _PVZ_BETA_LEAK_SUPPORT
             if (this->find_result == PVZ_BETA_0_9_9_1029_EN)
             {
                 asm_init();
@@ -762,6 +869,7 @@ void PvZ::SetTreeHeight(int height)
                 asm_code_inject();
             }
             else
+#endif
             {
                 asm_init();
                 asm_mov_exx(Reg::EDI, data().lawn);
@@ -884,6 +992,7 @@ void PvZ::asm_put_plant(int row, int col, int type, bool imitater, bool iz_style
         asm_push_dword(-1);
         asm_push_dword(type);
     }
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (isBETA())
     {
         asm_push_dword(row);
@@ -892,6 +1001,7 @@ void PvZ::asm_put_plant(int row, int col, int type, bool imitater, bool iz_style
         asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().board);
     }
     else
+#endif
     {
         asm_mov_exx(Reg::EAX, row);
         asm_push_dword(col);
@@ -915,8 +1025,10 @@ void PvZ::asm_put_plant(int row, int col, int type, bool imitater, bool iz_style
         asm_add_list(0x01, 0xd9);                         // add ecx,ebx
         asm_push_exx(Reg::ECX);
         asm_mov_exx_exx(Reg::ESI, Reg::EAX);
+#ifdef _PVZ_BETA_LEAK_SUPPORT
         if (isBETA())
             asm_mov_exx_exx(Reg::ECX, Reg::EAX);
+#endif
         asm_call(data().call_put_plant_imitater);
         asm_pop_exx(Reg::ECX);
         asm_mov_exx_exx(Reg::EAX, Reg::ECX);
@@ -929,8 +1041,10 @@ void PvZ::asm_put_plant(int row, int col, int type, bool imitater, bool iz_style
         asm_mov_exx_dword_ptr(Reg::EAX, data().lawn);
         asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().board);
         asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().challenge);
+#ifdef _PVZ_BETA_LEAK_SUPPORT
         if (isBETA())
             asm_mov_exx_exx(Reg::ECX, Reg::EAX);
+#endif
         asm_call(data().call_put_plant_iz_style);
         asm_mov_exx_exx(Reg::EAX, Reg::ESI);
     }
@@ -980,6 +1094,7 @@ void PvZ::asm_put_zombie(int row, int col, int type)
         asm_mov_exx(Reg::ECX, col);
         asm_call(data().call_put_zombie);
     }
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     else if (isBETA())
     {
         asm_push_dword(row);
@@ -990,6 +1105,7 @@ void PvZ::asm_put_zombie(int row, int col, int type)
         asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().challenge);
         asm_call(data().call_put_zombie);
     }
+#endif
     else
     {
         asm_push_dword(col);
@@ -1013,6 +1129,7 @@ void PvZ::PutZombie(int row, int col, int type)
     if (type == 25) // 僵王
     {
         asm_init();
+#ifdef _PVZ_BETA_LEAK_SUPPORT
         if (isBETA())
         {
             asm_mov_exx_dword_ptr(Reg::ECX, data().lawn);
@@ -1022,6 +1139,7 @@ void PvZ::PutZombie(int row, int col, int type)
             asm_push_dword(25);
         }
         else
+#endif
         {
             asm_mov_exx_dword_ptr(Reg::EAX, data().lawn);
             asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().board);
@@ -1064,6 +1182,7 @@ void PvZ::asm_put_grave(int row, int col)
         asm_mov_exx(Reg::EBX, col);
         asm_call(data().call_put_grave);
     }
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     else if (isBETA())
     {
         asm_mov_exx_dword_ptr(Reg::ECX, data().lawn);
@@ -1073,6 +1192,7 @@ void PvZ::asm_put_grave(int row, int col)
         asm_push_dword(col);
         asm_call(data().call_put_grave);
     }
+#endif
     else
     {
         asm_mov_exx_dword_ptr(Reg::EDX, data().lawn);
@@ -1114,6 +1234,7 @@ void PvZ::PutGrave(int row, int col)
 
 void PvZ::asm_put_ladder(int row, int col)
 {
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (isBETA())
     {
         asm_push_dword(row);
@@ -1123,6 +1244,7 @@ void PvZ::asm_put_ladder(int row, int col)
         asm_call(data().call_put_ladder);
     }
     else
+#endif
     {
         asm_mov_exx(Reg::EDI, row);
         asm_push_dword(col);
@@ -1226,12 +1348,14 @@ void PvZ::asm_put_rake(int row, int col)
     }
     else
     {
+#ifdef _PVZ_BETA_LEAK_SUPPORT
         if (isBETA())
         {
             asm_mov_exx_dword_ptr(Reg::ECX, data().lawn);
             asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().board);
         }
         else
+#endif
         {
             asm_mov_exx_dword_ptr(Reg::EDX, data().lawn);
             asm_mov_exx_dword_ptr_exx_add(Reg::EDX, data().board);
@@ -1262,9 +1386,11 @@ void PvZ::PutRake(int row, int col)
         reset_code_rake_row_goty = ReadMemory<uint8_t, 6>({data().call_put_rake_row});
 
     if (!isGOTY())
+#ifdef _PVZ_BETA_LEAK_SUPPORT
         if (isBETA())
             WriteMemory<uint8_t, 7>({0xbd, 0x00, 0x00, 0x00, 0x00, 0x90, 0x90}, {data().call_put_rake_row});
         else
+#endif
             WriteMemory<uint8_t, 7>({0xba, 0x00, 0x00, 0x00, 0x00, 0x90, 0x90}, {data().call_put_rake_row});
     else
         WriteMemory<uint8_t, 6>({0xbf, 0x00, 0x00, 0x00, 0x00, 0x90}, {data().call_put_rake_row});
@@ -1336,17 +1462,21 @@ void PvZ::SetLawnMowers(int option)
                 if (this->find_result == PVZ_GOTY_1_1_0_1056_ZH || //
                     this->find_result == PVZ_GOTY_1_1_0_1056_JA)
                     asm_mov_exx(Reg::EBX, addr);
+#ifdef _PVZ_BETA_LEAK_SUPPORT
                 else if (isBETA())
                     asm_mov_exx(Reg::ECX, addr);
+#endif
                 else
                     asm_mov_exx(Reg::ESI, addr);
                 asm_call(data().call_start_lawn_mower);
             }
             else
             {
+#ifdef _PVZ_BETA_LEAK_SUPPORT
                 if (isBETA())
                     asm_mov_exx(Reg::ECX, addr);
                 else
+#endif
                     asm_mov_exx(Reg::EAX, addr);
                 asm_call(data().call_delete_lawn_mower);
             }
@@ -1356,9 +1486,11 @@ void PvZ::SetLawnMowers(int option)
     {
         asm_mov_exx_dword_ptr(Reg::EAX, data().lawn);
         asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().board);
+#ifdef _PVZ_BETA_LEAK_SUPPORT
         if (isBETA())
             asm_mov_exx_exx(Reg::ECX, Reg::EAX);
         else
+#endif
             asm_push_exx(Reg::EAX);
         asm_call(data().call_restore_lawn_mower);
     }
@@ -1393,9 +1525,11 @@ void PvZ::ClearAllPlants()
         if (!plant_dead && !plant_squished)
         {
             uint32_t addr = plant_offset + plant_struct_size * i;
+#ifdef _PVZ_BETA_LEAK_SUPPORT
             if (isBETA())
                 asm_mov_exx(Reg::ECX, addr);
             else
+#endif
                 asm_push_dword(addr);
             asm_call(data().call_delete_plant);
         }
@@ -1413,8 +1547,10 @@ void PvZ::KillAllZombies()
         return;
 
     unsigned int zombie_struct_size = isGOTY() ? 0x168 : 0x15c;
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (this->find_result == PVZ_BETA_0_1_1_1014_EN)
         zombie_struct_size = 0x160;
+#endif
 
     auto zombie_count_max = ReadMemory<uint32_t>({data().lawn, data().board, data().zombie_count_max});
     auto zombie_offset = ReadMemory<uintptr_t>({data().lawn, data().board, data().zombie});
@@ -1442,8 +1578,10 @@ void PvZ::ClearGridItems(std::vector<int> types)
         return;
 
     unsigned int grid_item_struct_size = 0xec;
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (this->find_result == PVZ_BETA_0_1_1_1014_EN)
         grid_item_struct_size = 0x8c;
+#endif
 
     auto grid_item_count_max = ReadMemory<uint32_t>({data().lawn, data().board, data().grid_item_count_max});
     auto grid_item_offset = ReadMemory<uintptr_t>({data().lawn, data().board, data().grid_item});
@@ -1456,9 +1594,11 @@ void PvZ::ClearGridItems(std::vector<int> types)
         if (!grid_item_dead && std::find(types.begin(), types.end(), grid_item_type) != types.end())
         {
             int addr = grid_item_offset + grid_item_struct_size * i;
+#ifdef _PVZ_BETA_LEAK_SUPPORT
             if (isBETA())
                 asm_mov_exx(Reg::ECX, addr);
             else
+#endif
                 asm_mov_exx(Reg::ESI, addr);
             asm_call(data().call_delete_grid_item);
         }
@@ -1472,6 +1612,7 @@ void PvZ::PlantInvincible(bool on)
     if (!GameOn())
         return;
 
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (this->find_result == PVZ_BETA_0_1_1_1014_EN)
     {
         HACK<uint8_t, 5 + 3> plant_immune_eat = {0x0052130a,                                        //
@@ -1488,6 +1629,7 @@ void PvZ::PlantInvincible(bool on)
 
         enable_hack(plant_immune_eat, on);
     }
+#endif
 
     enable_hack(data().plant_immune_eat, on);
     enable_hack(data().plant_immune_radius, on);
@@ -1505,6 +1647,7 @@ void PvZ::PlantWeak(bool on)
     if (!GameOn())
         return;
 
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (this->find_result == PVZ_BETA_0_1_1_1014_EN)
     {
         HACK<uint8_t, 5 + 3> _plant_immune_eat = {0x0052130a,                                        //
@@ -1521,6 +1664,8 @@ void PvZ::PlantWeak(bool on)
 
         enable_hack(_plant_immune_eat, on);
     }
+#endif
+
     enable_hack(data()._plant_immune_eat, on);
     enable_hack(data()._plant_immune_projectile, on);
     enable_hack(data()._plant_immune_lob_motion, on);
@@ -1532,6 +1677,7 @@ void PvZ::ZombieInvincible(bool on)
     if (!GameOn())
         return;
 
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (this->find_result == PVZ_BETA_0_1_1_1014_EN)
     {
         HACK<uint8_t, 4 + 6> zombie_immune_body_damage = {0x0051f084,                                                    //
@@ -1540,6 +1686,7 @@ void PvZ::ZombieInvincible(bool on)
 
         enable_hack(zombie_immune_body_damage, on);
     }
+#endif
 
     enable_hack(data().zombie_immune_body_damage, on);
     enable_hack(data().zombie_immune_helm_damage, on);
@@ -1559,6 +1706,7 @@ void PvZ::ZombieWeak(bool on)
     if (!GameOn())
         return;
 
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (this->find_result == PVZ_BETA_0_1_1_1014_EN)
     {
         HACK<uint8_t, 4 + 6> _zombie_immune_body_damage = {0x0051f084,                                                    //
@@ -1567,6 +1715,7 @@ void PvZ::ZombieWeak(bool on)
 
         enable_hack(_zombie_immune_body_damage, on);
     }
+#endif
 
     enable_hack(data()._zombie_immune_body_damage, on);
     enable_hack(data()._zombie_immune_helm_damage, on);
@@ -1612,8 +1761,10 @@ void PvZ::MushroomsAwake(bool on)
                 uint32_t addr = plant_offset + plant_struct_size * i;
                 if (isGOTY())
                     asm_mov_exx(Reg::EDI, addr);
+#ifdef _PVZ_BETA_LEAK_SUPPORT
                 else if (isBETA())
                     asm_mov_exx(Reg::ECX, addr);
+#endif
                 else
                     asm_mov_exx(Reg::EAX, addr);
                 asm_push_byte(0);
@@ -1866,8 +2017,10 @@ Lineup PvZ::GetLineup()
 
     unsigned int plant_struct_size = 0x14c;
     unsigned int grid_item_struct_size = 0xec;
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (this->find_result == PVZ_BETA_0_1_1_1014_EN)
         grid_item_struct_size = 0x8c;
+#endif
 
     auto plant_count_max = ReadMemory<uint32_t>({data().lawn, data().board, data().plant_count_max});
     auto plant_offset = ReadMemory<uintptr_t>({data().lawn, data().board, data().plant});
@@ -2003,8 +2156,10 @@ void PvZ::SetLineup(Lineup lineup)
                 asm_push_exx(Reg::EAX);
                 if (isGOTY())
                     asm_mov_exx_exx(Reg::EDI, Reg::EAX);
+#ifdef _PVZ_BETA_LEAK_SUPPORT
                 else if (isBETA())
                     asm_mov_exx_exx(Reg::ECX, Reg::EAX);
+#endif
                 asm_push_byte(0);
                 asm_call(data().call_set_plant_sleeping);
                 asm_pop_exx(Reg::EAX);
@@ -2014,9 +2169,11 @@ void PvZ::SetLineup(Lineup lineup)
             // mov [eax+54],00000001
             if (plant_type == 4 || plant_type == 9)
             {
+#ifdef _PVZ_BETA_LEAK_SUPPORT
                 if (isBETA())
                     asm_add_list(0xc7, 0x40, 0x5c);
                 else
+#endif
                     asm_add_list(0xc7, 0x40, 0x54);
                 asm_add_dword(1);
             }
@@ -2076,12 +2233,14 @@ void PvZ::generate_spawn_list()
     }
     else
     {
+#ifdef _PVZ_BETA_LEAK_SUPPORT
         if (isBETA())
         {
             asm_mov_exx_dword_ptr(Reg::ECX, data().lawn);
             asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().board);
         }
         else
+#endif
         {
             asm_mov_exx_dword_ptr(Reg::EDI, data().lawn);
             asm_mov_exx_dword_ptr_exx_add(Reg::EDI, data().board);
@@ -2099,15 +2258,19 @@ void PvZ::update_spawn_preview()
     asm_init();
     asm_mov_exx_dword_ptr(Reg::EBX, data().lawn);
     asm_mov_exx_dword_ptr_exx_add(Reg::EBX, data().board);
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (isBETA())
         asm_mov_exx_exx(Reg::ECX, Reg::EBX);
+#endif
     asm_call(data().call_remove_cutscene_zombies);
     asm_mov_exx_dword_ptr(Reg::EAX, data().lawn);
     asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().board);
     asm_mov_exx_dword_ptr_exx_add(Reg::EAX, data().cut_scene);
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (isBETA())
         asm_mov_exx_exx(Reg::ECX, Reg::EAX);
     else
+#endif
         asm_push_exx(Reg::EAX);
     asm_call(data().call_place_street_zombies);
     asm_ret();
@@ -2298,10 +2461,10 @@ void PvZ::CustomizeSpawn(std::array<bool, 33> zombies, bool limit_giga, bool sim
                     type += 1;
                     type %= 33;
                 }
-            } while ((!zombies[type])                                                          //
-                     || (has_flag && limit_flag && type == 1)                                  //
-                     || (has_yeti && limit_yeti && type == 19)                                 //
-                     || (has_bungee && limit_bungee && type == 20)                             //
+            } while ((!zombies[type])                              //
+                     || (has_flag && limit_flag && type == 1)      //
+                     || (has_yeti && limit_yeti && type == 19)     //
+                     || (has_bungee && limit_bungee && type == 20) //
                      || (has_giga && limit_giga && type == 32 && !giga_waves[(i / 50) % 20])); //
 
             zombies_list[i] = type;
@@ -2341,6 +2504,7 @@ void PvZ::SetMusic(int id)
         return;
 
     asm_init();
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     if (isBETA())
     {
         asm_push_dword(id);
@@ -2348,6 +2512,7 @@ void PvZ::SetMusic(int id)
         asm_mov_exx_dword_ptr_exx_add(Reg::ECX, data().music);
     }
     else
+#endif
     {
         asm_mov_exx(Reg::EDI, id);
         asm_mov_exx_dword_ptr(Reg::EAX, data().lawn);

@@ -1,5 +1,5 @@
 
-#include "toolkit.h"
+#include "../inc/toolkit.h"
 
 namespace Pt
 {
@@ -7,7 +7,7 @@ namespace Pt
 Toolkit::Toolkit(int width, int height, const char *title)
     : Window(width, height, title)
 {
-    this->path = std::filesystem::current_path();
+    this->current_path = std::filesystem::current_path();
 
     // 子窗口
 
@@ -109,7 +109,9 @@ Toolkit::Toolkit(int width, int height, const char *title)
     button_speed->callback(cb_speed, this);
     check_limbo_page->callback(cb_limbo_page, this);
 
+#ifdef _PTK_CHINESE_UI
     check_tooltips->callback(cb_tooltips, this); // 重载
+#endif
 
     this->cb_tooltips();
 }
@@ -127,6 +129,7 @@ void Toolkit::cb_tooltips(Fl_Widget *, void *w)
 
 void Toolkit::cb_tooltips()
 {
+#ifdef _PTK_CHINESE_UI
     bool on = check_tooltips->value() == 1;
 
     window_spawn->tooltips(on);
@@ -141,6 +144,12 @@ void Toolkit::cb_tooltips()
         button_show_details->copy_label(EMOJI("📈", "查看详情"));
         button_show_details->copy_tooltip(on ? "Show Details" : nullptr);
     }
+#else
+    if (window_spawn->shown() == 1)
+        button_show_details->copy_label("Hide Details");
+    else
+        button_show_details->copy_label("Show Details");
+#endif
 
     Window::cb_tooltips(); // 放在最后
 }
@@ -277,8 +286,13 @@ void Toolkit::cb_zombies_list()
 
     if (window_spawn->button_zombies_list->value() == 2 && import_success)
     {
+#ifdef _PTK_CHINESE_UI
         fl_message_title("加载成功");
         fl_message("出怪列表已经导入到游戏中.");
+#else
+        fl_message_title("Loaded Successfully");
+        fl_message("Zombies list has been imported into the game.");
+#endif
     }
 
     // 保存
@@ -297,7 +311,7 @@ void Toolkit::cb_zombies_list()
         crc = crc32(crc, (const unsigned char *)data, (3 + 1000) * sizeof(int));
         data[3 + 1000] = crc;
 
-        std::filesystem::current_path(this->path);
+        std::filesystem::current_path(this->current_path);
         system("mkdir zombies");
 
         SYSTEMTIME time_now;
@@ -322,8 +336,13 @@ void Toolkit::cb_zombies_list()
         if (outfile)
         {
             outfile.write(reinterpret_cast<char *>(&data), sizeof(data));
+#ifdef _PTK_CHINESE_UI
             fl_message_title("保存成功");
             fl_message(std::string("当前出怪列表保存在文件: \n" + filename).c_str());
+#else
+            fl_message_title("Saved Successfully");
+            fl_message(std::string("Current zombies list is saved in file: \n" + filename).c_str());
+#endif
         }
         outfile.close();
     }
@@ -560,13 +579,15 @@ void Toolkit::cb_direct_win_thread()
 {
     Fl::lock();
     button_direct_win->deactivate();
+    check_brightest_cob_cannon->deactivate();
     Fl::unlock();
     Fl::awake();
 
-    pvz->DirectWin();
+    pvz->DirectWin(check_brightest_cob_cannon->value());
 
     Fl::lock();
     button_direct_win->activate();
+    check_brightest_cob_cannon->activate();
     Fl::unlock();
     Fl::awake();
 }
@@ -1069,18 +1090,18 @@ void Toolkit::cb_userdata(Fl_Widget *, void *w)
 
 void Toolkit::cb_userdata()
 {
-    auto open = [](std::string p)
+    auto open = [](const std::string &path)
     {
-        DWORD fa = GetFileAttributesA(p.c_str());
+        DWORD fa = GetFileAttributesA(path.c_str());
         if ((fa != INVALID_FILE_ATTRIBUTES) && (fa & FILE_ATTRIBUTE_DIRECTORY))
-            ShellExecuteA(nullptr, "open", p.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+            ShellExecuteA(nullptr, "open", path.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
     };
 
-    auto wopen = [](std::wstring p)
+    auto wopen = [](const std::wstring &path)
     {
-        DWORD fa = GetFileAttributesW(p.c_str());
+        DWORD fa = GetFileAttributesW(path.c_str());
         if ((fa != INVALID_FILE_ATTRIBUTES) && (fa & FILE_ATTRIBUTE_DIRECTORY))
-            ShellExecuteW(nullptr, L"open", p.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+            ShellExecuteW(nullptr, L"open", path.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
     };
 
     if (true)
@@ -1088,8 +1109,8 @@ void Toolkit::cb_userdata()
         // 2000/XP 系统下才会使用 `安装目录/userdata` 做存档位置
         // 需要找到游戏才能定位到游戏安装目录
         std::string exe_path = pvz->GamePath();
-        std::string path = exe_path.substr(0, exe_path.find_last_of("\\") + 1) + "userdata";
-        open(path);
+        std::string userdata_path_nt5 = exe_path.substr(0, exe_path.find_last_of("\\") + 1) + "userdata";
+        open(userdata_path_nt5);
     }
 
     TCHAR szPath[MAX_PATH];
@@ -1102,7 +1123,7 @@ void Toolkit::cb_userdata()
         wopen(std::wstring(szPath) + L"\\Reflexive\\PlantsVsZombies\\userdata");
     }
 
-    std::wstring path;
+    std::wstring userdata_path;
     HKEY hKey;
     DWORD ret = RegOpenKeyExW(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Valve\\Steam", //
                               0, KEY_QUERY_VALUE, &hKey);
@@ -1113,15 +1134,15 @@ void Toolkit::cb_userdata()
         DWORD dwSize = MAX_PATH;
         DWORD status = RegQueryValueExW(hKey, L"InstallPath", 0, &dwType, (LPBYTE)&szSteamPath, &dwSize);
         if (status == ERROR_SUCCESS)
-            path = std::wstring(szSteamPath) + L"\\userdata"; // 通过注册表找到的安装位置 + userdata
+            userdata_path = std::wstring(szSteamPath) + L"\\userdata"; // 通过注册表找到的安装位置 + userdata
         RegCloseKey(hKey);
     }
-    DWORD fa = GetFileAttributesW(path.c_str());
-    if (!path.empty() && (fa != INVALID_FILE_ATTRIBUTES) && (fa & FILE_ATTRIBUTE_DIRECTORY))
+    DWORD fa = GetFileAttributesW(userdata_path.c_str());
+    if (!userdata_path.empty() && (fa != INVALID_FILE_ATTRIBUTES) && (fa & FILE_ATTRIBUTE_DIRECTORY))
     {
         WIN32_FIND_DATA ffd;
         HANDLE hf;
-        hf = FindFirstFileW((path + L"\\*").c_str(), &ffd);
+        hf = FindFirstFileW((userdata_path + L"\\*").c_str(), &ffd);
         if (hf != INVALID_HANDLE_VALUE)
         {
             do
@@ -1131,8 +1152,7 @@ void Toolkit::cb_userdata()
                     continue;
                 if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
                 {
-                    path = path + L"\\" + name + L"\\3590\\remote";
-                    wopen(path);
+                    wopen(userdata_path + L"\\" + name + L"\\3590\\remote");
                 }
             } while (FindNextFileW(hf, &ffd) != 0);
             FindClose(hf);
@@ -1207,12 +1227,20 @@ void Toolkit::cb_unpack()
     }
     else if (this->unpack_result == UNPACK_SUCCESS)
     {
+#ifdef _PTK_CHINESE_UI
         fl_message_title("解包完成");
+#else
+        fl_message_title("Extract Success");
+#endif
         fl_message(this->unpack_text.c_str());
     }
     else
     {
+#ifdef _PTK_CHINESE_UI
         fl_message_title("解包出错");
+#else
+        fl_message_title("Extract Failed");
+#endif
         fl_alert(this->unpack_text.c_str());
     }
 }
@@ -1258,6 +1286,7 @@ void Toolkit::cb_unpack_thread()
     this->unpack_result = ret;
 
     std::vector<std::tuple<int, std::string>> msg = {
+#ifdef _PTK_CHINESE_UI
         {UNPACK_SRC_NOT_EXIST, "打开源文件失败！"},           //
         {UNPACK_SRC_SIZE_ERROR, "获取源文件大小失败！"},      //
         {UNPACK_SRC_LOAD_ERROR, "读取源文件内容失败！"},      //
@@ -1267,6 +1296,17 @@ void Toolkit::cb_unpack_thread()
         {UNPACK_FILE_CREATE_ERROR, "解包文件创建失败！"},     //
         {UNPACK_FILE_WRITE_ERROR, "解包文件写入失败！"},      //
         {UNPACK_SUCCESS, "解包后的文件夹位于：\n" + dst_dir}, //
+#else
+        {UNPACK_SRC_NOT_EXIST, "UNPACK_SRC_NOT_EXIST"},                      //
+        {UNPACK_SRC_SIZE_ERROR, "UNPACK_SRC_SIZE_ERROR"},                    //
+        {UNPACK_SRC_LOAD_ERROR, "UNPACK_SRC_LOAD_ERROR"},                    //
+        {UNPACK_SRC_HEADER_ERROR, "UNPACK_SRC_HEADER_ERROR"},                //
+        {UNPACK_SRC_DATA_ERROR, "UNPACK_SRC_DATA_ERROR"},                    //
+        {UNPACK_PATH_CREATE_ERROR, "UNPACK_PATH_CREATE_ERROR"},              //
+        {UNPACK_FILE_CREATE_ERROR, "UNPACK_FILE_CREATE_ERROR"},              //
+        {UNPACK_FILE_WRITE_ERROR, "UNPACK_FILE_WRITE_ERROR"},                //
+        {UNPACK_SUCCESS, "The extracted files are located at:\n" + dst_dir}, //
+#endif
     };
 
     for (size_t i = 0; i < msg.size(); i++)
@@ -1307,12 +1347,20 @@ void Toolkit::cb_pack()
     }
     else if (this->pack_result == PACK_SUCCESS)
     {
+#ifdef _PTK_CHINESE_UI
         fl_message_title("打包完成");
+#else
+        fl_message_title("Pack Success");
+#endif
         fl_message(this->pack_text.c_str());
     }
     else
     {
+#ifdef _PTK_CHINESE_UI
         fl_message_title("打包出错");
+#else
+        fl_message_title("Pack Failed");
+#endif
         fl_alert(this->pack_text.c_str());
     }
 }
@@ -1359,6 +1407,7 @@ void Toolkit::cb_pack_thread()
     this->pack_result = ret;
 
     std::vector<std::tuple<int, std::string>> msg = {
+#ifdef _PTK_CHINESE_UI
         {PACK_SRC_NOT_EXIST, "打开源文件夹失败！"},        //
         {PACK_SRC_EMPTY_ERROR, "源文件夹为空！"},          //
         {PACK_PATH_CREATE_ERROR, "打包路径创建失败！"},    //
@@ -1366,6 +1415,15 @@ void Toolkit::cb_pack_thread()
         {PACK_FILE_WRITE_ERROR, "打包文件写入失败！"},     //
         {PACK_SRC_READ_ERROR, "打包源文件读取失败！"},     //
         {PACK_SUCCESS, "打包后的文件位于：\n" + dst_file}, //
+#else
+        {PACK_SRC_NOT_EXIST, "PACK_SRC_NOT_EXIST"},                     //
+        {PACK_SRC_EMPTY_ERROR, "PACK_SRC_EMPTY_ERROR"},                 //
+        {PACK_PATH_CREATE_ERROR, "PACK_PATH_CREATE_ERROR"},             //
+        {PACK_FILE_CREATE_ERROR, "PACK_FILE_CREATE_ERROR"},             //
+        {PACK_FILE_WRITE_ERROR, "PACK_FILE_WRITE_ERROR"},               //
+        {PACK_SRC_READ_ERROR, "PACK_SRC_READ_ERROR"},                   //
+        {PACK_SUCCESS, "The packed file is located at: \n" + dst_file}, //
+#endif
     };
 
     for (size_t i = 0; i < msg.size(); i++)
@@ -1396,7 +1454,7 @@ void Toolkit::cb_speed(Fl_Widget *, void *w)
 
 void Toolkit::cb_speed()
 {
-    int time_ms[] = {
+    const int time_ms[] = {
         1,   // 10x
         2,   // 5x
         5,   // 2x

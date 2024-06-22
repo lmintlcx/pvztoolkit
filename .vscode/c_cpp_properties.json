@@ -3,22 +3,27 @@
         {
             "name": "Win32",
             "includePath": [
-                "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.29.30133/include",
-                "C:/Program Files (x86)/Windows Kits/10/Include/10.0.19041.0/ucrt",
-                "${workspaceFolder}/fltk/include",
-                "${workspaceFolder}/zlib/include",
-                "${workspaceFolder}/src"
+                "C:/VisualStudio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/include",
+                "C:/Program Files (x86)/Windows Kits/10/Include/10.0.17763.0/ucrt",
+                "C:/Dev/fltk_1.4.0/msvc2017_x86/static/include"
+                // "${workspaceFolder}"
             ],
             "defines": [
                 "WIN32",
                 "_DEBUG",
                 "UNICODE",
-                "_UNICODE"
+                "_UNICODE",
+                "NOMINMAX",
+                "WIN32_LEAN_AND_MEAN",
+                "_WIN32_WINNT=0x0600",
+                "_REGEX_MAX_STACK_COUNT=0",
+                "_PTK_CHINESE_UI",
+                "_PVZ_BETA_LEAK_SUPPORT"
             ],
-            "windowsSdkVersion": "10.0.19041.0",
-            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.29.30133/bin/Hostx86/x86/cl.exe",
+            "windowsSdkVersion": "10.0.17763.0",
+            "compilerPath": "C:/VisualStudio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/cl.exe",
             "cStandard": "c17",
-            "cppStandard": "c++20",
+            "cppStandard": "c++17",
             "intelliSenseMode": "msvc-x86"
         }
     ],

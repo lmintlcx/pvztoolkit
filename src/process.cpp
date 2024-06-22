@@ -1,5 +1,5 @@
 
-#include "process.h"
+#include "../inc/process.h"
 
 namespace Pt
 {
@@ -40,7 +40,7 @@ bool Process::OpenByWindow(const wchar_t *class_name, const wchar_t *window_name
         }
     }
 
-    assert(PROCESS_ALL_ACCESS == 0x001FFFFF);
+    // assert(PROCESS_ALL_ACCESS == 0x001FFFFF);
 
 #ifdef _DEBUG
     std::wcout << L"查找窗口: " << (class_name == nullptr ? L"nullptr" : class_name)               //

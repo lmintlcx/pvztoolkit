@@ -1,5 +1,5 @@
 
-#include "window.h"
+#include "../inc/window.h"
 
 #define IDI_ICON 1001
 
@@ -95,6 +95,46 @@ const char *zombies[] =
         "GigaGargantuar",
 };
 
+#ifdef _PTK_CHINESE_UI
+#else
+const char *zombies_s[] =
+    {
+        "Zombie",
+        "Flag ~",
+        "Conehead ~",
+        "Pole Vaulting ~",
+        "Buckethead ~",
+        "Newspaper ~",
+        "Screen Door ~",
+        "Football ~",
+        "Dancing ~",
+        "Backup Dancer",
+        "Ducky Tube ~",
+        "Snorkel ~",
+        "Zomboni",
+        "~ Bobsled Team",
+        "Dolphin Rider ~",
+        "Jack-in-the-Box ~",
+        "Balloon ~",
+        "Digger ~",
+        "Pogo ~",
+        "~ Yeti",
+        "Bungee ~",
+        "Ladder ~",
+        "Catapult ~",
+        "Gargantuar",
+        "Imp",
+        "Dr. Zomboss",
+        "Peashooter ~",
+        "Wall-nut ~",
+        "Jalapeno ~",
+        "Gatling Pea ~",
+        "Squash ~",
+        "Tall-nut ~",
+        "GigaGargantuar",
+};
+#endif
+
 const char *modes[] =
     {
         "Adventure",
@@ -172,6 +212,7 @@ const char *modes[] =
         "Intro",
 };
 
+#ifdef _PTK_CHINESE_UI
 const char *plants_zh[] =
     {
         "豌豆射手",
@@ -337,6 +378,7 @@ const char *modes_zh[] =
         "促销",
         "介绍",
 };
+#endif
 
 Fl_Choice_::Fl_Choice_(int x, int y, int w, int h, const char *l)
     : Fl_Choice(x, y, w, h, l)
@@ -412,7 +454,11 @@ SpawnTable::SpawnTable(int X, int Y, int W, int H, const char *L = 0)
 
     rows(ROWS);
     row_header(1);
+#ifdef _PTK_CHINESE_UI
     row_header_width(75);
+#else
+    row_header_width(175);
+#endif
     row_height_all(18);
     row_resize(0);
 
@@ -460,9 +506,9 @@ void SpawnTable::draw_cell(TableContext context, int ROW = 0, int COL = 0, //
     static char s[100]; // 缓冲
 
     // 单波某种僵尸一般不超过 20 只，单轮某种僵尸一般不超过 300 只
-    Fl_Color c_n = 0xffffff00u - 0x01000100u * (min(data[ROW][COL], 20) * 0xffu / 30);   // 背景颜色
-    Fl_Color c_t = 0xffffff00u - 0x01010100u * (min(data[ROW][COL], 300) * 0xffu / 500); // 背景颜色(总数)
-    Fl_Color c_f = 0xcccccc00u;                                                          // 旗帜波边框
+    Fl_Color c_n = 0xffffff00u - 0x01000100u * (std::min(data[ROW][COL], 20) * 0xffu / 30);   // 背景颜色
+    Fl_Color c_t = 0xffffff00u - 0x01010100u * (std::min(data[ROW][COL], 300) * 0xffu / 500); // 背景颜色(总数)
+    Fl_Color c_f = 0xcccccc00u;                                                               // 旗帜波边框
 
     int Ys = 0; // 因为不画缺少的种类造成的纵向偏移
     for (int r = 0; r < ROW; r++)
@@ -473,7 +519,11 @@ void SpawnTable::draw_cell(TableContext context, int ROW = 0, int COL = 0, //
     {
     case CONTEXT_STARTPAGE:
         extern Fl_Font ui_font;
+#ifdef _PTK_CHINESE_UI
         fl_font(ui_font, 13);
+#else
+        fl_font(ui_font, 12);
+#endif
         return;
 
     case CONTEXT_COL_HEADER:
@@ -499,13 +549,21 @@ void SpawnTable::draw_cell(TableContext context, int ROW = 0, int COL = 0, //
         if (data[ROW][20 + 1 - 1] == 0) // 不画不出的僵尸种类
             break;
 
+#ifdef _PTK_CHINESE_UI
         sprintf_s(s, "%s", std::string("[" + std::to_string(ROW) + "]" + " " + zombies_zh[ROW] + "  ").c_str());
+#else
+        sprintf_s(s, "%s", std::string("[" + std::to_string(ROW) + "]" + " " + zombies_s[ROW] + "  ").c_str());
+#endif
 
         fl_push_clip(X, Y - Ys, W, H);
         {
             fl_draw_box(FL_THIN_UP_BOX, X, Y - Ys, W, H, row_header_color());
             fl_color(FL_BLACK);
+#ifdef _PTK_CHINESE_UI
             fl_draw(s, X, Y - Ys, W, H, FL_ALIGN_RIGHT);
+#else
+            fl_draw(s, X, Y - Ys, W, H, FL_ALIGN_LEFT);
+#endif
         }
         fl_pop_clip();
 
@@ -547,35 +605,64 @@ SpawnWindow::SpawnWindow(int width, int height, const char *title)
     // 参数 width height title 均被忽略
 
     // 设置窗口标题
+#ifdef _PTK_CHINESE_UI
     this->copy_label("出怪数量统计");
+#else
+    this->copy_label("Spawning Counting");
+#endif
 
-    // 设置窗口大小
-    // 表格大小 837 x 617
-    int w = 5 + 837 + 5;
-    int h = 5 + 617 + 7;
+// 设置窗口大小
+// 表格大小 837 x 617
+#ifdef _PTK_CHINESE_UI
+    const int m = 5;
+    const int b = 7;
+    const int tw = 837;
+    const int th = 617;
+    const int rhw = 75;
+    const int chh = 18 + 3;
+#else
+    const int m = 5;
+    const int b = 7;
+    const int tw = 937;
+    const int th = 617;
+    const int rhw = 175;
+    const int chh = 18 + 3;
+#endif
+    const int w = m + tw + m;
+    const int h = m + th + b;
     this->size(w, h);
 
-    table_spawn = new SpawnTable(5, 5, 837, 617);
-    button_update_details = new Fl_Button(5, 5, 75, 18 + 3, "···");
-    button_zombies_list = new Fl_Menu_Button(5, 5, 837, 617, nullptr);
-    box_mask_spawn_types = new Fl_Box(5, 5 + 18 + 3, 75, 18 * 33, nullptr);
+    table_spawn = new SpawnTable(m, m, tw, th);
+    button_update_details = new Fl_Button(m, m, rhw, chh, "···");
+    button_zombies_list = new Fl_Menu_Button(m, m, tw, th, nullptr);
+#ifdef _PTK_CHINESE_UI
+    box_mask_spawn_types = new Fl_Box(m, m + chh, rhw, h * 33, nullptr);
+#endif
     this->end();
 
+#ifdef _PTK_CHINESE_UI
     button_zombies_list->add("[刷新]");
     button_zombies_list->add("[保存]");
     button_zombies_list->add("[加载]");
+#else
+    button_zombies_list->add("[ Refresh ]");
+    button_zombies_list->add("[ Save ]");
+    button_zombies_list->add("[ Load ]");
+#endif
     button_zombies_list->type(Fl_Menu_Button::POPUP3);
     button_zombies_list->value(0);
 
+#ifdef _PTK_CHINESE_UI
     extern Fl_Font ui_font;
-
     button_zombies_list->textfont(ui_font);
 
     emoji = IsWindows8OrGreater();
-
     button_zombies_list->replace(0, EMOJI("🔄", "[刷新]"));
     button_zombies_list->replace(1, EMOJI("💾", "[保存]"));
     button_zombies_list->replace(2, EMOJI("🔖", "[加载]"));
+#else
+    button_update_details->copy_tooltip("Refresh");
+#endif
 }
 
 SpawnWindow::~SpawnWindow()
@@ -606,22 +693,40 @@ void SpawnWindow::UpdateData(std::array<int, 1000> zombies_list)
         std::string zs;
         for (int r = 0; r < 33; r++)
             if (zombies_count[r] != 0)
+#ifdef _PTK_CHINESE_UI
                 zs += std::string("[" + std::to_string(r) + "]" + "  " + zombies[r] + "\n");
         box_mask_spawn_types->copy_tooltip(zs.c_str());
+#else
+                zs += std::string("[" + std::to_string(r) + "]" + "  " + zombies_s[r] + "\n");
+#endif
     }
     else
     {
+#ifdef _PTK_CHINESE_UI
         box_mask_spawn_types->copy_tooltip(nullptr);
+#endif
     }
 
+#ifdef _PTK_CHINESE_UI
     int w = deleted_rows == 33 ? 450 : 5 + 837 + 5;
+#else
+    int w = deleted_rows == 33 ? 450 : 5 + 937 + 5;
+#endif
     int h = 5 + 617 + 7 - deleted_rows * 18;
+    this->ww = w;
+    this->hh = h;
     this->size(w, h);
     this->redraw();
 }
 
+void SpawnWindow::resize(int X, int Y, int W, int H)
+{
+    Fl_Double_Window::resize(X, Y, this->ww, this->hh);
+}
+
 void SpawnWindow::tooltips(bool on)
 {
+#ifdef _PTK_CHINESE_UI
     button_update_details->copy_tooltip(on ? "Refresh" : "刷新");
 
     if (on) // this->on
@@ -638,6 +743,7 @@ void SpawnWindow::tooltips(bool on)
     }
 
     this->copy_label(on ? "Spawning Counting" : "出怪数量统计");
+#endif
 
     this->on = on;
 }
@@ -648,34 +754,51 @@ Window::Window(int width, int height, const char *title)
     // 参数 width height title 均被忽略
 
     // 设置窗口标题
-    this->copy_label("PvZ Toolkit - 植物大战僵尸全版本辅助工具");
-
-    // 设置窗口大小
-    int w = 95 * 4 + 10 * 2 + 10 * (4 + 1);          // 宽度 450
-    int h = 25 * 6 + 10 * 2 + 10 * (6 + 1) + 30 + 5; // 高度 275
-    this->size(w, h);
+#ifdef _PTK_CHINESE_UI
+    this->copy_label("PvZ Toolkit - 植物大战僵尸辅助工具");
+#else
+    this->copy_label("PvZ Toolkit - Plants vs. Zombies Tool Kit");
+#endif
 
     // 坐标系统
-    int m = 10;  // 控件边距
-    int th = 30; // 选项卡高度
-    int tb = 5;  // 选项卡底部边框
-    int iw = 95; // 控件宽度 (1/4)
-    int ih = 25; // 控件高度 (1/6)
+#ifdef _PTK_CHINESE_UI
+    const int m = 10;  // 控件边距
+    const int th = 30; // 选项卡高度
+    const int tb = 5;  // 选项卡底部边框
+    const int iw = 95; // 控件宽度 (1/4)
+    const int ih = 25; // 控件高度 (1/6)
+    const int R = 6;   // 控件行数
+    const int C = 4;   // 控件列数
+#else
+    const int m = 8;    // 控件边距
+    const int th = 27;  // 选项卡高度
+    const int tb = 5;   // 选项卡底部边框
+    const int iw = 120; // 控件宽度 (1/4)
+    const int ih = 24;  // 控件高度 (1/7)
+    const int R = 7;    // 控件行数
+    const int C = 4;    // 控件列数
+#endif
+    const int x = m + m;           // 第一个控件的 x 坐标
+    const int y = m + th + tb + m; // 第一个控件的 y 坐标
 
-    int x = m + m;           // 第一个控件的 x 坐标
-    int y = m + th + tb + m; // 第一个控件的 y 坐标
+    // 设置窗口大小
+    const int w = iw * C + m * 2 + m * (C + 1);           // 宽度 450 536
+    const int h = ih * R + m * 2 + m * (R + 1) + th + tb; // 高度 275 280
+    this->size(w, h);
 
-    // (4 列的情况下) 根据列数返回 x 坐标
+    // 根据列数返回 x 坐标
     auto c = [=](int col) -> int
     {
         return x + (iw + m) * (col - 1);
     };
 
-    // (6 行的情况下) 根据行数返回 y 坐标
+    // 根据行数返回 y 坐标
     auto r = [=](int row) -> int
     {
         return y + (ih + m) * (row - 1);
     };
+
+#ifdef _PTK_CHINESE_UI
 
     // 主窗体
     {
@@ -707,7 +830,8 @@ Window::Window(int width, int height, const char *title)
                 button_mix = new Fl_Button(c(4) + 15, r(5), iw - 15, ih, "混乱关卡");
                 input_level = new Fl_Value_Input(c(3) + 20, r(6), iw - 20 + 15, ih, "");
                 button_level = new Fl_Button(c(4) + 15, r(6), iw - 15, ih, "无尽轮数");
-                button_unlock = new Fl_Button(c(1), r(6), iw + 12, ih, "通关存档");
+                button_unlock = new Fl_Button(c(1), r(6), iw + 8, ih, "通关存档");
+                check_brightest_cob_cannon = new Fl_Check_Button(c(2) + 14, r(6), 18, ih, "");
                 button_direct_win = new Fl_Button(c(2) + 20 + 15, r(6), iw - 15, ih, "直接过关");
             }
             group_resource->end();
@@ -732,10 +856,10 @@ Window::Window(int width, int height, const char *title)
                 check_zombie_invincible = new Fl_Check_Button(c(3), r(4), iw - 15, ih, "僵尸无敌");
                 check_zombie_weak = new Fl_Check_Button(c(4), r(4), iw - 15, ih, "僵尸虚弱");
                 check_reload_instantly = new Fl_Check_Button(c(1), r(5), iw - 15, ih, "立刻装填");
-                check_mushroom_awake = new Fl_Check_Button(c(2), r(5), iw - 15, ih, "蘑菇睡醒");
+                check_lock_butter = new Fl_Check_Button(c(2), r(5), iw - 15, ih, "只投黄油");
                 check_stop_spawning = new Fl_Check_Button(c(3), r(5), iw - 15, ih, "暂停刷怪");
                 check_stop_zombies = new Fl_Check_Button(c(4), r(5), iw - 15, ih, "停滞不前");
-                check_lock_butter = new Fl_Check_Button(c(1), r(6), iw - 15, ih, "只投黄油");
+                check_mushroom_awake = new Fl_Check_Button(c(1), r(6), iw - 15, ih, "蘑菇睡醒");
                 check_no_crater = new Fl_Check_Button(c(2), r(6), iw - 15, ih, "核弹无坑");
                 check_no_ice_trail = new Fl_Check_Button(c(3), r(6), iw - 15, ih, "冰车无痕");
                 check_zombie_not_explode = new Fl_Check_Button(c(4), r(6), iw - 15, ih, "丑椒不爆");
@@ -773,15 +897,22 @@ Window::Window(int width, int height, const char *title)
 
             group_spawn = new Fl_Group(m, m + th, w - m * 2, h - m * 2 - th, "出怪");
             {
-                int tmp[20] = {2, 3, 4, 5, 6,       //
-                               7, 8, 11, 12, 14,    //
-                               15, 16, 17, 18, 19,  //
-                               20, 21, 22, 23, 32}; //
+                const int tmp[20] = {
+                    2, 3, 4, 5, 6,      //
+                    7, 8, 11, 12, 14,   //
+                    15, 16, 17, 18, 19, //
+                    20, 21, 22, 23, 32  //
+                };
                 memcpy(spawn_type, tmp, sizeof(tmp));
                 for (size_t row = 0; row < 4; row++)
                     for (size_t col = 0; col < 5; col++)
-                        check_zombie[row * 5 + col] = new Fl_Check_Button                               //
-                            (x + 8 + (iw - 22 + m) * col, y + 5 + (ih + 7 + m) * row, iw - 42, ih, ""); //
+                    {
+                        int _x = x + 8 + (iw - 22 + m) * col;
+                        int _y = y + 5 + (ih + 7 + m) * row;
+                        check_zombie[row * 5 + col] = new Fl_Check_Button(_x, _y, iw - 42, ih, "");
+                        this->xy[row * 5 + col][0] = _x;
+                        this->xy[row * 5 + col][1] = _y;
+                    }
                 button_show_details = new Fl_Button(c(1), r(6), iw, ih, "查看详情");
                 choice_giga_weight = new Fl_Choice_(c(2) + 5, r(6), iw - 20, ih, "");
                 check_giga_limit = new Fl_Check_Button(c(3) - 55 + 40, r(6), iw - 40, ih, "变速");
@@ -831,6 +962,163 @@ Window::Window(int width, int height, const char *title)
     }
     this->end();
 
+#else
+
+    // 主窗体
+    {
+        tabs = new Fl_Tabs(m, m, w - m * 2, h - m * 2);
+        {
+            group_resource = new Fl_Group(m, m + th, w - m * 2, h - m * 2 - th, "Resources");
+            {
+                box_sun = new Fl_Box(c(1), r(1), iw - 40, ih, "Sunlight");
+                input_sun = new Fl_Value_Input(c(1) + iw - 40 + m, r(1), 40 + 45 - m, ih, "");
+                button_sun = new Fl_Button(c(2) + 45, r(1), iw - 45 - 5, ih, "Value");
+                box_money = new Fl_Box(c(1), r(2), iw - 40, ih, "Wallet (x10)");
+                input_money = new Fl_Value_Input(c(1) + iw - 40 + m, r(2), 40 + 45 - m, ih, "");
+                button_money = new Fl_Button(c(2) + 45, r(2), iw - 45 - 5, ih, "Coins");
+                box_wisdom_tree = new Fl_Box(c(1), r(3), iw - 40, ih, "Wisdom Tree");
+                input_wisdom_tree = new Fl_Value_Input(c(1) + iw - 40 + m, r(3), 40 + 45 - m, ih, "");
+                button_wisdom_tree = new Fl_Button(c(2) + 45, r(3), iw - 45 - 5, ih, "Feet");
+                check_unlock_sun_limit = new Fl_Round_Button(c(3), r(1), iw + m + iw - 75, ih, "No Upper Limit to Sunlight");
+                check_fertilizer = new Fl_Check_Button(c(3), r(2), iw, ih, "Infinite Fertilizer");
+                check_bug_spray = new Fl_Check_Button(c(4), r(2), iw, ih, "Infinite Bug Spray");
+                check_tree_food = new Fl_Check_Button(c(3), r(3), iw, ih, "Infinite Tree Food");
+                check_chocolate = new Fl_Check_Button(c(4), r(3), iw, ih, "Infinite Chocolate");
+                check_auto_collected = new Fl_Check_Button(c(1), r(4), iw, ih, "Auto Collected");
+                check_not_drop_loot = new Fl_Check_Button(c(2), r(4), iw, ih, "Don\'t Drop Loot");
+                check_free_planting = new Fl_Check_Button(c(3), r(4), iw, ih, "Free Planting");
+                check_placed_anywhere = new Fl_Check_Button(c(4), r(4), iw, ih, "Place Anywhere");
+                button_unlock = new Fl_Button(c(1), r(5), iw + m + iw - 18 - 40 - 12, ih, "Get Gold Sunflower Trophy");
+                check_fast_belt = new Fl_Check_Button(c(3) - 18 - 40, r(5), iw + 40, ih, "Seamless Conveyor Belt");
+                check_lock_shovel = new Fl_Check_Button(c(4) - 18, r(5), iw + 18, ih, "Shovel Continuously");
+                choice_mode = new Fl_Choice_(c(1), r(6), iw + m + iw + 20, ih, "");
+                choice_adventure = new Fl_Choice_(c(3) + 20, r(6), iw - 20, ih, "");
+                button_mix = new Fl_Button(c(4), r(6), iw, ih, "Modify Mode");
+                button_direct_win = new Fl_Button(c(1), r(7), iw - 5, ih, "Level Complete");
+                check_brightest_cob_cannon = new Fl_Check_Button(c(2) - 5, r(7), iw + 5 + 20, ih, "End with Brightest Cob");
+                input_level = new Fl_Value_Input(c(3) + 20, r(7), iw - 20, ih, "");
+                button_level = new Fl_Button(c(4), r(7), iw, ih, "Endless Rounds");
+            }
+            group_resource->end();
+
+            group_battle = new Fl_Group(m, m + th, w - m * 2, h - m * 2 - th, "Battlefield");
+            {
+                auto r = [=](int row) -> int
+                {
+                    return y + (ih + m) * (row - 1) + row * 4 + 2;
+                };
+                choice_row = new Fl_Choice_(c(1), r(1), iw - 10, ih, "");
+                choice_col = new Fl_Choice_(c(1), r(2), iw - 10, ih, "");
+                choice_plant = new Fl_Choice_(c(2) - 10, r(1), iw + 10 + 35 * 2, ih, "");
+                choice_zombie = new Fl_Choice_(c(2) - 10, r(2), iw + 10 + 35 * 2, ih, "");
+                button_put_plant = new Fl_Button(c(3) + 35 * 2, r(1), iw - 35, ih, "Put Plant");
+                check_imitater = new Fl_Check_Button(c(4) + 35 * 1, r(1), iw - 35, ih, "Imitater");
+                button_put_zombie = new Fl_Button(c(3) + 35 * 2, r(2), iw - 35, ih, "Put Zombie");
+                button_put_grave = new Fl_Button(c(4) + 35 * 1, r(2), iw - 35, ih, "Put Grave");
+                button_put_ladder = new Fl_Button(c(3) + 35 * 2, r(3), iw - 35, ih, "Put Ladder");
+                button_put_rake = new Fl_Button(c(4) + 35 * 1, r(3), iw - 35, ih, "Put Rake");
+                button_lawn_mower = new Fl_Menu_Button(c(1), r(3), iw - 10, ih, "Lawn Mower");
+                choice_item = new Fl_Choice_(c(2) - 10, r(3), 100, ih, "");
+                button_clear = new Fl_Button(c(2) - 10 + 100 + m, r(3), (iw + 10 + 35 * 2) - 100 - m, ih, "Clear All");
+                check_plant_invincible = new Fl_Check_Button(c(1), r(4), iw + 5, ih, "Plant Invincible");
+                check_plant_weak = new Fl_Check_Button(c(2) + 5, r(4), iw - 20, ih, "Plant Weak");
+                check_reload_instantly = new Fl_Check_Button(c(1), r(5), iw + 5, ih, "Reload Instantly");
+                check_lock_butter = new Fl_Check_Button(c(2) + 5, r(5), iw - 20, ih, "Always Butter");
+                check_mushroom_awake = new Fl_Check_Button(c(1), r(6), iw + 5, ih, "Mushroom Awake");
+                check_no_crater = new Fl_Check_Button(c(2) + 5, r(6), iw - 20, ih, "No Crater");
+                check_zombie_invincible = new Fl_Check_Button(c(3), r(4), iw + 8, ih, "Zombie Invincible");
+                check_zombie_weak = new Fl_Check_Button(c(4) + 8, r(4), iw - 8, ih, "Zombie Weak");
+                check_stop_spawning = new Fl_Check_Button(c(3), r(5), iw + 8, ih, "Pause Spawning");
+                check_stop_zombies = new Fl_Check_Button(c(4) + 8, r(5), iw - 8, ih, "Stay in Place");
+                check_no_ice_trail = new Fl_Check_Button(c(3), r(6), iw + 8, ih, "No Ice Trail");
+                check_zombie_not_explode = new Fl_Check_Button(c(4) + 8, r(6), iw - 8, ih, "Never Explode");
+            }
+            group_battle->end();
+
+            group_lineup = new Fl_Group(m, m + th, w - m * 2, h - m * 2 - th, "Setups");
+            {
+                choice_slot = new Fl_Choice_(c(1), r(1), iw - 10, ih, "");
+                choice_seed = new Fl_Choice_(c(2) - 10, r(1), iw + 10 + 35 * 2, ih, "");
+                button_seed = new Fl_Button(c(3) + 35 * 2, r(1), iw - 35 + 20, ih, "Replace Seed");
+                check_seed_imitater = new Fl_Check_Button(c(4) + 35 * 1 + 20, r(1), iw - 35 - 20, ih, "Imitater");
+                check_lineup_mode = new Fl_Check_Button(c(1), r(2), iw - 10, ih, "Lineup Mode");
+                button_auto_ladder = new Fl_Button(c(2) - 10, r(2), iw - 10, ih, "Smart Laddering");
+                button_put_lily_pad = new Fl_Menu_Button(c(3) - 5 - 15, r(2), iw + 5, ih, "Pool \'s Lily Pad");
+                button_put_flower_pot = new Fl_Menu_Button(c(4) - 15, r(2), iw + 15, ih, "Roof \'s Flower Pot");
+                button_reset = new Fl_Button(c(1), r(3), iw - 10, ih, "Reset Scene");
+                choice_scene = new Fl_Choice_(c(2) - 10, r(3), iw - 10, ih, "");
+                button_load_lineup = new Fl_Button(c(3) - 10 - 10, r(3), iw * 2 + m + 10 + 10, ih, "Load Lineup List File (***.yml)");
+                choice_lineup_name[0] = new Fl_Choice_(c(3) - 10 - 10, r(3), iw * 2 + m + 10 + 10, ih, "");
+                choice_lineup_name[1] = new Fl_Choice_(c(3) - 10 - 10, r(3), iw * 2 + m + 10 + 10, ih, "");
+                choice_lineup_name[2] = new Fl_Choice_(c(3) - 10 - 10, r(3), iw * 2 + m + 10 + 10, ih, "");
+                choice_lineup_name[3] = new Fl_Choice_(c(3) - 10 - 10, r(3), iw * 2 + m + 10 + 10, ih, "");
+                choice_lineup_name[4] = new Fl_Choice_(c(3) - 10 - 10, r(3), iw * 2 + m + 10 + 10, ih, "");
+                choice_lineup_name[5] = new Fl_Choice_(c(3) - 10 - 10, r(3), iw * 2 + m + 10 + 10, ih, "");
+                buffer_lineup_string = new Fl_Text_Buffer();
+                editor_lineup_string = new Fl_Text_Editor(c(1), r(4), iw * 4 + m * 3, ih * 2 + m * 1, "");
+                button_get_lineup = new Fl_Button(c(1), r(6), iw + 60, ih, "Get Lineup Code");
+                button_copy_lineup = new Fl_Button(c(1), r(7), iw + 60, ih, "Copy (Export)");
+                button_set_lineup = new Fl_Button(c(4) - 60, r(6), iw + 60, ih, "Apply Current Setup");
+                button_paste_lineup = new Fl_Button(c(4) - 60, r(7), iw + 60, ih, "Paste (Import)");
+                button_capture = new Fl_Button(c(2) + 60 + 10, r(6), iw + m + iw - 60 - 60 - 20, ih + m + ih, "Screenshot\nto\nClipboard");
+            }
+            group_lineup->end();
+
+            group_spawn = new Fl_Group(m, m + th, w - m * 2, h - m * 2 - th, "Spawning");
+            {
+                const int tmp[20] = {
+                    2, 3, 4, 5,     //
+                    6, 7, 8, 11,    //
+                    12, 14, 15, 16, //
+                    17, 18, 19, 20, //
+                    21, 22, 23, 32  //
+                };
+                memcpy(spawn_type, tmp, sizeof(tmp));
+                for (size_t row = 0; row < 5; row++)
+                    for (size_t col = 0; col < 4; col++)
+                        check_zombie[row * 4 + col] = new Fl_Check_Button(c(col + 1), r(row + 1), iw, ih, "");
+                choice_giga_weight = new Fl_Choice_(c(3), r(6), iw - 48, ih, "GigaGargantuar\'s Weight in Non-huge Waves:");
+                check_giga_limit = new Fl_Check_Button(c(1), r(7), iw + m + iw, ih, "No GigaGargantuar in 11th ~ 19th Waves");
+                button_show_details = new Fl_Button(c(4), r(6), iw, ih, "Show Details");
+                button_set_spawn = new Fl_Button(c(4) - 80, r(7), iw + 80, ih, "Extreme (Filling Evenly)");
+                button_spawn_extra = new Fl_Menu_Button(m, m + th, iw * 4 + m * 5, ih * 7 + m * 8, nullptr);
+                button_spawn_mode = new Fl_Menu_Button(c(4) - 80, r(7), iw + 80, ih, "Select Spawning Mode: ");
+            }
+            group_spawn->end();
+
+            group_others = new Fl_Group(m, m + th, w - m * 2, h - m * 2 - th, "Others");
+            {
+                choice_music = new Fl_Choice_(c(1), r(1), iw + 50, ih, "");
+                button_music = new Fl_Button(c(2) + 50, r(1), iw + 15, ih, "Background Music");
+                button_userdata = new Fl_Button(c(3) + 50 + 15, r(1), iw + m + iw - 50 - 15, ih, "Open Userdata Folder");
+                check_no_fog = new Fl_Check_Button(c(1), r(2), iw - 10, ih, "Clear Fog");
+                check_see_vase = new Fl_Check_Button(c(2) - 10, r(2), iw, ih, "Transparent Vase");
+                check_readonly = new Fl_Check_Button(c(4) - 15, r(2), iw + 15, ih, "Userdata Readonly");
+                button_file = new Fl_Button(c(1), r(3), iw - 10, ih, "Choose File");
+                input_file = new Fl_Input_(c(2) - 10, r(3), iw + 10 + m + iw + 45, ih, "");
+                button_unpack = new Fl_Button(c(4) + 45, r(3), iw - 45, ih, "Extract");
+                button_dir = new Fl_Button(c(1), r(4), iw - 10, ih, "Choose Folder");
+                input_dir = new Fl_Input_(c(2) - 10, r(4), iw + 10 + m + iw + 45, ih, "");
+                button_pack = new Fl_Button(c(4) + 45, r(4), iw - 45, ih, "Pack");
+                choice_debug = new Fl_Choice_(c(1), r(5), iw - 10, ih, "");
+                button_debug = new Fl_Button(c(2) - 10, r(5), iw - 30, ih, "Debug");
+                choice_speed = new Fl_Choice_(c(1), r(6), iw - 10, ih, "");
+                button_speed = new Fl_Button(c(2) - 10, r(6), iw - 30, ih, "Speed");
+                check_limbo_page = new Fl_Check_Button(c(3), r(5), iw + 5, ih, "Show Limbo Page");
+                check_background = new Fl_Check_Button(c(3), r(6), iw + m + iw - 40, ih, "Enable PvZ to Run in Background");
+                choice_scheme = new Fl_Choice_(c(1), r(7), iw - 10, ih, "");
+                button_document = new Fl_Button(c(3), r(7), iw, ih, "Document");
+                button_about = new Fl_Button(c(4), r(7), iw, ih, "About ...");
+            }
+            group_others->end();
+        }
+        tabs->end();
+
+        game_status = new Fl_Box(330, 10, 190, 25, "");
+    }
+    this->end();
+#endif
+
     // 默认值
 
     // 选项卡颜色
@@ -847,14 +1135,18 @@ Window::Window(int width, int height, const char *title)
 
     // 金钱
     input_money->bounds(0, 99999);
-    input_money->value(99999);
+    input_money->value(80000);
 
     // 智慧树
     input_wisdom_tree->bounds(0, 1000);
-    input_wisdom_tree->value(1437);
+    input_wisdom_tree->value(1000);
 
     for (size_t i = 0; i < 73; i++)
+#ifdef _PTK_CHINESE_UI
         choice_mode->add(("[" + std::to_string(i) + "]" + " " + modes_zh[i]).c_str());
+#else
+        choice_mode->add(("[" + std::to_string(i) + "]" + " " + modes[i]).c_str());
+#endif
 
     // 默认无尽模式
     choice_mode->value(13);
@@ -866,10 +1158,14 @@ Window::Window(int width, int height, const char *title)
     choice_adventure->value(39); // 4-10
     choice_adventure->deactivate();
 
+    // 默认刚结束时炮最亮
+    check_brightest_cob_cannon->value(1);
+
     // 1010 * 2 + 2 = 2022
-    input_level->bounds(0, 10000000);
+    input_level->bounds(0, 999999);
     input_level->value(1010);
 
+#ifdef _PTK_CHINESE_UI
     choice_row->add("所有行");
     choice_row->add("第 1 行");
     choice_row->add("第 2 行");
@@ -877,9 +1173,19 @@ Window::Window(int width, int height, const char *title)
     choice_row->add("第 4 行");
     choice_row->add("第 5 行");
     choice_row->add("第 6 行");
+#else
+    choice_row->add("All Rows");
+    choice_row->add("1st Row");
+    choice_row->add("2nd Row");
+    choice_row->add("3rd Row");
+    choice_row->add("4th Row");
+    choice_row->add("5th Row");
+    choice_row->add("6th Row");
+#endif
 
     choice_row->value(1); // 第 1 行
 
+#ifdef _PTK_CHINESE_UI
     choice_col->add("所有列");
     choice_col->add("第 1 列");
     choice_col->add("第 2 列");
@@ -890,35 +1196,70 @@ Window::Window(int width, int height, const char *title)
     choice_col->add("第 7 列");
     choice_col->add("第 8 列");
     choice_col->add("第 9 列");
+#else
+    choice_col->add("All Columns");
+    choice_col->add("1st Column");
+    choice_col->add("2nd Column");
+    choice_col->add("3rd Column");
+    choice_col->add("4th Column");
+    choice_col->add("5th Column");
+    choice_col->add("6th Column");
+    choice_col->add("7th Column");
+    choice_col->add("8th Column");
+    choice_col->add("9th Column");
+#endif
 
     choice_col->value(1); // 第 1 列
 
     for (size_t i = 0; i < 48; i++)
     {
+#ifdef _PTK_CHINESE_UI
         std::string p = "[" + std::to_string(i) + "]" + " " + plants_zh[i];
+#else
+        std::string p = "[" + std::to_string(i) + "]" + " " + plants[i];
+#endif
         choice_plant->add(p.c_str());
     }
     choice_plant->value(0);
 
     for (size_t i = 0; i < 33; i++)
     {
+#ifdef _PTK_CHINESE_UI
         std::string z = "[" + std::to_string(i) + "]" + " " + zombies_zh[i];
+#else
+        std::string z = "[" + std::to_string(i) + "]" + " " + zombies[i];
+#endif
         choice_zombie->add(z.c_str());
     }
     choice_zombie->value(0);
 
+#ifdef _PTK_CHINESE_UI
     button_lawn_mower->add("[启动]");
     button_lawn_mower->add("[删除]");
     button_lawn_mower->add("[恢复]");
+#else
+    button_lawn_mower->add("[ Start ]");
+    button_lawn_mower->add("[ Delete ]");
+    button_lawn_mower->add("[ Restore ]");
+#endif
 
+#ifdef _PTK_CHINESE_UI
     choice_item->add("植物");
     choice_item->add("僵尸");
     choice_item->add("梯子");
     choice_item->add("墓碑");
     choice_item->add("钉耙");
+#else
+    choice_item->add("Plant");
+    choice_item->add("Zombie");
+    choice_item->add("Ladder");
+    choice_item->add("Grave");
+    choice_item->add("Rake");
+#endif
 
     choice_item->value(3); // 墓碑
 
+#ifdef _PTK_CHINESE_UI
     choice_slot->add("第 1 格");
     choice_slot->add("第 2 格");
     choice_slot->add("第 3 格");
@@ -929,12 +1270,28 @@ Window::Window(int width, int height, const char *title)
     choice_slot->add("第 8 格");
     choice_slot->add("第 9 格");
     choice_slot->add("第 10 格");
+#else
+    choice_slot->add("1st Seed");
+    choice_slot->add("2nd Seed");
+    choice_slot->add("3rd Seed");
+    choice_slot->add("4th Seed");
+    choice_slot->add("5th Seed");
+    choice_slot->add("6th Seed");
+    choice_slot->add("7th Seed");
+    choice_slot->add("8th Seed");
+    choice_slot->add("9th Seed");
+    choice_slot->add("10th Seed");
+#endif
 
     choice_slot->value(0); // 第一格卡槽
 
     for (size_t i = 0; i < 48; i++)
     {
+#ifdef _PTK_CHINESE_UI
         std::string p = "[" + std::to_string(i) + "]" + " " + plants_zh[i];
+#else
+        std::string p = "[" + std::to_string(i) + "]" + " " + plants[i];
+#endif
         choice_seed->add(p.c_str());
     }
 
@@ -943,8 +1300,8 @@ Window::Window(int width, int height, const char *title)
     for (size_t i = 0; i < 8; i++)
     {
         std::string label;
-        for (unsigned int c = 1; c <= 9; c++)
-            label += (lily_pad_col_lower[i] <= c && c <= lily_pad_col_upper[i])
+        for (unsigned int col = 1; col <= 9; col++)
+            label += (lily_pad_col_lower[i] <= col && col <= lily_pad_col_upper[i])
                          ? "■"
                          : "□";
         button_put_lily_pad->add(label.c_str());
@@ -953,19 +1310,28 @@ Window::Window(int width, int height, const char *title)
     for (size_t i = 0; i < 7; i++)
     {
         std::string label;
-        for (unsigned int c = 1; c <= 9; c++)
-            label += (flower_pot_col_lower[i] <= c && c <= flower_pot_col_upper[i])
+        for (unsigned int col = 1; col <= 9; col++)
+            label += (flower_pot_col_lower[i] <= col && col <= flower_pot_col_upper[i])
                          ? "■"
                          : "□";
         button_put_flower_pot->add(label.c_str());
     }
 
+#ifdef _PTK_CHINESE_UI
     choice_scene->add("[0] 白天");
     choice_scene->add("[1] 黑夜");
     choice_scene->add("[2] 泳池");
     choice_scene->add("[3] 雾夜");
     choice_scene->add("[4] 屋顶");
     choice_scene->add("[5] 月夜");
+#else
+    choice_scene->add("[0] Day");
+    choice_scene->add("[1] Night");
+    choice_scene->add("[2] Pool");
+    choice_scene->add("[3] Fog");
+    choice_scene->add("[4] Roof");
+    choice_scene->add("[5] Moon");
+#endif
 
     choice_scene->value(2); // 泳池
 
@@ -990,25 +1356,41 @@ Window::Window(int width, int height, const char *title)
 
     // 出怪名称
     for (size_t i = 0; i < 20; i++)
+#ifdef _PTK_CHINESE_UI
         check_zombie[i]->copy_label(zombies_zh[spawn_type[i]]);
+#else
+        check_zombie[i]->copy_label(zombies_s[spawn_type[i]]);
+#endif
 
     // 非旗帜波红眼权重范围
-    for (size_t w = 1000; w <= 6000; w += 100)
-        choice_giga_weight->add(std::to_string(w).c_str());
+    for (size_t weight = 1000; weight <= 6000; weight += 100)
+        choice_giga_weight->add(std::to_string(weight).c_str());
     choice_giga_weight->value(0);
 
     // 默认极限出怪的情况
     choice_giga_weight->deactivate();
     check_giga_limit->activate();
 
+#ifdef _PTK_CHINESE_UI
     button_spawn_extra->add("[清空已选]", 0, cb_clear_checked_zombies, this);
     button_spawn_extra->add("[取消限制]", 0, cb_disable_limit_species, this);
+    button_spawn_extra->add("[切换布局]", 0, cb_switch_layout_xwz, this);
+#else
+    button_spawn_extra->add("[ Clear Checked Zombies ]", 0, cb_clear_checked_zombies, this);
+    button_spawn_extra->add("[ Disable Species Limit ]", 0, cb_disable_limit_species, this);
+#endif
     button_spawn_extra->type(Fl_Menu_Button::POPUP3);
     button_spawn_extra->value(0);
 
+#ifdef _PTK_CHINESE_UI
     button_spawn_mode->add("自然出怪 (游戏生成)", 0, cb_switch_spawn_mode, this);
     button_spawn_mode->add("极限出怪 (均匀填充)", 0, cb_switch_spawn_mode, this);
     button_spawn_mode->add("模拟出怪 (加权随机)", 0, cb_switch_spawn_mode, this);
+#else
+    button_spawn_mode->add("Natural  (Game Generate)", 0, cb_switch_spawn_mode, this);
+    button_spawn_mode->add("Extreme  (Filling Evenly)", 0, cb_switch_spawn_mode, this);
+    button_spawn_mode->add("Simulate (Weighted Random)", 0, cb_switch_spawn_mode, this);
+#endif
     button_spawn_mode->type(Fl_Menu_Button::POPUP3);
     button_spawn_mode->value(1); // 默认极限刷怪
 
@@ -1027,11 +1409,19 @@ Window::Window(int width, int height, const char *title)
 
     choice_music->value(4); // Graze the Roof
 
+#ifdef _PTK_CHINESE_UI
     choice_debug->add("关闭");
     choice_debug->add("出怪");
     choice_debug->add("音乐");
     choice_debug->add("内存");
     choice_debug->add("碰撞");
+#else
+    choice_debug->add("Off");
+    choice_debug->add("Spawning");
+    choice_debug->add("Music");
+    choice_debug->add("Memory");
+    choice_debug->add("Collision");
+#endif
 
     choice_debug->value(0); // 关闭
 
@@ -1049,6 +1439,7 @@ Window::Window(int width, int height, const char *title)
     choice_scheme->add("plastic");
     choice_scheme->add("gtk+");
     choice_scheme->add("gleam");
+    choice_scheme->add("oxy");
 
     choice_scheme->value(0); // base
 
@@ -1109,7 +1500,9 @@ Window::Window(int width, int height, const char *title)
     // 设置字体
 
     extern Fl_Font ui_font;
-    extern Fl_Font ls_font;
+    extern Fl_Font ms_font;
+
+#ifdef _PTK_CHINESE_UI
 
     for (int i = 0; i < this->children(); i++)
         this->child(i)->labelfont(ui_font);
@@ -1153,13 +1546,13 @@ Window::Window(int width, int height, const char *title)
             choice_lineup_name[3]->textfont(ui_font);
             choice_lineup_name[4]->textfont(ui_font);
             choice_lineup_name[5]->textfont(ui_font);
-            editor_lineup_string->textfont(ls_font); // 阵型字符串特殊字体
-            editor_lineup_string->textsize(16);
+            editor_lineup_string->textfont(ms_font); // 阵型字符串特殊字体
+            editor_lineup_string->textsize(15);
         }
         {
             for (int i = 0; i < group_spawn->children(); i++)
                 group_spawn->child(i)->labelfont(ui_font);
-            // choice_giga_weight->textfont(ui_font);
+            choice_giga_weight->textfont(ui_font);
             button_spawn_extra->textfont(ui_font);
             button_spawn_mode->textfont(ui_font);
         }
@@ -1174,6 +1567,84 @@ Window::Window(int width, int height, const char *title)
             choice_scheme->textfont(ui_font);
         }
     }
+
+#else
+
+    const int font_size = 12;
+
+    for (int i = 0; i < this->children(); i++)
+        this->child(i)->labelsize(font_size);
+    {
+        for (int i = 0; i < tabs->children(); i++)
+        {
+            tabs->child(i)->labelsize(font_size);
+            tabs->child(i)->labelsize(tabs->child(i)->labelsize() + 1);
+        }
+        {
+            for (int i = 0; i < group_resource->children(); i++)
+                group_resource->child(i)->labelsize(font_size);
+            input_sun->textsize(font_size);
+            input_money->textsize(font_size);
+            input_wisdom_tree->textsize(font_size);
+            choice_mode->textsize(font_size);
+            choice_adventure->textsize(font_size);
+            input_level->textsize(font_size);
+        }
+        {
+            for (int i = 0; i < group_battle->children(); i++)
+                group_battle->child(i)->labelsize(font_size);
+            choice_row->textsize(font_size);
+            choice_col->textsize(font_size);
+            choice_plant->textsize(font_size);
+            choice_zombie->textsize(font_size);
+            button_lawn_mower->textsize(font_size);
+            choice_item->textsize(font_size);
+        }
+        {
+            for (int i = 0; i < group_lineup->children(); i++)
+                group_lineup->child(i)->labelsize(font_size);
+            choice_slot->textsize(font_size);
+            choice_seed->textsize(font_size);
+            // button_put_lily_pad
+            // button_put_flower_pot
+            choice_scene->textsize(font_size);
+            choice_lineup_name[0]->textsize(font_size);
+            choice_lineup_name[1]->textsize(font_size);
+            choice_lineup_name[2]->textsize(font_size);
+            choice_lineup_name[3]->textsize(font_size);
+            choice_lineup_name[4]->textsize(font_size);
+            choice_lineup_name[5]->textsize(font_size);
+            choice_lineup_name[0]->textfont(ui_font);
+            choice_lineup_name[1]->textfont(ui_font);
+            choice_lineup_name[2]->textfont(ui_font);
+            choice_lineup_name[3]->textfont(ui_font);
+            choice_lineup_name[4]->textfont(ui_font);
+            choice_lineup_name[5]->textfont(ui_font);
+            editor_lineup_string->textfont(ms_font); // 阵型字符串特殊字体
+            editor_lineup_string->textsize(14);
+        }
+        {
+            for (int i = 0; i < group_spawn->children(); i++)
+                group_spawn->child(i)->labelsize(font_size);
+            choice_giga_weight->textsize(font_size);
+            button_spawn_extra->textsize(font_size);
+            button_spawn_mode->textsize(font_size);
+        }
+        {
+            for (int i = 0; i < group_others->children(); i++)
+                group_others->child(i)->labelsize(font_size);
+            choice_music->textsize(font_size);
+            input_file->textsize(font_size);
+            input_dir->textsize(font_size);
+            choice_debug->textsize(font_size);
+            choice_speed->textsize(font_size);
+            choice_scheme->textsize(font_size);
+        }
+    }
+
+#endif
+
+#ifdef _PTK_CHINESE_UI
 
     // Emoji
 
@@ -1197,12 +1668,15 @@ Window::Window(int width, int height, const char *title)
 
     button_spawn_extra->replace(0, EMOJI("❌", "[清空已选]"));
     button_spawn_extra->replace(1, EMOJI("❎", "[取消限制]"));
+    button_spawn_extra->replace(2, EMOJI("🔀", "[切换布局]"));
 
     button_show_details->copy_label(EMOJI("📈", "查看详情"));
 
     button_music->copy_label(EMOJI("🎵", "背景音乐"));
     button_userdata->copy_label(EMOJI("💾", "存档文件夹"));
     button_document->copy_label(EMOJI("🌏", "文档"));
+
+#endif
 
     // 默认运行的回调函数
 
@@ -1212,8 +1686,10 @@ Window::Window(int width, int height, const char *title)
     // 获取阵型的字符串
     choice_scene->do_callback();
 
+#ifdef _PTK_CHINESE_UI
     // 设置控件工具提示
     check_tooltips->do_callback();
+#endif
 
     // this->show(); // 在 main() 里带参调用
 
@@ -1229,6 +1705,30 @@ Window::Window(int width, int height, const char *title)
 Window::~Window()
 {
     WriteSettings(); // 保存设置
+}
+
+float Window::MinScale()
+{
+    float min_scale = 1.0f;
+
+    int dpi = 96;
+    HDC dc = GetDC(nullptr);
+    if (dc != nullptr)
+    {
+        // int virtual_width = GetDeviceCaps(dc, HORZRES);
+        // int physical_width = GetDeviceCaps(dc, DESKTOPHORZRES);
+        // dpi = 96 * physical_width / virtual_width;
+        int dpi_x = GetDeviceCaps(dc, LOGPIXELSX);
+        int dpi_y = GetDeviceCaps(dc, LOGPIXELSY);
+        dpi = (dpi_x + dpi_y) / 2;
+        ReleaseDC(nullptr, dc);
+    }
+
+    min_scale = static_cast<int>(dpi / 96) * 1.0f;
+    if (min_scale < 1.0f)
+        min_scale = 1.0f;
+
+    return min_scale;
 }
 
 void Window::ReadSettings()
@@ -1248,27 +1748,28 @@ void Window::ReadSettings()
         DWORD dwType;
         DWORD dwSize;
 
-        wchar_t lang[15];    // 语言
-        DWORD scale;         // 缩放
-        int scheme;          // 样式
-        wchar_t zombies[20]; // 出怪
-        int mode;            // 模式
-        int sun;             // 阳光
-        int money;           // 金币
-        int level;           // 轮数
-        unsigned int page;   // 页面
+#ifdef _PTK_CHINESE_UI
+        int tooltips = 0; // 提示
+#endif
+        DWORD scale = 0x3f800000;                    // 缩放
+        int scheme = 0;                              // 样式
+        wchar_t types[21] = L"00000000000000000000"; // 出怪
+        int mode = 1;                                // 模式
+        int sun = 8000;                              // 阳光
+        int money = 80000;                           // 金币
+        int level = 1010;                            // 轮数
+        unsigned int page = 3;                       // 页面
 
-        dwType = REG_SZ;
-        dwSize = sizeof(lang);
-        status = RegQueryValueExW(hKey, L"Language", 0, &dwType, (LPBYTE)&lang, &dwSize);
+#ifdef _PTK_CHINESE_UI
+        dwType = REG_DWORD;
+        dwSize = sizeof(tooltips);
+        status = RegQueryValueExW(hKey, L"ToolTips", 0, &dwType, (LPBYTE)&tooltips, &dwSize);
         if (status == ERROR_SUCCESS)
         {
-            if (std::wstring(lang) == L"English")
-            {
-                check_tooltips->value(1);
-                check_tooltips->do_callback();
-            }
+            check_tooltips->value(tooltips);
+            check_tooltips->do_callback();
         }
+#endif
 
         dwType = REG_DWORD;
         dwSize = sizeof(scale);
@@ -1286,7 +1787,7 @@ void Window::ReadSettings()
         status = RegQueryValueExW(hKey, L"Scheme", 0, &dwType, (LPBYTE)&scheme, &dwSize);
         if (status == ERROR_SUCCESS)
         {
-            if (0 <= scheme && scheme < 4)
+            if (0 <= scheme && scheme < 5)
             {
                 choice_scheme->value(scheme);
                 choice_scheme->do_callback();
@@ -1294,12 +1795,12 @@ void Window::ReadSettings()
         }
 
         dwType = REG_SZ;
-        dwSize = sizeof(zombies);
-        status = RegQueryValueExW(hKey, L"SpawnTypes", 0, &dwType, (LPBYTE)&zombies, &dwSize);
+        dwSize = sizeof(types);
+        status = RegQueryValueExW(hKey, L"SpawnTypes", 0, &dwType, (LPBYTE)&types, &dwSize);
         if (status == ERROR_SUCCESS)
         {
             for (size_t i = 0; i < 20; i++)
-                this->check_zombie[i]->value(zombies[i] == L'1' ? 1 : 0);
+                this->check_zombie[i]->value(types[i] == L'1' ? 1 : 0);
             cb_spawn_count_check();
         }
 
@@ -1338,7 +1839,7 @@ void Window::ReadSettings()
         status = RegQueryValueExW(hKey, L"ValueLevel", 0, &dwType, (LPBYTE)&level, &dwSize);
         if (status == ERROR_SUCCESS)
         {
-            if (0 <= level && level <= 10000000)
+            if (0 <= level && level <= 999999)
                 input_level->value(level);
         }
 
@@ -1365,6 +1866,7 @@ void Window::ReadSettings()
 
     if (first_open)
     {
+#ifdef _PTK_CHINESE_UI
         // 0804  2052  zh-CN  Chinese (Simplified) - China
         // 0404  1028  zh-TW  Chinese (Traditional) - Taiwan
         // 0C04  3076  zh-HK  Chinese - Hong Kong SAR
@@ -1383,28 +1885,23 @@ void Window::ReadSettings()
             check_tooltips->value(1);
             check_tooltips->do_callback();
         }
+#endif
 
-        int dpi = 96;
-        HDC dc = GetDC(nullptr);
-        if (dc != nullptr)
+        // 初次启动缩放
+        if (this->MinScale() != 1.0f)
         {
-            // int virtual_width = GetDeviceCaps(dc, HORZRES);
-            // int physical_width = GetDeviceCaps(dc, DESKTOPHORZRES);
-            // dpi = 96 * physical_width / virtual_width;
-            int dpi_x = GetDeviceCaps(dc, LOGPIXELSX);
-            int dpi_y = GetDeviceCaps(dc, LOGPIXELSY);
-            dpi = (dpi_x + dpi_y) / 2;
-            ReleaseDC(nullptr, dc);
-        }
-        if (dpi > 96)
-        {
-            Fl::screen_scale(this->screen_num(), dpi / 96.0f);
-            std::string text = std::string()                                 //
-                               + "软件界面已跟随系统缩放比例："              //
-                               + std::to_string(dpi * 100 / 96) + "%%。\n\n" //
-                               + "单独按 Esc 键可恢复默认的窗口大小，\n"     //
-                               + "同时按 Ctrl 和 + / - 键可放大缩小窗口。";  //
+            Fl::screen_scale(this->screen_num(), this->MinScale());
+#ifdef _PTK_CHINESE_UI
             fl_message_title("界面缩放");
+            std::string text = std::string()                                 //
+                               + "同时按 Ctrl 和 + / - 键可放大缩小窗口，\n" //
+                               + "单独按 Esc 键可恢复默认的窗口大小。";      //
+#else
+            fl_message_title("DPI Scaling");
+            std::string text = std::string()                                                          //
+                               + "Press the Ctrl and + / - keys simultaneously to zoom in and out,\n" //
+                               + "Press the Esc key alone to restore default 100% window size.";      //
+#endif
             fl_message(text.c_str());
         }
 
@@ -1416,25 +1913,38 @@ void Window::ReadSettings()
             dwBuild = (DWORD)(HIWORD(dwVersion));
 #pragma warning(default : 4996)
 
-        if (dwBuild >= 6000)         // Vista
-            choice_scheme->value(3); //       gleam
-        if (dwBuild >= 7600)         // 7
-            choice_scheme->value(3); //       gleam
-        if (dwBuild >= 9200)         // 8
-            choice_scheme->value(0); //       base
-        if (dwBuild >= 9600)         // 8.1
-            choice_scheme->value(0); //       base
-        if (dwBuild >= 10240)        // 10
-            choice_scheme->value(0); //       base
-        if (dwBuild >= 22000)        // 11
-            choice_scheme->value(2); //       gtk+
+        int scheme = 0;
+        if (dwBuild >= 22000)      // 11
+            scheme = 2;            //       gtk+
+        else if (dwBuild >= 10240) // 10
+            scheme = 2;            //       gtk+
+        else if (dwBuild >= 9600)  // 8.1
+            scheme = 4;            //       oxy
+        else if (dwBuild >= 9200)  // 8
+            scheme = 4;            //       oxy
+        else if (dwBuild >= 7600)  // 7
+            scheme = 3;            //       gleam
+        else if (dwBuild >= 6000)  // Vista
+            scheme = 3;            //       gleam
+        else if (dwBuild >= 2600)  // XP
+            scheme = 1;            //       plastic
+        else if (dwBuild >= 2195)  // 2000
+            scheme = 0;            //       base
+        choice_scheme->value(scheme);
         choice_scheme->do_callback();
 
         // 第一次打开时显示文档
+#ifdef _PTK_CHINESE_UI
         fl_message_title("在线文档");
         int c = fl_choice("这是你首次运行 PvZ Toolkit，要先阅读一下在线教程文档吗？\n" //
                           "也可以在修改器界面的“杂项”页面点击“文档”按钮来访问。",      //
                           "No", "Yes", 0);
+#else
+        fl_message_title("Online Document");
+        int c = fl_choice("This is your first time running PvZ Toolkit, do you want to read the manual first?\n" //
+                          "You can also access it later by clicking \"Document\" button at \"Others\" page.",    //
+                          "No", "Yes", 0);
+#endif
         if (c == 1)
             cb_document();
     }
@@ -1444,9 +1954,10 @@ void Window::WriteSettings()
 {
     // 注册表配置版本 v1
 
-    // 语言
-    wchar_t langChinese[] = L"简体中文";
-    wchar_t langEnglish[] = L"English";
+#ifdef _PTK_CHINESE_UI
+    // 提示
+    int tooltips = check_tooltips->value();
+#endif
 
     // 缩放
     float scale = Fl::screen_scale(this->screen_num());
@@ -1455,9 +1966,9 @@ void Window::WriteSettings()
     int scheme = choice_scheme->value();
 
     // 出怪
-    wchar_t zombies[20] = {0};
+    wchar_t types[21] = {0};
     for (size_t i = 0; i < 20; i++)
-        zombies[i] = (this->check_zombie[i]->value() == 1 ? L'1' : L'0');
+        types[i] = (this->check_zombie[i]->value() == 1 ? L'1' : L'0');
 
     // 模式
     int mode = button_spawn_mode->value();
@@ -1490,13 +2001,12 @@ void Window::WriteSettings()
                               0, nullptr, 0, KEY_SET_VALUE, nullptr, &hKey, nullptr);
     if (ret == ERROR_SUCCESS)
     {
-        if (check_tooltips->value() == 1)
-            RegSetValueExW(hKey, L"Language", 0, REG_SZ, (LPBYTE)&langEnglish, sizeof(langEnglish));
-        else
-            RegSetValueExW(hKey, L"Language", 0, REG_SZ, (LPBYTE)&langChinese, sizeof(langChinese));
+#ifdef _PTK_CHINESE_UI
+        RegSetValueExW(hKey, L"ToolTips", 0, REG_DWORD, (LPBYTE)&tooltips, sizeof(tooltips));
+#endif
         RegSetValueExW(hKey, L"ScaleFactor", 0, REG_DWORD, (LPBYTE)&scale, sizeof(scale));
         RegSetValueExW(hKey, L"Scheme", 0, REG_DWORD, (LPBYTE)&scheme, sizeof(scheme));
-        RegSetValueExW(hKey, L"SpawnTypes", 0, REG_SZ, (LPBYTE)&zombies, sizeof(zombies));
+        RegSetValueExW(hKey, L"SpawnTypes", 0, REG_SZ, (LPBYTE)&types, sizeof(types));
         RegSetValueExW(hKey, L"SpawnMode", 0, REG_DWORD, (LPBYTE)&mode, sizeof(mode));
         RegSetValueExW(hKey, L"ValueSun", 0, REG_DWORD, (LPBYTE)&sun, sizeof(sun));
         RegSetValueExW(hKey, L"ValueMoney", 0, REG_DWORD, (LPBYTE)&money, sizeof(money));
@@ -1504,28 +2014,6 @@ void Window::WriteSettings()
         RegSetValueExW(hKey, L"CurrentPage", 0, REG_DWORD, (LPBYTE)&page, sizeof(page));
         RegCloseKey(hKey);
     }
-}
-
-// TODO fl_utf8fromwc fl_utf8towc
-
-std::string Window::utf8_encode(const std::wstring &wstr)
-{
-    if (wstr.empty())
-        return std::string();
-    int size_needed = WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), nullptr, 0, nullptr, nullptr);
-    std::string str(size_needed, 0);
-    WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), &str[0], size_needed, nullptr, nullptr);
-    return str;
-}
-
-std::wstring Window::utf8_decode(const std::string &str)
-{
-    if (str.empty())
-        return std::wstring();
-    int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), nullptr, 0);
-    std::wstring wstr(size_needed, 0);
-    MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), &wstr[0], size_needed);
-    return wstr;
 }
 
 void Window::cb_find_result(void *w, int result)
@@ -1539,6 +2027,7 @@ void Window::cb_find_result(int result)
     if (result != PVZ_NOT_FOUND && result != PVZ_OPEN_ERROR && result != PVZ_UNSUPPORTED)
         this->keep_selected_feature();
 
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     // 某些版本只实现了部分功能
     if (result == PVZ_BETA_0_1_1_1014_EN)
     {
@@ -1547,6 +2036,7 @@ void Window::cb_find_result(int result)
         button_wisdom_tree->deactivate();
     }
     else
+#endif
     {
         check_tree_food->activate();
         input_wisdom_tree->activate();
@@ -1562,12 +2052,15 @@ void Window::cb_find_result_tooltip(Fl_Widget *, void *w)
     ((Window *)w)->cb_find_result_tooltip();
 }
 
+#ifdef _PTK_CHINESE_UI
+
 void Window::cb_find_result_tooltip()
 {
     bool on = check_tooltips->value() == 1;
 
     switch (result)
     {
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     case PVZ_BETA_0_1_1_1014_EN:
         game_status->copy_label("0.1.1.1014 英语测试版");
         game_status->copy_tooltip(on ? "0.1.1.1014 Beta (en)" : nullptr);
@@ -1576,6 +2069,7 @@ void Window::cb_find_result_tooltip()
         game_status->copy_label("0.9.9.1029 英语测试版");
         game_status->copy_tooltip(on ? "0.9.9.1029 Beta (en)" : nullptr);
         break;
+#endif
     case PVZ_1_0_0_1051_EN:
         game_status->copy_label("1.0.0.1051 英语原始版");
         game_status->copy_tooltip(on ? "1.0.0.1051 (en)" : nullptr);
@@ -1637,43 +2131,44 @@ void Window::cb_find_result_tooltip()
         break;
     case PVZ_UNSUPPORTED:
         game_status->copy_label("不支持的游戏版本");
-        game_status->copy_tooltip(on ? "Unsupported game version." : nullptr);
+        game_status->copy_tooltip(on ? "Unsupported PvZ Version" : nullptr);
         break;
     case PVZ_OPEN_ERROR:
         game_status->copy_label("打开游戏进程出错");
-        game_status->copy_tooltip(on ? "Error opening game process." : nullptr);
+        game_status->copy_tooltip(on ? "Error Opening PvZ Process" : nullptr);
         break;
     case PVZ_NOT_FOUND:
     default:
         game_status->copy_label("没有找到游戏窗口");
-        game_status->copy_tooltip(on ? "No game window was found." : nullptr);
+        game_status->copy_tooltip(on ? "PvZ Window Not Found" : nullptr);
         break;
     }
 
     if (result == PVZ_NOT_FOUND)
     {
         game_status_tip->copy_label(emoji_i ? "🛈" : "i");
-        game_status_tip->copy_tooltip(on ? "Run Plants vs. Zombies first."
-                                         : "先打开运行植物大战僵尸游戏。");
+        game_status_tip->copy_tooltip(on ? "Please run Plants vs. Zombies first."
+                                         : "请先打开植物大战僵尸游戏。");
     }
     else if (result == PVZ_OPEN_ERROR)
     {
         game_status_tip->copy_label(emoji_i ? "🛈" : "i");
-        game_status_tip->copy_tooltip(on ? "Try run Pt as administrator."
-                                         : "建议用管理员权限运行修改器。");
+        game_status_tip->copy_tooltip(on ? "Please try run PvZ Toolkit as administrator."
+                                         : "请尝试用管理员权限运行修改器。");
     }
     else if (result == PVZ_UNSUPPORTED)
     {
         game_status_tip->copy_label(emoji_i ? "🛈" : "i");
-        game_status_tip->copy_tooltip(on ? "Contact author to add support."
+        game_status_tip->copy_tooltip(on ? "Contact author to add support for this version."
                                          : "联系作者给这个版本添加支持。");
     }
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     else if (result == PVZ_BETA_0_1_1_1014_EN)
     {
         game_status_tip->copy_label(emoji_i ? "🛈" : "i");
         game_status_tip->copy_tooltip(on ? "Partial support for beta version."
-                                         : "对早期测试版本仅提供有限功能支持，\n"
-                                           "游戏对象的序号和名称未能完全对应。");
+                                         : "测试版内存布局与正式版差别较大，\n"
+                                           "对测试版本仅提供有限的功能支持。");
     }
     else if (result == PVZ_BETA_0_9_9_1029_EN)
     {
@@ -1681,11 +2176,12 @@ void Window::cb_find_result_tooltip()
         game_status_tip->copy_tooltip(on ? "Partial support for beta version."
                                          : "对测试版本仅提供有限的功能支持。");
     }
+#endif
     else if (result == PVZ_GOTY_1_1_0_1056_ZH)
     {
         game_status_tip->copy_label(emoji_i ? "🛈" : "i");
-        game_status_tip->copy_tooltip(on ? "Replace this bad game version."
-                                         : "换掉这个有严重问题的游戏版本。");
+        game_status_tip->copy_tooltip(on ? "Suggest to replace this buggy game version."
+                                         : "建议换掉这个有严重问题的游戏版本。");
     }
     else
     {
@@ -1704,6 +2200,112 @@ void Window::cb_find_result_tooltip()
     game_status->redraw();
     game_status_tip->redraw();
 }
+
+#else
+
+void Window::cb_find_result_tooltip()
+{
+    switch (result)
+    {
+#ifdef _PVZ_BETA_LEAK_SUPPORT
+    case PVZ_BETA_0_1_1_1014_EN:
+        game_status->copy_label("0.1.1.1014 Beta (en)");
+        break;
+    case PVZ_BETA_0_9_9_1029_EN:
+        game_status->copy_label("0.9.9.1029 Beta (en)");
+        break;
+#endif
+    case PVZ_1_0_0_1051_EN:
+        game_status->copy_label("1.0.0.1051 (en)");
+        break;
+    case PVZ_1_2_0_1065_EN:
+        game_status->copy_label("1.2.0.1065 (en)");
+        break;
+    case PVZ_1_0_4_7924_ES:
+        game_status->copy_label("1.0.4.7924 (es)");
+        break;
+    case PVZ_1_0_7_3556_ES:
+        game_status->copy_label("1.0.7.3556 (es)");
+        break;
+    case PVZ_1_0_7_3467_RU:
+        game_status->copy_label("1.0.7.3467 (ru)");
+        break;
+    case PVZ_GOTY_1_2_0_1073_EN:
+        game_status->copy_label("1.2.0.1073 GOTY Origin (en)");
+        break;
+    case PVZ_GOTY_1_2_0_1096_EN:
+        game_status->copy_label("1.2.0.1096 GOTY Steam (en)");
+        break;
+    case PVZ_GOTY_1_2_0_1093_DE_ES_FR_IT:
+        game_status->copy_label("1.2.0.1093 GOTY Origin (de/es/fr/it)");
+        break;
+    case PVZ_GOTY_1_1_0_1056_ZH:
+        game_status->copy_label("1.1.0.1056 GOTY 2010 (zh)");
+        if (!this->bad_version_warned)
+        {
+            this->bad_version_warned = true;
+            fl_message_title("Warning");
+            int c = fl_choice("This version of game has serious issues and may crash at any time.\n" //
+                              "It is recommended to use another version that can run normally.\n"    //
+                              "Would you like to download it now?",                                  //
+                              "No", "Yes", 0);
+            if (c == 1)
+                ShellExecuteW(nullptr, L"open", L"https://pvz.lmintlcx.com/download/", //
+                              nullptr, nullptr, SW_SHOWNORMAL);
+        }
+        break;
+    case PVZ_GOTY_1_1_0_1056_JA:
+        game_status->copy_label("1.1.0.1056 GOTY (ja)");
+        break;
+    case PVZ_GOTY_1_1_0_1056_ZH_2012_06:
+        game_status->copy_label("1.1.0.1056 GOTY 2012 (zh)");
+        break;
+    case PVZ_GOTY_1_1_0_1056_ZH_2012_07:
+        game_status->copy_label("1.1.0.1056 GOTY 2012 (zh)");
+        break;
+    case PVZ_UNSUPPORTED:
+        game_status->copy_label("Unsupported PvZ Version");
+        break;
+    case PVZ_OPEN_ERROR:
+        game_status->copy_label("Error Opening PvZ Process");
+        break;
+    case PVZ_NOT_FOUND:
+    default:
+        game_status->copy_label("PvZ Window Not Found");
+        break;
+    }
+
+    if (result == PVZ_NOT_FOUND)
+    {
+        game_status->copy_tooltip("Please run Plants vs. Zombies first.");
+    }
+    else if (result == PVZ_OPEN_ERROR)
+    {
+        game_status->copy_tooltip("Please try run PvZ Toolkit as administrator.");
+    }
+    else if (result == PVZ_UNSUPPORTED)
+    {
+        game_status->copy_tooltip("Contact author to add support for this version.");
+    }
+#ifdef _PVZ_BETA_LEAK_SUPPORT
+    else if (result == PVZ_BETA_0_1_1_1014_EN || result == PVZ_BETA_0_9_9_1029_EN)
+    {
+        game_status->copy_tooltip("Partial support for beta version.");
+    }
+#endif
+    else if (result == PVZ_GOTY_1_1_0_1056_ZH)
+    {
+        game_status->copy_tooltip("Suggest to replace this buggy game version.");
+    }
+    else
+    {
+        game_status->copy_tooltip(nullptr);
+    }
+
+    game_status->redraw();
+}
+
+#endif
 
 void Window::keep_selected_feature()
 {
@@ -1793,7 +2395,7 @@ void Window::import_lineup_list(bool automatic)
                 std::wstring ext = name.substr(name.find_last_of(L".") + 1);
                 if (ext == L"yml")
                 {
-                    import_lineup_list_file(name.c_str());
+                    import_lineup_list_file(name);
                     // std::wcout << L"导入阵型列表: " << name << std::endl;
                 }
             } while (FindNextFileW(hf, &ffd) != 0);
@@ -1830,7 +2432,9 @@ void Window::import_lineup_list(bool automatic)
 
     // 排序
     auto LessThan = [&](const Lineup &l1, const Lineup &l2)
-    { return l1.weight < l2.weight; };
+    {
+        return l1.weight < l2.weight;
+    };
     std::sort(this->lineups.begin(), this->lineups.end(), LessThan);
 
     // 插入
@@ -1874,13 +2478,13 @@ void Window::import_lineup_list_file(std::wstring file)
         }
         else
         {
-            if (str[0] == '#' || str.empty()) // 注释或者空行
+            if (str.empty() || str[0] == '#') // 空行或者注释
             {
                 continue;
             }
             else
             {
-                std::regex re("\".*\": [a-zA-Z0-9+/=]{1,}");
+                std::regex re("\".*\": ([a-zA-Z0-9+/=]{1,}|[a-zA-Z0-9-_=]{1,})");
                 if (std::regex_match(str, re))
                 {
                     size_t p = str.find_last_of(": ");
@@ -1908,21 +2512,37 @@ void Window::import_lineup_list_file(std::wstring file)
 
     if (err_lst.size() > 0)
     {
+#ifdef _PTK_CHINESE_UI
         std::wstring title = file + L" " + L"阵型列表文件格式错误";
+#else
+        std::wstring title = file + L" " + L"Lineup List File Format Error";
+#endif
         std::wstring text;
         for (size_t i = 0; i < err_lst.size(); i++)
         {
             if (i > 11)
             {
+#ifdef _PTK_CHINESE_UI
                 text += std::wstring() + L"\n" + L"（还有更多的没有显示……）";
+#else
+                text += std::wstring() + L"\n" + L"( More to show ... )";
+#endif
                 break;
             }
             auto [l, s] = err_lst[i];
+#ifdef _PTK_CHINESE_UI
             if (s.length() > 49)
                 s = s.substr(0, 48) + " ...";
             text += std::wstring()                            //
                     + L"第 " + std::to_wstring(l) + L" 行： " //
                     + utf8_decode(s) + L"\n";                 //
+#else
+            if (s.length() > 59)
+                s = s.substr(0, 58) + " ...";
+            text += std::wstring()                           //
+                    + L"Line " + std::to_wstring(l) + L" : " //
+                    + utf8_decode(s) + L"\n";                //
+#endif
         }
         fl_message_title(utf8_encode(title).c_str());
         fl_message(utf8_encode(text).c_str());
@@ -2100,17 +2720,81 @@ void Window::cb_disable_limit_species()
     if (limit_species)
     {
         limit_species = false;
+#ifdef _PTK_CHINESE_UI
         button_spawn_extra->replace(1, EMOJI("✅", "[启用限制]"));
+#else
+        button_spawn_extra->replace(1, "[ Enable Species Limit ]");
+#endif
     }
     else
     {
         limit_species = true;
+#ifdef _PTK_CHINESE_UI
         button_spawn_extra->replace(1, EMOJI("❎", "[取消限制]"));
+#else
+        button_spawn_extra->replace(1, "[ Disable Species Limit ]");
+#endif
     }
 
     button_spawn_extra->value(0);
     cb_spawn_count_check();
 }
+
+#ifdef _PTK_CHINESE_UI
+
+void Window::cb_switch_layout_xwz(Fl_Widget *, void *w)
+{
+    ((Window *)w)->cb_switch_layout_xwz();
+}
+
+void Window::cb_switch_layout_xwz()
+{
+    const int layout_ori[20] = {
+        2, 3, 4, 5, 6,      //
+        7, 8, 11, 12, 14,   //
+        15, 16, 17, 18, 19, //
+        20, 21, 22, 23, 32  //
+    };
+
+    const int layout_xwz[20] = {
+        2, 5, 4, 6, 16,    //
+        21, 3, 8, 11, 18,  //
+        12, 15, 7, 17, 14, //
+        22, 23, 32, 20, 19 //
+    };
+
+    if (this->switch_layout)
+    {
+        for (size_t r = 0; r < 4; r++)
+            for (size_t c = 0; c < 5; c++)
+            {
+                int x = this->xy[r * 5 + c][0];
+                int y = this->xy[r * 5 + c][1];
+                check_zombie[r * 5 + c]->position(x, y);
+            }
+        this->switch_layout = false;
+    }
+    else
+    {
+        for (size_t r = 0; r < 4; r++)
+            for (size_t c = 0; c < 5; c++)
+                for (size_t i = 0; i < 4; i++)
+                    for (size_t j = 0; j < 5; j++)
+                        if (layout_xwz[r * 5 + c] == layout_ori[i * 5 + j])
+                        {
+                            int x = this->xy[r * 5 + c][0];
+                            int y = this->xy[r * 5 + c][1];
+                            check_zombie[i * 5 + j]->position(x, y);
+                        }
+        this->switch_layout = true;
+    }
+
+    button_spawn_extra->value(0);
+
+    this->redraw();
+}
+
+#endif
 
 void Window::cb_switch_spawn_mode(Fl_Widget *, void *w)
 {
@@ -2119,30 +2803,44 @@ void Window::cb_switch_spawn_mode(Fl_Widget *, void *w)
 
 void Window::cb_switch_spawn_mode()
 {
+#ifdef _PTK_CHINESE_UI
     bool on = check_tooltips->value() == 1;
+#endif
 
     switch (button_spawn_mode->value())
     {
     case 0: // 自然
         choice_giga_weight->deactivate();
         check_giga_limit->deactivate();
+#ifdef _PTK_CHINESE_UI
         button_set_spawn->copy_label("自然出怪 (游戏生成)");
         button_set_spawn->copy_tooltip(on ? "Natural (Game Generate)" : nullptr);
+#else
+        button_set_spawn->copy_label("Natural  (Game Generate)");
+#endif
         break;
 
     case 1: // 极限
     default:
         choice_giga_weight->deactivate();
         check_giga_limit->activate();
+#ifdef _PTK_CHINESE_UI
         button_set_spawn->copy_label("极限出怪 (均匀填充)");
         button_set_spawn->copy_tooltip(on ? "Extreme (Filling Evenly)" : nullptr);
+#else
+        button_set_spawn->copy_label("Extreme  (Filling Evenly)");
+#endif
         break;
 
     case 2: // 模拟
         choice_giga_weight->activate();
         check_giga_limit->activate();
+#ifdef _PTK_CHINESE_UI
         button_set_spawn->copy_label("模拟出怪 (加权随机)");
         button_set_spawn->copy_tooltip(on ? "Simulate (Weighted Random)" : nullptr);
+#else
+        button_set_spawn->copy_label("Simulate (Weighted Random)");
+#endif
         break;
     }
 }
@@ -2220,7 +2918,11 @@ void Window::cb_open_dir()
     bi.hwndOwner = nullptr;
     bi.pidlRoot = nullptr;
     // pszDisplayName
+#ifdef _PTK_CHINESE_UI
     bi.lpszTitle = L"选择要打包的文件夹：";
+#else
+    bi.lpszTitle = L"Choose Folder To Pack: ";
+#endif
     bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_USENEWUI | BIF_NONEWFOLDERBUTTON;
     bi.lpfn = nullptr;
     // lParam
@@ -2266,6 +2968,8 @@ void Window::cb_tooltips(Fl_Widget *, void *w)
 {
     ((Window *)w)->cb_tooltips();
 }
+
+#ifdef _PTK_CHINESE_UI
 
 void Window::cb_tooltips()
 {
@@ -2361,56 +3065,57 @@ void Window::cb_tooltips()
 
     bool on = check_tooltips->value() == 1;
 
-    check_unlock_sun_limit->copy_tooltip(on ? "Disable Upper Limit" : "去除上限");
+    check_unlock_sun_limit->copy_tooltip(on ? "No Upper Limit to Sunlight" : "阳光无上限");
     input_sun->copy_tooltip("0 ~ 9990");
     button_sun->copy_tooltip(on ? "Sun" : nullptr);
     input_money->copy_tooltip("0 ~ 99999");
     button_money->copy_tooltip(on ? "Coins" : nullptr);
-    check_auto_collected->copy_tooltip(on ? "Automatic Collected" : nullptr);
-    check_not_drop_loot->copy_tooltip(on ? "Not Drop Loot" : nullptr);
-    check_fertilizer->copy_tooltip(on ? "Unlimited Fertilizer" : nullptr);
-    check_bug_spray->copy_tooltip(on ? "Unlimited Bug Spray" : nullptr);
-    check_tree_food->copy_tooltip(on ? "Unlimited Tree Food" : nullptr);
-    check_chocolate->copy_tooltip(on ? "Unlimited Chocolate" : nullptr);
+    check_auto_collected->copy_tooltip(on ? "Auto Collected" : nullptr);
+    check_not_drop_loot->copy_tooltip(on ? "Don\'t Drop Loot" : nullptr);
+    check_fertilizer->copy_tooltip(on ? "Infinite Fertilizer" : nullptr);
+    check_bug_spray->copy_tooltip(on ? "Infinite Bug Spray" : nullptr);
+    check_tree_food->copy_tooltip(on ? "Infinite Tree Food" : nullptr);
+    check_chocolate->copy_tooltip(on ? "Infinite Chocolate" : nullptr);
     input_wisdom_tree->copy_tooltip("0 ~ 1000");
-    button_wisdom_tree->copy_tooltip(on ? "Feet Tall" : nullptr);
+    button_wisdom_tree->copy_tooltip(on ? "Feet" : nullptr);
     check_free_planting->copy_tooltip(on ? "Free Planting" : nullptr);
-    check_placed_anywhere->copy_tooltip(on ? "Placed Anywhere" : nullptr);
+    check_placed_anywhere->copy_tooltip(on ? "Place Anywhere" : nullptr);
     check_fast_belt->copy_tooltip(on ? "Seamless Conveyor Belt" : nullptr);
     check_lock_shovel->copy_tooltip(on ? "Shovel Continuously" : nullptr);
     choice_mode->copy_tooltip(on ? vstr_modes[choice_mode->value()].c_str() : nullptr);
     choice_adventure->copy_tooltip(on ? choice_adventure->text(choice_adventure->value()) : nullptr);
     button_mix->copy_tooltip(on ? "Modify Mode" : nullptr);
-    input_level->copy_tooltip("0 ~ 10000000");
+    input_level->copy_tooltip("0 ~ 999999");
     button_level->copy_tooltip(on ? "Endless Rounds" : nullptr);
     button_unlock->copy_tooltip(on ? "Get Gold Sunflower Trophy" : "解锁黄金向日葵奖杯");
     button_direct_win->copy_tooltip(on ? "Level Complete" : nullptr);
+    check_brightest_cob_cannon->copy_tooltip(on ? "End with Brightest Cob" : "结束时炮最亮");
 
     choice_row->copy_tooltip(on ? vstr_rows[choice_row->value()].c_str() : nullptr);
     choice_col->copy_tooltip(on ? vstr_cols[choice_col->value()].c_str() : nullptr);
     choice_plant->copy_tooltip(on ? vstr_plants[choice_plant->value()].c_str() : nullptr);
     choice_zombie->copy_tooltip(on ? vstr_zombies[choice_zombie->value()].c_str() : nullptr);
-    button_put_plant->copy_tooltip(on ? "Place Plant" : nullptr);
+    button_put_plant->copy_tooltip(on ? "Put Plant" : nullptr);
     check_imitater->copy_tooltip(on ? "Imitater" : nullptr);
-    button_put_zombie->copy_tooltip(on ? "Place Zombie" : nullptr);
-    button_put_ladder->copy_tooltip(on ? "Place Ladder" : nullptr);
-    button_put_grave->copy_tooltip(on ? "Place Grave" : nullptr);
-    button_put_rake->copy_tooltip(on ? "Place Rake" : nullptr);
+    button_put_zombie->copy_tooltip(on ? "Put Zombie" : nullptr);
+    button_put_ladder->copy_tooltip(on ? "Put Ladder" : nullptr);
+    button_put_grave->copy_tooltip(on ? "Put Grave" : nullptr);
+    button_put_rake->copy_tooltip(on ? "Put Rake" : nullptr);
     button_lawn_mower->copy_tooltip(on ? "Lawn Mowers" : nullptr);
     choice_item->copy_tooltip(on ? vstr_items[choice_item->value()].c_str() : nullptr);
-    button_clear->copy_tooltip(on ? "Clear" : nullptr);
+    button_clear->copy_tooltip(on ? "Clear All" : nullptr);
     check_plant_invincible->copy_tooltip(on ? "Plant Invincible" : nullptr);
     check_plant_weak->copy_tooltip(on ? "Plant Weak" : nullptr);
     check_zombie_invincible->copy_tooltip(on ? "Zombie Invincible" : nullptr);
     check_zombie_weak->copy_tooltip(on ? "Zombie Weak" : nullptr);
     check_reload_instantly->copy_tooltip(on ? "Reload Instantly" : nullptr);
     check_mushroom_awake->copy_tooltip(on ? "Mushroom Awake" : nullptr);
-    check_stop_spawning->copy_tooltip(on ? "Spawning Paused" : nullptr);
+    check_stop_spawning->copy_tooltip(on ? "Pause Spawning" : nullptr);
     check_stop_zombies->copy_tooltip(on ? "Stay In Place" : nullptr);
     check_lock_butter->copy_tooltip(on ? "Always Butter" : nullptr);
     check_no_crater->copy_tooltip(on ? "No Crater" : nullptr);
     check_no_ice_trail->copy_tooltip(on ? "No Ice Trail" : nullptr);
-    check_zombie_not_explode->copy_tooltip(on ? "Zombies Never Explode" : nullptr);
+    check_zombie_not_explode->copy_tooltip(on ? "Never Explode" : nullptr);
 
     choice_slot->copy_tooltip(on ? vstr_slots[choice_slot->value()].c_str() : nullptr);
     if (choice_seed->value() == -1)
@@ -2419,21 +3124,21 @@ void Window::cb_tooltips()
         choice_seed->copy_tooltip(on ? vstr_plants[choice_seed->value()].c_str() : nullptr);
     button_seed->copy_tooltip(on ? "Replace Seed" : nullptr);
     check_seed_imitater->copy_tooltip(on ? "Imitater" : nullptr);
-    check_lineup_mode->copy_tooltip(on ? "Lineup Mode Shortcut" : nullptr);
+    check_lineup_mode->copy_tooltip(on ? "Lineup Mode" : nullptr);
     button_auto_ladder->copy_tooltip(on ? "Smart Laddering" : nullptr);
-    button_put_lily_pad->copy_tooltip(on ? "Lily Pad On Pool" : nullptr);
-    button_put_flower_pot->copy_tooltip(on ? "Flower Pot On Roof" : nullptr);
+    button_put_lily_pad->copy_tooltip(on ? "Pool \'s Lily Pad" : nullptr);
+    button_put_flower_pot->copy_tooltip(on ? "Roof \'s Flower Pot" : nullptr);
     button_reset->copy_tooltip(on ? "Reset Scene" : nullptr);
     choice_scene->copy_tooltip(on ? vstr_scenes[choice_scene->value()].c_str() : nullptr);
     button_load_lineup->copy_tooltip(on ? "Load Lineup List File (***.yml)" : nullptr);
     for (size_t i = 0; i < 6; i++)
         choice_lineup_name[i]->copy_tooltip(on ? "(Lineup Name)" : nullptr);
     button_get_lineup->copy_tooltip(on ? "Get Lineup Code" : nullptr);
-    button_copy_lineup->copy_tooltip(on ? "Copy / Export" : nullptr);
-    button_paste_lineup->copy_tooltip(on ? "Paste / Import" : nullptr);
-    button_set_lineup->copy_tooltip(on ? "Apply Current Build" : nullptr);
+    button_copy_lineup->copy_tooltip(on ? "Copy (Export)" : nullptr);
+    button_paste_lineup->copy_tooltip(on ? "Paste (Import)" : nullptr);
+    button_set_lineup->copy_tooltip(on ? "Apply Current Setup" : nullptr);
     editor_lineup_string->copy_tooltip(on ? "(Lineup Code)" : "(阵型代码)");
-    button_capture->copy_tooltip(on ? "Screenshot To Clipboard" : "截图到剪贴板");
+    button_capture->copy_tooltip(on ? "Screenshot to Clipboard" : "截图到剪贴板");
 
     for (size_t i = 0; i < 20; i++)
     {
@@ -2450,11 +3155,11 @@ void Window::cb_tooltips()
 
     choice_music->copy_tooltip(on ? choice_music->text(choice_music->value()) : nullptr);
     button_music->copy_tooltip(on ? "Background Music" : nullptr);
-    button_userdata->copy_tooltip(on ? "Userdata Folder" : nullptr);
+    button_userdata->copy_tooltip(on ? "Open Userdata Folder" : nullptr);
     check_no_fog->copy_tooltip(on ? "Clear Fog" : nullptr);
     check_see_vase->copy_tooltip(on ? "Transparent Vase" : nullptr);
-    check_background->copy_tooltip(on ? "Enable Background Running" : nullptr);
-    check_readonly->copy_tooltip(on ? "Disable Delete/Save Userdata" : nullptr);
+    check_background->copy_tooltip(on ? "Enable PvZ to Run in Background" : nullptr);
+    check_readonly->copy_tooltip(on ? "Userdata Readonly" : nullptr);
     button_file->copy_tooltip(on ? "Choose File" : nullptr);
     input_file->copy_tooltip(on ? "(File Path)" : "(文件路径)");
     button_unpack->copy_tooltip(on ? "Extract" : nullptr);
@@ -2492,37 +3197,36 @@ void Window::cb_tooltips()
 
     // 顺便更新标题
 
-    // 96   100%
-    // 120  125%
-    // 144  150%
-    // 168  175%
-    // 192  200%
-    int dpi = 96;
-    HDC dc = GetDC(nullptr);
-    if (dc != nullptr)
-    {
-        // int virtual_width = GetDeviceCaps(dc, HORZRES);
-        // int physical_width = GetDeviceCaps(dc, DESKTOPHORZRES);
-        // dpi = 96 * physical_width / virtual_width;
-        int dpi_x = GetDeviceCaps(dc, LOGPIXELSX);
-        int dpi_y = GetDeviceCaps(dc, LOGPIXELSY);
-        dpi = (dpi_x + dpi_y) / 2;
-        ReleaseDC(nullptr, dc);
-    }
-    // std::cout << "dpi: " << dpi << std::endl;
-
     std::string title;
-    if (dpi <= 96)
-        title = on ? "Plants vs. Zombies All Version Toolkit"
-                   : "PvZ Toolkit - 植物大战僵尸全版本辅助工具";
-    else if (dpi <= 120)
-        title = on ? "Plants vs. Zombies Toolkit"
-                   : "植物大战僵尸全版本辅助工具";
-    else
-        title = on ? "PvZ Toolkit"
-                   : "植物大战僵尸辅助";
+    title = on ? "PvZ Toolkit - Plants vs. Zombies Tool Kit"
+               : "PvZ Toolkit - 植物大战僵尸辅助工具";
     this->copy_label(title.c_str());
 }
+
+#else
+
+void Window::cb_tooltips()
+{
+    input_sun->copy_tooltip("0 ~ 9990");
+    input_money->copy_tooltip("0 ~ 99999");
+    input_wisdom_tree->copy_tooltip("0 ~ 1000");
+    input_level->copy_tooltip("0 ~ 999999");
+
+    for (size_t i = 0; i < 6; i++)
+        choice_lineup_name[i]->copy_tooltip("(Lineup Name)");
+
+    editor_lineup_string->copy_tooltip("(Lineup Code)");
+
+    choice_giga_weight->copy_tooltip("Original: 1000 (non-huge waves), 6000 (huge waves).");
+    button_set_spawn->copy_tooltip("Right click to change spawning mode.");
+
+    input_file->copy_tooltip("(File Path)");
+    input_dir->copy_tooltip("(Folder Path)");
+
+    cb_find_result_tooltip();
+}
+
+#endif
 
 void Window::cb_about(Fl_Widget *, void *w)
 {
@@ -2538,13 +3242,32 @@ void Window::cb_about()
                                + TOSTRING(VERSION_BUILD) //
                                + ")";                    //
 
+    std::string dep_fltk_ver = std::string("FLTK")          //
+                               + " "                        //
+                               + TOSTRING(FL_MAJOR_VERSION) //
+                               + "."                        //
+                               + TOSTRING(FL_MINOR_VERSION) //
+                               + "."                        //
+                               + TOSTRING(FL_PATCH_VERSION) //
+                               + " dev";                    // TODO
+
+    std::string dep_zlib_ver = std::string("zlib")               //
+                               + " "                             //
+                               + TOSTRING(ZLIB_VER_MAJOR)        //
+                               + "."                             //
+                               + TOSTRING(ZLIB_VER_MINOR)        //
+                               + "."                             //
+                               + TOSTRING(ZLIB_VER_REVISION)     //
+                               + "."                             //
+                               + TOSTRING(ZLIB_VER_SUBREVISION); //
+
     // "Sep  1 2021"
     //  0123456789A
     std::string date = std::string(__DATE__);
     std::string time = std::string(__TIME__);
     if (date[4] == ' ')
         date[4] = '0';
-    char s_month[4] = {date[0], date[1], date[2], 0};
+    const char s_month[4] = {date[0], date[1], date[2], 0};
     const char month_names[] = "JanFebMarAprMayJunJulAugSepOctNovDec";
     int month = (strstr(month_names, s_month) - month_names) / 3 + 1;
     std::string build_date = std::string()                                     //
@@ -2555,21 +3278,56 @@ void Window::cb_about()
                              + date[4] + date[5];                              //
     std::string build_date_time = build_date + " " + time;
 
-    std::string text = std::string()                                              //
-                       + "植物大战僵尸辅助工具" + "\n"                            //
-                       + "Plants vs. Zombies Toolkit" + "\n"                      //
-                       + "\n"                                                     //
-                       + "官方网站：" + "\t" + "https://pvz.lmintlcx.com/" + "\n" //
-                       + "\n"                                                     //
-                       + "发行版本：" + "\t" + version_full + "\n"                //
-                       + "编译时间：" + "\t" + build_date_time + "\n"             //
-                       + "版权所有：" + "\t" + "© 2020~2022 L.Mint. LCX" + "\n"   //
-                       + "\n"                                                     //
-                       + "复刻起源：" + "\t" + "PVZ Helper 1.8.7" + "\n"          //
-                       + "依赖项目：" + "\t" + "FLTK 1.4 + zlib 1.2.12" + "\n"    //
-                       + "鸣谢名单：" + "\t" + "kmtohoem 63enjoy 273.15K" + "\n"; //
+    std::string official_website = "https://pvz.lmintlcx.com/";
+    std::string build_date_year = std::string() + date[7] + date[8] + date[9] + date[10];
+    std::string copyright = "© 2020 ~ " + build_date_year + " L.Mint. LCX";
 
+    std::string reference_project = "PVZ Helper 1.8.7";
+    std::string origin_author = "zhumxiang @@ GitHub";
+
+    std::string dependencies = dep_fltk_ver + " + " + dep_zlib_ver;
+
+    std::string acknowledgements = "kmtohoem / 63enjoy / 273.15K";
+
+#ifdef _PTK_CHINESE_UI
+    std::string text = std::string()                                    //
+                       + "植物大战僵尸辅助工具" + "\n"                  //
+                       + "Plants vs. Zombies Tool Kit" + "\n"           //
+                       + "\n"                                           //
+                       + "发行版本：" + "\t" + version_full + "\n"      //
+                       + "编译时间：" + "\t" + build_date_time + "\n"   //
+                       + "\n"                                           //
+                       + "官方网站：" + "\t" + official_website + "\n"  //
+                       + "版权所有：" + "\t" + copyright + "\n"         //
+                       + "\n"                                           //
+                       + "参考项目：" + "\t" + reference_project + "\n" //
+                       + "原始作者：" + "\t" + origin_author + "\n"     //
+                       + "\n"                                           //
+                       + "开发依赖：" + "\t" + dependencies + "\n"      //
+                       + "鸣谢名单：" + "\t" + acknowledgements + "\n"; //
+#else
+    std::string text = std::string()                                        //
+                       + "PvZ Toolkit" + "\n"                               //
+                       + "Plants vs. Zombies Tool Kit" + "\n"               //
+                       + "\n"                                               //
+                       + "Version:      " + "\t" + version_full + "\n"      //
+                       + "Date:         " + "\t" + build_date_time + "\n"   //
+                       + "\n"                                               //
+                       + "Website:      " + "\t" + official_website + "\n"  //
+                       + "Copyright:    " + "\t" + copyright + "\n"         //
+                       + "\n"                                               //
+                       + "Origin:       " + "\t" + reference_project + "\n" //
+                       + "Author:       " + "\t" + origin_author + "\n"     //
+                       + "\n"                                               //
+                       + "Dependencies: " + "\t" + dependencies + "\n"      //
+                       + "Credits:      " + "\t" + acknowledgements + "\n"; //
+#endif
+
+#ifdef _PTK_CHINESE_UI
     fl_message_title("关于 PvZ Toolkit");
+#else
+    fl_message_title("About PvZ Toolkit");
+#endif
     fl_message(text.c_str());
 }
 

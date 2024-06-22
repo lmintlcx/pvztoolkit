@@ -1,8 +1,24 @@
 
 #pragma once
 
-#include "pvz.h"
+#include <Windows.h>
+
+#include <ShlObj.h>
+#include <commdlg.h>
+#include <shellapi.h>
+
+#include <algorithm>
+#include <array>
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <tuple>
+#include <vector>
+
+#include <FL/images/zlib.h>
+
 #include "pak.h"
+#include "pvz.h"
 #include "window.h"
 
 namespace Pt
@@ -14,7 +30,7 @@ class Toolkit : public Window
     Toolkit(int, int, const char *);
     ~Toolkit();
 
-    std::filesystem::path path;
+    std::filesystem::path current_path;
 
     static void cb_tooltips(Fl_Widget *, void *);
     inline void cb_tooltips();

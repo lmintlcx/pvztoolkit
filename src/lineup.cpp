@@ -1,5 +1,5 @@
 
-#include "lineup.h"
+#include "../inc/lineup.h"
 
 namespace Pt
 {
@@ -9,13 +9,13 @@ Lineup::Lineup()
     reset_data();
 }
 
-Lineup::Lineup(std::string string)
+Lineup::Lineup(const std::string &string)
 {
     reset_data();
     Init(string);
 }
 
-Lineup::Lineup(std::string name, std::string string)
+Lineup::Lineup(const std::string &name, const std::string &string)
 {
     reset_data();
     Init(string);
@@ -56,7 +56,7 @@ void Lineup::reset_data()
 void Lineup::Init(const std::string &string)
 {
     std::regex regex_string("[0-5](,[a-fA-F0-9]{1,2} [1-6] [1-9] [0-2] [0-4]( [a-zA-Z0-9]{1,}){0,}){0,}");
-    std::regex regex_code("[a-zA-Z0-9+/=]{18,164}");
+    std::regex regex_code("([a-zA-Z0-9+/=]{18,164}|[a-zA-Z0-9-_=]{18,164})");
 
     if (std::regex_match(string, regex_string))
     {
@@ -232,10 +232,11 @@ bool Lineup::lineup_code_to_data()
 
     unsigned long size = 128;
     unsigned char buffer[128] = {0};
-    BOOL ret_decode = CryptStringToBinaryA(this->lineup_code.c_str(), 0, CRYPT_STRING_BASE64,
-                                           buffer, &size, nullptr, nullptr);
-    if (ret_decode == FALSE)
-        return false;
+
+    size_t len = this->lineup_code.length();
+    auto written = base64_decode(buffer, this->lineup_code.c_str(), len);
+    // TODO 检测失败
+    size = written;
 
     for (size_t i = 0; i < size; i++)
         buffer[i] = buffer[i] ^ (unsigned char)0x54;
@@ -270,13 +271,16 @@ void Lineup::data_to_lineup_code()
     for (size_t i = 0; i < size + 1; i++)
         buffer[i] = buffer[i] ^ (unsigned char)0x54;
 
-    DWORD len = 256;
     char str[256] = {0};
-    CryptBinaryToStringA(buffer, size + 1, CRYPT_STRING_BASE64, str, &len);
+    size_t len = size + 1;
+    auto written = base64_encode(str, buffer, len);
 
     std::string code(str);
-    code.erase(std::remove(code.begin(), code.end(), '\r'), code.end());
-    code.erase(std::remove(code.begin(), code.end(), '\n'), code.end());
+
+    // CryptBinaryToStringA
+    // code.erase(std::remove(code.begin(), code.end(), '\r'), code.end());
+    // code.erase(std::remove(code.begin(), code.end(), '\n'), code.end());
+
     // std::cout << lineup << " " << lineup.size() << std::endl;
     lineup_code = code;
 }

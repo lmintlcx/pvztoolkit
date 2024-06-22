@@ -1,20 +1,20 @@
 
 #pragma once
 
+#include <Windows.h>
+
+#include <array>
+#include <cassert>
+#include <initializer_list>
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <initializer_list>
-#include <array>
-#include <cassert>
-
-#include <Windows.h>
 
 namespace Pt
 {
 
 // 输出内存读写数据
-#define _PTK_MEMORY_OUTPUT
+#define _PZTK_MEMORY_OUTPUT
 
 class Process
 {
@@ -53,7 +53,7 @@ class Process
     DWORD pid;     // 进程标识
     HANDLE handle; // 进程句柄
 
-#if (defined _DEBUG) && (defined _PTK_MEMORY_OUTPUT)
+#if (defined _DEBUG) && (defined _PZTK_MEMORY_OUTPUT)
   private:
     std::string int_to_hex_string(unsigned int num)
     {
@@ -103,7 +103,7 @@ T Process::ReadMemory(std::initializer_list<uintptr_t> addr)
         }
     }
 
-#if (defined _DEBUG) && (defined _PTK_MEMORY_OUTPUT)
+#if (defined _DEBUG) && (defined _PZTK_MEMORY_OUTPUT)
     std::cout << addr_list_to_string(addr) << " --> " << std::dec << result << " / " << std::hex << result << std::endl;
 #endif
 
@@ -145,7 +145,7 @@ inline std::string Process::ReadMemory<std::string>(std::initializer_list<uintpt
         }
     }
 
-#if (defined _DEBUG) && (defined _PTK_MEMORY_OUTPUT)
+#if (defined _DEBUG) && (defined _PZTK_MEMORY_OUTPUT)
     std::cout << addr_list_to_string(addr) << " --> " << result << std::endl;
 #endif
 
@@ -177,7 +177,7 @@ void Process::WriteMemory(T value, std::initializer_list<uintptr_t> addr)
         }
     }
 
-#if (defined _DEBUG) && (defined _PTK_MEMORY_OUTPUT)
+#if (defined _DEBUG) && (defined _PZTK_MEMORY_OUTPUT)
     std::cout << addr_list_to_string(addr) << " <-- " << std::dec << value << " / " << std::hex << value << std::endl;
     // if (ReadMemory<T>(addr) != value)
     //     std::wcout << L"写内存出错!" << std::endl;
@@ -214,7 +214,7 @@ std::array<T, size> Process::ReadMemory(std::initializer_list<uintptr_t> addr)
     for (size_t i = 0; i < size; i++)
         result[i] = buff[i];
 
-#if (defined _DEBUG) && (defined _PTK_MEMORY_OUTPUT)
+#if (defined _DEBUG) && (defined _PZTK_MEMORY_OUTPUT)
     std::cout << addr_list_to_string(addr) << " --> ";
     for (size_t i = 0; i < size; i++)
         std::cout << std::hex << int(result[i]) << " ";
@@ -252,7 +252,7 @@ void Process::WriteMemory(std::array<T, size> value, std::initializer_list<uintp
         }
     }
 
-#if (defined _DEBUG) && (defined _PTK_MEMORY_OUTPUT)
+#if (defined _DEBUG) && (defined _PZTK_MEMORY_OUTPUT)
     std::cout << addr_list_to_string(addr) << " <-- ";
     for (size_t i = 0; i < size; i++)
         std::cout << std::hex << int(value[i]) << " ";

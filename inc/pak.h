@@ -1,12 +1,14 @@
 
 #pragma once
 
+#include <Windows.h>
+
+#include <cassert>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <cassert>
 
-#include <Windows.h>
+#include "utils.h"
 
 namespace Pt
 {
@@ -36,26 +38,23 @@ class PAK
     ~PAK();
 
   private:
-    std::string utf8_encode(const std::wstring &);
-    std::wstring utf8_decode(const std::string &);
-
     // 递归地创建文件夹
     bool create_path(const std::wstring &);
 
     // 递归地查找所有文件
-    void find_files(const std::wstring,
+    void find_files(const std::wstring &,
                     std::vector<std::wstring> &, //
                     std::vector<int> &,          //
                     std::vector<FILETIME> &);
 
   public:
     // 解包, 参数分别为源文件名和解包文件夹
-    int Unpack(std::wstring, std::wstring);
-    int Unpack(std::string, std::string);
+    int Unpack(const std::wstring &, const std::wstring &);
+    int Unpack(const std::string &, const std::string &);
 
     // 打包, 参数分别为源文件夹和打包文件名
-    int Pack(std::wstring, std::wstring);
-    int Pack(std::string, std::string);
+    int Pack(const std::wstring &, const std::wstring &);
+    int Pack(const std::string &, const std::string &);
 };
 
 } // namespace Pt

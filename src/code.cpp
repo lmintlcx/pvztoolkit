@@ -1,5 +1,5 @@
 
-#include "code.h"
+#include "../inc/code.h"
 
 namespace Pt
 {

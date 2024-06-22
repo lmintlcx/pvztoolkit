@@ -5,10 +5,10 @@
             "name": "Launch",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/out/pvztoolkitd.exe",
+            "program": "${workspaceFolder}/build/pvztoolkitd.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/out",
+            "cwd": "${workspaceFolder}/build",
             "environment": [],
             "console": "integratedTerminal",
             "preLaunchTask": "Build"

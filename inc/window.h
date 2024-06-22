@@ -1,44 +1,50 @@
 
 #pragma once
 
-#include <FL/x.H>
-#include <FL/Fl_Widget.H>
-#include <FL/Fl_Double_Window.H>
-#include <Fl/Fl_Box.H>
-#include <FL/Fl_Tabs.H>
-#include <FL/Fl_Input.H>
-#include <FL/Fl_Value_Input.H>
-#include <FL/Fl_Button.H>
-#include <FL/Fl_Check_Button.H>
-#include <FL/Fl_Round_Button.H>
-#include <FL/Fl_Menu_Button.H>
-#include <FL/Fl_Text_Editor.H>
-#include <FL/Fl_Choice.H>
-#include <FL/Fl_Table.H>
-#include <FL/fl_ask.H>
-
 #include <Windows.h>
+
 #include <ShlObj.h>
 #include <VersionHelpers.h>
+#include <commdlg.h>
+#include <shellapi.h>
 
+#include <algorithm>
+#include <array>
+#include <fstream>
 #include <iostream>
 #include <map>
-#include <array>
-#include <string>
-#include <vector>
-#include <cassert>
-#include <filesystem>
 #include <regex>
-#include <algorithm>
+#include <string>
+#include <tuple>
+#include <vector>
 
-#include "pvz.h"
+#include <FL/Fl_Button.H>
+#include <FL/Fl_Check_Button.H>
+#include <FL/Fl_Choice.H>
+#include <FL/Fl_Double_Window.H>
+#include <FL/Fl_Input.H>
+#include <FL/Fl_Menu_Button.H>
+#include <FL/Fl_Round_Button.H>
+#include <FL/Fl_Table.H>
+#include <FL/Fl_Tabs.H>
+#include <FL/Fl_Text_Editor.H>
+#include <FL/Fl_Value_Input.H>
+#include <FL/Fl_Widget.H>
+#include <FL/fl_ask.H>
+#include <FL/x.H>
+#include <Fl/Fl_Box.H>
+
 #include "lineup.h"
-#include "../res/version.h"
+#include "pvz.h"
+#include "utils.h"
+#include "version.h"
 
 namespace Pt
 {
 
+#ifdef _PTK_CHINESE_UI
 #define EMOJI(e, s) ((std::string(this->emoji ? (e) : "▢") + ((s)[0] == 0 ? "" : " ") + (s)).c_str())
+#endif
 
 // 实现 Fl_Choice 对滚轮的响应
 class Fl_Choice_ : public Fl_Choice
@@ -83,13 +89,18 @@ class SpawnWindow : public Fl_Double_Window
     SpawnWindow(int, int, const char *);
     ~SpawnWindow();
     void UpdateData(std::array<int, 1000>);
+    void resize(int, int, int, int);
+    int ww = 0;
+    int hh = 0;
 
   public:
     SpawnTable *table_spawn;
     Fl_Button *button_update_details;
     Fl_Menu_Button *button_zombies_list;
+#ifdef _PTK_CHINESE_UI
     Fl_Box *box_mask_spawn_types;
     bool emoji = false;
+#endif
 
   public:
     void tooltips(bool);
@@ -102,6 +113,7 @@ class Window : public Fl_Double_Window
     Window(int, int, const char *);
     ~Window();
 
+    float MinScale();
     void ReadSettings();
     void WriteSettings();
 
@@ -109,6 +121,10 @@ class Window : public Fl_Double_Window
 
     Fl_Group *group_resource;
     Fl_Round_Button *check_unlock_sun_limit;
+#ifdef _PTK_CHINESE_UI
+#else
+    Fl_Box *box_sun;
+#endif
     Fl_Value_Input *input_sun;
     Fl_Button *button_sun;
     Fl_Box *box_money;
@@ -134,6 +150,7 @@ class Window : public Fl_Double_Window
     Fl_Button *button_level;
     Fl_Button *button_unlock;
     Fl_Button *button_direct_win;
+    Fl_Check_Button *check_brightest_cob_cannon;
 
     Fl_Group *group_battle;
     Fl_Choice_ *choice_row;
@@ -192,6 +209,10 @@ class Window : public Fl_Double_Window
     Fl_Group *group_spawn;
     int spawn_type[20];
     bool limit_species = true;
+#ifdef _PTK_CHINESE_UI
+    bool switch_layout = false;
+    int xy[20][2] = {0};
+#endif
     Fl_Check_Button *check_zombie[20];
     Fl_Button *button_show_details;
     Fl_Choice_ *choice_giga_weight;
@@ -220,28 +241,33 @@ class Window : public Fl_Double_Window
     Fl_Button *button_speed;
     Fl_Check_Button *check_limbo_page;
     Fl_Choice_ *choice_scheme;
+#ifdef _PTK_CHINESE_UI
     Fl_Check_Button *check_tooltips;
+#endif
     Fl_Button *button_document;
     Fl_Button *button_about;
 
+#ifdef _PTK_CHINESE_UI
     Fl_Box *box_mask_resource;
     Fl_Box *box_mask_battle;
     Fl_Box *box_mask_lineup;
     Fl_Box *box_mask_spawn;
     Fl_Box *box_mask_others;
+#endif
 
     int result = PVZ_NOT_FOUND;
     Fl_Box *game_status;
+#ifdef _PTK_CHINESE_UI
     Fl_Box *game_status_tip;
+#endif
     bool bad_version_warned = false;
 
+#ifdef _PTK_CHINESE_UI
     bool emoji = false;
     bool emoji_i = false;
+#endif
 
   protected:
-    std::string utf8_encode(const std::wstring &);
-    std::wstring utf8_decode(const std::string &);
-
     static void cb_find_result(void *, int);
     inline void cb_find_result(int);
     static void cb_find_result_tooltip(Fl_Widget *, void *);
@@ -284,6 +310,11 @@ class Window : public Fl_Double_Window
 
     static void cb_disable_limit_species(Fl_Widget *, void *);
     inline void cb_disable_limit_species();
+
+#ifdef _PTK_CHINESE_UI
+    static void cb_switch_layout_xwz(Fl_Widget *, void *);
+    inline void cb_switch_layout_xwz();
+#endif
 
     static void cb_switch_spawn_mode(Fl_Widget *, void *);
     inline void cb_switch_spawn_mode();

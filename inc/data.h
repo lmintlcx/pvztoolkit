@@ -1,9 +1,10 @@
 
 #pragma once
 
-#include <map>
-#include <vector>
 #include <array>
+#include <map>
+#include <utility>
+#include <vector>
 
 namespace Pt
 {
@@ -12,8 +13,10 @@ namespace Pt
 #define PVZ_OPEN_ERROR -1
 #define PVZ_UNSUPPORTED 1
 
+#ifdef _PVZ_BETA_LEAK_SUPPORT
 #define PVZ_BETA_0_1_1_1014_EN 901
 #define PVZ_BETA_0_9_9_1029_EN 902
+#endif
 
 #define PVZ_1_0_0_1051_EN 1001
 #define PVZ_1_2_0_1065_EN 1002
@@ -251,8 +254,10 @@ class Data
     Data();
     ~Data();
 
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     // 是否为测试版
     bool isBETA();
+#endif
 
     // 是否为年度版
     bool isGOTY();
@@ -265,8 +270,10 @@ class Data
     int find_result;
 
     // 不同版本的内存数据
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     PVZ_DATA data_beta_0_1_1_1014_en;
     PVZ_DATA data_beta_0_9_9_1029_en;
+#endif
     PVZ_DATA data_1_0_0_1051_en;
     PVZ_DATA data_1_2_0_1065_en;
     PVZ_DATA data_1_0_4_7924_es;

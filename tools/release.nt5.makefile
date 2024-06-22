@@ -9,11 +9,11 @@ CXX_FLAGS_BARE = /c /nologo \
                 /MP \
                 /utf-8 \
                 /W3 /GR- \
-                /O1 /MT /GL
+                /O1 /MT /GL /arch:IA32
 DEFINES = -DNDEBUG -D_HAS_EXCEPTIONS=0 \
           -DUNICODE -D_UNICODE \
           -DWIN32_LEAN_AND_MEAN -DNOMINMAX \
-          -DWIN32 -D_WIN32_WINNT=0x0600 \
+          -DWIN32 -D_WIN32_WINNT=0x0501 -D_USING_V110_SDK71_ \
           -D_REGEX_MAX_STACK_COUNT=0 \
           -D_PVZ_BETA_LEAK_SUPPORT \
           -D_PTK_CHINESE_UI \
@@ -27,7 +27,8 @@ INCS = .\inc\utils.h \
        .\inc\lineup.h \
        .\inc\pvz.h \
        .\inc\window.h \
-       .\inc\toolkit.h
+       .\inc\toolkit.h \
+       .\nt5\vc141_nt5.h
 CXX_FLAGS = /Fo"$(OUTDIR)\\" /Fd"$(OUTDIR)\$(TARGET).pdb" $(CXX_FLAGS_BARE) $(DEFINES) $(INCPATH)
 
 ASM = ml
@@ -51,9 +52,11 @@ OBJS = $(OUTDIR)\utils.obj \
        $(OUTDIR)\pvz.obj \
        $(OUTDIR)\window.obj \
        $(OUTDIR)\toolkit.obj \
+       $(OUTDIR)\vc141_nt5.obj \
+       $(OUTDIR)\vc141_nt5_asm.obj \
        $(OUTDIR)\main.obj
 RES = $(OUTDIR)\version.res
-LINK_FLAGS = /NOLOGO /DYNAMICBASE:NO /INCREMENTAL:NO /SUBSYSTEM:WINDOWS \
+LINK_FLAGS = /NOLOGO /DYNAMICBASE:NO /INCREMENTAL:NO /SUBSYSTEM:WINDOWS,5.01 \
          $(LIBS) $(OBJS) $(RES) /STACK:0x00400000 /LTCG
 
 
@@ -94,6 +97,12 @@ $(OUTDIR)\window.obj: .\src\window.cpp $(INCS)
 
 $(OUTDIR)\toolkit.obj: .\src\toolkit.cpp $(INCS)
     $(CXX) $(CXX_FLAGS) /Fe"$(OUTDIR)\toolkit.obj" .\src\toolkit.cpp
+
+$(OUTDIR)\vc141_nt5.obj: .\nt5\vc141_nt5.cpp $(INCS)
+    $(CXX) $(CXX_FLAGS) /Fe"$(OUTDIR)\vc141_nt5.obj" .\nt5\vc141_nt5.cpp
+
+$(OUTDIR)\vc141_nt5_asm.obj: .\nt5\vc141_nt5.asm $(INCS)
+    $(ASM) $(ASM_FLAGS) /Fo"$(OUTDIR)\vc141_nt5_asm.obj" .\nt5\vc141_nt5.asm
 
 $(OUTDIR)\main.obj: .\src\main.cpp $(INCS)
     $(CXX) $(CXX_FLAGS) /Fe"$(OUTDIR)\main.obj" .\src\main.cpp

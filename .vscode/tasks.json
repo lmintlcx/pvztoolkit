@@ -4,7 +4,7 @@
         {
             "label": "Build",
             "type": "shell",
-            "command": "${workspaceRoot}/build.bat",
+            "command": "${workspaceRoot}/tools/build_pvztoolkit.bat",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -12,3 +12,46 @@
         }
     ]
 }
+// {
+//     "version": "2.0.0",
+//     "tasks": [
+//         {
+//             "type": "shell",
+//             "label": "cmake",
+//             "command": "cmake",
+//             "args": [
+//                 "-G",
+//                 "Visual Studio 15 2017",
+//                 "-A",
+//                 "Win32",
+//                 // "-D",
+//                 // "CMAKE_BUILD_TYPE=Debug",
+//                 "-D",
+//                 "FLTK_DIR=C:/Dev/fltk_1.4.0/msvc2017_x86/static/CMake",
+//                 "-B",
+//                 "./build",
+//                 "-S",
+//                 "."
+//             ]
+//         },
+//         {
+//             "type": "shell",
+//             "label": "make",
+//             "command": "cmake",
+//             "args": [
+//                 "--build",
+//                 "./build",
+//                 "--config",
+//                 "Debug"
+//             ]
+//         },
+//         {
+//             "label": "Build",
+//             "dependsOrder": "sequence",
+//             "dependsOn": [
+//                 "cmake",
+//                 "make"
+//             ]
+//         }
+//     ]
+// }

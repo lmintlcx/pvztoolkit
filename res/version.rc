@@ -5,7 +5,7 @@
 
 #include <Windows.h>
 
-#include "version.h"
+#include "../inc/version.h"
 
 IDI_ICON ICON DISCARDABLE "logo.ico"
 
@@ -24,13 +24,22 @@ VS_VERSION_INFO VERSIONINFO
     BEGIN
         BLOCK "StringFileInfo"
         BEGIN
-            BLOCK "080404b0"
+#ifdef _PTK_CHINESE_UI
+            BLOCK "080404B0"
+#else
+            BLOCK "040904B0"
+#endif
             BEGIN
+#ifdef _PTK_CHINESE_UI
+                VALUE "CompanyName", "立方体工作室"
+                VALUE "FileDescription", "植物大战僵尸辅助工具"
+#else
                 VALUE "CompanyName", "Cube Studio"
-                VALUE "FileDescription", "PvZ Toolkit"
+                VALUE "FileDescription", "Plants vs. Zombies Tool Kit"
+#endif
                 VALUE "FileVersion", VERSION_NAME_FULL
-                VALUE "LegalCopyright", "(C) 2020-2022 lmintlcx"
                 VALUE "InternalName", "pvztoolkit"
+                VALUE "LegalCopyright", "(C) 2020 - 2024 lmintlcx"
                 VALUE "OriginalFilename", "pvztoolkit.exe"
                 VALUE "ProductName", "PvZ Toolkit"
                 VALUE "ProductVersion", VERSION_NAME_FULL
@@ -38,6 +47,10 @@ VS_VERSION_INFO VERSIONINFO
         END
         BLOCK "VarFileInfo"
         BEGIN
+#ifdef _PTK_CHINESE_UI
             VALUE "Translation", 0x0804, 1200
+#else
+            VALUE "Translation", 0x0409, 1200
+#endif
         END
     END

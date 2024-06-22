@@ -1,5 +1,5 @@
 
-#include "data.h"
+#include "../inc/data.h"
 
 namespace Pt
 {
@@ -7,6 +7,8 @@ namespace Pt
 Data::Data()
 {
     this->find_result = PVZ_NOT_FOUND;
+
+#ifdef _PVZ_BETA_LEAK_SUPPORT
 
     this->data_beta_0_1_1_1014_en =
         {
@@ -409,6 +411,8 @@ Data::Data()
 
             0x00457f90, // call_play_music
         };
+
+#endif
 
     this->data_1_0_0_1051_en =
         {
@@ -2826,8 +2830,10 @@ Data::Data()
     this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_OPEN_ERROR, data_1_0_0_1051_en));
     this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_UNSUPPORTED, data_1_0_0_1051_en));
 
+#ifdef _PVZ_BETA_LEAK_SUPPORT
     this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_BETA_0_1_1_1014_EN, data_beta_0_1_1_1014_en));
     this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_BETA_0_9_9_1029_EN, data_beta_0_9_9_1029_en));
+#endif
 
     this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_0_0_1051_EN, data_1_0_0_1051_en));
     this->ver_map.insert(std::pair<int, PVZ_DATA>(PVZ_1_2_0_1065_EN, data_1_2_0_1065_en));
@@ -2850,11 +2856,13 @@ Data::~Data()
 {
 }
 
+#ifdef _PVZ_BETA_LEAK_SUPPORT
 bool Data::isBETA()
 {
     return (this->find_result == PVZ_BETA_0_1_1_1014_EN      //
             || this->find_result == PVZ_BETA_0_9_9_1029_EN); //
 }
+#endif
 
 bool Data::isGOTY()
 {

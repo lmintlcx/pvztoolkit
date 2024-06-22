@@ -1,21 +1,20 @@
 
 #pragma once
 
-#include <array>
-#include <iostream>
-#include <vector>
-#include <string>
-#include <initializer_list>
-#include <cassert>
-#include <random>
-#include <chrono>
-
 #include <Windows.h>
 
-#include "process.h"
+#include <array>
+#include <cassert>
+#include <chrono>
+#include <iostream>
+#include <random>
+#include <string>
+#include <vector>
+
 #include "code.h"
 #include "data.h"
 #include "lineup.h"
+#include "process.h"
 
 namespace Pt
 {
@@ -38,6 +37,16 @@ class PvZ : public Process, public Code, public Data
     // 应用 hacks
     template <typename T, size_t size>
     void enable_hack(std::vector<HACK<T, size>>, bool);
+
+#ifdef _DEBUG
+    template <typename T, size_t size>
+    void check_hack(HACK<T, size>);
+
+    template <typename T, size_t size>
+    void check_hack(std::vector<HACK<T, size>>);
+
+    void check_all_hacks();
+#endif
 
     // 设置查找游戏的回调函数
     void callback(cb_func, void *);
@@ -77,7 +86,7 @@ class PvZ : public Process, public Code, public Data
     void UnlockTrophy();
 
     // 直接过关
-    void DirectWin();
+    void DirectWin(bool);
 
     // 去除上限
     void UnlockSunLimit(bool);
@@ -287,5 +296,44 @@ void PvZ::enable_hack(std::vector<HACK<T, size>> hacks, bool on)
             WriteMemory(std::array<T, size>(hacks[i].reset_value), {hacks[i].mem_addr});
     }
 }
+
+#ifdef _DEBUG
+
+template <typename T, size_t size>
+void PvZ::check_hack(HACK<T, size> hack)
+{
+    bool ok = true;
+
+    if (hack.mem_addr == 0x00000000 || hack.mem_addr == 0xffffffff)
+        return;
+
+    auto read_value = ReadMemory<T, size>({hack.mem_addr});
+    if (read_value != hack.reset_value)
+        ok = false;
+
+    if (!ok)
+        std::cout << "Hack Error: " << hack.mem_addr << std::endl;
+}
+
+template <typename T, size_t size>
+void PvZ::check_hack(std::vector<HACK<T, size>> hacks)
+{
+    bool ok = true;
+
+    for (size_t i = 0; i < hacks.size(); i++)
+    {
+        if (hacks[i].mem_addr == 0x00000000 || hacks[i].mem_addr == 0xffffffff)
+            continue;
+
+        auto read_value = ReadMemory<T, size>({hacks[i].mem_addr});
+        if (read_value != hacks[i].reset_value)
+            ok = false;
+
+        if (!ok)
+            std::cout << "Hack Error: " << hacks[i].mem_addr << std::endl;
+    }
+}
+
+#endif
 
 } // namespace Pt

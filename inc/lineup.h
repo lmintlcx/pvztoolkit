@@ -1,16 +1,15 @@
 
 #pragma once
 
-#include "zlib.h"
-
+#include <algorithm>
 #include <iostream>
 #include <regex>
 #include <string>
 #include <vector>
-#include <cassert>
-#include <fstream>
 
-#include <Windows.h>
+#include <FL/images/zlib.h>
+
+#include "utils.h"
 
 namespace Pt
 {
@@ -21,8 +20,8 @@ class Lineup
 {
   public:
     Lineup();
-    Lineup(std::string);
-    Lineup(std::string, std::string);
+    Lineup(const std::string &);
+    Lineup(const std::string &, const std::string &);
     ~Lineup();
 
     bool may_sleep[48] = {false, false, false, false, false, false, false, false, //

@@ -1,0 +1,90 @@
+diff --git a/src/Fl_Choice.cxx b/src/Fl_Choice.cxx
+index 66bd57a..b4061ac 100644
+--- a/src/Fl_Choice.cxx
++++ b/src/Fl_Choice.cxx
+@@ -118,7 +118,7 @@ void Fl_Choice::draw() {
+       fl_draw_shortcut = 2; // hack value to make '&' disappear
+       l.draw(xx+3, yy, ww>6 ? ww-6 : 0, hh, FL_ALIGN_LEFT);
+       fl_draw_shortcut = 0;
+-      if ( Fl::focus() == this ) draw_focus(box(), xx, yy, ww, hh);
++      if ( Fl::focus() == this ) draw_focus(box(), xx-1, yy-2, ww+2, hh+4);
+     }
+     else {
+       fl_draw_shortcut = 2; // hack value to make '&' disappear
+diff --git a/src/Fl_Screen_Driver.cxx b/src/Fl_Screen_Driver.cxx
+index 2956b7b..3a019df 100644
+--- a/src/Fl_Screen_Driver.cxx
++++ b/src/Fl_Screen_Driver.cxx
+@@ -478,14 +478,10 @@ int Fl_Screen_Driver::scale_handler(int event)
+   if (!keyboard_screen_scaling) return 0;
+   if ( event != FL_SHORTCUT || !Fl::event_command() ) return 0;
+   enum {none, zoom_in, zoom_out, zoom_reset} zoom = none;
+-  if (Fl::test_shortcut(FL_COMMAND+'+')) zoom = zoom_in;
+-  else if (Fl::test_shortcut(FL_COMMAND+'-')) zoom = zoom_out;
+-  else if (Fl::test_shortcut(FL_COMMAND+'0')) zoom = zoom_reset;
+-  if (Fl::option(Fl::OPTION_SIMPLE_ZOOM_SHORTCUT)) {
+-    // kludge to recognize shortcut FL_COMMAND+'+' without pressing SHIFT
+-    if ((Fl::event_state()&(FL_META|FL_ALT|FL_CTRL|FL_SHIFT)) == FL_COMMAND &&
+-           Fl::event_key() == '=') zoom = zoom_in;
+-  }
++  int key = Fl::event_key() & ~(FL_SHIFT+FL_COMMAND);
++  if (key == '=' || key == '+') zoom = zoom_in;
++  else if (key == '-') zoom = zoom_out;
++  else if (key == '0' || key == 0xE0) zoom = zoom_reset;
+   if (zoom != none) {
+     int i, count;
+     if (Fl::grab()) return 0; // don't rescale when menu windows are on
+@@ -520,9 +516,8 @@ int Fl_Screen_Driver::scale_handler(int event)
+ #else
+     // scaling factors for the standard GUI
+     static float scaling_values[] = {
+-      0.5f, 2.f/3, 0.8f, 0.9f, 1.0f,
+-      1.1f, 1.2f, 4.f/3, 1.5f, 1.7f,
+-      2.0f, 2.4f, 3.0f};
++      1.00f, 1.25f, 1.50f, 2.00f, 2.50f, 3.00f, 4.00f, 5.00f
++    };
+ #endif
+     float f, old_f = screen_dr->scale(screen)/initial_scale;
+     if (zoom == zoom_reset) f = 1;
+diff --git a/src/Fl_Tabs.cxx b/src/Fl_Tabs.cxx
+index ed6b45a..47f0e15 100644
+--- a/src/Fl_Tabs.cxx
++++ b/src/Fl_Tabs.cxx
+@@ -804,6 +804,7 @@ void Fl_Tabs::draw() {
+   if (damage() & (FL_DAMAGE_ALL|FL_DAMAGE_EXPOSE|FL_DAMAGE_SCROLL))
+   {
+     // -- draw tabs background
++    if (damage() & FL_DAMAGE_ALL) {
+     if (parent()) {
+       Fl_Widget *p = parent();
+       fl_push_clip(x(), tabs_y, w(), tabs_h);
+@@ -817,6 +818,7 @@ void Fl_Tabs::draw() {
+     } else {
+       fl_rectf(x(), tabs_y, w(), tabs_h, color());
+     }
++    }
+ 
+     // -- draw selection border
+     fl_push_clip(x(), selection_border_y, w(), selection_border_h);
+@@ -966,7 +968,7 @@ void Fl_Tabs::draw_tab(int x1, int x2, int W, int H, Fl_Widget* o, int flags, in
+ 
+     // Draw the focus box
+     if (Fl::focus() == this && o->visible())
+-      draw_focus(bt, x1, y(), W, H, bc);
++      draw_focus(bt, x1, y(), W, H-2, bc);
+   } else {
+     H = -H;
+     H += dh;
+diff --git a/src/Fl_win32.cxx b/src/Fl_win32.cxx
+index ce5cf0c..6c84ae0 100644
+--- a/src/Fl_win32.cxx
++++ b/src/Fl_win32.cxx
+@@ -555,7 +555,7 @@ void Fl_WinAPI_Screen_Driver::desktop_scale_factor() {
+     if (r != S_OK) { dpiX = dpiY = 96; }
+     dpi[ns][0] = float(dpiX);
+     dpi[ns][1] = float(dpiY);
+-    scale(ns, dpiX / 96.f);
++    scale(ns, 1.0f);
+     // fprintf(LOG, "desktop_scale_factor ns=%d factor=%.2f dpi=%.1f\n", ns, scale(ns), dpi[ns][0]);
+   }
+   update_scaling_capability();

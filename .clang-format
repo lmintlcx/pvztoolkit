@@ -1,0 +1,13 @@
+---
+Language: Cpp
+BasedOnStyle: LLVM
+SortIncludes: true
+ColumnLimit: 0
+UseTab: Never
+TabWidth: 4
+IndentWidth: 4
+BreakBeforeBraces: Allman
+AccessModifierOffset: -2
+AllowShortLambdasOnASingleLine: None
+SpacesBeforeTrailingComments: 1
+---
