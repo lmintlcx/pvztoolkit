@@ -6,7 +6,7 @@ Plants vs. Zombies Tool Kit
 
 ## Screenshots
 
-![PvZ Toolkit](https://github.com/lmintlcx/pvztoolkit/raw/master/img/pvztoolkit_en.gif)
+![PvZ Toolkit](https://github.com/lmintlcx/pvztoolkit/raw/master/docs/pvztoolkit_en.gif)
 
 ## Download Link
 
