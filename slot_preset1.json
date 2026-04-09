@@ -1,0 +1,52 @@
+[
+  {
+    "index": 0,
+    "plant_type": 8,
+    "imitater": true
+  },
+  {
+    "index": 1,
+    "plant_type": 8,
+    "imitater": true
+  },
+  {
+    "index": 2,
+    "plant_type": 8,
+    "imitater": true
+  },
+  {
+    "index": 3,
+    "plant_type": 8,
+    "imitater": true
+  },
+  {
+    "index": 4,
+    "plant_type": 8,
+    "imitater": true
+  },
+  {
+    "index": 5,
+    "plant_type": 1,
+    "imitater": false
+  },
+  {
+    "index": 6,
+    "plant_type": 14,
+    "imitater": false
+  },
+  {
+    "index": 7,
+    "plant_type": 2,
+    "imitater": false
+  },
+  {
+    "index": 8,
+    "plant_type": 20,
+    "imitater": false
+  },
+  {
+    "index": 9,
+    "plant_type": 35,
+    "imitater": false
+  }
+]
